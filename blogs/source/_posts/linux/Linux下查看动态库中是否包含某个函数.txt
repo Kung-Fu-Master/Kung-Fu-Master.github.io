@@ -1,0 +1,6 @@
+
+Linux下查看动态库中是否包含某个函数
+	strings libdrv.so | grep BrdReInitAllGMPU
+
+linux下查看动态链接库so文件的依赖的相关组建
+	ldd libJNativeCpp.so

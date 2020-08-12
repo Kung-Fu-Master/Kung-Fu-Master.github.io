@@ -1,0 +1,56 @@
+---
+title: Windows10_VScode远程连接linux编辑调试
+categories:
+- windows
+---
+
+1. 查看Windows10 是否已安装或开启ssh-client，默认Windows10自带的有
+Windows 10 : 设置 -> 应用(APPS) -> 应用和功能(APP & features) -> 管理可选功能(Manage app execution aliases)
+![](1.png)
+
+没有的话需要点击如图上面的Add a feature，install一下.
+
+2. Centos
+	1. //安装 yum install -y openssl openssh-server 
+	//重启sshd服务 systemctl restart sshd.service 
+	//自动启动 systemctl enable sshd
+	2. $cd ~/.ssh/
+	此目录如果没有authorized_keys文件需要touch新建一个，里面需要存放Window10的公匙(id_rsa.pub,另外id_rsa是Window10的密匙).
+3. 安装VS code， 安装扩展(Extensions)"Remote-Developoment"插件，会自动安装其他的Remote插件，其中会包含Remote-SSH
+安装完成出现如下选项
+![](2.png)
+
+添加config文件
+![](3.png)
+
+添加linux主机
+	Host 后面接空格，名字随便写，显示在左边
+	HostName 主机IP
+	User root
+![](4.png)
+
+右击要连接的linux，选择在当前页面或新打开Vscode
+![](5.png)
+
+输入linux登录密码，这个过程可能需要输入密码多次…
+![](6.png)
+观察VScode右下角等待连接成功
+![](7.png)
+
+最后点击Open folder就可以了
+
+后边遇到vscode一直连不上linux情况
+解决方法一:
+	$df -hl 查看linux ~/ 等主目录是否已占满，删除一些文件释放空间后再连接就可以了
+
+解决方法二:
+	是查看linux /tmp 临时文件发现占满了，全部删掉，再用windows上得VS code连接就可以了
+	原因是vscode连接linxu会自动在linux的/tmp生成一些文件
+
+## Linux 重装系统后再用windowsshangVScode连接报如下错误:
+	Could not establish connection to "IP". The process tried to write to a nonexistent pipe.
+原因是windows与linux连接成功后会在C:\Users\用户名\.ssh\known_hosts添加对应Linux的密匙信息，把它相关的内容删掉.
+
+## VScode 连接Linux Waiting for /root/.vscode-server/bin/***/vscode-scp-done.flag and vscode-server.tar.gz to exist
+解决方法如下链接:
+![参考链接](https://blog.csdn.net/Ding19950107/article/details/103713556)

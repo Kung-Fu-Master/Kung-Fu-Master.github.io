@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Token jwt | Hexo</title>
+  <meta name="keywords" content=" security ">
+  <meta name="description" content="Token jwt | Hexo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="1. 确保系统已安装node.js, git工具2. cmd管理员身份进入git clone下来的文件夹$ cd ...\blogs_backup\blogs $ npm install hexo-deployer-git --save3. 生成部署博客$ hexo g    &#x2F;&#x2F;generate，md生成html $ hexo s    &#x2F;&#x2F;start，开启服务, 网页上输入http:&#x2F;&#x2F;loc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 02 git clone blog后如何运行">
+<meta property="og:url" content="https://kung-fu-master.github.io/2020/08/12/blogs/Hexo_02_git_clone_blog%E5%90%8E%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%20-%20%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 确保系统已安装node.js, git工具2. cmd管理员身份进入git clone下来的文件夹$ cd ...\blogs_backup\blogs $ npm install hexo-deployer-git --save3. 生成部署博客$ hexo g    &#x2F;&#x2F;generate，md生成html $ hexo s    &#x2F;&#x2F;start，开启服务, 网页上输入http:&#x2F;&#x2F;loc">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-12T12:24:28.735Z">
+<meta property="article:modified_time" content="2020-08-12T12:08:32.334Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/sublime.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>Kung-Fu-Master</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="rss" href="/atom.xml" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-rss"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="github" href="https://github.com/yelog" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="facebook" href="https://www.facebook.com/faker.tops" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-facebook"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+        <a title="instagram" href="https://www.facebook.com/faker.tops" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-instagram"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="reddit" href="https://www.reddit.com/user/yelog/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-reddit"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="weibo" href="http://weibo.com/u/2307534817" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-weibo"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="jianshu" href="https://www.jianshu.com/u/ff56736de7cf" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-jianshu"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="zhihu" href="https://www.zhihu.com/people/jaytp/activities" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-zhihu"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+        <a title="oschina" href="https://my.oschina.net/yelog" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-oschina"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+        <a title="email" href="mailto:jaytp@qq.com" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-email"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="qq" href="http://wpa.qq.com/msgrd?v=3&uin=872336115&site=qq&menu=yes" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-qq"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="kugou" href="https://www.kugou.com/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-kugou"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="neteasemusic" href="https://music.163.com/#/user/home?id=88151013" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-neteasemusic"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(123)</small></div></li>
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="blogs">blogs<small>(5)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="deeplearning">deeplearning<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Englisth"><i class="fold iconfont icon-right"></i>Englisth<small>(1)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Englisth<--->5500">5500<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="language"><i class="fold iconfont icon-right"></i>language<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="language<--->c">c<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="language<--->go">go<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="language<--->python">python<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="LearnLinks">LearnLinks<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="linux">linux<small>(58)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="microService"><i class="fold iconfont icon-right"></i>microService<small>(15)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="microService<--->istio">istio<small>(4)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="microService<--->kubernetes">kubernetes<small>(10)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="microService<--->REST-API">REST-API<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="nodejs">nodejs<small>(8)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="storage">storage<small>(6)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="technologies"><i class="fold iconfont icon-right"></i>technologies<small>(21)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="technologies<--->docker">docker<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="technologies<--->maven">maven<small>(6)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="technologies<--->security">security<small>(6)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="technologies<--->web前端">web前端<small>(4)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="windows">windows<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="123">
+<input type="hidden" id="yelog_site_word_count" value="126.5k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>deeplearning</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>istio</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kubernetes</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>SSH-port</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>storage</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/07/08/micro_service/09_kubernetes_certificate/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="08 Kubernetes Certificates">08 Kubernetes Certificates</span>
+            <span class="post-date" title="2020-07-08 20:25:27">2020/07/08</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/06/06/micro_service/Resources/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="Resources">Resources</span>
+            <span class="post-date" title="2020-06-06 20:21:51">2020/06/06</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/05/21/micro_service/08_kubernetes_samples_problems/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="08 Kubernetes samples and problems">08 Kubernetes samples and problems</span>
+            <span class="post-date" title="2020-05-21 21:49:21">2020/05/21</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/05/31/micro_service/07_kubernetes_Etcd/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="07 Kubernetes Etcd">07 Kubernetes Etcd</span>
+            <span class="post-date" title="2020-05-31 19:59:38">2020/05/31</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/05/21/micro_service/06_kubernetes_deployment/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="06 Kubernetes deployment">06 Kubernetes deployment</span>
+            <span class="post-date" title="2020-05-21 21:49:21">2020/05/21</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/05/21/micro_service/04_kubernetes_service/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="04 Kubernetes service">04 Kubernetes service</span>
+            <span class="post-date" title="2020-05-21 21:49:21">2020/05/21</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/05/21/micro_service/03_kubernetes_ns_pod/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="03 Kubernetes nodes, namespace, pod">03 Kubernetes nodes, namespace, pod</span>
+            <span class="post-date" title="2020-05-21 21:49:21">2020/05/21</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/07/08/micro_service/02_kubernetes_roles_introduction/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="02 kubernetes introduction">02 kubernetes introduction</span>
+            <span class="post-date" title="2020-07-08 20:25:27">2020/07/08</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/05/21/micro_service/01_kubernetes_build/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="01 Kubernetes build">01 Kubernetes build</span>
+            <span class="post-date" title="2020-05-21 21:49:21">2020/05/21</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/08/13/blogs/Hexo_03_%E5%86%99%E5%8D%9A%E5%AE%A2%E8%AF%AD%E6%B3%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hexo 03 写博客语法">Hexo 03 写博客语法</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/08/12/blogs/Hexo_02_git_clone_blog%E5%90%8E%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%20-%20%E5%89%AF%E6%9C%AC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hexo 02 git clone blog后如何运行">Hexo 02 git clone blog后如何运行</span>
+            <span class="post-date" title="2020-08-12 20:24:28">2020/08/12</span>
+        </a>
+        
+        <a  class="All deeplearning "
+           href="/2020/08/12/deeplearning/deeplearning_01_get_started/"
+           data-tag="deeplearning"
+           data-author="" >
+            <span class="post-title" title="deeplearning 01 getting started">deeplearning 01 getting started</span>
+            <span class="post-date" title="2020-08-12 18:43:17">2020/08/12</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/11/linux/linux%E5%90%91%E5%85%B6%E5%AE%83%E7%BB%88%E7%AB%AF%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux向其它终端发送消息">linux向其它终端发送消息</span>
+            <span class="post-date" title="2020-08-11 00:19:57">2020/08/11</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/11/linux/linux%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux查看运行的服务">linux查看运行的服务</span>
+            <span class="post-date" title="2020-08-11 00:19:57">2020/08/11</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/11/linux/history/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux中禁用命令历史记录">Linux中禁用命令历史记录</span>
+            <span class="post-date" title="2020-08-11 00:19:57">2020/08/11</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/06/storage/minIO_03_client.md/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="MinIO 03 client">MinIO 03 client</span>
+            <span class="post-date" title="2020-08-06 21:34:30">2020/08/06</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/06/storage/minIO_02_deployment_on_kubernetes/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="MinIO deployment on kubernetes">MinIO deployment on kubernetes</span>
+            <span class="post-date" title="2020-08-06 21:34:30">2020/08/06</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/06/storage/minIO_01_conception/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="MinIO 01 conception">MinIO 01 conception</span>
+            <span class="post-date" title="2020-08-06 21:34:30">2020/08/06</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/08/04/micro_service/istio_02_installation/"
+           data-tag="istio"
+           data-author="" >
+            <span class="post-title" title="Istio 02 Installation on Kubernetes">Istio 02 Installation on Kubernetes</span>
+            <span class="post-date" title="2020-08-04 19:12:41">2020/08/04</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/03/storage/greenplum/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="Greenplum Deployment on Kubernetes">Greenplum Deployment on Kubernetes</span>
+            <span class="post-date" title="2020-08-03 20:20:46">2020/08/03</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/03/storage/ceph_deployment_02/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="Ceph Storage Deployment on Kubernetes">Ceph Storage Deployment on Kubernetes</span>
+            <span class="post-date" title="2020-08-03 20:20:46">2020/08/03</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/03/linux/fdisk%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="fdisk磁盘分区">fdisk磁盘分区</span>
+            <span class="post-date" title="2020-08-03 20:07:15">2020/08/03</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/07/20/technologies/security/pki/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="PKI 体系概述">PKI 体系概述</span>
+            <span class="post-date" title="2020-07-20 23:26:14">2020/07/20</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/07/20/technologies/security/token_jwt/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="Token jwt">Token jwt</span>
+            <span class="post-date" title="2020-07-20 22:23:19">2020/07/20</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/07/17/technologies/security/key_digest_signature_certificates/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="certificates, public/private key, signature digest">certificates, public/private key, signature digest</span>
+            <span class="post-date" title="2020-07-17 10:15:48">2020/07/17</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/07/17/technologies/security/algorithm_security/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="algorithm security">algorithm security</span>
+            <span class="post-date" title="2020-07-17 10:13:58">2020/07/17</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/07/17/technologies/security/tls_ssl_https_http_protocol/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="TLS/SSL/HTTP/HTTPS protocol">TLS/SSL/HTTP/HTTPS protocol</span>
+            <span class="post-date" title="2020-07-17 10:13:44">2020/07/17</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/07/17/technologies/security/openssl_certificates/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="openssl certificates">openssl certificates</span>
+            <span class="post-date" title="2020-07-17 10:13:44">2020/07/17</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/07/08/linux/linux%E6%97%A5%E5%BF%97_%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="查看 linux 系统日志 和 服务的日志">查看 linux 系统日志 和 服务的日志</span>
+            <span class="post-date" title="2020-07-08 20:23:46">2020/07/08</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/07/03/blogs/HTTP_TCP_Socket/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HTTP, TCP, Socket">HTTP, TCP, Socket</span>
+            <span class="post-date" title="2020-07-03 15:17:09">2020/07/03</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/07/03/blogs/Restful_API/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Restful API">Restful API</span>
+            <span class="post-date" title="2020-07-03 15:17:09">2020/07/03</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/06/09/linux/EOF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="EOF">EOF</span>
+            <span class="post-date" title="2020-06-09 21:29:00">2020/06/09</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/06/09/linux/dd_command/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="dd">dd</span>
+            <span class="post-date" title="2020-06-09 21:28:59">2020/06/09</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/05/31/linux/U%E7%9B%98RAW%E7%B1%BB%E5%9E%8B%E4%BF%AE%E5%A4%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘RAW类型修复">U盘RAW类型修复</span>
+            <span class="post-date" title="2020-05-31 20:18:49">2020/05/31</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/05/31/linux/rpm_yum/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RPM, yum">RPM, yum</span>
+            <span class="post-date" title="2020-05-31 20:00:33">2020/05/31</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/05/31/linux/ssh%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84/"
+           data-tag="SSH-port"
+           data-author="" >
+            <span class="post-title" title="ssh端口映射">ssh端口映射</span>
+            <span class="post-date" title="2020-05-31 20:00:33">2020/05/31</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/05/21/linux/ntpdate_synchronize_os_time/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ntpdate 同步各个系统时间">ntpdate 同步各个系统时间</span>
+            <span class="post-date" title="2020-05-21 22:14:41">2020/05/21</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/05/21/storage/ceph_conception_01/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="Ceph Storage Conception 01">Ceph Storage Conception 01</span>
+            <span class="post-date" title="2020-05-21 22:12:24">2020/05/21</span>
+        </a>
+        
+        <a  class="All microService kubernetes "
+           href="/2020/05/21/micro_service/05_kubernetes_volume/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="05 Kubernetes volumes">05 Kubernetes volumes</span>
+            <span class="post-date" title="2020-05-21 21:49:21">2020/05/21</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/05/05/linux/curl_wget/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="curl &amp; wget">curl &amp; wget</span>
+            <span class="post-date" title="2020-05-05 20:11:10">2020/05/05</span>
+        </a>
+        
+        <a  class="All technologies docker "
+           href="/2020/05/05/technologies/docker/dockerfile/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Dockerfile introduction">Dockerfile introduction</span>
+            <span class="post-date" title="2020-05-05 20:10:47">2020/05/05</span>
+        </a>
+        
+        <a  class="All language python "
+           href="/2020/04/29/language/python/linux_install_python_pip_pipenv/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Install python3 &amp; pip3 &amp; pipenv">Install python3 &amp; pip3 &amp; pipenv</span>
+            <span class="post-date" title="2020-04-29 22:23:24">2020/04/29</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/04/20/micro_service/istio_01_conception/"
+           data-tag="istio"
+           data-author="" >
+            <span class="post-title" title="Istio 01 conception">Istio 01 conception</span>
+            <span class="post-date" title="2020-04-20 23:28:21">2020/04/20</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/04/20/micro_service/istio_03_configuration/"
+           data-tag="istio"
+           data-author="" >
+            <span class="post-title" title="Istio 03 configuration">Istio 03 configuration</span>
+            <span class="post-date" title="2020-04-20 23:28:21">2020/04/20</span>
+        </a>
+        
+        <a  class="All technologies docker "
+           href="/2020/04/19/technologies/docker/docker_step_02/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="docker 02 private hub &amp; journal">docker 02 private hub &amp; journal</span>
+            <span class="post-date" title="2020-04-19 18:56:22">2020/04/19</span>
+        </a>
+        
+        <a  class="All technologies docker "
+           href="/2020/04/19/technologies/docker/docker_step_01/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="docker 01 installation and control commands">docker 01 installation and control commands</span>
+            <span class="post-date" title="2020-04-19 18:56:22">2020/04/19</span>
+        </a>
+        
+        <a  class="All technologies "
+           href="/2020/04/15/technologies/Intel_tips_at_work/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Intel_tips_at_work">Intel_tips_at_work</span>
+            <span class="post-date" title="2020-04-15 19:10:14">2020/04/15</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/04/13/micro_service/Istio_K8s_SpringCloud/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="Istio_K8s_SpringCloud">Istio_K8s_SpringCloud</span>
+            <span class="post-date" title="2020-04-13 21:43:27">2020/04/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/04/13/nodejs/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="浏览器工作原理">浏览器工作原理</span>
+            <span class="post-date" title="2020-04-13 01:17:36">2020/04/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/04/12/nodejs/NodeJs%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NodeJs简介">NodeJs简介</span>
+            <span class="post-date" title="2020-04-12 23:50:14">2020/04/12</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/04/12/nodejs/Express%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Express简介">Express简介</span>
+            <span class="post-date" title="2020-04-12 22:12:50">2020/04/12</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/04/09/technologies/maven/ubuntu18.04%E5%AE%89%E8%A3%85Mysql8.0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Ubuntu18.04 安装 Mysql8.0">Ubuntu18.04 安装 Mysql8.0</span>
+            <span class="post-date" title="2020-04-09 22:51:01">2020/04/09</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/04/09/technologies/maven/navicat_premium/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="navicat">navicat</span>
+            <span class="post-date" title="2020-04-09 22:50:20">2020/04/09</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/04/08/technologies/maven/thrift/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="thrift">thrift</span>
+            <span class="post-date" title="2020-04-08 21:03:19">2020/04/08</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/04/08/technologies/maven/maven_eclipse_tomcat_JDK1.8_configuration/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Maven_eclipse_tomcat_JDK1.8_configuration">Maven_eclipse_tomcat_JDK1.8_configuration</span>
+            <span class="post-date" title="2020-04-08 21:03:19">2020/04/08</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/04/08/technologies/maven/maven_project/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven project">maven project</span>
+            <span class="post-date" title="2020-04-08 21:03:19">2020/04/08</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/04/08/technologies/maven/IntelliJ_idea/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="IntelliJ idea">IntelliJ idea</span>
+            <span class="post-date" title="2020-04-08 21:03:19">2020/04/08</span>
+        </a>
+        
+        <a  class="All language go "
+           href="/2020/04/07/language/go/goLang/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="go language">go language</span>
+            <span class="post-date" title="2020-04-07 20:35:40">2020/04/07</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/04/07/linux/U%E7%9B%98%E5%AE%89%E8%A3%85OS_Ubuntu_18.04/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘安装OS_Ubuntu_18.04">U盘安装OS_Ubuntu_18.04</span>
+            <span class="post-date" title="2020-04-07 20:32:34">2020/04/07</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/04/07/nodejs/2.Linux_Node.js_%E5%AE%89%E8%A3%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2.Linux Node.js 安装">2.Linux Node.js 安装</span>
+            <span class="post-date" title="2020-04-07 20:29:08">2020/04/07</span>
+        </a>
+        
+        <a  class="All microService REST-API "
+           href="/2020/04/06/micro_service/services_analysis/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="1.services analysis">1.services analysis</span>
+            <span class="post-date" title="2020-04-06 19:34:47">2020/04/06</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/03/16/technologies/web/datatables/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="web前端datatables框架">web前端datatables框架</span>
+            <span class="post-date" title="2020-03-16 19:10:18">2020/03/16</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/03/16/linux/cmake/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="cmake">cmake</span>
+            <span class="post-date" title="2020-03-16 19:09:54">2020/03/16</span>
+        </a>
+        
+        <a  class="All windows "
+           href="/2020/03/16/windows/U%E7%9B%98%E5%88%86%E5%8C%BA%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘分区之后如何恢复">U盘分区之后如何恢复</span>
+            <span class="post-date" title="2020-03-16 19:09:17">2020/03/16</span>
+        </a>
+        
+        <a  class="All windows "
+           href="/2020/03/16/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Windows10_VScode远程连接linux编辑调试">Windows10_VScode远程连接linux编辑调试</span>
+            <span class="post-date" title="2020-03-16 19:09:10">2020/03/16</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/03/12/technologies/web/bootstrap/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="bootstrap">bootstrap</span>
+            <span class="post-date" title="2020-03-12 23:06:02">2020/03/12</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/03/12/technologies/web/HTML/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HTML">HTML</span>
+            <span class="post-date" title="2020-03-12 18:29:14">2020/03/12</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/03/05/nodejs/4.node_modules/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="4.node_modules">4.node_modules</span>
+            <span class="post-date" title="2020-03-05 15:18:25">2020/03/05</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/03/05/nodejs/1.webstorm%E8%87%AA%E5%8A%A8%E6%8F%90%E7%A4%BA%E8%AE%BE%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="1.webstorm自动提示设置">1.webstorm自动提示设置</span>
+            <span class="post-date" title="2020-03-05 13:19:43">2020/03/05</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/03/04/nodejs/3.JSP%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0,%E8%87%AA%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="3.匿名函数,自执行函数">3.匿名函数,自执行函数</span>
+            <span class="post-date" title="2020-03-04 23:17:08">2020/03/04</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/03/03/technologies/web/JavaScript/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="JavaScript">JavaScript</span>
+            <span class="post-date" title="2020-03-03 22:52:22">2020/03/03</span>
+        </a>
+        
+        <a  class="All technologies "
+           href="/2020/03/01/technologies/git_problems_encountered/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="git">git</span>
+            <span class="post-date" title="2020-03-01 19:45:06">2020/03/01</span>
+        </a>
+        
+        <a  class="All LearnLinks "
+           href="/2020/02/28/links/Learning_links/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Learning Links">Learning Links</span>
+            <span class="post-date" title="2020-02-28 20:02:36">2020/02/28</span>
+        </a>
+        
+        <a  class="All Englisth 5500 "
+           href="/2020/02/13/Englist_Learn/Englisth1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Unit 1">Unit 1</span>
+            <span class="post-date" title="2020-02-13 21:21:04">2020/02/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/02/13/nodejs/2.Windows10_Node.js_%E5%AE%89%E8%A3%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2.Windows10 Node.js 安装">2.Windows10 Node.js 安装</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/02/13/blogs/Hexo_01_%E9%83%A8%E7%BD%B2github_blog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hexo 01 部署github blog">Hexo 01 部署github blog</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/%E8%BF%9E%E6%8E%A5router%E5%90%8E%E6%9C%BA%E5%99%A8%E8%BF%9E%E4%B8%8D%E4%B8%8A%E5%A4%96%E7%BD%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="连接router后机器连不上外网">连接router后机器连不上外网</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="解压缩命令合集">解压缩命令合集</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E9%94%99%E8%AF%AF_r_command%20not%20found/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="脚本执行错误 $&#39;\r&#39;:command not found">脚本执行错误 $&#39;\r&#39;:command not found</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/%E7%A1%AC%E7%9B%98%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%8D%95%E4%BD%8DGB/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="硬盘存储空间单位GB">硬盘存储空间单位GB</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/%E7%94%A8%E6%88%B7%E6%80%81%E5%92%8C%E5%86%85%E6%A0%B8%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98-%E4%BD%BF%E7%94%A8dev_mem&mmap/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="用户态和内核共享内存----使用 /dev/mem &amp; mmap">用户态和内核共享内存----使用 /dev/mem &amp; mmap</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/%E6%9F%A5%E7%9C%8BSSD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="查看SSD">查看SSD</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/%E6%8C%89%E5%AD%97%E8%8A%82-%E5%AD%97%E5%AF%BB%E5%9D%80_%E5%AD%97%E9%95%BF_%E5%9C%B0%E5%9D%80%E6%80%BB%E7%BA%BF_%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF%E5%85%B3%E7%B3%BB/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="按字节/字寻址，字长，地址总线，数据总线关系">按字节/字寻址，字长，地址总线，数据总线关系</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/yum%E4%BD%BF%E7%94%A8%E5%92%8C%E5%AE%89%E8%A3%85cmake-3%E7%89%88%E6%9C%AC%E4%B8%8A/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="yum使用和安装cmake 3 版本上">yum使用和安装cmake 3 版本上</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/yum%E4%B8%8B%E8%BD%BD%E9%81%87%E5%88%B0XZ_5.1.2alpha%E9%97%AE%E9%A2%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="yum下载遇到XZ_5.1.2alpha问题">yum下载遇到XZ_5.1.2alpha问题</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/wget_www.baidu.com/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="wget www.baidu.com">wget www.baidu.com</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/vim/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="vim">vim</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/sda_hda/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="sda hda">sda hda</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/screen%E7%A8%8B%E5%BA%8F%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="screen程序在后台运行">screen程序在后台运行</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/scp%E6%9C%BA%E5%99%A8%E9%97%B4%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="scp机器间复制文件">scp机器间复制文件</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/perf/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="perf">perf</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/ln_-s_-_linux%20%E8%BD%AF%E8%BF%9E%E6%8E%A5command/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ln -s - linux 软连接command">ln -s - linux 软连接command</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/linux%E7%BB%99grub%E6%B7%BB%E5%8A%A0%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux给grub添加内核启动参数">linux给grub添加内核启动参数</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/linux%E5%88%B6%E4%BD%9CU%E7%9B%98%E5%90%AF%E5%8A%A8%E7%9B%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux制作U盘启动盘">linux制作U盘启动盘</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E7%A0%94%E7%A9%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="intel_pstate/acpi-cpufreq驱动研究">intel_pstate/acpi-cpufreq驱动研究</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/etc_profile-etc_bashrc-~.bashrc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="/etc/profile, /etc/bashrc, ~/.bashrc">/etc/profile, /etc/bashrc, ~/.bashrc</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/emon/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="emon">emon</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/docker/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="docker">docker</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/dmidecode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="dmidecode">dmidecode</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/cppc%E5%8A%A8%E6%80%81%E8%B0%83%E9%A2%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="cppc动态调频">cppc动态调频</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/centos%E5%8D%87%E7%BA%A7gcc%E5%88%B09.1.0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="centos升级gcc到9.1.0">centos升级gcc到9.1.0</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Windows10mstsc%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Centos7.0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Windows10 mstsc远程登录Centos7.0">Windows10 mstsc远程登录Centos7.0</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/U%E7%9B%98%E5%88%86%E5%8C%BA%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘制作启动盘分区后恢复">U盘制作启动盘分区后恢复</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85CUDA8.0%E5%8F%8Anvidia%E9%A9%B1%E5%8A%A8(%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B)/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Ubuntu下安装CUDA8.0及nvidia驱动(详细教程）">Ubuntu下安装CUDA8.0及nvidia驱动(详细教程）</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/TSC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="TSC">TSC</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/RHEL8.0%E5%BC%80%E6%9C%BA%E6%80%BB%E6%98%AF%E8%A6%81dhclient%E6%89%8B%E5%8A%A8%E8%8E%B7%E5%8F%96IP/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RHEL8.0开机总是要dhclient手动获取IP">RHEL8.0开机总是要dhclient手动获取IP</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/PTU(Power%20Thermal%20Utility)/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="PTU(Power Thermal Utility)">PTU(Power Thermal Utility)</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/MMIO/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="MMIO">MMIO</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/02/13/linux/Linux%E8%83%BD%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91_%E5%A4%96%E7%BD%91%E5%8D%B4%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E6%AD%A4Linux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux/Linux能访问外网_外网却访问不了此Linux">linux/Linux能访问外网_外网却访问不了此Linux</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Linux%E6%B0%B8%E8%BF%9C%E4%BF%AE%E6%94%B9%E6%97%B6%E9%97%B4/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux 永远修改时间">Linux 永远修改时间</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Linux_kernel_%E6%9B%B4%E6%96%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux kernel 更新">Linux kernel 更新</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Linux_kernel_userspace%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux kernel userspace体系结构">Linux kernel userspace体系结构</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Linux_command_find_grep_sed_awk/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux command, find, grep,sed, awk">Linux command, find, grep,sed, awk</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Linux%20%E4%BF%AE%E6%94%B9root%E5%90%8D%E7%A7%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux 修改root名称">Linux 修改root名称</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E5%88%87%E6%8D%A2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Intel_pstate/acpi-cpufreq驱动切换">Intel_pstate/acpi-cpufreq驱动切换</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Intel_pstate&HWP%E5%8A%9F%E8%83%BDenable_disable/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Intel_pstate &amp; HWP功能enable/disable">Intel_pstate &amp; HWP功能enable/disable</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Devtoolset%20%E5%8D%87%E7%BA%A7gcc%E5%88%B08.3.1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Devtoolset 升级gcc到8.3.1">Devtoolset 升级gcc到8.3.1</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/Centos%E6%9B%B4%E6%94%B9kernel%20%E9%BB%98%E8%AE%A4%E5%90%AF%E5%8A%A8%E9%A1%B9/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Centos 更改kernel 默认启动项">Centos 更改kernel 默认启动项</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CPU角度理解PCIE">CPU角度理解PCIE</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/BIOS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="BIOS">BIOS</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/02/13/linux/ACPI%E6%98%AF%E4%BB%80%E4%B9%88&BIOS%E4%B8%ADACPI%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ACPI是什么,BIOS中ACPI要怎么设置">ACPI是什么,BIOS中ACPI要怎么设置</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/02/13/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <a  class="All language c "
+           href="/2020/02/13/language/c/gdb/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="gdb">gdb</span>
+            <span class="post-date" title="2020-02-13 20:47:44">2020/02/13</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-technologies/security/token_jwt" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Token jwt</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="technologies">technologies</a> > 
+            
+            <a  data-rel="technologies&lt;---&gt;security">security</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">security</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-08-11 00:33:53'>2020-07-20 22:23</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:3.6k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                Comment:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Json-Web-Token-JWT-简介"><span class="toc-text">Json Web Token(JWT)简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#传统服务端验证客户端身份的方法"><span class="toc-text">传统服务端验证客户端身份的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于-Token-的身份验证方法"><span class="toc-text">基于 Token 的身份验证方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么要使用JSON-Web-Token"><span class="toc-text">为什么要使用JSON Web Token</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JWT-Json-Web-Token-一种Token验证方法"><span class="toc-text">JWT(Json Web Token 一种Token验证方法)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Header-头部"><span class="toc-text">Header 头部</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Payload-有效负载"><span class="toc-text">Payload 有效负载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Signature-签名"><span class="toc-text">Signature 签名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#签名的作用"><span class="toc-text">签名的作用:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#签发-Json-Web-Token-JWT"><span class="toc-text">签发 Json Web Token(JWT)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HS256-算法签发Json-Web-Token-JWT"><span class="toc-text">HS256 算法签发Json Web Token(JWT)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RS256-算法签发Json-Web-Token-JWT"><span class="toc-text">RS256 算法签发Json Web Token(JWT)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#验证Json-Web-Token-JWT"><span class="toc-text">验证Json Web Token(JWT)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HS256-算法验证Json-Web-TOken-JWT"><span class="toc-text">HS256 算法验证Json Web TOken(JWT)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RS256-算法验证Json-Web-Token-JWT"><span class="toc-text">RS256 算法验证Json Web Token(JWT)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用场景"><span class="toc-text">使用场景</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-6 i,
+    .toc-level-6 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://www.cnblogs.com/MyCode1990/p/13096423.html" target="_blank" rel="noopener">csdn blog</a></li>
+<li><a href="https://www.jianshu.com/p/4941a269a9d8" target="_blank" rel="noopener">简书</a></li>
+</ul>
+<h1 id="Json-Web-Token-JWT-简介"><a href="#Json-Web-Token-JWT-简介" class="headerlink" title="Json Web Token(JWT)简介"></a><strong>Json Web Token(JWT)简介</strong></h1><p>JWT属于Token验证方式的一种方法.</p>
+<blockquote>
+<p>JSON Web Token（JWT）是一个开放标准（RFC 7519），它定义了一种紧凑的、自包含的方式，用于作为JSON对象在各方之间安全地传输信息。此信息可以验证和信任，因为它是数字签名的。JWTs可以使用密钥（使用HMAC算法）或使用RSA或ECDSA的公钥/私钥对进行签名.</p>
+</blockquote>
+<h1 id="传统服务端验证客户端身份的方法"><a href="#传统服务端验证客户端身份的方法" class="headerlink" title="传统服务端验证客户端身份的方法"></a><strong>传统服务端验证客户端身份的方法</strong></h1><p>HTTP 是一种没有状态的协议，也就是它并不知道是谁是访问应用。这里我们把用户看成是客户端，客户端使用用户名还有密码通过了身份验证，不过下回这个客户端再发送请求时候，还得再验证一下。</p>
+<p>解决的方法就是，当用户请求登录的时候，如果没有问题，我们在服务端生成一条记录，这个记录里可以说明一下登录的用户是谁，然后把这条记录的 ID 号发送给客户端，客户端收到以后把这个 ID 号存储在 Cookie 里，下次这个用户再向服务端发送请求的时候，可以带着这个 Cookie ，这样服务端会验证一个这个 Cookie 里的信息，看看能不能在服务端这里找到对应的记录，如果可以，说明用户已经通过了身份验证，就把用户请求的数据返回给客户端。</p>
+<p>上面说的就是 Session，我们需要在服务端存储为登录的用户生成的 Session ，这些 Session 可能会存储在内存，磁盘，或者数据库里。我们可能需要在服务端定期的去清理过期的 Session 。</p>
+<h1 id="基于-Token-的身份验证方法"><a href="#基于-Token-的身份验证方法" class="headerlink" title="基于 Token 的身份验证方法"></a><strong>基于 Token 的身份验证方法</strong></h1><p>Token是在客户端频繁向服务端请求数据，服务端频繁的去数据库查询用户名和密码并进行对比，判断用户名和密码正确与否，并作出相应提示，在这样的背景下，Token便应运而生。<br>Token是服务端生成的一串字符串，以作客户端进行请求的一个令牌，当第一次登录后，服务器生成一个Token便将此Token返回给客户端，以后客户端只需带上这个Token前来请求数据即可，无需再次带上用户名和密码。<br>使用基于 Token 的身份验证方法，在服务端不需要存储用户的登录记录。大概的流程是这样的：</p>
+<ol>
+<li>客户端使用用户名跟密码请求登录</li>
+<li>服务端收到请求，去验证用户名与密码</li>
+<li>验证成功后，服务端会签发一个 Token，再把这个 Token 发送给客户端</li>
+<li>客户端收到 Token 以后可以把它存储起来，比如放在 Cookie 里或者 Local Storage 里</li>
+<li>客户端每次向服务端请求资源的时候需要带着服务端签发的 Token</li>
+<li>服务端收到请求，然后去验证客户端请求里面带着的 Token，如果验证成功，就向客户端返回请求的数据</li>
+</ol>
+<h1 id="为什么要使用JSON-Web-Token"><a href="#为什么要使用JSON-Web-Token" class="headerlink" title="为什么要使用JSON Web Token"></a><strong>为什么要使用JSON Web Token</strong></h1><ul>
+<li>Token的目的是为了减轻服务器的压力，减少频繁的查询数据库，使服务器更加健壮.</li>
+<li>JSON比XML不那么冗长，当它被编码时，它的大小也更小，使得JWT比SAML更紧凑。这使得JWT成为在HTML和HTTP环境中传递的一个很好的选择。</li>
+<li>安全方面，使用HMAC算法，SWT只能由共享密钥对称签名。但是，JWT和SAML令牌可以使用X.509证书形式的公钥/私钥对进行签名。与签名JSON的简单性相比，使用XML数字签名来签名XML而不引入隐藏的安全漏洞是非常困难的。</li>
+<li>JSON解析器在大多数编程语言中都很常见，因为它们直接映射到对象。相反，XML没有自然的文档到对象的映射。这使得使用JWT比使用SAML断言更容易。</li>
+<li>在使用方面，JWT是在互联网上使用的。这突出了JSON Web令牌在多个平台（尤其是移动平台）上客户端处理的方便性。</li>
+<li>比较编码JWT和编码SAML的长度.</li>
+</ul>
+<h1 id="JWT-Json-Web-Token-一种Token验证方法"><a href="#JWT-Json-Web-Token-一种Token验证方法" class="headerlink" title="JWT(Json Web Token 一种Token验证方法)"></a><strong>JWT(Json Web Token 一种Token验证方法)</strong></h1><p>实施 Token 验证的方法挺多的，还有一些标准方法，比如 JWT，读作：jot ，表示：JSON Web Tokens 。JWT 标准的 Token 有三个部分：</p>
+<ul>
+<li><p>header（头部）</p>
+</li>
+<li><p>payload（荷载,数据）</p>
+</li>
+<li><p>signature（签名）<br>中间用点分隔开，并且都会使用 Base64 编码，所以真正的 Token 看起来像这样：</p>
+<p> eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5naGFvLm5ldCIsImV4cCI6IjE0Mzg5NTU0NDUiLCJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlfQ.SwyHTEx_RQppr97g4J5lKXtabJecpejuef8AqKYMAJc</p>
+</li>
+</ul>
+<h2 id="Header-头部"><a href="#Header-头部" class="headerlink" title="Header 头部"></a><strong>Header 头部</strong></h2><ul>
+<li>令牌的类型</li>
+<li>正在使用的签名算法(HMAC, SHA256, RSA等)。</li>
+</ul>
+<p>每个 JWT token 里面都有一个 header，也就是头部数据。里面包含了使用的算法，这个 JWT 是不是带签名的或者加密的。主要就是说明一下怎么处理这个 JWT token 。<br>头部里包含的东西可能会根据 JWT 的类型有所变化，比如一个加密的 JWT 里面要包含使用的加密的算法。唯一在头部里面要包含的是 alg 这个属性，如果是加密的 JWT，这个属性的值就是使用的签名或者解密用的算法。如果是未加密的 JWT，这个属性的值要设置成 none。<br>示例：</p>
+<pre><code>{
+  &quot;typ&quot;: &quot;JWT&quot;,
+  &quot;alg&quot;: &quot;HS256&quot;
+}</code></pre><p>意思是这个 JWT 用的算法是 HS256。上面的内容得用 base64url 的形式编码一下，所以就变成这样：</p>
+<pre><code>eyJhbGciOiJIUzI1NiJ9</code></pre><h2 id="Payload-有效负载"><a href="#Payload-有效负载" class="headerlink" title="Payload 有效负载"></a><strong>Payload 有效负载</strong></h2><p>有效负载包含了”声明(claims)”, 有三种类型的claims：</p>
+<ul>
+<li>registered claims 已注册的 (不是强制的，而是推荐,iss（发行者）、exp（到期时间）、sub（主题）、aud（受众）和其他)</li>
+<li>public claims 公开的 (可以由使用JWT的用户随意定义, 为了避免冲突，应该在<a href="https://www.iana.org/assignments/jwt/jwt.xhtml" target="_blank" rel="noopener">IANA JSON Web令牌注册表</a>中定义它们，或者将它们定义为包含防冲突命名空间的URI)</li>
+<li>private claims 私有的</li>
+</ul>
+<p>Payload 里面是 Token 的具体内容，这些内容里面有一些是标准字段，你也可以添加其它需要的内容。下面是标准字段：</p>
+<ul>
+<li>iss：Issuer，发行者</li>
+<li>sub：Subject，主题</li>
+<li>aud：Audience，观众</li>
+<li>exp：Expiration time，过期时间</li>
+<li>nbf：Not before</li>
+<li>iat：Issued at，发行时间</li>
+<li>jti：JWT ID</li>
+</ul>
+<p>比如下面这个 Payload ，用到了 iss 发行人，还有 exp 过期时间这两个标准字段。另外还有两个自定义的字段，一个是 name ，还有一个是 admin 。</p>
+<pre><code>{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;iss&quot;: &quot;ninghao.net&quot;,
+  &quot;exp&quot;: &quot;1438955445&quot;,
+  &quot;admin&quot;: true
+}</code></pre><p>使用 base64url 编码以后就变成了这个样子：</p>
+<pre><code>eyJpc3MiOiJuaW5naGFvLm5ldCIsImV4cCI6IjE0Mzg5NTU0NDUiLCJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlfQ</code></pre><p><strong>请注意，对于已签名的令牌，此信息虽然受保护不受篡改，但任何人都可以读取。除非经过加密，否则不要将机密信息放在JWT的有效负载或头部</strong>.</p>
+<h2 id="Signature-签名"><a href="#Signature-签名" class="headerlink" title="Signature 签名"></a><strong>Signature 签名</strong></h2><p>要创建签名部分，您必须已经有了 经过编码的<strong>头部</strong>、经过编码的<strong>负载</strong>、一个<strong>秘钥</strong>、在头部中指定的<strong>算法</strong>，这样就可以进行签名了.<br>Signature这部分内容有三个部分，先是用 Base64 编码的 header.payload ，再用加密算法加密一下，加密的时候要放进去一个 Secret ，这个相当于是一个密码，这个密码秘密地存储在服务端。  </p>
+<ul>
+<li>header</li>
+<li>payload</li>
+<li>secret</li>
+</ul>
+<pre><code>const encodedString = base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(payload); 
+HMACSHA256(encodedString, &apos;secret&apos;);</code></pre><p>处理完成以后看起来像这样：</p>
+<pre><code>SwyHTEx_RQppr97g4J5lKXtabJecpejuef8AqKYMAJc</code></pre><p>最后这个在服务端生成并且要发送给客户端的 Token 看起来像这样：</p>
+<pre><code>eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5naGFvLm5ldCIsImV4cCI6IjE0Mzg5NTU0NDUiLCJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlfQ.SwyHTEx_RQppr97g4J5lKXtabJecpejuef8AqKYMAJc</code></pre><p>输出的内容是三个由点分隔的Base64 URL字符串。它可以在HTML和HTTP环境中轻松传递，它比XML的标准（如SAML）更加紧凑.<br>客户端收到这个 Token 以后把它存储下来，下回向服务端发送请求的时候就带着这个 Token 。服务端收到这个 Token ，然后进行验证，通过以后就会返回给客户端想要的资源。</p>
+<h2 id="签名的作用"><a href="#签名的作用" class="headerlink" title="签名的作用:"></a><strong>签名的作用:</strong></h2><p>(1) 签名用于验证消息在传输过程中没有被更改。<br>(2) 使用私钥签名的令牌，还可以验证JWT的发送者是它所说的发送者。</p>
+<h1 id="签发-Json-Web-Token-JWT"><a href="#签发-Json-Web-Token-JWT" class="headerlink" title="签发 Json Web Token(JWT)"></a><strong>签发 Json Web Token(JWT)</strong></h1><ul>
+<li>JWT 对 “信息” 进行签名，产生一个令牌。</li>
+<li>签名的令牌可以验证其中包含的内容的完整性（防篡改）。</li>
+<li>也可对“信息”加密，加密的令牌则对其他方隐藏这些内容。</li>
+<li>当令牌使用公钥/私钥对签名时，签名还证明只有持有私钥的一方才是签名方。可以非对称加密方式证明了</li>
+</ul>
+<h2 id="HS256-算法签发Json-Web-Token-JWT"><a href="#HS256-算法签发Json-Web-Token-JWT" class="headerlink" title="HS256 算法签发Json Web Token(JWT)"></a><strong>HS256 算法签发Json Web Token(JWT)</strong></h2><p>这种算法需要一个密钥（密码）.<br>在项目里随便添加一个 .js 文件，比如 index.js，在文件里添加下面这些代码：  </p>
+<pre><code>const jwt = require(&apos;jsonwebtoken&apos;)
+// Token 数据
+const payload = {
+name: &apos;wanghao&apos;,
+admin: true
+}
+// 密钥
+const secret = &apos;ILOVENINGHAO&apos;
+// 签发 Token
+const token = jwt.sign(payload, secret, { expiresIn: &apos;1day&apos; })
+// 输出签发的 Token
+console.log(token)</code></pre><p>非常简单，就是用了刚刚为项目安装的 jsonwebtoken 里面提供的 jwt.sign 功能，去签发一个 token。这个 sign 方法需要三个参数：</p>
+<ul>
+<li>playload：签发的 token 里面要包含的一些数据。</li>
+<li>secret：签发 token 用的密钥，在验证 token 的时候同样需要用到这个密钥。</li>
+<li>options：一些其它的选项。</li>
+</ul>
+<p>在命令行下面，用 node 命令，执行一下项目里的 index.js 这个文件（node index.js），会输出应用签发的 token：</p>
+<pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlLCJpYXQiOjE1MjkwMzM5MDYsImV4cCI6MTUyOTEyMDMwNn0.DctA2QlUCrM6wLWkIO78wBVN0NLpjoIq4T5B_2WJ-PU</code></pre><p>上面的 Token 内容并没有加密，所以如果用一些 JWT 解码功能，可以看到 Token 里面包含的内容，内容由三个部分组成，像这样：</p>
+<pre><code>// header
+{
+  &quot;alg&quot;: &quot;HS256&quot;, 
+  &quot;typ&quot;: &quot;JWT&quot;
+}
+// payload
+{
+  &quot;admin&quot;: true, 
+  &quot;iat&quot;: 1529033906, 
+  &quot;name&quot;: &quot;wanghao&quot;, 
+  &quot;exp&quot;: 1529120306
+}
+// signature
+DctA2QlUCrM6wLWkIO78wBVN0NLpjoIq4T5B_2WJ-PU</code></pre><blockquote>
+<p>假设用户通过了某种身份验证，你就可以使用上面的签发 Token 的功能为用户签发一个 Token。一般在客户端那里会把它保存在 Cookie 或 LocalStorage 里面。<br>用户下次向我们的应用请求受保护的资源的时候，可以在请求里带着我们给它签发的这个 Token，后端应用收到请求，检查签名，如果验证通过确定这个 Token 是我们自己签发的，那就可以为用户响应回他需要的资源。</p>
+</blockquote>
+<h2 id="RS256-算法签发Json-Web-Token-JWT"><a href="#RS256-算法签发Json-Web-Token-JWT" class="headerlink" title="RS256 算法签发Json Web Token(JWT)"></a><strong>RS256 算法签发Json Web Token(JWT)</strong></h2><p>默认签发还有验证 Token 的时候用的是 HS256 算法，这种算法需要一个密钥（密码）。我们还可以使用 RS256 算法签发与验证 JWT。这种方法可以让我们分离开签发与验证，签发时需要用一个密钥，验证时使用公钥，也就是有公钥的地方只能做验证，但不能签发 JWT。</p>
+<p>在项目下面创建一个新的目录，里面可以存储即将生成的密钥与公钥文件。</p>
+<pre><code>$ cd ~/desktop/jwt-demo
+$ mkdir config
+$ cd config</code></pre><p><strong>密钥:</strong><br>先生成一个密钥文件：</p>
+<pre><code>ssh-keygen -t rsa -b 2048 -f private.key</code></pre><p><strong>公钥:</strong><br>基于上面生成的密钥，再去创建一个对应的公钥：</p>
+<pre><code>openssl rsa -in private.key -pubout -outform PEM -out public.key</code></pre><p><strong>签发 JWT（RS256 算法）</strong><br>用 RS256 算法签发 JWT 的时候，需要从文件系统上读取创建的密钥文件里的内容。</p>
+<pre><code>const fs = require(&apos;fs&apos;)
+// 获取签发 JWT 时需要用的密钥
+const privateKey = fs.readFileSync(&apos;./config/private.key&apos;)
+签发仍然使用 jwt.sign 方法，只不过在选项参数里特别说明一下使用的算法是 RS256：
+// 签发 Token
+const tokenRS256 = jwt.sign(payload, privateKey, { algorithm: &apos;RS256&apos; })
+// 输出签发的 Token
+console.log(&apos;RS256 算法：&apos;, tokenRS256)</code></pre><h1 id="验证Json-Web-Token-JWT"><a href="#验证Json-Web-Token-JWT" class="headerlink" title="验证Json Web Token(JWT)"></a><strong>验证Json Web Token(JWT)</strong></h1><h2 id="HS256-算法验证Json-Web-TOken-JWT"><a href="#HS256-算法验证Json-Web-TOken-JWT" class="headerlink" title="HS256 算法验证Json Web TOken(JWT)"></a><strong>HS256 算法验证Json Web TOken(JWT)</strong></h2><p>需要一个签发token时候用的密钥（密码）来验证,这种算法需要一个密钥（密码）.<br>验证 JWT 的用效性，确定一下用户的 JWT 是我们自己签发的，首先要得到用户的这个 JWT Token，然后用 jwt.verify 这个方法去做一下验证。这个方法是 Node.js 的 jsonwebtoken 这个包里提供的，在其它的应用框架或者系统里，你可能会找到类似的方法来验证 JWT。<br>打开项目的 index.js 文件，里面添加几行代码：</p>
+<pre><code>// 验证 Token
+jwt.verify(token, &apos;bad secret&apos;, (error, decoded) =&gt; {
+  if (error) {
+    console.log(error.message)
+    return
+  }
+  console.log(decoded)
+})</code></pre><p>把要验证的 Token 数据，还有签发这个 Token 的时候用的那个密钥告诉 verify 这个方法，在一个回调里面有两个参数，error 表示错误，decoded 是解码之后的 Token 数据。</p>
+<p>执行：</p>
+<pre><code>$ node ~/desktop/jwt-demo/index.js</code></pre><p>输出：</p>
+<pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlLCJpYXQiOjE1MjkwMzQ3MzMsImV4cCI6MTUyOTEyMTEzM30.swXojmu7VimFu3BoIgAxxpmm2J05dvD0HT3yu10vuqU
+invalid signature</code></pre><p>注意输出了一个 invalid signature ，表示 Token 里的签名不对，这是因为我们组长 verify 方法提供的密钥并不是签发 Token 的时候用的那个密钥。这样修改一下：</p>
+<pre><code>jwt.verify(token, secret, (error, decoded) =&gt; { ...</code></pre><p>再次运行，会输出类似的数据：</p>
+<pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlLCJpYXQiOjE1MjkwMzUzODYsImV4cCI6MTUyOTEyMTc4Nn0.mkNrt4TfcfmP22xd3C_GQn8qnUmlB39dKT9SpIBTBGI
+{ name: &apos;wanghao&apos;, admin: true, iat: 1529035386, exp: 1529121786 }</code></pre><h2 id="RS256-算法验证Json-Web-Token-JWT"><a href="#RS256-算法验证Json-Web-Token-JWT" class="headerlink" title="RS256 算法验证Json Web Token(JWT)"></a><strong>RS256 算法验证Json Web Token(JWT)</strong></h2><p>验证 JWT（RS256 算法）<br>验证使用 RS256 算法签发的 JWT，需要在文件系统上读取公钥文件里的内容。然后用 jwt 的 verify 方法去做验证。</p>
+<pre><code>// 获取验证 JWT 时需要用的公钥
+const publicKey = fs.readFileSync(&apos;./config/public.key&apos;)
+
+// 验证 Token
+jwt.verify(tokenRS256, publicKey, (error, decoded) =&gt; {
+  if (error) {
+    console.log(error.message)
+    return
+  }
+  console.log(decoded)
+})</code></pre><h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a><strong>使用场景</strong></h1><p><img src="token_scene1.png" alt=""></p>
+<ol>
+<li>应用程序或客户端，向授权服务器请求授权。</li>
+<li>当授权被通过时，授权服务器将向应用程序返回一个访问令牌token。</li>
+<li>应用程序使用访问令牌访问受保护的资源。</li>
+</ol>
+<p><strong>请注意，使用签名的令牌，令牌中包含的所有信息都将公开给用户或其他方（虽然他们无法更改它，但可以阅读）。这意味着您不应将机密信息放入令牌中.</strong></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">💰</a>
+</p>
+
+
+
+
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script type="text/javascript">
+    $.getScript('/js/gitalk.js', function () {
+        var gitalk = new Gitalk({
+            clientID: 'b52060ecaee3da3300c2',
+            clientSecret: 'a2497fa5608f31fbcf075ab465e32edc8cda73a9',
+            repo: 'Kung-Fu-Master.github.io',
+            owner: 'Kung-Fu-Master',
+            admin: ['Kung-Fu-Master'],
+            id: decodeURI(location.pathname),
+            distractionFreeMode: 'true',
+            language: 'zh-CN',
+            perPage: parseInt('10',10)
+        })
+        gitalk.render('comments')
+    })
+</script>
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2020-2029 Kung-Fu-Master
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close"  onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>Help us with donation</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">alipay</label></span><span><label><input type="radio" name="pay" value="weixin">weixin</label></span>
+    </div>
+</div>
+
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 582px;
+    }
+    .nav.fullscreen {
+        margin-left: -582px;
+    }
+    .nav-left {
+        width: 160px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 552px;
+        }
+        .nav.fullscreen {
+            margin-left: -552px;
+        }
+        .nav-left {
+            width: 160px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 552px;
+            margin-left: -552px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #c1bfc1;
+    }
+    
+    
+    .nav-right nav a.hover > span{
+        color: #ffffff !important;
+    }
+    
+
+    /*列表样式*/
+    
+    #post .pjax article .article-entry>ol, #post .pjax article .article-entry>ul, #post .pjax article>ol, #post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    #post .pjax article .article-entry li>ol, #post .pjax article .article-entry li>ul,#post .pjax article li>ol, #post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #post .pjax article .article-entry>ol>li, #post .pjax article .article-entry>ul>li,#post .pjax article>ol>li, #post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    #post .pjax article .article-entry li>ol>li, #post .pjax article .article-entry li>ul>li,#post .pjax article li>ol>li, #post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
