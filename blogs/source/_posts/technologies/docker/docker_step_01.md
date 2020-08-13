@@ -19,7 +19,7 @@ categories:
 官网: https://www.docker.com/get-started
 查找image: https://hub.docker.com/search?type=image
 
-### 简介
+## 简介
 > Docker 是基于 Go 语言实现的开源容器项目 。 它诞生于 2013 年年初，最初发起者是dotCloud 公司，dotCloud 公司也随之快速发展壮大，在 2013 年年底直接改名为 Docker Inc ，并专注于Docker 相关技术和产品的开发，目前已经成为全球最大的 Docker 容器服务提供商 。 官方网站为 docker.com 
 > 在 Linux 基金会最近一次关于“最受欢 迎的 云 计算开源项目”的调查中， Docker 仅次于 2010 年发起的 OpenStack 项目，并仍处于上升趋势 。2014 年， Docker 镜像下载数达到了一百万次， 2015 年直接突破十亿次， 2017 年更是突破了惊人的百亿次
 > Docker 的构想是要实现“ Build , Ship and Run Any App, Anywhere ”，即通过对应用的封装（ Packaging）、分发（ Distribution ）、部署（ Deployment）、运行（ Runtime ）生命周期进行管理，达到应用组件级别的“一次封装 ，到处运行”
@@ -27,13 +27,32 @@ categories:
 > 每个容器内运行着一个应用，不同的容器相互隔离，容器之间也可以通过网络互相通信 。 容器的创建和停止十分快速，几乎跟创建和终止原生应用－致.
 > 容器自身对系统资源的额外需求也十分有限，远远低于传统虚拟机。 很多时候，甚至直接把容器当作应用本身也没有任何问题.
 
-### 为什么用Docker
+## 为什么用Docker
 > 在云时代，开发者创建的应用必须要能很方便地在网络上传播，也就是说应用必须脱离底层物理硬件的限制；同时必须是“任何时间任何地点”可获取的 。 因此，开发者们需要一种新型的创建分布式应用程序的方式，快速分发和部署，而这正是 Docker 所能够提供的最大优势
 > Docker 提供了一种更为聪明的方式，通过容器来打包应用、解藕应用和运行平台。这意味着迁移的时候，只需要在新的服务器上启动需要的容器就可以了，无论新旧服务器是否是同一类型的平台 。 这无疑将帮助我们节约大量的宝贵时间，并降低部署过程出现问题的风险
 > 传统虚拟机方式运行 N 个不同的应用就要启用 N 个虚拟机（每个虚拟机需要单独分配独占的内存、磁盘等资源），而 Docker 只需要启动 N 个隔离得“很薄的”容器，并将应用放进容器内即可 。 应用获得的是接近原生的运行性能
 > 传统方式是在硬件层面实现虚拟化，需要有额外的虚拟机管理应用和虚拟机操作系统层。 Docker 容器是在操作系统层面上实现虚拟化，直接复用本地主机的操作系统，因此更加轻量级 
 
-### 安装curl:
+## docker ce与 docker ee区别
+ * Docker Engine改为Docker CE(社区版), 它包含了CLI客户端、后台进程/服务以及API。用户像以前以同样的方式获取。
+  docker-ce是docker公司维护的开源项目，是一个基于moby项目的免费的容器产品；
+
+ * Docker Data Center改为Docker EE（企业版）
+  docker-ee是docker公司维护的闭源产品，是docker公司的商业产品；
+这些ce和ee版并不影响Docker Compose以及Docker Machine
+docker-ce project是docker公司维护，docker-ee是闭源的；
+
+要使用免费的docker，从网页docker-ce上获取；
+
+要使用收费的docker，从网页docker-ee上获取
+
+## docker UCP 介绍
+> Docker Universal Control Plane（UCP）是Docker公司在2015年底巴塞罗那的开发者大会上发布的，这是一个跟单信用证，是一个新的Docker支付服务的组合的一部分,旨在帮助运维团队轻松地设置一个集群,使开发人员可以快速部署Dockerized应用。他们构建Docker DataCenter的其中重要的组成部分。
+> UCP集群包含两种节点：
+> Controller: 管理集群，并持久化集群配置
+> Node：运行容器
+
+## 安装curl:
 > * 第一种方法:
 >	 https://curl.haxx.se/download.html
 >	 $ curl-7.69.1.tar.gz
@@ -53,7 +72,7 @@ categories:
 >    export http_proxy=child-prc.intel.com:913
 >    export https_proxy=child-prc.intel.com:913 // https的proxy与上面的http的要一样
 
-### 安装docker:
+## 安装docker:
 >$ apt-get install docker
 >$ apt-get install docker.io
 >
@@ -76,7 +95,7 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 >$ systemctl restart docker
 >$ docker search redis
 
-### 安装docker compose:		// 关于此程序说明可以参考 https://www.runoob.com/docker/docker-compose.html
+## 安装docker compose:		// 关于此程序说明可以参考 https://www.runoob.com/docker/docker-compose.html
 	 https://github.com/docker/compose/releases
 	 curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 	 chmod +x /usr/local/bin/docker-compose
