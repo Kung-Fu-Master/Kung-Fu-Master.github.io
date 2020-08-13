@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>01 Kubernetes build | Hexo</title>
+  <meta name="keywords" content=" kubernetes ">
+  <meta name="description" content="01 Kubernetes build | Hexo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="查看Windows10 是否已安装或开启ssh-client，默认Windows10自带的有Windows 10 : 设置 -&gt; 应用(APPS) -&gt; 应用和功能(APP &amp; features) -&gt; 管理可选功能(Manage app execution aliases)  没有的话需要点击如图上面的Add a feature，install一下.  Centos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows10_VScode远程连接linux编辑调试">
+<meta property="og:url" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="查看Windows10 是否已安装或开启ssh-client，默认Windows10自带的有Windows 10 : 设置 -&gt; 应用(APPS) -&gt; 应用和功能(APP &amp; features) -&gt; 管理可选功能(Manage app execution aliases)  没有的话需要点击如图上面的Add a feature，install一下.  Centos">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/1.png">
+<meta property="og:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/2.png">
+<meta property="og:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/3.png">
+<meta property="og:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/4.png">
+<meta property="og:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/5.png">
+<meta property="og:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/6.png">
+<meta property="og:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/7.png">
+<meta property="og:image" content="https://blog.csdn.net/Ding19950107/article/details/103713556">
+<meta property="article:published_time" content="2020-08-12T16:05:49.334Z">
+<meta property="article:modified_time" content="2020-04-07T12:31:34.325Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kung-fu-master.github.io/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/1.png">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/sublime.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>Kung-Fu-Master</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="rss" href="/atom.xml" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-rss"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="github" href="https://github.com/yelog" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="facebook" href="https://www.facebook.com/faker.tops" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-facebook"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+        <a title="instagram" href="https://www.facebook.com/faker.tops" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-instagram"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="reddit" href="https://www.reddit.com/user/yelog/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-reddit"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="weibo" href="http://weibo.com/u/2307534817" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-weibo"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="jianshu" href="https://www.jianshu.com/u/ff56736de7cf" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-jianshu"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="zhihu" href="https://www.zhihu.com/people/jaytp/activities" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-zhihu"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+        <a title="oschina" href="https://my.oschina.net/yelog" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-oschina"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+        <a title="email" href="mailto:jaytp@qq.com" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-email"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="qq" href="http://wpa.qq.com/msgrd?v=3&uin=872336115&site=qq&menu=yes" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-qq"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="kugou" href="https://www.kugou.com/" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-kugou"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="neteasemusic" href="https://music.163.com/#/user/home?id=88151013" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-neteasemusic"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(123)</small></div></li>
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="blogs">blogs<small>(5)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="deeplearning">deeplearning<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Englisth"><i class="fold iconfont icon-right"></i>Englisth<small>(1)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Englisth<--->5500">5500<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="language"><i class="fold iconfont icon-right"></i>language<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="language<--->c">c<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="language<--->go">go<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="language<--->python">python<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="LearnLinks">LearnLinks<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="linux">linux<small>(58)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="microService"><i class="fold iconfont icon-right"></i>microService<small>(15)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="microService<--->istio">istio<small>(4)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="microService<--->kubernetes">kubernetes<small>(10)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="microService<--->REST-API">REST-API<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="nodejs">nodejs<small>(8)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="storage">storage<small>(6)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="technologies"><i class="fold iconfont icon-right"></i>technologies<small>(21)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="technologies<--->docker">docker<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="technologies<--->maven">maven<small>(6)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="technologies<--->security">security<small>(6)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="technologies<--->web前端">web前端<small>(4)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="windows">windows<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="123">
+<input type="hidden" id="yelog_site_word_count" value="126.8k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>deeplearning</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>istio</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kubernetes</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>SSH-port</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>storage</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/Resources/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="Resources">Resources</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/09_kubernetes_certificate/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="08 Kubernetes Certificates">08 Kubernetes Certificates</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/08_kubernetes_samples_problems/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="08 Kubernetes samples and problems">08 Kubernetes samples and problems</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/07_kubernetes_Etcd/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="07 Kubernetes Etcd">07 Kubernetes Etcd</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/06_kubernetes_deployment/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="06 Kubernetes deployment">06 Kubernetes deployment</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/04_kubernetes_service/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="04 Kubernetes service">04 Kubernetes service</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/03_kubernetes_ns_pod/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="03 Kubernetes nodes, namespace, pod">03 Kubernetes nodes, namespace, pod</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/02_kubernetes_roles_introduction/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="02 kubernetes introduction">02 kubernetes introduction</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a id="top" class="All microService kubernetes "
+           href="/2020/08/13/micro_service/01_kubernetes_build/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="01 Kubernetes build">01 Kubernetes build</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All windows "
+           href="/2020/08/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Windows10_VScode远程连接linux编辑调试">Windows10_VScode远程连接linux编辑调试</span>
+            <span class="post-date" title="2020-08-13 00:05:49">2020/08/13</span>
+        </a>
+        
+        <a  class="All windows "
+           href="/2020/08/13/windows/U%E7%9B%98%E5%88%86%E5%8C%BA%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘分区之后如何恢复">U盘分区之后如何恢复</span>
+            <span class="post-date" title="2020-08-13 00:05:49">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/08/13/technologies/web/JavaScript/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="JavaScript">JavaScript</span>
+            <span class="post-date" title="2020-08-13 00:05:49">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/08/13/technologies/web/HTML/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HTML">HTML</span>
+            <span class="post-date" title="2020-08-13 00:05:49">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/08/13/technologies/web/datatables/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="web前端datatables框架">web前端datatables框架</span>
+            <span class="post-date" title="2020-08-13 00:05:49">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies web前端 "
+           href="/2020/08/13/technologies/web/bootstrap/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="bootstrap">bootstrap</span>
+            <span class="post-date" title="2020-08-13 00:05:49">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/08/13/technologies/security/token_jwt/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="Token jwt">Token jwt</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/08/13/technologies/security/tls_ssl_https_http_protocol/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="TLS/SSL/HTTP/HTTPS protocol">TLS/SSL/HTTP/HTTPS protocol</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/08/13/technologies/security/pki/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="PKI 体系概述">PKI 体系概述</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/08/13/technologies/security/openssl_certificates/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="openssl certificates">openssl certificates</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/08/13/technologies/security/key_digest_signature_certificates/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="certificates, public/private key, signature digest">certificates, public/private key, signature digest</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies security "
+           href="/2020/08/13/technologies/security/algorithm_security/"
+           data-tag="security"
+           data-author="" >
+            <span class="post-title" title="algorithm security">algorithm security</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/08/13/technologies/maven/ubuntu18.04%E5%AE%89%E8%A3%85Mysql8.0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Ubuntu18.04 安装 Mysql8.0">Ubuntu18.04 安装 Mysql8.0</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/08/13/technologies/maven/thrift/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="thrift">thrift</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/08/13/technologies/maven/navicat_premium/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="navicat">navicat</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/08/13/technologies/maven/maven_project/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven project">maven project</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/08/13/technologies/maven/maven_eclipse_tomcat_JDK1.8_configuration/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Maven_eclipse_tomcat_JDK1.8_configuration">Maven_eclipse_tomcat_JDK1.8_configuration</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies maven "
+           href="/2020/08/13/technologies/maven/IntelliJ_idea/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="IntelliJ idea">IntelliJ idea</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies docker "
+           href="/2020/08/13/technologies/docker/docker_step_02/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="docker 02 private hub &amp; journal">docker 02 private hub &amp; journal</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies docker "
+           href="/2020/08/13/technologies/docker/docker_step_01/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="docker 01 installation and control commands">docker 01 installation and control commands</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies docker "
+           href="/2020/08/13/technologies/docker/dockerfile/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Dockerfile introduction">Dockerfile introduction</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies "
+           href="/2020/08/13/technologies/Intel_tips_at_work/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Intel_tips_at_work">Intel_tips_at_work</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All technologies "
+           href="/2020/08/13/technologies/git_problems_encountered/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="git">git</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/13/storage/minIO_03_client.md/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="MinIO 03 client">MinIO 03 client</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/13/storage/minIO_02_deployment_on_kubernetes/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="MinIO deployment on kubernetes">MinIO deployment on kubernetes</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/13/storage/minIO_01_conception/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="MinIO 01 conception">MinIO 01 conception</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/13/storage/greenplum/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="Greenplum Deployment on Kubernetes">Greenplum Deployment on Kubernetes</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/13/storage/ceph_deployment_02/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="Ceph Storage Deployment on Kubernetes">Ceph Storage Deployment on Kubernetes</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All storage "
+           href="/2020/08/13/storage/ceph_conception_01/"
+           data-tag="storage"
+           data-author="" >
+            <span class="post-title" title="Ceph Storage Conception 01">Ceph Storage Conception 01</span>
+            <span class="post-date" title="2020-08-13 00:05:48">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="浏览器工作原理">浏览器工作原理</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/NodeJs%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NodeJs简介">NodeJs简介</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/Express%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Express简介">Express简介</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/4.node_modules/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="4.node_modules">4.node_modules</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/3.JSP%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0,%E8%87%AA%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="3.匿名函数,自执行函数">3.匿名函数,自执行函数</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/2.Windows10_Node.js_%E5%AE%89%E8%A3%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2.Windows10 Node.js 安装">2.Windows10 Node.js 安装</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/2.Linux_Node.js_%E5%AE%89%E8%A3%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2.Linux Node.js 安装">2.Linux Node.js 安装</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All nodejs "
+           href="/2020/08/13/nodejs/1.webstorm%E8%87%AA%E5%8A%A8%E6%8F%90%E7%A4%BA%E8%AE%BE%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="1.webstorm自动提示设置">1.webstorm自动提示设置</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All microService REST-API "
+           href="/2020/08/13/micro_service/services_analysis/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="1.services analysis">1.services analysis</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/08/13/micro_service/Istio_K8s_SpringCloud/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="Istio_K8s_SpringCloud">Istio_K8s_SpringCloud</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/08/13/micro_service/istio_03_configuration/"
+           data-tag="istio"
+           data-author="" >
+            <span class="post-title" title="Istio 03 configuration">Istio 03 configuration</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/08/13/micro_service/istio_02_installation/"
+           data-tag="istio"
+           data-author="" >
+            <span class="post-title" title="Istio 02 Installation on Kubernetes">Istio 02 Installation on Kubernetes</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All microService istio "
+           href="/2020/08/13/micro_service/istio_01_conception/"
+           data-tag="istio"
+           data-author="" >
+            <span class="post-title" title="Istio 01 conception">Istio 01 conception</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All microService kubernetes "
+           href="/2020/08/13/micro_service/05_kubernetes_volume/"
+           data-tag="kubernetes"
+           data-author="" >
+            <span class="post-title" title="05 Kubernetes volumes">05 Kubernetes volumes</span>
+            <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/%E8%BF%9E%E6%8E%A5router%E5%90%8E%E6%9C%BA%E5%99%A8%E8%BF%9E%E4%B8%8D%E4%B8%8A%E5%A4%96%E7%BD%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="连接router后机器连不上外网">连接router后机器连不上外网</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="解压缩命令合集">解压缩命令合集</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E9%94%99%E8%AF%AF_r_command%20not%20found/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="脚本执行错误 $&#39;\r&#39;:command not found">脚本执行错误 $&#39;\r&#39;:command not found</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/%E7%A1%AC%E7%9B%98%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%8D%95%E4%BD%8DGB/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="硬盘存储空间单位GB">硬盘存储空间单位GB</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/%E7%94%A8%E6%88%B7%E6%80%81%E5%92%8C%E5%86%85%E6%A0%B8%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98-%E4%BD%BF%E7%94%A8dev_mem&mmap/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="用户态和内核共享内存----使用 /dev/mem &amp; mmap">用户态和内核共享内存----使用 /dev/mem &amp; mmap</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/%E6%9F%A5%E7%9C%8BSSD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="查看SSD">查看SSD</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/%E6%8C%89%E5%AD%97%E8%8A%82-%E5%AD%97%E5%AF%BB%E5%9D%80_%E5%AD%97%E9%95%BF_%E5%9C%B0%E5%9D%80%E6%80%BB%E7%BA%BF_%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF%E5%85%B3%E7%B3%BB/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="按字节/字寻址，字长，地址总线，数据总线关系">按字节/字寻址，字长，地址总线，数据总线关系</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/yum%E4%BD%BF%E7%94%A8%E5%92%8C%E5%AE%89%E8%A3%85cmake-3%E7%89%88%E6%9C%AC%E4%B8%8A/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="yum使用和安装cmake 3 版本上">yum使用和安装cmake 3 版本上</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/yum%E4%B8%8B%E8%BD%BD%E9%81%87%E5%88%B0XZ_5.1.2alpha%E9%97%AE%E9%A2%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="yum下载遇到XZ_5.1.2alpha问题">yum下载遇到XZ_5.1.2alpha问题</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Windows10mstsc%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Centos7.0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Windows10 mstsc远程登录Centos7.0">Windows10 mstsc远程登录Centos7.0</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/wget_www.baidu.com/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="wget www.baidu.com">wget www.baidu.com</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/vim/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="vim">vim</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/U%E7%9B%98%E5%AE%89%E8%A3%85OS_Ubuntu_18.04/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘安装OS_Ubuntu_18.04">U盘安装OS_Ubuntu_18.04</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/U%E7%9B%98%E5%88%86%E5%8C%BA%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘制作启动盘分区后恢复">U盘制作启动盘分区后恢复</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/U%E7%9B%98RAW%E7%B1%BB%E5%9E%8B%E4%BF%AE%E5%A4%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="U盘RAW类型修复">U盘RAW类型修复</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85CUDA8.0%E5%8F%8Anvidia%E9%A9%B1%E5%8A%A8(%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B)/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Ubuntu下安装CUDA8.0及nvidia驱动(详细教程）">Ubuntu下安装CUDA8.0及nvidia驱动(详细教程）</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/TSC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="TSC">TSC</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/ssh%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84/"
+           data-tag="SSH-port"
+           data-author="" >
+            <span class="post-title" title="ssh端口映射">ssh端口映射</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/sda_hda/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="sda hda">sda hda</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/screen%E7%A8%8B%E5%BA%8F%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="screen程序在后台运行">screen程序在后台运行</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/scp%E6%9C%BA%E5%99%A8%E9%97%B4%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="scp机器间复制文件">scp机器间复制文件</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/rpm_yum/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RPM, yum">RPM, yum</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/RHEL8.0%E5%BC%80%E6%9C%BA%E6%80%BB%E6%98%AF%E8%A6%81dhclient%E6%89%8B%E5%8A%A8%E8%8E%B7%E5%8F%96IP/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RHEL8.0开机总是要dhclient手动获取IP">RHEL8.0开机总是要dhclient手动获取IP</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/PTU(Power%20Thermal%20Utility)/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="PTU(Power Thermal Utility)">PTU(Power Thermal Utility)</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/perf/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="perf">perf</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/ntpdate_synchronize_os_time/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ntpdate 同步各个系统时间">ntpdate 同步各个系统时间</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/MMIO/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="MMIO">MMIO</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/ln_-s_-_linux%20%E8%BD%AF%E8%BF%9E%E6%8E%A5command/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ln -s - linux 软连接command">ln -s - linux 软连接command</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/08/13/linux/Linux%E8%83%BD%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91_%E5%A4%96%E7%BD%91%E5%8D%B4%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E6%AD%A4Linux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux/Linux能访问外网_外网却访问不了此Linux">linux/Linux能访问外网_外网却访问不了此Linux</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/linux%E7%BB%99grub%E6%B7%BB%E5%8A%A0%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux给grub添加内核启动参数">linux给grub添加内核启动参数</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Linux%E6%B0%B8%E8%BF%9C%E4%BF%AE%E6%94%B9%E6%97%B6%E9%97%B4/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux 永远修改时间">Linux 永远修改时间</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/linux%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux查看运行的服务">linux查看运行的服务</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/linux%E6%97%A5%E5%BF%97_%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="查看 linux 系统日志 和 服务的日志">查看 linux 系统日志 和 服务的日志</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/linux%E5%90%91%E5%85%B6%E5%AE%83%E7%BB%88%E7%AB%AF%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux向其它终端发送消息">linux向其它终端发送消息</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/linux%E5%88%B6%E4%BD%9CU%E7%9B%98%E5%90%AF%E5%8A%A8%E7%9B%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="linux制作U盘启动盘">linux制作U盘启动盘</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Linux_kernel_%E6%9B%B4%E6%96%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux kernel 更新">Linux kernel 更新</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Linux_kernel_userspace%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux kernel userspace体系结构">Linux kernel userspace体系结构</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Linux_command_find_grep_sed_awk/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux command, find, grep,sed, awk">Linux command, find, grep,sed, awk</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Linux%20%E4%BF%AE%E6%94%B9root%E5%90%8D%E7%A7%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux 修改root名称">Linux 修改root名称</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E7%A0%94%E7%A9%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="intel_pstate/acpi-cpufreq驱动研究">intel_pstate/acpi-cpufreq驱动研究</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E5%88%87%E6%8D%A2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Intel_pstate/acpi-cpufreq驱动切换">Intel_pstate/acpi-cpufreq驱动切换</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Intel_pstate&HWP%E5%8A%9F%E8%83%BDenable_disable/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Intel_pstate &amp; HWP功能enable/disable">Intel_pstate &amp; HWP功能enable/disable</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/history/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Linux中禁用命令历史记录">Linux中禁用命令历史记录</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/fdisk%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="fdisk磁盘分区">fdisk磁盘分区</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/etc_profile-etc_bashrc-~.bashrc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="/etc/profile, /etc/bashrc, ~/.bashrc">/etc/profile, /etc/bashrc, ~/.bashrc</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/EOF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="EOF">EOF</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/emon/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="emon">emon</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/docker/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="docker">docker</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/dmidecode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="dmidecode">dmidecode</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Devtoolset%20%E5%8D%87%E7%BA%A7gcc%E5%88%B08.3.1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Devtoolset 升级gcc到8.3.1">Devtoolset 升级gcc到8.3.1</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/dd_command/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="dd">dd</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/curl_wget/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="curl &amp; wget">curl &amp; wget</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CPU角度理解PCIE">CPU角度理解PCIE</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/cppc%E5%8A%A8%E6%80%81%E8%B0%83%E9%A2%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="cppc动态调频">cppc动态调频</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/cmake/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="cmake">cmake</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/Centos%E6%9B%B4%E6%94%B9kernel%20%E9%BB%98%E8%AE%A4%E5%90%AF%E5%8A%A8%E9%A1%B9/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Centos 更改kernel 默认启动项">Centos 更改kernel 默认启动项</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/centos%E5%8D%87%E7%BA%A7gcc%E5%88%B09.1.0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="centos升级gcc到9.1.0">centos升级gcc到9.1.0</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/BIOS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="BIOS">BIOS</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/08/13/linux/ACPI%E6%98%AF%E4%BB%80%E4%B9%88&BIOS%E4%B8%ADACPI%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ACPI是什么,BIOS中ACPI要怎么设置">ACPI是什么,BIOS中ACPI要怎么设置</span>
+            <span class="post-date" title="2020-08-13 00:05:46">2020/08/13</span>
+        </a>
+        
+        <a  class="All LearnLinks "
+           href="/2020/08/13/links/Learning_links/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Learning Links">Learning Links</span>
+            <span class="post-date" title="2020-08-13 00:05:45">2020/08/13</span>
+        </a>
+        
+        <a  class="All language python "
+           href="/2020/08/13/language/python/linux_install_python_pip_pipenv/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Install python3 &amp; pip3 &amp; pipenv">Install python3 &amp; pip3 &amp; pipenv</span>
+            <span class="post-date" title="2020-08-13 00:05:45">2020/08/13</span>
+        </a>
+        
+        <a  class="All language go "
+           href="/2020/08/13/language/go/goLang/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="go language">go language</span>
+            <span class="post-date" title="2020-08-13 00:05:45">2020/08/13</span>
+        </a>
+        
+        <a  class="All language c "
+           href="/2020/08/13/language/c/gdb/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="gdb">gdb</span>
+            <span class="post-date" title="2020-08-13 00:05:45">2020/08/13</span>
+        </a>
+        
+        <a  class="All Englisth 5500 "
+           href="/2020/08/13/Englist_Learn/Englisth1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Unit 1">Unit 1</span>
+            <span class="post-date" title="2020-08-13 00:05:45">2020/08/13</span>
+        </a>
+        
+        <a  class="All deeplearning "
+           href="/2020/08/13/deeplearning/deeplearning_01_get_started/"
+           data-tag="deeplearning"
+           data-author="" >
+            <span class="post-title" title="deeplearning 01 getting started">deeplearning 01 getting started</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/08/13/blogs/Restful_API/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Restful API">Restful API</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/08/13/blogs/HTTP_TCP_Socket/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HTTP, TCP, Socket">HTTP, TCP, Socket</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/08/13/blogs/Hexo_03_%E5%86%99%E5%8D%9A%E5%AE%A2%E8%AF%AD%E6%B3%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hexo 03 写博客语法">Hexo 03 写博客语法</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/08/13/blogs/Hexo_02_git_clone_blog%E5%90%8E%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%20-%20%E5%89%AF%E6%9C%AC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hexo 02 git clone blog后如何运行">Hexo 02 git clone blog后如何运行</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <a  class="All blogs "
+           href="/2020/08/13/blogs/Hexo_01_%E9%83%A8%E7%BD%B2github_blog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hexo 01 部署github blog">Hexo 01 部署github blog</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/08/13/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2020-08-13 00:05:44">2020/08/13</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-micro_service/01_kubernetes_build" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">01 Kubernetes build</h1>
+    
+    <div class="article-meta">
+        
+        <span class="top"><a>置顶</a></span>
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="microService">microService</a> > 
+            
+            <a  data-rel="microService&lt;---&gt;kubernetes">kubernetes</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color1">kubernetes</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-08-11 00:35:58'>2020-08-13 00:05</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:4.6k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                Comment:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubernetes-简介"><span class="toc-text">Kubernetes 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要特征"><span class="toc-text">主要特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构"><span class="toc-text">架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubernetes-VS-Docker"><span class="toc-text">Kubernetes VS Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#核心概念"><span class="toc-text">核心概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Label-标签"><span class="toc-text">Label 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POD-可以称为实例"><span class="toc-text">POD (可以称为实例)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod-通讯"><span class="toc-text">Pod 通讯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Service"><span class="toc-text">Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReplicaSet-RS-副本集-副本集这一层运行的程序可以称为应用"><span class="toc-text">ReplicaSet(RS)副本集 (副本集这一层运行的程序可以称为应用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deployment"><span class="toc-text">Deployment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构设计"><span class="toc-text">架构设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密码学原理"><span class="toc-text">密码学原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务之间通信加密"><span class="toc-text">服务之间通信加密:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务发现"><span class="toc-text">服务发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环境搭建"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Download-amp-Install"><span class="toc-text">Download &amp; Install</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#机器配置"><span class="toc-text">机器配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#每个node都在-etc-environment-添加如下信息"><span class="toc-text">每个node都在 &#x2F;etc&#x2F;environment 添加如下信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kubeadm-kubelet-kubectl"><span class="toc-text">kubeadm, kubelet, kubectl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#机器环境配置"><span class="toc-text">机器环境配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步系统时间"><span class="toc-text">同步系统时间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置docker的proxy"><span class="toc-text">设置docker的proxy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装镜像"><span class="toc-text">安装镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加机器到K8s集群"><span class="toc-text">添加机器到K8s集群</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在master-server01-机器上查看集群节点信息"><span class="toc-text">在master server01 机器上查看集群节点信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看node节点信息"><span class="toc-text">查看node节点信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重新-reset-在原来-机器上搭建k8s集群操作"><span class="toc-text">重新(reset)在原来(机器上搭建k8s集群操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#k8s重新生成token"><span class="toc-text">k8s重新生成token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional"><span class="toc-text">Additional</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#重新reset-K8s集群，然后kubeadm-init遇到如下问题"><span class="toc-text">重新reset K8s集群，然后kubeadm init遇到如下问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题1"><span class="toc-text">问题1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题2"><span class="toc-text">问题2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题3"><span class="toc-text">问题3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题n"><span class="toc-text">问题n</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-6 i,
+    .toc-level-6 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Kubernetes-简介"><a href="#Kubernetes-简介" class="headerlink" title="Kubernetes 简介"></a>Kubernetes 简介</h3><p> <img src="1.JPG" alt=""><br> <img src="2.JPG" alt=""></p>
+<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><blockquote>
+<ul>
+<li>以服务为中心: 不关心服务运行的环境和细节，所以构建在kubernetes上的系统可以部署在物理机、虚拟机、公有云、私有云，在什么地方运行都是无差别的.</li>
+<li>自动化: 在kubernetes里的系统可以自动扩缩容、自动升级、更新、部署. 比如:<ul>
+<li>K8s收到某个指令后，会触发调度流程，选中目标节点，部署或者停止响应服务.</li>
+<li>如果有新的pod启动，会被自动加入负载均衡器，自动生效</li>
+<li>服务运行过程中，K8s会定期的检查它们的实例数，以及这些实例的状态是否正常，当发现某个实例不可用的时候会自动销毁不可用的实例然后重新调度一个新的实例，以上所有都是自动化完成，不需要人工参与.</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="K8s_arch1.JPG" alt=""></p>
+<h3 id="Kubernetes-VS-Docker"><a href="#Kubernetes-VS-Docker" class="headerlink" title="Kubernetes VS Docker"></a>Kubernetes VS Docker</h3><blockquote>
+<p>K8s可以看成是Docker的上层架构, 就像是javaee和java的关系,Java是一问语言，J2EE是Java语言的一门使用技术，Java为J2EE提供了库和语法，J2EE使用Java的库和语法应用在WEB上。这是概念性的区别。</p>
+<ul>
+<li>Java SE（Java Platform，Standard Edition）。Java SE 以前称为 J2SE。它允许开发和部署在桌面、服务器、嵌入式环境和实时环境中使用的 Java 应用程序。Java SE 包含了支持 Java Web 服务开发的类，并为 Java Platform，Enterprise Edition（Java EE）提供基础。</li>
+<li>Java EE（Java Platform，Enterprise Edition）。这个版本以前称为 J2EE。企业版本帮助开发和部署可移植、健壮、可伸缩且安全的服务器端 Java 应用程序。Java EE 是在 Java SE 的基础上构建的，它提供 Web 服务、组件模型、管理和通信 API，可以用来实现企业级的面向服务体系结构（service-oriented architecture，SOA）和 Web 2.0 应用程序。</li>
+<li>Java ME（Java Platform，Micro Edition）。这个版本以前称为 J2ME。Java ME 为在移动设备和嵌入式设备（比如手机、PDA、电视机顶盒和打印机）上运行的应用程序提供一个健壮且灵活的环境。Java ME 包括灵活的用户界面、健壮的安全模型、许多内置的网络协议以及对可以动态下载的连网和离线应用程序的丰富支持。基于 Java ME 规范的应用程序只需编写一次，就可以用于许多设备，而且可以利用每个设备的本机功能。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>K8s是以Docker技术的标准为基础去打造一个全新的分布式架构系统，K8s不是一定要依赖Docker，Docker是一个产品，而Docker技术是一些列的标准，只要实现了这些标准的产品都可以替代Docker，所以说K8s在底层可以支持它自己的容器技术并且经过Google的持续优化，号称在某些方面做得比Docker更加优秀，所以用不用Docker可以自己选择.</p>
+</blockquote>
+<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p><img src="3.JPG" alt=""><br><img src="4.JPG" alt=""><br><img src="5.JPG" alt=""></p>
+<h3 id="Label-标签"><a href="#Label-标签" class="headerlink" title="Label 标签"></a>Label 标签</h3><blockquote>
+<p>POD，Deployment，Node等都可以打标签启到标识作用.</p>
+</blockquote>
+<h3 id="POD-可以称为实例"><a href="#POD-可以称为实例" class="headerlink" title="POD (可以称为实例)"></a>POD (可以称为实例)</h3><blockquote>
+<ul>
+<li>所有的服务，所有的应用最终都是跑在Pod中,Pod是Kubernetes概念中最小的单元，可以理解为是Kubernetes的一个原子.</li>
+<li>POD 里面可以有一个或多个容器，</li>
+<li>POD里面所有的容器都是运行在一台机器上</li>
+<li>POD里面的容器共享网络，有一个唯一的IP</li>
+<li>POD里面都会有一个容器叫做Pause容器<ul>
+<li>有特定的image镜像比如pause:v1.0</li>
+<li>作为根容器，把POD里其它的容器都link到一起，当我们的业务里面有两个或多个容器关系非常紧密，这时候就可以考虑把它们放到同一个POD里</li>
+<li>负责整个POD的健康检查，然后汇报给K8s<br><img src="K8s_arch2.JPG" alt=""><br><img src="K8s_arch3.JPG" alt=""></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="Pod-通讯"><a href="#Pod-通讯" class="headerlink" title="Pod 通讯"></a>Pod 通讯</h3><blockquote>
+<ul>
+<li>Pod内容器之间通讯: 通过localhost加上端口就可以访问.<br><img src="Pod_communication1.JPG" alt=""></li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>同一个Node上不同Pod之间的通讯: 同一个Node上的Pod，它们默认的路由都是Docker0，都关联在同一个Docker0网桥，地址网段是相同的，它们之间可以直接通过网桥进行通讯，访问方式是可以通过 Pod IP 直接进行访问.<br><img src="Pod_communication2.JPG" alt=""></li>
+</ul>
+</blockquote>
+<blockquote>
+<p>不同Node不同Pod直接通讯: Pod的IP不能冲突，Pod的IP和Node的IP关联起来，通过关联让Pod之间可以通讯.<br><img src="Pod_communication3.JPG" alt=""></p>
+</blockquote>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p><img src="K8s_arch4.JPG" alt=""></p>
+<blockquote>
+<p>Pod具体运行在某个Node上<br>Service在Pod外再包一层IP<br>当某个Pod提供服务出现问题，会在其它地方再启动一个Pod和新的Pod的IP，我们还可以通过Service IP找到新的Pod<br>上面2台Node，3个Pod可以看做同一个应用的多个副本，对一个应用进行扩容，从一个实例扩成三个实例对外提供相同服务<br>Service除了上面可以定位到Pod地址外还可以对Pod地址进行负载均衡，比如轮训访问每个Pod<br>Pod也不一定是一模一样的，也可以是同一个应用的不同版本</p>
+</blockquote>
+<blockquote>
+<p>通过什么方式来确定哪些Pod是一个Service? 怎么定位哪个Pod或哪几个Pod属于某个Service?<br>Kubernetes使用的是Laber Selector<br>通过配置好的Service的Select()，选择标签然后自动寻找POD, Service 对外有一个ClusterIP(Kube-proxy)，其它服务或者Client客户端就可以通过ClusterIP访问到这个Service，进而访问到最底层的POD服务</p>
+</blockquote>
+<h3 id="ReplicaSet-RS-副本集-副本集这一层运行的程序可以称为应用"><a href="#ReplicaSet-RS-副本集-副本集这一层运行的程序可以称为应用" class="headerlink" title="ReplicaSet(RS)副本集 (副本集这一层运行的程序可以称为应用)"></a>ReplicaSet(RS)副本集 (副本集这一层运行的程序可以称为应用)</h3><blockquote>
+<p>RS是POD的上一层, 管理关联POD，如果应用运行过程中某个POD出现了异常或异常退出，RS就会保证副本始终为R，会在另一台机器重新调度一个POD</p>
+</blockquote>
+<h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><blockquote>
+<ul>
+<li>扩容: 如对一个应用(Pod)扩容，把1个Pod扩容成四个实例，扩容的是Pod而不是Service, 4个Pod拥有相同标签，ServiceIP不变并对这4个Pod实行负载均衡<br><img src="Pod_Scaling.JPG" alt=""></li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>滚动更新: 一个旧的应用(RS这一层)运行了两个实例(两个POD), 更新这个应用的时候，Deployment会自动帮我们创建一个RS，并且滚动的先启动一个新版本的不改变服务的POD, 修改的可能是image(login-image:V1-&gt;V2),这时候Deployment管理的是三个实例(3个POD)，新的POD启动完成，健康检查结束，会停掉原来的POD并删掉，然后RS会再新建一个与另一个旧版本提供相同服务的POD，然后停掉另外一个旧版本POD，旧版POD停掉之后Deployment会清理掉管理旧版本的RS, 服务更新完成.<br><img src="Rolling_update1.JPG" alt=""><br><img src="Rolling_update2.JPG" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h3><p><img src="k8s_architecture1.JPG" alt=""><br><img src="k8s_architecture2.JPG" alt=""></p>
+<h3 id="密码学原理"><a href="#密码学原理" class="headerlink" title="密码学原理"></a>密码学原理</h3><blockquote>
+<ul>
+<li>对称加密:<br><img src="Symmetric_encryption.JPG" alt=""></li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>非对称加密:<br><img src="Asymmetric_encryption.JPG" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="服务之间通信加密"><a href="#服务之间通信加密" class="headerlink" title="服务之间通信加密:"></a>服务之间通信加密:</h3><p><img src="6.JPG" alt=""></p>
+<blockquote>
+<p>非对称加密非常复杂，不管是加密还是解密都非常耗时， 如果每次通信都进行非对称加密性能损耗是无法接受的<br>对称加密性能非常高，因此考虑把两者结合在一起来通信</p>
+<ul>
+<li>Server B 公开了自己的公钥pub_key, 任何人都可以看到</li>
+<li>第一次通信，Server A 用Server B的pub_key 加密自己的秘钥，把秘钥变成密文，然后发到Server B，除了Server B可以用自己的私钥解密看到是对称加密的秘钥，中间黑客因为没有Server B的私钥因此无法解密, Server B 就知道要跟 Server A 进行对称加密的通信，并且使用的就是这个秘钥</li>
+<li>之后通信, Server A就可以用发送给Server B 的秘钥对要发送的信息使用对称加密算法进行加密变成密文，然后发送给Server B， Server B收到信息后再用第一次拿到的秘钥进行对称加密算法解密.</li>
+</ul>
+<ul>
+<li>上面的就是 SSL/TLS 协议， https底层就是通过这两个协议进行通信.</li>
+</ul>
+<ul>
+<li>上面有个不完美地方，Server B公开pub_key， 黑客截获后再把黑客自己Server的pub_key发送给Server A, Server A拿着这个pub_key加密了自己的私钥，之后又被黑客截获并解密，虽然这些工作对黑客来说很复杂，但这种情况是有可能发生的.</li>
+<li>解决方法: CA 证书认证机构，一个中间商，给所有Server颁发证书,所有正常网站的证书都在这一个地方存储，当Server A 拿到 pub_key之后会向 CA 查询这个公钥是不是合法的是不是可以信任的，CA会查自己的数据库这个pub_key是哪个公司的，它的域名是什么，包括所有人是谁等各种信息在CA都有备案，CA告诉Server A这个pub_key是我颁发的没有问题，Server A再拿着这个公钥去通信, 有时候我们访问一些网站时候，https会显示红色警告，这就说明这个网站的证书不是通过CA认证过的，一般是自己生成的.</li>
+</ul>
+</blockquote>
+<h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><blockquote>
+<ul>
+<li>Kube-proxy(ClusterIP)： 为Pod创建虚拟IP，只能在集群内部访问，并且是固定的, 只要Service不删除，这个IP是不变的.</li>
+<li>Kube-proxy(NodePort): 在每个Node上都启一个线程端口，把服务暴露在节点上，这样就可以让集群外的服务通过Node IP 和 NodePort去访问集群内的服务.</li>
+<li>Kube-DNS: Kubernetes的一个插件，负责集群内部的DNS解析，目的是让集群内部的Pod之间通过名字去访问</li>
+</ul>
+</blockquote>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><blockquote>
+<ul>
+<li>官方推荐使用Kubeadmin进行方便快捷的搭建.</li>
+<li>网上找的个人搭建的Kubernetes, 在绿色网络环境下安装kubernetes集群，并在安装过程中加深对Kubernetes组件以及架构的理解.<ul>
+<li><a href="https://github.com/liuyi01/kubernetes-starter" target="_blank" rel="noopener">https://github.com/liuyi01/kubernetes-starter</a></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="Download-amp-Install"><a href="#Download-amp-Install" class="headerlink" title="Download &amp; Install"></a>Download &amp; Install</h3><blockquote>
+<p>官网步骤: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a></p>
+</blockquote>
+<h4 id="机器配置"><a href="#机器配置" class="headerlink" title="机器配置"></a>机器配置</h4><p>搭建K8s集群只用了一台安装Ubuntu18.04的酷睿机器.</p>
+<blockquote>
+<ol>
+<li>Ubuntu18.04宿主主机上 download &amp; install virtualbox<br>$ apt-get install virtualbox</li>
+<li>下载Ubuntu18.04镜像: <a href="http://releases.ubuntu.com/18.04/" target="_blank" rel="noopener">http://releases.ubuntu.com/18.04/</a> 选择 ubuntu-18.04.4-live-server-amd64.iso 2020-02-03 18:36 870M    Server install image for 64-bit PC (AMD64) computers (standard download)</li>
+<li>用virtualbox安装两台Ubuntu18.04虚拟机<ul>
+<li>虚拟机server01 作为 master; </li>
+<li>虚拟机server02 作为 worker01; </li>
+<li>宿主主机 作为 worker02<br>每台虚拟机 内存要大于等于 2 G ，CPU核数需要大于等于 4 核</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h4 id="每个node都在-etc-environment-添加如下信息"><a href="#每个node都在-etc-environment-添加如下信息" class="headerlink" title="每个node都在 /etc/environment 添加如下信息"></a>每个node都在 /etc/environment 添加如下信息</h4><blockquote>
+<p>http_proxy=”<a href="http://child-prc.intel.com:913/&quot;" target="_blank" rel="noopener">http://child-prc.intel.com:913/&quot;</a><br>https_proxy=”<a href="http://child-prc.intel.com:913/&quot;" target="_blank" rel="noopener">http://child-prc.intel.com:913/&quot;</a><br>ftp_proxy=”<a href="ftp://child-prc.intel.com:913/&quot;" target="_blank" rel="noopener">ftp://child-prc.intel.com:913/&quot;</a><br>no_proxy=”K8S_MASTER_IP,K8S_MASTER_HostName”  如: no_proxy=”10.67.108.200,hci-node01”  // [iotg@hci-node01 ~]$</p>
+</blockquote>
+<h4 id="kubeadm-kubelet-kubectl"><a href="#kubeadm-kubelet-kubectl" class="headerlink" title="kubeadm, kubelet, kubectl"></a>kubeadm, kubelet, kubectl</h4><blockquote>
+<p>每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的node上也安装(也就是下载或拷贝)kubectl二进制文件工具.</p>
+</blockquote>
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https gnupg2
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+$ echo &quot;deb https://apt.kubernetes.io/ kubernetes-xenial main&quot; | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+$ sudo apt-get update
+$ sudo apt-get install -y kubectl
+$ sudo apt-get install -y kubeadm
+$ sudo apt-get install -y kubelet
+$ kubeadm version        // 通过 kubectl 命令行客户端向运行在主节点上的 Kubemetes API 服务器发出 REST 请求以与集群交互
+$ kubectl version        // 客户端工具
+$ kubelet --version        // kubelet是一个服务，可通过systemctl restart kubelet重启服务，每台master和worker节点都需要安装
+$ systemctl enable --now kubelet
+$ kubeadm reset
+$ sudo hostnamectl set-hostname master-node //修改机器名字, 重开终端就可以看到机器名变了</code></pre><h4 id="机器环境配置"><a href="#机器环境配置" class="headerlink" title="机器环境配置"></a>机器环境配置</h4><pre><code>关闭交换区, K8s认为swap性能开销比较大, 性能会大幅降低, 使用swap做云基础架构会减少性能, 因此k8s关闭swap
+另外重新装系统OS时候就可以不给swap分配分区.
+$ swapoff -a            // 临时关闭交换区，$ free -h 可以查看 Swap: 0B...
+$ vim /etc/fstab  // 设置重启后自动关闭swapoff, 将含有swap的那一行前面加&quot;#&quot;注释掉就可以了
+  /dev/mapper/centos-swap swap                    swap    defaults        0 0
+$ sed -i &apos;/swap/d&apos; /etc/fstab    //永久关闭
+
+关闭防火墙
+$ systemctl stop firewalld.service
+$ systemctl status firewalld.service    // 查看防火墙是否有 Active: inactive (dead) since......
+$ systemctl disable firewalld             // 设置开机不启动防火墙
+$ sysctl net.bridge.bridge-nf-call-iptables=1
+$ sysctl net.bridge.bridge-nf-call-ip6tables=1</code></pre><blockquote>
+<p>Iptables原理<br>linux的防火墙由netfilter和iptables组成<br>用户空间的iptables制定防火墙规则，内核空间的netfilter实现防火墙功能netfilter（内核空间）位于Linux内核中的包过滤防火墙功能体系，称为Linux防火墙的“内核态”<br>iptables(用户空间)位于/sbin/iptables，是用来管理防火墙的命令的工具，为防火墙体系提供过滤规则/策略，决定如何过滤或处理到达防火墙主机的数据包，称为Linux防火墙的“用户态”</p>
+</blockquote>
+<pre><code>关闭selinux:        // 限制访问linux资源文件上下文
+$ getenforce            // 查看是否disabled
+$ setenforce 0            //临时关闭selinux(Security-Enhanced Linux), 终端会输出&quot;setenforce: SELinux is disabled&quot;
+$ vim /etc/selinux/config --&gt; 将 SELINUX=permissive 改为 SELINUX=disabled, 设置重启后自动关闭selinux
+$ sed -i &apos;s/^SELINUX=enforcing$/SELINUX=permissive/&apos; /etc/selinux/config    //永久关闭(试了好像没反应): </code></pre><h4 id="同步系统时间"><a href="#同步系统时间" class="headerlink" title="同步系统时间"></a>同步系统时间</h4><blockquote>
+<p>涉及到验证签发的证书的有效性, 如果签发证书的服务器时间比使用证书的服务器时间早, 就会导致校验不成功或证书错误, 一直等到使用证书的服务器时间也运行到证书开始生效的时间后才会解决这个问题.</p>
+</blockquote>
+<pre><code>$ ntpdate time.windows.com         // 同步 windows 系统时间</code></pre><h4 id="设置docker的proxy"><a href="#设置docker的proxy" class="headerlink" title="设置docker的proxy"></a>设置docker的proxy</h4><pre><code>$ mkdir docker.service.d
+$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
+
+[Service]
+Environment=&quot;HTTP_PROXY=http://child-prc.intel.com:913/&quot;
+Environment=&quot;HTTPS_PROXY=http://child-prc.intel.com:913/&quot;</code></pre><h4 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h4><pre><code>$ docker images
+$ docker pull gcr.io/google_containers/kube-apiserver-amd64:v1.9.3
+$ docker pull gcr.io/google_containers/kube-controller-manager-amd64:v1.9.3
+$ docker pull gcr.io/google_containers/kube-scheduler-amd64:v1.9.3</code></pre><h4 id="添加机器到K8s集群"><a href="#添加机器到K8s集群" class="headerlink" title="添加机器到K8s集群"></a>添加机器到K8s集群</h4><blockquote>
+<ol>
+<li>在Master主机 server01 上运行</li>
+</ol>
+</blockquote>
+<pre><code>$ kubeadm init</code></pre><p>返回部分数据如下</p>
+<pre><code>......
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 10.239.141.112:6443 --token uvm0zr.ndg144wcga276j16 \
+    --discovery-token-ca-cert-hash sha256:e1535452b32ed4039fa2f261197c0b91179fb168e8da3dd58b99fc11fe2213b8
+root@server01:~#</code></pre><blockquote>
+<p>添加kubeadm部署k8s后生成的administrator访问证书到环境变量或~/.kube目录, 使得root或其它user登陆后可以通过kubectl访问或生成k8s资源如pod等, 有如下两种方式.</p>
+</blockquote>
+<p>第一种:</p>
+<pre><code>$ export KUBECONFIG=/etc/kubernetes/admin.conf
+$ echo &quot;export KUBECONFIG=/etc/kubernetes/admin.conf&quot; | tee -a ~/.bashrc
+$ source ~/.bashrc</code></pre><p>第二种(其它user而非root登陆后需要做如下操作才能通过kubectl访问或生成k8s资源如pod等):</p>
+<pre><code>$ mkdir -p $HOME/.kube
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config</code></pre><p>添加容器之间的通信网络, 第三方资源weave, 官网上也推荐部署其它几种通信网络方式</p>
+<pre><code>$ kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d &apos;\n&apos;)</code></pre><blockquote>
+<ol start="2">
+<li>之后用上面命令返回的 kubeadm join 10.239.141.112:6443 –t … 复制 并 在其它node机器(server02和宿主主机) 上运行就可以把node加进上面创建的Cluster了</li>
+</ol>
+</blockquote>
+<h4 id="在master-server01-机器上查看集群节点信息"><a href="#在master-server01-机器上查看集群节点信息" class="headerlink" title="在master server01 机器上查看集群节点信息"></a>在master server01 机器上查看集群节点信息</h4><pre><code>$ kubectl get nodes
+$ kubectl get namespaces</code></pre><h4 id="查看node节点信息"><a href="#查看node节点信息" class="headerlink" title="查看node节点信息"></a>查看node节点信息</h4><pre><code>$ kubectl describe node server02</code></pre><h3 id="重新-reset-在原来-机器上搭建k8s集群操作"><a href="#重新-reset-在原来-机器上搭建k8s集群操作" class="headerlink" title="重新(reset)在原来(机器上搭建k8s集群操作"></a>重新(reset)在原来(机器上搭建k8s集群操作</h3><blockquote>
+<p>主机名和IP解析, 通过主机名访问机器, 修改下各个节点 /etc/hosts 文件内容(实验环境没有修改，跳过这个步骤), 也可以只在master上配置, 因为很多操作都是在master上执行</p>
+</blockquote>
+<pre><code>......
+10.239.141.106 server01
+10.239.140.184 server02
+10.239.140.186 alpha</code></pre><blockquote>
+<ol>
+<li>需要在master节点上执行 </li>
+</ol>
+</blockquote>
+<pre><code>$ rm -rf /etc/kubernetes/pki/etcd/
+$ rm -rf /var/lib/etcd
+$ rm -rf $HOME/.kube
+$ kubeadm reset
+$ swapoff -a
+$ setenforce 0
+$ systemctl stop firewalld.service
+$ sysctl net.bridge.bridge-nf-call-iptables=1
+$ kubeadm init, 再用返回的 &quot;kubeadm join...&quot; 在其它节点执行
+$ echo &quot;export KUBECONFIG=/etc/kubernetes/admin.conf&quot; | tee -a ~/.bashrc
+$ source ~/.bashrc</code></pre><blockquote>
+<ol start="2">
+<li>在worker节点执行:</li>
+</ol>
+</blockquote>
+<pre><code>$ systemctl enable docker.service
+$ kubeadm reset
+$ swapoff -a
+$ setenforce 0
+$ systemctl stop firewalld.service
+$ sysctl net.bridge.bridge-nf-call-iptables=1
+$ systemctl daemon-reload        // 重新加载 systemctl 的配置文件
+$ systemctl restart kubelet
+ // $ iptables -F &amp;&amp; iptables -t nat -F &amp;&amp; iptables -t mangle -F &amp;&amp; iptables -X        // will reset iptables
+$ kubeadm join ......</code></pre><blockquote>
+<ol start="3">
+<li>再次在master节点上执行<br>如果不执行下面命令安装weave pod, kube-system命名空间下的coredns会一直处于containercreating状态.</li>
+</ol>
+</blockquote>
+<pre><code>$ kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d &apos;\n&apos;)</code></pre><h3 id="k8s重新生成token"><a href="#k8s重新生成token" class="headerlink" title="k8s重新生成token"></a>k8s重新生成token</h3><p>主机上执行如下命令，主机IP:10.239.140.186</p>
+<pre><code>$ kubeadm token create
+v6rgnu.ydqgkuujayykkanv
+
+$ kubeadm token list
+TOKEN                     TTL   EXPIRES                     USAGES                   DESCRIPTION   EXTRA GROUPS
+v6rgnu.ydqgkuujayykkanv   23h   2020-05-30T13:24:41+08:00   authentication,signing   &lt;none&gt;        system:bootstrappers:kubeadm:default-node-token
+
+$ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&gt;/dev/null | openssl dgst -sha256 -hex | sed &apos;s/^.* //&apos;
+be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4</code></pre><p>用上面master主机上生成的token在worker节点执行如下命令:</p>
+<pre><code>$ kubeadm reset
+$ swapoff -a
+$ setenforce 0
+$ systemctl stop firewalld.service
+$ sysctl net.bridge.bridge-nf-call-iptables=1
+$ sysctl net.bridge.bridge-nf-call-ip6tables=1
+$ kubeadm join --token v6rgnu.ydqgkuujayykkanv --discovery-token-ca-cert-hash sha256:be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4  10.239.140.186:6443</code></pre><h3 id="Additional"><a href="#Additional" class="headerlink" title="Additional"></a>Additional</h3><h4 id="重新reset-K8s集群，然后kubeadm-init遇到如下问题"><a href="#重新reset-K8s集群，然后kubeadm-init遇到如下问题" class="headerlink" title="重新reset K8s集群，然后kubeadm init遇到如下问题"></a>重新reset K8s集群，然后kubeadm init遇到如下问题</h4><h4 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h4><blockquote>
+<p>[kubelet-check] The HTTP call equal to ‘curl -sSL <a href="http://localhost:10248/healthz&#39;" target="_blank" rel="noopener">http://localhost:10248/healthz&#39;</a> failed with error: Get <a href="http://localhost:10248/healthz" target="_blank" rel="noopener">http://localhost:10248/healthz</a>: dial tcp [::1]:10248: connect: connection refused.<br>解决方法:</p>
+</blockquote>
+<pre><code>$ systemctl restart docker
+$ rm -rf /etc/systemd/system/kubelet.service.d/*
+$ systemctl daemon-reload</code></pre><h4 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h4><p>Unable to connect to the server: x509: certificate signed by unknown authority<br>需要删除上一次部署后cp到~/.kube的证书文件, 再重新部署一遍k8s集群</p>
+<pre><code>$ rm -rf $HOME/.kube</code></pre><h4 id="问题3"><a href="#问题3" class="headerlink" title="问题3"></a>问题3</h4><p>The connection to the server localhost:8080 was refused - did you specify the right host or port?<br>需要添加administrator访问证书<br>第一种:</p>
+<pre><code>$ export KUBECONFIG=/etc/kubernetes/admin.conf
+$ echo &quot;export KUBECONFIG=/etc/kubernetes/admin.conf&quot; | tee -a ~/.bashrc
+$ source ~/.bashrc</code></pre><p>第二种:</p>
+<pre><code>$ mkdir -p $HOME/.kube
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config</code></pre><h4 id="问题n"><a href="#问题n" class="headerlink" title="问题n"></a>问题n</h4><p><a href="https://istio.io/docs/examples/bookinfo/" target="_blank" rel="noopener">https://istio.io/docs/examples/bookinfo/</a><br>Istio 部署bookinfo 到bookinfo命名空间， 发现只部署了svc，RS，但是没有部署pod.</p>
+<pre><code>$ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo</code></pre><p>用以下命令可以查看出错信息, 发现是webhook相关错误</p>
+<pre><code>$ kubectl describe rs/RS-NAME -n bookinfo</code></pre><p>解决方法是注释掉kubernetes的proxy</p>
+<p>/etc/kubernetes/manifests/kube-apiserver.yaml</p>
+<pre><code> env:                                    // K8s安装会用系统的proxy，加#注释掉.
+#- name: HTTP_PROXY
+#  value: http://child-prc.intel.com:913
+#- name: https_proxy
+#  value: http://child-prc.intel.com:913
+#- name: http_proxy
+#  value: http://child-prc.intel.com:913
+#- name: HTTPS_PROXY
+#  value: http://child-prc.intel.com:913
+ - name: no_proxy
+   value: 10.239.140.186,10.239.140.200        // master和一个worker节点的NodeIP.</code></pre><p>稍等一会$ kubectl get po -n bookinfo 就可以看到pod慢慢部署成功了.</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">💰</a>
+</p>
+
+
+
+
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script type="text/javascript">
+    $.getScript('/js/gitalk.js', function () {
+        var gitalk = new Gitalk({
+            clientID: 'b52060ecaee3da3300c2',
+            clientSecret: 'a2497fa5608f31fbcf075ab465e32edc8cda73a9',
+            repo: 'Kung-Fu-Master.github.io',
+            owner: 'Kung-Fu-Master',
+            admin: ['Kung-Fu-Master'],
+            id: decodeURI(location.pathname),
+            distractionFreeMode: 'true',
+            language: 'zh-CN',
+            perPage: parseInt('10',10)
+        })
+        gitalk.render('comments')
+    })
+</script>
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2020-2029 Kung-Fu-Master
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close"  onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>Help us with donation</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">alipay</label></span><span><label><input type="radio" name="pay" value="weixin">weixin</label></span>
+    </div>
+</div>
+
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 582px;
+    }
+    .nav.fullscreen {
+        margin-left: -582px;
+    }
+    .nav-left {
+        width: 160px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 552px;
+        }
+        .nav.fullscreen {
+            margin-left: -552px;
+        }
+        .nav-left {
+            width: 160px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 552px;
+            margin-left: -552px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #c1bfc1;
+    }
+    
+    
+    .nav-right nav a.hover > span{
+        color: #ffffff !important;
+    }
+    
+
+    /*列表样式*/
+    
+    #post .pjax article .article-entry>ol, #post .pjax article .article-entry>ul, #post .pjax article>ol, #post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    #post .pjax article .article-entry li>ol, #post .pjax article .article-entry li>ul,#post .pjax article li>ol, #post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #post .pjax article .article-entry>ol>li, #post .pjax article .article-entry>ul>li,#post .pjax article>ol>li, #post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    #post .pjax article .article-entry li>ol>li, #post .pjax article .article-entry li>ul>li,#post .pjax article li>ol>li, #post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
