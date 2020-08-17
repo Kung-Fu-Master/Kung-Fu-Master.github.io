@@ -37,3 +37,18 @@ git bash终端 cd 到博客副本文件夹, 输入: $git config --global credent
 	helper = store
 重新git push就不需要用户名密码了
 
+## **git设置忽略文件(夹)和目录**
+博客clone下来后执行`hexo clean; hexo g;`后, 再查看git状态`git status`, 会看到blogs/public/* 和 db.json处于modified状态，如果想每次生成博客后忽略 blogs/public/等下的文件修改情况, 参考以下方式.  
+1. gitbash 命令进入本地git库目录
+2. 博客根目录创建.gitignore文件
+3. 修改文件, 添加如下的忽略正则内容
+
+
+	$ vim .gitignore
+	.idea			// 忽略.idea文件夹及文件夹下的文件的修改
+	*.html			// 忽略以.html结尾的文件的修改
+	blogs/public/	// 忽略blogs/public/下的所有文件的修改
+	db.json			// 忽略db.json文件的修改
+
+**Note:** .gitignore只能忽略那些原来没有被track的文件，如果某些文件已经被纳入了版本管理也就是已经执行了`git add <文件(夹)A>;`，则修改.gitignore, 忽略`文件(夹)A`是无效的。  
+**正确的做法**是在clone下来的仓库中手动执行 `git rm <文件(夹)A>;`如`git rm blogs/public/*`,然后再`git commit "*"; git push origin master;`, 远程仓库的此文件(夹)也删除后，再在本地生成的`文件(夹)A`, git就可以忽略它的修改.  
