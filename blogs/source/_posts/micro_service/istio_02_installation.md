@@ -77,6 +77,17 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 	  Checked 3 Istio Deployments
 	  Istio is installed successfully
 
+## istioctl command
+
+### istioctl profile
+查看profile list
+
+	$ istioctl profile list
+输出profile
+
+	$ istioctl profile dump demo > demo.yaml
+	vim demo.yaml
+
 
 ## **Istioctl analyze**
 
@@ -86,6 +97,7 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 ## **Istio upgrade and rollback**
 istio1.6 提供了简单的升级命令方式，直接通过命令 $ istioctl upgrade 就可以更新Istio control plane in-place
 且提供了金丝雀发布方式，更新和回滚过程可以看到有两个istiod在istio-system命名空间下.
+
 
 
 

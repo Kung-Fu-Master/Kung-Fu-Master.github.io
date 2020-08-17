@@ -302,6 +302,12 @@ top: 1
 	$ sysctl net.bridge.bridge-nf-call-ip6tables=1
 	$ kubeadm join --token v6rgnu.ydqgkuujayykkanv --discovery-token-ca-cert-hash sha256:be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4  10.239.140.186:6443
 
+### k8s命令自动补全
+
+	$ yum install bash-completion
+	$ echo "source <(kubectl completion bash)" >> ~/.bashrc
+	$ source ~/.bashrc
+试试 输入 `kubectl get n` 按 `tab` 查看提示.
 
 ### Additional
 

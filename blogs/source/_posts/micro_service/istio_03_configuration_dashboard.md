@@ -170,7 +170,7 @@ categories:
 	这里-H选项是设置主机的HTTP报头为httpbin.example.com
 
 ## **Dashboard & log**
-### Dashboard
+### Dashboard Overall
 controlz: 日志, 也可用kubectl logs查看不过不够直观
 envoy
 grafana
@@ -205,5 +205,10 @@ zipkin: 查看traces
 	  mesh: |-
 	    accessLogEncoding: TEXT		// 日志默认是TEXT格式输出，可以改为json模式, 再序列话可以很直观查看进出istio envoy的流量的方向, 上下流等.
 
+### **kiali**
+
+	$ istioctl dashboard kiali
+	$ while true; do curl http://10.239.186.141/productpage; done; 
+![](kiali_1.PNG)
 
 
