@@ -2,3 +2,4 @@
 *.html
 blogs/public/
 db.json
+blogs/.deploy_git/*
