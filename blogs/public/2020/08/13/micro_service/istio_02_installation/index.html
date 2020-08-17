@@ -425,7 +425,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="123">
-<input type="hidden" id="yelog_site_word_count" value="126.8k">
+<input type="hidden" id="yelog_site_word_count" value="126.9k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -890,10 +890,10 @@
         </a>
         
         <a  class="All microService istio "
-           href="/2020/08/13/micro_service/istio_03_configuration/"
+           href="/2020/08/13/micro_service/istio_03_configuration_dashboard/"
            data-tag="istio"
            data-author="" >
-            <span class="post-title" title="Istio 03 configuration">Istio 03 configuration</span>
+            <span class="post-title" title="Istio 03 configuration &amp; dashboard">Istio 03 configuration &amp; dashboard</span>
             <span class="post-date" title="2020-08-13 00:05:47">2020/08/13</span>
         </a>
         
@@ -1535,12 +1535,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-11 23:48:23'>2020-08-13 00:05</time>
+            Created At : <time class="date" title='Updated At: 2020-08-17 21:01:06'>2020-08-13 00:05</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:617</span>
+        <span>Count:652</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1570,7 +1570,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Download-the-specific-version-of-Istio"><span class="toc-text">Download the specific version of Istio</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#istio目录介绍"><span class="toc-text">istio目录介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Istioctl工具介绍"><span class="toc-text">Istioctl工具介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Istio-upgrade-and-rollback"><span class="toc-text">Istio upgrade and rollback</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Download-the-specific-version-of-Istio"><span class="toc-text">Download the specific version of Istio</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#istio目录介绍"><span class="toc-text">istio目录介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Istioctl工具介绍"><span class="toc-text">Istioctl工具介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#istioctl-command"><span class="toc-text">istioctl command</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#istioctl-profile"><span class="toc-text">istioctl profile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Istioctl-analyze"><span class="toc-text">Istioctl analyze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Istio-upgrade-and-rollback"><span class="toc-text">Istio upgrade and rollback</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1640,7 +1640,11 @@ $ ./istioctl verify-install
   ......
   Checked 25 custom resource definitions    // 可以看到Istio 1.6.4只有25个crd
   Checked 3 Istio Deployments
-  Istio is installed successfully</code></pre><h2 id="Istio-upgrade-and-rollback"><a href="#Istio-upgrade-and-rollback" class="headerlink" title="Istio upgrade and rollback"></a><strong>Istio upgrade and rollback</strong></h2><p>istio1.6 提供了简单的升级命令方式，直接通过命令 $ istioctl upgrade 就可以更新Istio control plane in-place<br>且提供了金丝雀发布方式，更新和回滚过程可以看到有两个istiod在istio-system命名空间下.</p>
+  Istio is installed successfully</code></pre><h2 id="istioctl-command"><a href="#istioctl-command" class="headerlink" title="istioctl command"></a>istioctl command</h2><h3 id="istioctl-profile"><a href="#istioctl-profile" class="headerlink" title="istioctl profile"></a>istioctl profile</h3><p>查看profile list</p>
+<pre><code>$ istioctl profile list</code></pre><p>输出profile</p>
+<pre><code>$ istioctl profile dump demo &gt; demo.yaml
+vim demo.yaml</code></pre><h2 id="Istioctl-analyze"><a href="#Istioctl-analyze" class="headerlink" title="Istioctl analyze"></a><strong>Istioctl analyze</strong></h2><pre><code>$ istioctl analyze -n book-info
+  √ No Validation issues found when analyzing namespace: book-info</code></pre><h2 id="Istio-upgrade-and-rollback"><a href="#Istio-upgrade-and-rollback" class="headerlink" title="Istio upgrade and rollback"></a><strong>Istio upgrade and rollback</strong></h2><p>istio1.6 提供了简单的升级命令方式，直接通过命令 $ istioctl upgrade 就可以更新Istio control plane in-place<br>且提供了金丝雀发布方式，更新和回滚过程可以看到有两个istiod在istio-system命名空间下.</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
