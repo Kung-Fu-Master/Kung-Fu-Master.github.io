@@ -49,6 +49,7 @@ git bash终端 cd 到博客副本文件夹, 输入: $git config --global credent
 	*.html			// 忽略以.html结尾的文件的修改
 	blogs/public/	// 忽略blogs/public/下的所有文件的修改
 	db.json			// 忽略db.json文件的修改
+	blogs/.deploy_git/*
 
 **Note:** .gitignore只能忽略那些原来没有被track的文件，如果某些文件已经被纳入了版本管理也就是已经执行了`git add <文件(夹)A>;`，则修改.gitignore, 忽略`文件(夹)A`是无效的。  
 **正确的做法**是在clone下来的仓库中手动执行 `git rm <文件(夹)A>;`如`git rm blogs/public/*`,然后再`git commit "*"; git push origin master;`, 远程仓库的此文件(夹)也删除后，再在本地生成的`文件(夹)A`, git就可以忽略它的修改.  
