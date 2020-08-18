@@ -83,6 +83,18 @@ sidecar 注入后查看pod提供对外服务的端口号:
 	Proto Recv-Q Send-Q Local Address       Foreign Address      State      PID/Program name
 	tcp     0          0.0.0.0:80             0.0.0.0:*          LISTEN     1/nginx: master pro
 	......//Pod对外服务端口号会多增加5个
+部署istio后搭建bookinfo实例, 查看productpage 网络
+
+	$ k exec -it -n book-info productpage-v1-7df7cb7f86-gjtfz -c istio-proxy -- netstat -ntlp
+	Active Internet connections (only servers)
+	Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+	tcp        0      0 0.0.0.0:15090           0.0.0.0:*               LISTEN      35/envoy
+	tcp        0      0 127.0.0.1:15000         0.0.0.0:*               LISTEN      35/envoy
+	tcp        0      0 0.0.0.0:15001           0.0.0.0:*               LISTEN      35/envoy
+	tcp        0      0 0.0.0.0:15006           0.0.0.0:*               LISTEN      35/envoy
+	tcp        0      0 0.0.0.0:15021           0.0.0.0:*               LISTEN      35/envoy
+	tcp6       0      0 :::9080                 :::*                    LISTEN      -
+	tcp6       0      0 :::15020                :::*                    LISTEN      1/pilot-agent
 
 ### **3. istio-iptables**
 tcp/ip协议栈一般都是由OS内核去实现的,无论是linux, windows, mac. 因为编码时候不会考虑传输层是什么, 怎么封报, 只是在应用层用http协议或调一些SDK或者调用开源包来实现数据转发或者说是报文的封装等.  
@@ -97,14 +109,34 @@ istio-init容器在启动后不久就停止运行，改变了容器的网络策�
 	$ kubectl logs -f -n jiuxi-ns jiuxi-*** -c istio-init 
 	......
 	* nat			//nat表增加下面四条链
-	-N ISTIO_REDIRECT
-	-N ISTIO_IN_REDIRECT
-	-N ISTIO_INBOUND
-	-N ISTIO_OUTPUT
-	-A ISTIO_REDIRECT -p tcp -j REDIRECT --to-port 15001	// 从任意地方来的和到任意地方去的流量, 协议是tcp/ip协议, 都会转到15001这个端口
-	......
+	:PREROUTING ACCEPT [0:0]
+	:INPUT ACCEPT [0:0]
+	:OUTPUT ACCEPT [0:0]
+	:POSTROUTING ACCEPT [0:0]
+	:ISTIO_INBOUND - [0:0]
+	:ISTIO_IN_REDIRECT - [0:0]
+	:ISTIO_OUTPUT - [0:0]
+	:ISTIO_REDIRECT - [0:0]
+	-A PREROUTING -p tcp -j ISTIO_INBOUND
+	-A OUTPUT -p tcp -j ISTIO_OUTPUT
+	-A ISTIO_INBOUND -p tcp -m tcp --dport 22 -j RETURN
+	-A ISTIO_INBOUND -p tcp -m tcp --dport 15090 -j RETURN
+	-A ISTIO_INBOUND -p tcp -m tcp --dport 15021 -j RETURN
+	-A ISTIO_INBOUND -p tcp -m tcp --dport 15020 -j RETURN
+	-A ISTIO_INBOUND -p tcp -j ISTIO_IN_REDIRECT
+	-A ISTIO_IN_REDIRECT -p tcp -j REDIRECT --to-ports 15006
+	-A ISTIO_OUTPUT -s 127.0.0.6/32 -o lo -j RETURN
+	-A ISTIO_OUTPUT ! -d 127.0.0.1/32 -o lo -m owner --uid-owner 1337 -j ISTIO_IN_REDIRECT
+	-A ISTIO_OUTPUT -o lo -m owner ! --uid-owner 1337 -j RETURN
+	-A ISTIO_OUTPUT -m owner --uid-owner 1337 -j RETURN
+	-A ISTIO_OUTPUT ! -d 127.0.0.1/32 -o lo -m owner --gid-owner 1337 -j ISTIO_IN_REDIRECT
+	-A ISTIO_OUTPUT -o lo -m owner ! --gid-owner 1337 -j RETURN
+	-A ISTIO_OUTPUT -m owner --gid-owner 1337 -j RETURN
+	-A ISTIO_OUTPUT -d 127.0.0.1/32 -j RETURN
+	-A ISTIO_OUTPUT -j ISTIO_REDIRECT
+	-A ISTIO_REDIRECT -p tcp -j REDIRECT --to-ports 15001	// 从任意地方来的和到任意地方去的流量, 协议是tcp/ip协议, 都会转到15001这个端口
 	COMMIT
-	......
+	# Completed on Thu Aug 13 08:59:39 2020
 查看此pod被调度到哪台机器上
 
 	$ docker ps | grep -i istio-proxy
@@ -142,7 +174,7 @@ istio-init容器在启动后不久就停止运行，改变了容器的网络策�
 	                                         ps -ef
 
 **envoy作用**
-![](envoy.PNG)
+![](ports_used_by_istio.PNG)
 之所以不用nginx而用envoy做sidecar原因是nginx功能啥都有,太重了, envoy更偏轻量级, 更方便使用.  
 
 	$ kubectl exec -it -n jiuxi-ns jiuxi-*** -c istio-proxy -- netstat -ntlp
@@ -153,8 +185,8 @@ istio-init容器和istio-proxy容器都使用相同的image 如: docker.io/istio
 
 当用户同时在kubernetes中的yaml中写了command和args时候自然是可以覆盖DockerFile中ENTRYPOINT的命令行和参数，完整情况如下:  
  * 如果command 和 args 均没有写，那么用Docker默认的配置.
- * 如果command写了, 但args没有写，那么Docker默认的配置会被忽略而且仅仅执行.yaml文件的command(不带任何参数的).(istio-init容器)
- * 如果command没写, 但args写了，那么Docker默认配置的ENTRYPOINT的命令行会被执行, 但是调用的参数是.yaml中的args.(istio-proxy容器)
+ * 如果command写了, 但args没有写，那么Docker默认的配置会被忽略而且仅仅执行.yaml文件的command(不带任何参数的).
+ * 如果command没写, 但args写了，那么Docker默认配置的ENTRYPOINT的命令行会被执行, 但是调用的参数是.yaml中的args.(istio-proxy和istio-init容器都是这样)
  * 如果command和args都写了, 那么Docker默认的配置被忽略, 使用.yaml的配置
 
 
@@ -176,10 +208,17 @@ istio-init容器和istio-proxy容器都使用相同的image 如: docker.io/istio
 	$ kubectl get po -n jiuxi-ns jiuxi-***
 	......
 	initContainers:
-	- command:			// 有command, 因此容器会仅执行此command而且忽略image原数据里的args参数
+	- args:			// 有command, 因此容器会仅执行此command而且忽略image原数据里的args参数
 	  - istio-iptables
 	  - -p
 	......
+查看istio-init容器进程
+
+	$ docker ps -a --no-trunc| grep istio-init
+	......
+	"/usr/local/bin/pilot-agent istio-iptables -p 15001 -z 15006 -u 1337 -m REDIRECT -i * -x  -b * -d 15090,15021,15020"
+	......
+
 3. 查看 istio-proxy 容器yaml资源配置
 
 
@@ -195,7 +234,12 @@ istio-init容器和istio-proxy容器都使用相同的image 如: docker.io/istio
 	  - --binaryPath
 	  - /usr/local/bin/envoy	// pilot-agent启动envoy进程
 	......
+查看istio-proxy容器进程
 
+	$ docker ps --no-trunc| grep istio-proxy
+	......
+	"/usr/local/bin/pilot-agent proxy sidecar --domain istio-system.svc.cluster.local istio-proxy-prometheus --proxyLogLevel=warning --proxyComponentLogLevel=misc:error --controlPlaneAuthPolicy NONE --trust-domain=cluster.local"
+	......
 
 ## sidecar 自动注入
 

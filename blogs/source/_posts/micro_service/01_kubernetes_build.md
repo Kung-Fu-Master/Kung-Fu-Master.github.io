@@ -307,6 +307,8 @@ top: 1
 	$ yum install bash-completion
 	$ echo "source <(kubectl completion bash)" >> ~/.bashrc
 	$ source ~/.bashrc
+	$ bash /usr/share/bash-completion/bash_completion
+	$ bash
 试试 输入 `kubectl get n` 按 `tab` 查看提示.
 
 ### Additional
