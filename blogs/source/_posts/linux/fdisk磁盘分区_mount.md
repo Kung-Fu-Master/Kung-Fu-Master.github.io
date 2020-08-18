@@ -1,5 +1,5 @@
 ---
-title: fdisk磁盘分区
+title: fdisk磁盘分区 mount操作
 tags: 
 categories:
 - linux
