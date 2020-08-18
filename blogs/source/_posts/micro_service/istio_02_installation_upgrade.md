@@ -1,5 +1,5 @@
 ---
-title: Istio 02 Installation on Kubernetes
+title: Istio 02 Installation on Kubernetes and upgrade
 tags: istio
 categories:
 - microService
@@ -98,6 +98,51 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 istio1.6 提供了简单的升级命令方式，直接通过命令 $ istioctl upgrade 就可以更新Istio control plane in-place
 且提供了金丝雀发布方式，更新和回滚过程可以看到有两个istiod在istio-system命名空间下.
 
+使用istioctl升级时候, 老版本和新版本之间版本号要接近，相差太远如由istio1.0升级到istio1.6.8有可能会失败.
 
+**升级步骤**
+查看升级前的istioctl 版本
+
+	$ istioctl version
+	client versin: 1.5.0			// 指istioctl 这个二进制客户端工具
+	control plane version: 1.5.0	// istio部署在k8s上的控制面资源, 如pilot等
+	dataplane version: 1.5.0		// istio部署在k8s上的数据面资源, 如envoy
+
+**1. 升级istioctl客户端二进制工具**
+Download istio最新版本如istio-1.6.8, 解压缩`tar -zxvf istio-1.6.8.tar.gz`进入istio-1.6.8/bin  
+linux Path环境变量中的老版本istioctl去掉添加新版本的istioctl客户端工具.  
+
+**2. 升级istio在k8s上的数据面和控制面**
+升级时候要保证升级的是同样的profile, 如demo, 或者default
+
+	$ istioctl profile list 		// 查看istioctl有哪些profile
+	$ istioctl profile dump demo > demo.yaml	// 先dump出跟老版本相同选择的新版本的profile, 如新老版本都采用demo 这个profile
+根据新版本的demo.yaml来进行升级
+
+	$ vim demo.yaml 	//先修改下dump出来的新版本的demo.yaml
+	jwtPolicy: third-party-jwt ---> 改为 jwtPolicy: first-party-jwt
+	如果这里不修改会报证书无法挂载情况.
+	
+	$ istioctl upgrade -f demo.yaml
+查看升级后的istioctl 版本
+
+	$ istioctl version
+	client versin: 1.6.8			// 指istioctl 这个二进制客户端工具
+	control plane version: 1.6.8	// istio部署在k8s上的控制面资源, 如pilot等
+	dataplane version: 1.5.0 (1 proxies), 1.6.8 (3 proxies)	// istio部署在k8s上的数据面资源, 如envoy, 发现还有老版本注入的envoy, 也需要`手动`或`自动升级`
+如果以前采用的是自动sidecar注入, 则将所有pods通过滚动更新来更新sidecar
+
+	$ kubectl rollout restart deployment --namespace <namespace with auto injection>
+如果以前采用的是手动sidecar注入, 则更新sidecar通过执行:
+
+	$ kubectl apply -f < (istioctl kube-inject -f <original application deployment yaml>) //实例如下
+	$ istioctl kube-inject -f nginx.yaml | kubectl apply -f -
+通过`kubectl get pods -n <Namespace>` 来观察到新版本生成后老版本的pod才terminate.  
+重新查看istioctl version
+
+	$ istioctl version
+	client versin: 1.6.8
+	control plane version: 1.6.8
+	dataplane version: 1.6.8 (4 proxies)
 
 
