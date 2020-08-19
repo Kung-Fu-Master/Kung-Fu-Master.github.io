@@ -256,6 +256,9 @@ kubectl create -f 命令用于从YAML或JSON文件创建任何资源（不只是
 	Normal  Scheduled  5m12s  default-scheduler  Successfully assigned default/kubia-liveness to server02
 	Normal  Pulling    5m8s   kubelet, server02  Pulling image "luksa/kubia-unhealthy"
 
+### 一直查看pod状态
+
+	$ kubectl get pods -w
 ### pod标签labels
 
 	$ kubectl get po --show-labels
@@ -288,7 +291,7 @@ POD添加标签
 	app=pc,rel=beta 选择pc微服务的beta版本pod
 
 
-## pod 注解
+### pod 注解
 
 	$ kubectl annotate pod kubia-gpu mycompany.com/someannotion="foo bar"
 	$ kubectl describe pod/kubia-gpu
