@@ -1,5 +1,5 @@
 ---
-title: Istio 02 Installation on Kubernetes and upgrade
+title: Istio 02 Installation and upgrade
 tags: istio
 categories:
 - microService
@@ -132,12 +132,13 @@ linux Path环境变量中的老版本istioctl去掉添加新版本的istioctl客
 	client versin: 1.6.8			// 指istioctl 这个二进制客户端工具
 	control plane version: 1.6.8	// istio部署在k8s上的控制面资源, 如pilot等
 	dataplane version: 1.5.0 (1 proxies), 1.6.8 (3 proxies)	// istio部署在k8s上的数据面资源, 如envoy, 发现还有老版本注入的envoy, 也需要`手动`或`自动升级`
+**3. 升级已经注入到pod中的sidecar**
 如果以前采用的是自动sidecar注入, 则将所有pods通过滚动更新来更新sidecar
 
 	$ kubectl rollout restart deployment --namespace <namespace with auto injection>
-如果以前采用的是手动sidecar注入, 则更新sidecar通过执行:
+如果以前采用的是手动sidecar注入, 则更新sidecar通过执行如下命令:
 
-	$ kubectl apply -f < (istioctl kube-inject -f <original application deployment yaml>) //实例如下
+	$ kubectl apply -f < (istioctl kube-inject -f <original-application-deployment.yaml>) //实例如下
 	$ istioctl kube-inject -f nginx.yaml | kubectl apply -f -
 通过`kubectl get pods -n <Namespace>` 来观察到新版本生成后老版本的pod才terminate.  
 重新查看istioctl version
