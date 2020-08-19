@@ -57,7 +57,7 @@ categories:
 bin/目录存放istioctl客户端工具.  
 manifests/目录存放istio安装表单.  
 samples/目录存放一些使用样例.  
-tools/目录下的istioctl.bash文件是能在输入$ istioctl m 时候自动补全命令,如 $istioctl manfest.  , 需要先执行$ source istioctl.bash才能生效，新版本istio好像不用设置也能有自动补全功能.  
+tools/目录下的istioctl.bash文件是能在输入$ istioctl m 时候自动补全命令,如 $istioctl manifest.  , 需要先执行$ source istioctl.bash才能生效，新版本istio好像不用设置也能有自动补全功能.  
 
 ## **Istioctl工具介绍**
 official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
@@ -117,13 +117,15 @@ linux Path环境变量中的老版本istioctl去掉添加新版本的istioctl客
 
 	$ istioctl profile list 		// 查看istioctl有哪些profile
 	$ istioctl profile dump demo > demo.yaml	// 先dump出跟老版本相同选择的新版本的profile, 如新老版本都采用demo 这个profile
-根据新版本的demo.yaml来进行升级
+第一种:根据新版本的demo.yaml来进行升级
 
 	$ vim demo.yaml 	//先修改下dump出来的新版本的demo.yaml
 	jwtPolicy: third-party-jwt ---> 改为 jwtPolicy: first-party-jwt
 	如果这里不修改会报证书无法挂载情况.
-	
 	$ istioctl upgrade -f demo.yaml
+第二种:
+
+	$ istioctl manifest apply -set profile=demo --set values.global.jwtPolicy=first-party-jwt
 查看升级后的istioctl 版本
 
 	$ istioctl version
