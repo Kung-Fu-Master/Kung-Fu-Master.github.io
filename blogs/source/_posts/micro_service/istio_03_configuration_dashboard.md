@@ -91,9 +91,9 @@ categories:
 	kind: VirtualService
 	metadata:
 	  name: bookinfo
-	spec:
-	  hosts:
-	  - "*"					# 也指定为"httpbin.example.com", 与上面的hosts保持一致
+	spec:					# * 经常会跟Gateway一起使用.
+	  hosts:				# * 表示VirtualService对整个k8s可寻址的资源如Service,Ingress, 都使用同样的路由规则
+	  - "*"					# 也指定为"httpbin.example.com", 与上面Gateway的hosts保持一致, 表示VirtualService的路由规则只适用于此流量可路由的域名资源httpbin.example.com.
 	  gateways:
 	  - bookinfo-gateway	# 绑定上面Gateway, 从外部如浏览器可以访问如: curl -s http://ingressgateway-Host-IP:NodePortNumber/productpage
 	  http:					# 访问协议是http的时候才会进一步匹配

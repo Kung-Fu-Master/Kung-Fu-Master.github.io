@@ -245,9 +245,9 @@ pods 的缩写是 po, service 的缩写是 SVC, replicationcontroller 的缩写 
 ### 创建POD
 通过上传 JSON 或 YAML 描述文件到 Kubemetes API 服务器来创建 pod.
 kubectl create -f 命令用于从YAML或JSON文件创建任何资源（不只是 pod).
-	$ kubectl create -f kubia-manual.yaml
-	$ kubectl create -f kubia-gpu.yaml -n custom-namespace	//船舰pod到custom-namespace命名空间下
 
+	$ kubectl create -f kubia-manual.yaml
+	$ kubectl create -f kubia-gpu.yaml -n custom-namespace	//创建pod到custom-namespace命名空间下
 	$ kubectl describe pod/kubia
 	......
 	Events:
@@ -255,6 +255,10 @@ kubectl create -f 命令用于从YAML或JSON文件创建任何资源（不只是
 	----    ------     ----   ----               -------
 	Normal  Scheduled  5m12s  default-scheduler  Successfully assigned default/kubia-liveness to server02
 	Normal  Pulling    5m8s   kubelet, server02  Pulling image "luksa/kubia-unhealthy"
+编写好yaml文件在本地某个目录后, cd到此目录, 用一条command全部创建或删除资源
+
+	$ kubectl apply -f .	// 添加所有资源
+	$ kubectl delete -f .	// 删除所有资源
 
 ### 一直查看pod状态
 
