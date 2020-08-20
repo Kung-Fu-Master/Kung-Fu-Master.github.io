@@ -1,6 +1,6 @@
 ---
 title: docker 02 private hub & journal
-tags: 
+tags: docker
 categories:
 - technologies
 - docker

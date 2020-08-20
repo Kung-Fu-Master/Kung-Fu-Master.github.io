@@ -8,21 +8,21 @@ categories:
 top: 1
 ---
 
-### Kubernetes 简介
+## **Kubernetes 简介**
  ![](1.JPG)
  ![](2.JPG)
  
-### 主要特征
+## **主要特征**
 > * 以服务为中心: 不关心服务运行的环境和细节，所以构建在kubernetes上的系统可以部署在物理机、虚拟机、公有云、私有云，在什么地方运行都是无差别的.
 > * 自动化: 在kubernetes里的系统可以自动扩缩容、自动升级、更新、部署. 比如:
 >  - K8s收到某个指令后，会触发调度流程，选中目标节点，部署或者停止响应服务.
 >  - 如果有新的pod启动，会被自动加入负载均衡器，自动生效
 >  - 服务运行过程中，K8s会定期的检查它们的实例数，以及这些实例的状态是否正常，当发现某个实例不可用的时候会自动销毁不可用的实例然后重新调度一个新的实例，以上所有都是自动化完成，不需要人工参与.
 
-### 架构
+## **架构**
 ![](K8s_arch1.JPG)
 
-### Kubernetes VS Docker
+## **Kubernetes VS Docker**
 > K8s可以看成是Docker的上层架构, 就像是javaee和java的关系,Java是一问语言，J2EE是Java语言的一门使用技术，Java为J2EE提供了库和语法，J2EE使用Java的库和语法应用在WEB上。这是概念性的区别。
 > * Java SE（Java Platform，Standard Edition）。Java SE 以前称为 J2SE。它允许开发和部署在桌面、服务器、嵌入式环境和实时环境中使用的 Java 应用程序。Java SE 包含了支持 Java Web 服务开发的类，并为 Java Platform，Enterprise Edition（Java EE）提供基础。
 > * Java EE（Java Platform，Enterprise Edition）。这个版本以前称为 J2EE。企业版本帮助开发和部署可移植、健壮、可伸缩且安全的服务器端 Java 应用程序。Java EE 是在 Java SE 的基础上构建的，它提供 Web 服务、组件模型、管理和通信 API，可以用来实现企业级的面向服务体系结构（service-oriented architecture，SOA）和 Web 2.0 应用程序。
@@ -31,15 +31,15 @@ top: 1
 > K8s是以Docker技术的标准为基础去打造一个全新的分布式架构系统，K8s不是一定要依赖Docker，Docker是一个产品，而Docker技术是一些列的标准，只要实现了这些标准的产品都可以替代Docker，所以说K8s在底层可以支持它自己的容器技术并且经过Google的持续优化，号称在某些方面做得比Docker更加优秀，所以用不用Docker可以自己选择.
 
 
-### 核心概念
+## **核心概念**
 ![](3.JPG)
 ![](4.JPG)
 ![](5.JPG)
 
-### Label 标签
+## **Label 标签**
 > POD，Deployment，Node等都可以打标签启到标识作用.
 
-### POD (可以称为实例)
+## **POD (可以称为实例)**
 > * 所有的服务，所有的应用最终都是跑在Pod中,Pod是Kubernetes概念中最小的单元，可以理解为是Kubernetes的一个原子.
 > * POD 里面可以有一个或多个容器，
 > * POD里面所有的容器都是运行在一台机器上
@@ -51,7 +51,7 @@ top: 1
 ![](K8s_arch2.JPG)
 ![](K8s_arch3.JPG)
  
-### Pod 通讯
+## **Pod 通讯**
 > * Pod内容器之间通讯: 通过localhost加上端口就可以访问.
 ![](Pod_communication1.JPG)
 
@@ -61,7 +61,7 @@ top: 1
 > 不同Node不同Pod直接通讯: Pod的IP不能冲突，Pod的IP和Node的IP关联起来，通过关联让Pod之间可以通讯.
 ![](Pod_communication3.JPG)
 
-### Service
+## **Service**
 ![](K8s_arch4.JPG)
 > Pod具体运行在某个Node上
 > Service在Pod外再包一层IP
@@ -74,10 +74,10 @@ top: 1
 > Kubernetes使用的是Laber Selector
 > 通过配置好的Service的Select()，选择标签然后自动寻找POD, Service 对外有一个ClusterIP(Kube-proxy)，其它服务或者Client客户端就可以通过ClusterIP访问到这个Service，进而访问到最底层的POD服务
 
-### ReplicaSet(RS)副本集 (副本集这一层运行的程序可以称为应用)
+## **ReplicaSet(RS)副本集 (副本集这一层运行的程序可以称为应用)**
 > RS是POD的上一层, 管理关联POD，如果应用运行过程中某个POD出现了异常或异常退出，RS就会保证副本始终为R，会在另一台机器重新调度一个POD
 
-### Deployment
+## **Deployment**
 > * 扩容: 如对一个应用(Pod)扩容，把1个Pod扩容成四个实例，扩容的是Pod而不是Service, 4个Pod拥有相同标签，ServiceIP不变并对这4个Pod实行负载均衡
 ![](Pod_Scaling.JPG)
 
@@ -85,18 +85,18 @@ top: 1
 ![](Rolling_update1.JPG)
 ![](Rolling_update2.JPG)
 
-### 架构设计 
+## **架构设计 **
 ![](k8s_architecture1.JPG)
 ![](k8s_architecture2.JPG)
 
-### 密码学原理
+## **密码学原理**
 > * 对称加密:
 ![](Symmetric_encryption.JPG)
  
 > * 非对称加密:
 ![](Asymmetric_encryption.JPG)
 
-### 服务之间通信加密:
+## **服务之间通信加密:**
 ![](6.JPG)
 > 非对称加密非常复杂，不管是加密还是解密都非常耗时， 如果每次通信都进行非对称加密性能损耗是无法接受的
 > 对称加密性能非常高，因此考虑把两者结合在一起来通信
@@ -107,20 +107,34 @@ top: 1
 > + 上面有个不完美地方，Server B公开pub_key， 黑客截获后再把黑客自己Server的pub_key发送给Server A, Server A拿着这个pub_key加密了自己的私钥，之后又被黑客截获并解密，虽然这些工作对黑客来说很复杂，但这种情况是有可能发生的.
 > + 解决方法: CA 证书认证机构，一个中间商，给所有Server颁发证书,所有正常网站的证书都在这一个地方存储，当Server A 拿到 pub_key之后会向 CA 查询这个公钥是不是合法的是不是可以信任的，CA会查自己的数据库这个pub_key是哪个公司的，它的域名是什么，包括所有人是谁等各种信息在CA都有备案，CA告诉Server A这个pub_key是我颁发的没有问题，Server A再拿着这个公钥去通信, 有时候我们访问一些网站时候，https会显示红色警告，这就说明这个网站的证书不是通过CA认证过的，一般是自己生成的.
 
-### 服务发现
+## **服务发现**
 > * Kube-proxy(ClusterIP)： 为Pod创建虚拟IP，只能在集群内部访问，并且是固定的, 只要Service不删除，这个IP是不变的.
 > * Kube-proxy(NodePort): 在每个Node上都启一个线程端口，把服务暴露在节点上，这样就可以让集群外的服务通过Node IP 和 NodePort去访问集群内的服务.
 > * Kube-DNS: Kubernetes的一个插件，负责集群内部的DNS解析，目的是让集群内部的Pod之间通过名字去访问
 
-### 环境搭建
+## **环境搭建一篇blog**
 > * 官方推荐使用Kubeadmin进行方便快捷的搭建.
 > * 网上找的个人搭建的Kubernetes, 在绿色网络环境下安装kubernetes集群，并在安装过程中加深对Kubernetes组件以及架构的理解.
 >  - [https://github.com/liuyi01/kubernetes-starter](https://github.com/liuyi01/kubernetes-starter)
 
-### Download & Install
-> 官网步骤: https://kubernetes.io/docs/tasks/tools/install-kubectl/
+## **Download & Install**
+kubernetes集群部署三种方式
+1. kubeadm
+kubeadm也是一个工具，提供kubeadm init和kubeadm join，用于快速部署kubernetes集群, 官网步骤参考: 
+https://kubernetes.io/docs/tasks/tools/install-kubectl/
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
-#### 机器配置
+2. 二进制包
+从官方下载发行版的二进制包，手动部署每个组件，组成kubernetes集群
+地址：https://github.com/kubernetes/kubernetes/releases
+https://github.com/kubernetes/kubernetes/releases?after=v1.13.1
+
+3. minikube
+minikube是一个工具，可以在本地快速运行一个单点的kubernetes，仅用于尝试K8S或日常开发的测试环境使用
+部署地址：https://kubernetes.io/docs/setup/minkube/
+
+`这里我们使用kubeadm安装的方式搭建 kubernetes`
+## **机器配置**
 搭建K8s集群只用了一台安装Ubuntu18.04的酷睿机器.
 > 1. Ubuntu18.04宿主主机上 download & install virtualbox
 > $ apt-get install virtualbox
@@ -131,15 +145,16 @@ top: 1
 >  * 宿主主机 作为 worker02
 > 每台虚拟机 内存要大于等于 2 G ，CPU核数需要大于等于 4 核
 
-#### 每个node都在 /etc/environment 添加如下信息
-> http_proxy="http://child-prc.intel.com:913/"
-> https_proxy="http://child-prc.intel.com:913/"
-> ftp_proxy="ftp://child-prc.intel.com:913/"
-> no_proxy="K8S_MASTER_IP,K8S_MASTER_HostName"  如: no_proxy="10.67.108.200,hci-node01"  // [iotg@hci-node01 ~]$
+### **每个node都在 /etc/environment 添加如下信息**
+	http_proxy="http://child-prc.intel.com:913/"
+	https_proxy="http://child-prc.intel.com:913/"
+	ftp_proxy="ftp://child-prc.intel.com:913/"
+	no_proxy="K8S_MASTER_IP,K8S_MASTER_HostName"  如: no_proxy="10.67.108.200,hci-node01"
 
+### **kubeadm, kubelet, kubectl**
+> 每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的worknode上也安装(也就是下载或拷贝)kubectl二进制文件工具.
 
-#### kubeadm, kubelet, kubectl
-> 每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的node上也安装(也就是下载或拷贝)kubectl二进制文件工具.
+Ubuntu:
 
 	$ sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
 	$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -148,17 +163,37 @@ top: 1
 	$ sudo apt-get install -y kubectl
 	$ sudo apt-get install -y kubeadm
 	$ sudo apt-get install -y kubelet
+Centos:
+
+	$ cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+	[kubernetes]
+	name=Kubernetes
+	baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+	enabled=1
+	gpgcheck=1
+	repo_gpgcheck=1
+	gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+	exclude=kubelet kubeadm kubectl
+	EOF
+	
+	# Set SELinux in permissive mode (effectively disabling it)
+	$ setenforce 0
+	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+	$ yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes // 禁掉除了这个之外的别的仓库,也就是用这个新加的kubernetes仓库来安装kubeadm等.  
+	$ systemctl enable --now kubelet
+
 	$ kubeadm version		// 通过 kubectl 命令行客户端向运行在主节点上的 Kubemetes API 服务器发出 REST 请求以与集群交互
 	$ kubectl version		// 客户端工具
+	// kubelet服务配置文件路径: /var/lib/kubelet/config.yaml
 	$ kubelet --version		// kubelet是一个服务，可通过systemctl restart kubelet重启服务，每台master和worker节点都需要安装
 	$ systemctl enable --now kubelet
 	$ kubeadm reset
 	$ sudo hostnamectl set-hostname master-node //修改机器名字, 重开终端就可以看到机器名变了
+### **机器环境配置**
+master-node和worknode都需要设置.  
+关闭交换区, K8s认为swap性能开销比较大, 性能会大幅降低, 使用swap做云基础架构会减少性能, 因此k8s关闭swap.  
+另外重新装系统OS时候就可以不给swap分配分区.  
 
-#### 机器环境配置
-
-	关闭交换区, K8s认为swap性能开销比较大, 性能会大幅降低, 使用swap做云基础架构会减少性能, 因此k8s关闭swap
-	另外重新装系统OS时候就可以不给swap分配分区.
 	$ swapoff -a			// 临时关闭交换区，$ free -h 可以查看 Swap: 0B...
 	$ vim /etc/fstab  // 设置重启后自动关闭swapoff, 将含有swap的那一行前面加"#"注释掉就可以了
 	  /dev/mapper/centos-swap swap                    swap    defaults        0 0
@@ -170,6 +205,15 @@ top: 1
 	$ systemctl disable firewalld 			// 设置开机不启动防火墙
 	$ sysctl net.bridge.bridge-nf-call-iptables=1
 	$ sysctl net.bridge.bridge-nf-call-ip6tables=1
+有的说明还可以关闭网络管理器,关闭核心防护,清空iptabels, 编辑主机名
+
+	$ systemctl list-unit-files --type=service | grep NetworkManager // 查看NetworkManager是否enabled
+	$ systemctl status NetworkManager	// 查看NetworkManager是否running
+	$ systemctl stop NetworkManager
+	$ systemctl disable NetworkManager
+	$ setenforce 0
+	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+	$ iptables -F	// 清空iptables
 > Iptables原理
 > linux的防火墙由netfilter和iptables组成
 > 用户空间的iptables制定防火墙规则，内核空间的netfilter实现防火墙功能netfilter（内核空间）位于Linux内核中的包过滤防火墙功能体系，称为Linux防火墙的“内核态”
@@ -179,32 +223,33 @@ top: 1
 	$ getenforce			// 查看是否disabled
 	$ setenforce 0			//临时关闭selinux(Security-Enhanced Linux), 终端会输出"setenforce: SELinux is disabled"
 	$ vim /etc/selinux/config --> 将 SELINUX=permissive 改为 SELINUX=disabled, 设置重启后自动关闭selinux
-	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config	//永久关闭(试了好像没反应): 
-
-#### 同步系统时间
+	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config	//永久关闭(试了好像没反应)
+	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config(另一种)
+### **同步系统时间**
 > 涉及到验证签发的证书的有效性, 如果签发证书的服务器时间比使用证书的服务器时间早, 就会导致校验不成功或证书错误, 一直等到使用证书的服务器时间也运行到证书开始生效的时间后才会解决这个问题.
 
 	$ ntpdate time.windows.com 		// 同步 windows 系统时间
-
-#### 设置docker的proxy
+### **设置docker的proxy**
 	$ mkdir docker.service.d
 	$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
-
 	[Service]
 	Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
 	Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 
-#### 安装镜像
+	$ vim /etc/systemd/system/docker.service.d/no-proxy.conf
+	[Service]
+	Environment="NO_PROXY=10.239.140.133,10.239.141.123,master-node,node-1"
+### **安装镜像(可跳过)**
+	$ kubeadm config images list // 查看kubeadm 下载过的images
 	$ docker images
 	$ docker pull gcr.io/google_containers/kube-apiserver-amd64:v1.9.3
 	$ docker pull gcr.io/google_containers/kube-controller-manager-amd64:v1.9.3
 	$ docker pull gcr.io/google_containers/kube-scheduler-amd64:v1.9.3
 
-#### 添加机器到K8s集群
+### **添加机器到K8s集群**
 > 1. 在Master主机 server01 上运行
 
 	$ kubeadm init
-
 返回部分数据如下
 
 	......
@@ -232,16 +277,14 @@ top: 1
 
 > 2. 之后用上面命令返回的 kubeadm join 10.239.141.112:6443 --t ... 复制 并 在其它node机器(server02和宿主主机) 上运行就可以把node加进上面创建的Cluster了
 
-#### 在master server01 机器上查看集群节点信息
+### **在master server01 机器上查看集群节点信息**
 
 	$ kubectl get nodes
 	$ kubectl get namespaces
-
-#### 查看node节点信息
+### **查看node节点信息**
 
 	$ kubectl describe node server02
-
-### 重新(reset)在原来(机器上搭建k8s集群操作
+## **重新(reset)在原来(机器上搭建k8s集群操作**
 > 主机名和IP解析, 通过主机名访问机器, 修改下各个节点 /etc/hosts 文件内容(实验环境没有修改，跳过这个步骤), 也可以只在master上配置, 因为很多操作都是在master上执行
 
 	......
@@ -253,7 +296,7 @@ top: 1
 	$ rm -rf /etc/kubernetes/pki/etcd/
 	$ rm -rf /var/lib/etcd
 	$ rm -rf $HOME/.kube
-	$ kubeadm reset
+	$ kubeadm reset		// 出现有什么没有清理干净的可以手动删除掉, 如cni等,再reset, 如果还出现,可以忽略掉没有清理干净的信息提示, 执行kubeadm init.
 	$ swapoff -a
 	$ setenforce 0
 	$ systemctl stop firewalld.service
@@ -280,7 +323,7 @@ top: 1
 
 	$ kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')
 
-### k8s重新生成token
+## **k8s重新生成token**
 主机上执行如下命令，主机IP:10.239.140.186
 
 	$ kubeadm token create
@@ -302,7 +345,7 @@ top: 1
 	$ sysctl net.bridge.bridge-nf-call-ip6tables=1
 	$ kubeadm join --token v6rgnu.ydqgkuujayykkanv --discovery-token-ca-cert-hash sha256:be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4  10.239.140.186:6443
 
-### k8s命令自动补全
+## **k8s命令自动补全**
 
 	$ yum install bash-completion
 	$ echo "source <(kubectl completion bash)" >> ~/.bashrc
@@ -311,10 +354,10 @@ top: 1
 	$ bash
 试试 输入 `kubectl get n` 按 `tab` 查看提示.
 
-### Additional
+## **Additional**
 
-#### 重新reset K8s集群，然后kubeadm init遇到如下问题
-#### 问题1
+### **重新reset K8s集群，然后kubeadm init遇到如下问题**
+### **问题1**
 > [kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get http://localhost:10248/healthz: dial tcp [::1]:10248: connect: connection refused.
 解决方法:
 
@@ -322,13 +365,13 @@ top: 1
 	$ rm -rf /etc/systemd/system/kubelet.service.d/*
 	$ systemctl daemon-reload
 
-#### 问题2
+### **问题2**
 Unable to connect to the server: x509: certificate signed by unknown authority
 需要删除上一次部署后cp到~/.kube的证书文件, 再重新部署一遍k8s集群
 
 	$ rm -rf $HOME/.kube
 
-#### 问题3
+### **问题3**
 The connection to the server localhost:8080 was refused - did you specify the right host or port?
 需要添加administrator访问证书
 第一种:
@@ -342,7 +385,7 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 	$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-#### 问题n
+### **问题n**
 https://istio.io/docs/examples/bookinfo/
 Istio 部署bookinfo 到bookinfo命名空间， 发现只部署了svc，RS，但是没有部署pod.
 

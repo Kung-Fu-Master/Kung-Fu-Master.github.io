@@ -1,6 +1,6 @@
 ---
 title: docker 01 installation and control commands
-tags: 
+tags: docker
 categories:
 - technologies
 - docker
@@ -54,46 +54,49 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 
 ## 安装curl:
 > * 第一种方法:
->	 https://curl.haxx.se/download.html
->	 $ curl-7.69.1.tar.gz
->	 $ ./configure --prefix=/usr/local/curl
->	 $ make -j12
->	 $ make install
->	 $ ln -s /usr/local/curl/bin/curl /usr/bin
->	 $ vim ~/.bashrc 添加 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/curl/lib
->	 $ source ~/.bashrc
->	 $ curl --version 		// 查看curl版本和支持的协议如http, https
+
+	 https://curl.haxx.se/download.html
+	 $ curl-7.69.1.tar.gz
+	 $ ./configure --prefix=/usr/local/curl
+	 $ make -j12
+	 $ make install
+	 $ ln -s /usr/local/curl/bin/curl /usr/bin
+	 $ vim ~/.bashrc 添加 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/curl/lib
+	 $ source ~/.bashrc
+	 $ curl --version 		// 查看curl版本和支持的协议如http, https
 > * 第二种方法(推荐，方便快捷):
->    $ apt-get update
->    $ apt-get upgrade
->    $ apt-get install curl
->    $ curl --version
+
+	$ apt-get update
+	$ apt-get upgrade
+	$ apt-get install curl
+	$ curl --version
 > * 提前设置好系统的proxy如:
->    export http_proxy=child-prc.intel.com:913
->    export https_proxy=child-prc.intel.com:913 // https的proxy与上面的http的要一样
+
+	$ export http_proxy=child-prc.intel.com:913
+	$ export https_proxy=child-prc.intel.com:913 // https的proxy与上面的http的要一样
 
 ## 安装docker:
->$ apt-get install docker
->$ apt-get install docker.io
->
->$ mkdir -p /etc/systemd/system/docker.service.d
->$ touch /etc/systemd/system/docker.service.d/http-proxy.conf
-```
-添加如下内容
-[Service]
-Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
-Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
-```
+
+	$ apt-get install docker
+	$ apt-get install docker.io
+	$ mkdir -p /etc/systemd/system/docker.service.d
+	$ touch /etc/systemd/system/docker.service.d/http-proxy.conf
+	添加如下内容
+	[Service]
+	Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
+	Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
+
 > Additional: 也可以在Docker服务启动配置中增加 --regis七ry-mirror=proxy_URL来指定镜像代理服务地址（如https://registry.docker-en.com)
 
->$ cd /etc/docker
->$ touch daemon.json
->	 {
->		"insecure-registries" :["10.239.82.163:5000"]  // 此文件设置为空, 需要从10.239.82.163这台机器拉镜像时候才需要添加此内容
->	 }
->$ systemctl daemon-reload
->$ systemctl restart docker
->$ docker search redis
+	$ cd /etc/docker
+	$ touch daemon.json
+	{
+	"insecure-registries" :["10.239.82.163:5000"],  // 此文件设置为空, 需要从10.239.82.163这台机器拉镜像时候才需要添加此内容
+	"registry-mirrors": ["https://uxk0ognt.mirror.aliyuncs.com"]	//使用国内镜像下载images
+	}
+	$ systemctl daemon-reload
+	$ systemctl restart docker
+	$ docker search redis
 
 ## 安装docker compose:		// 关于此程序说明可以参考 https://www.runoob.com/docker/docker-compose.html
 	 https://github.com/docker/compose/releases
@@ -127,22 +130,25 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
   + 执行完毕后容器被自动终止。
 
 ### 启动并进入容器
-> $ docker run --name ubuntu_18.04_v1.0 ubuntu_test:18.04 /bin/echo 'hello' // 不加 -it容器执行完echo 'hello'后就退出
-> hello
-> $ docker run -itd --name ubuntu_18.04_v2.0 ubuntu_test:18.04 /bin/bash // 不加参数d容器退出后，就终止运行，最好加上d，容器退出后容器内进程仍然后台执行
-> $ docker exec -it ubuntu_18.04_v2.0 /bin/bash
-> root@1cf8105dbd62:/# ps
->  PID TTY          TIME CMD
->    1 pts/0    00:00:00 bash
->   11 pts/0    00:00:00 ps
-> root@1cf8105dbd62:/#
-> 在容器内用 ps 命令查看进程，可以看到，只运行了 bash 应用，并没有运行其他无关的进程
-> Ctrl+d 或输入 exit 命令来退出容器：
-> root@afBbae53bdd3:/# exit
-> 进入容器后配置好proxy如:
-> $ export http_proxy=child-prc.intel.com:913
-> $ apt-get update
-> $ apt-get install python ......
+
+	$ docker run --name ubuntu_18.04_v1.0 ubuntu_test:18.04 /bin/echo 'hello' // 不加 -it容器执行完echo 'hello'后就退出
+	hello
+	$ docker run -itd --name ubuntu_18.04_v2.0 ubuntu_test:18.04 /bin/bash // 不加参数d容器退出后，就终止运行，最好加上d，容器退出后容器内进程仍然后台执行
+	$ docker exec -it ubuntu_18.04_v2.0 /bin/bash
+	root@1cf8105dbd62:/# ps
+	 PID TTY          TIME CMD
+	   1 pts/0    00:00:00 bash
+	  11 pts/0    00:00:00 ps
+	root@1cf8105dbd62:/#
+在容器内用 ps 命令查看进程，可以看到，只运行了 bash 应用，并没有运行其他无关的进程
+Ctrl+d 或输入 exit 命令来退出容器：
+
+	root@afBbae53bdd3:/# exit
+进入容器后配置好proxy如:
+
+	$ export http_proxy=child-prc.intel.com:913
+	$ apt-get update
+	$ apt-get install python ......
 
 
 ### 停止一个容器
@@ -167,18 +173,29 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 
 ### 导出容器
  * 第一种:
+
+
 	$ docker export a1cb4017f313 > export_ubuntu_container.tar		// 导出容器 1e560fca3906 快照到本地文件 ubuntu.tar。
  * 第二种:
+
+
 	$ docker export -o export_ubuntu_container.tar a1cb4017f313
 之后，可将导出的 tar 文件传输到其他机器上，然后再通过导人命令导入到系统中，实现容器的迁移 
 
 ### 导入容器(container)快照到本地image库
-> root@alpha:/home/dockers# cat export_ubuntu_container.tar | docker import - in_container/ubuntu:v1.0
-> sha256:31bfe55fe553047cd3cf513dc7d19ae15e746166685c90d8ac3afac9dcea755b
-> root@alpha:/home/dockers# docker images
-> REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
-> in_container/ubuntu     v1.0                31bfe55fe553        3 seconds ago       64.2MB
-> ubuntu_test             18.04               a4850ad0370a        About an hour ago   64.2MB
+ * 第一种导入方式:
+
+
+	$ docker load -i ubuntu_18.04.tar
+ * 第二种导入方式:
+
+
+	$ cat export_ubuntu_container.tar | docker import - in_container/ubuntu:v1.0
+	  sha256:31bfe55fe553047cd3cf513dc7d19ae15e746166685c90d8ac3afac9dcea755b
+	$ docker images
+	  REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+	  in_container/ubuntu     v1.0                31bfe55fe553        3 seconds ago       64.2MB
+	  ubuntu_test             18.04               a4850ad0370a        About an hour ago   64.2MB
 
 > 既可以使用 $ docker load -i ubuntu_18.04.tar 命令来导入镜像存储文件到本地镜像库，也可以使用 $ cat export_ubuntu_container.tar | docker import - in_container/ubuntu:v1.0 命令来导入一个容器快照到本地镜像库。
 > 这两者的区别在于： 容器快照文件将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），而镜像存储文件将保存完整记录，体积更大。
@@ -196,12 +213,18 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 
 ### 查看容器内的进程，端口映射，统计信息，容器详情, 容器文件变更， 更新容器配置等
  * 查看窑器内进程
+
+
 	$ docker top a1cb4017f313
 
  * 查看容器端口与宿主主机端口映射情况
+
+
 	$ docker port a1cb4017f313 // 或者 $ docker container port a1cb4017f313
 
  * 查看统计信息, 会显示 CPU 、内存、存储、网络等使用情况的统计信息
+
+
 	$ docker stats a1cb4017f313
 	CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT    MEM %               NET I/O             BLOCK I/O           PIDS
 	a1cb4017f313        strange_mendeleev   0.00%               6.23MiB / 7.612GiB   0.08%               22kB / 0B           0B / 4.1kB          1
@@ -211,12 +234,18 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 	 + －no-trunc ：不截断输出信息。
 
  * 查看容器文件变更
+
+
 	$ docker [container] diff a1cb4017f313
 
  * 查看容器信息
+
+
 	$ docker inspect a1cb4017f313 // 或者 $ docker container inspect a1cb4017f313
 
  * 更新容器配置
+
+
 	$ docker update --help查看支持的选项
 	限制总配额为 1 秒，容器 test 所占用时间为 10% ，代码如下所示：
 	$ docker update --cpu-quota 1000000 test
@@ -285,8 +314,9 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 ### 查找镜像
 	Docker Hub 网址为： https://hub.docker.com/
 	$ docker search httpd			// 使用 docker search 命令来搜索镜像
-	
-	* 搜索官方提供的带 nginx关键字的镜像
+ * 搜索官方提供的带 nginx关键字的镜像
+
+
 	$ docker search --filter=is-official=true nginx
 	NAME                DESCRIPTION                STARS               OFFICIAL            AUTOMATED
 	nginx               Official build of Nginx.   13037               [OK]
@@ -295,14 +325,17 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
   + STARS: 类似 Github 里面的 star，表示点赞、喜欢的意思。
   + OFFICIAL: 是否 docker 官方发布
   + AUTOMATED: 自动构建。
-  
-	* 搜索所有收藏数超过 4 的关键词包括 tensorow 的镜像
+
+ * 搜索所有收藏数超过 4 的关键词包括 tensorow 的镜像
+
+
 	$ docker search --filter=stars=200 tensorflow
 	NAME                          DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
 	tensorflow/tensorflow         Official Docker images for the machine learn…   1662
 	jupyter/tensorflow-notebook   Jupyter Notebook Scientific Python Stack w/ …   209
-	
-	* 搜索所有收藏数超过 4 的关键词包括 tensorow 的镜像的前3个镜像
+* 搜索所有收藏数超过 4 的关键词包括 tensorow 的镜像的前3个镜像
+
+
 	$ docker search --filter=stars=4 --limit=3 tensorflow
 	NAME                          DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
 	tensorflow/tensorflow         Official Docker images for the machine learn…   1662
@@ -343,40 +376,45 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 	$ docker pull hub.c.163.com/public/ubuntu:18.04
 
 ### 改变标签
- $ docker tag mysql:5.7 my_mysql:5.7.0
- $ docker images
+	$ docker tag mysql:5.7 my_mysql:5.7.0
+	$ docker images
 	REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
 	my_mysql                5.7.0               273c7fcf9499        4 days ago          455MB
 	mysql                   5.7                 273c7fcf9499        4 days ago          455MB
 > 它们实际上指向了同一个镜像文件，只是别名不同而巳。docker tag命令添加的标签实际上起到了类似链接的作用
 
 ### 查看imgage制作信息
- $ docker inspect mysql:5.7
- 只要其中一项内容时， 可以使用 -f 来指定
- $ docker inspect -f {{".Architecture"}} mysql:5.7
- $  docker inspect -f {{".ContainerConfig"}} mysql:5.7
+	$ docker inspect mysql:5.7
+	只要其中一项内容时， 可以使用 -f 来指定
+	$ docker inspect -f {{".Architecture"}} mysql:5.7
+	$  docker inspect -f {{".ContainerConfig"}} mysql:5.7
 
 ### 查看image历史
- $ docker history mysql:5.7
+	$ docker history mysql:5.7
 
 
 
 ### 删除镜像
 > -f, -force: 强制删除镜像， 即使有容器依赖它
 > -no-prune: 不要清理未带标签的父镜像
-> $ docker rmi hello-world
+
+	$ docker rmi hello-world
 > docker rmi 命令只是删除了该镜像多个标签中的指定标签而巳， 并不影响镜像文件
-> $ docker rmi my_mysql:5.7.0
+
+	$ docker rmi my_mysql:5.7.0
 > Untagged: my_mysql:5.7.0
 > docker rmi 命令来删除只有一个标签的镜像， 可以看出会删除这个镜像文件的所有文件层
 > 当使用 docker rmi 命令， 并且后面跟上镜像的 ID (也可以是能进行区分的部分 ID 串前缀）时， 会先尝试删除所有指向该镜像的标签， 然后删除该镜像文件本身
 > 当有该镜像创建的容器存在时， 镜像文件默认是无法被删除的, 如果要想强行删除镜像， 可以使用-f参数
-> $ docker rmi -f ubuntu:18.04
+
+	$ docker rmi -f ubuntu:18.04
 > 通常并不推荐使用-f参数来强制删除一个存在容器依赖的镜像。 正确的做法是，先删除依赖该镜像的所有容器， 再来删除镜像
 > 首先删除容器a21c0840213e:
-> $ docker rm a2lc0840213e
+
+	$ docker rm a2lc0840213e
 > 然后使用ID来删除镜像， 此时会正常打印出删除的各层信息：
-> $ docker rmi Bflbd2lbd25c
+
+	$ docker rmi Bflbd2lbd25c
 
 
 ### 清理镜像
@@ -415,11 +453,11 @@ Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
  * 导出镜像
 
 
- $ docker save -o ubuntu_18.04.tar ubuntu:18.04
+	$ docker save -o ubuntu_18.04.tar ubuntu:18.04
  * 载入镜像
 
 
- $ docker load -i ubuntu_18.04.tar 或者 docker load < ubuntu_18.04.tar
+	$ docker load -i ubuntu_18.04.tar 或者 docker load < ubuntu_18.04.tar
 
 ## 重启docker服务
 
