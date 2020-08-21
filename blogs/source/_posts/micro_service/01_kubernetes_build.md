@@ -119,12 +119,12 @@ top: 1
 
 ## **Download & Install**
 kubernetes集群部署三种方式
-1. kubeadm
+1. kubeadm(安装起来简单)
 kubeadm也是一个工具，提供kubeadm init和kubeadm join，用于快速部署kubernetes集群, 官网步骤参考: 
 https://kubernetes.io/docs/tasks/tools/install-kubectl/
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
-2. 二进制包
+2. 二进制包 (生产环境安装方式,比较稳定)
 从官方下载发行版的二进制包，手动部署每个组件，组成kubernetes集群
 地址：https://github.com/kubernetes/kubernetes/releases
 https://github.com/kubernetes/kubernetes/releases?after=v1.13.1
