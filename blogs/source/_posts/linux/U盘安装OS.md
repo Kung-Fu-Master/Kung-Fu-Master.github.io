@@ -1,17 +1,18 @@
 ---
-title: U盘安装OS_Ubuntu_18.04
+title: U盘安装OS
 tags: 
 categories:
 - linux
 ---
 
-### 1. 安装启动盘(U 盘)
+## **安装启动盘(U 盘)**
 > $ fdisk -l
 > $ umount /dev/sdb1
 > $ mkfs.vfat /dev/sdb -I
 > $ sudo dd if=~/Downloads/ubuntu-16.04-desktop-amd64.iso of=/dev/sdb status=progress
 
-### 2. 开启root访问权限
+## **安装Ubuntu_18.04**
+### 1. 开启root访问权限
 > $ sudo passwd root
 > 输入user用户密码，再设置root密码，下次就可以$ su root 获取root权限了
 
@@ -19,7 +20,7 @@ categories:
 > $ adduser $USERNAME
 > $ passwd $PASSWD
 
-### 3. 设置网络
+### 2. 设置网络
 > * 点击屏幕右上角向下三角
 >  + Wired Connected -> Wired Settings -> Network Proxy -> Manual -> HTTP Proxy等输入child-prc.intel.com, port输入913
 >  + 到此可以试着打开浏览器看能不能上网
@@ -41,7 +42,7 @@ set nu
 set tabstop=4
 ```
 
-### 4. 安装ssh并开启root远程登录
+### 3. 安装ssh并开启root远程登录
 > $ apt-get install openssh-server
 > $ vim /etc/ssh/sshd_config
 
@@ -51,7 +52,7 @@ set tabstop=4
 > $ ps -e | grep sshd			// 查看SSH是否启动成功
 > $ /etc/init.d/ssh stop		// 关闭SSH服务, 如果先开启服务再设置PermitRootLogin为yes则需要关掉ssh服务再启动ssh服务使其修改生效
 
-### 5. 安装build-essential等必要的编译配置运行程序工具如gcc等
+### 4. 安装build-essential等必要的编译配置运行程序工具如gcc等
 > $ apt install build-essential	// 该命令将安装一堆新包，包括gcc，g ++和make。
 > $ gcc --version		// gcc -v
 
@@ -102,7 +103,7 @@ set tabstop=4
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 
-# cpupower
+### cpupower
 > $ apt install linux-tools-common
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
@@ -112,27 +113,42 @@ set tabstop=4
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 
+## 安装Centos Minimal
 
+### 配置网络启动
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+	$ vi /etc/sysconfig/network-scripts/ifcfg-ens33
+	ONBOOT=yes			// ONBOOT=no，改为ONBOOT=yes
+	
+	//重启网络
+	$ ifup ens33		// ifup 网卡名字
+### 配置yum代理
 
+	$ echo proxy=http://Proxy:port
+	$ yum install vim
+### 配置系统proxy
 
+	$ vim ~/.bashrc
+	export http_proxy=http://Proxy:port
+	export https_proxy=http://Proxy:port
 
+### 安装网络工具
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+	$ yum install net-tools
+### 开启远程登陆
 
+	$ vim /etc/ssh/sshd_config
+	Port 22
+	#AddressFamily any
+	#ListenAddress 0.0.0.0
+	#ListenAddress ::
+	
+	#LoginGraceTime 2m
+	PermitRootLogin yes
+	#StrictModes yes
+	#MaxAuthTries 6
+	#MaxSessions 10
 
-
-
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
-
-
-
-
-
-
-
-
-
-
+	启动sshd
+	$ /bin/systemctl start sshd.service
 

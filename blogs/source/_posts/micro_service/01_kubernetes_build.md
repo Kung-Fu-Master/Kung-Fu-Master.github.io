@@ -209,7 +209,7 @@ master-node和worknode都需要设置.
 
 	$ systemctl list-unit-files --type=service | grep NetworkManager // 查看NetworkManager是否enabled
 	$ systemctl status NetworkManager	// 查看NetworkManager是否running
-	$ systemctl stop NetworkManager
+	$ systemctl stop NetworkManager		// 关闭网络, 没有IP地址无法远程连接终端, 慎用.
 	$ systemctl disable NetworkManager
 	$ setenforce 0
 	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
@@ -228,7 +228,92 @@ master-node和worknode都需要设置.
 ### **同步系统时间**
 > 涉及到验证签发的证书的有效性, 如果签发证书的服务器时间比使用证书的服务器时间早, 就会导致校验不成功或证书错误, 一直等到使用证书的服务器时间也运行到证书开始生效的时间后才会解决这个问题.
 
+#### **第一种: 手动修改时间**
+	//查看当前系统时间
+	$ date
+	//修改当前系统时间
+	$ date -s “2018-2-22 19:10:30”
+	//查看硬件时间
+	$ hwclock –show
+	//修改硬件时间
+	$ hwclock –set –date “2018-2-22 19:10:30”
+	//同步系统时间和硬件时间
+	$ hwclock –hctosys
+	//保存时钟
+	$ clock -w
+	重启系统（init 6）后便发现系统时间被修改了
+
+#### **第二种chrony:**
+1. 配置master机器
+
+
+	//master-node安装
+	$ yum install chrony -y
+	$ vim /etc/chrony.config
+	......
+	# Please consider joining the pool (http://www.pool.ntp.org/join.html)
+	#server 0.centos.pool.ntp.org iburst	//注释掉或删掉
+	#server 1.centos.pool.ntp.org iburst	//注释掉或删掉
+	#server 2.centos.pool.ntp.org iburst	//注释掉或删掉
+	#server 3.centos.pool.ntp.org iburst	//注释掉或删掉
+	server 127.127.1.0 iburst		//1. 添加master充当server
+	......
+	# Allow NTP client access from local network
+	allow 10.239.0.0/16				// 2. # allow 192.168.31.0/24
+	# Serve time even if not synchronized to a time source.
+	local stratum 10				// 3. 
+重启chrony
+
+	$ systemctl start chronyd
+	$ systenctl restart chronyd
+	$ systemctl enable chronyd
+查看chrony端口，判断服务是否起来
+
+	$ ss -unl | grep 123
+	UNCONN     0      0            *:123                      *:*
+2. 配置node机器
+
+
+	//work node安装
+	$ yum install chrony -y
+	$ vim /etc/chrony.config	//只添加一行，指定从master获取时间
+	# Please consider joining the pool (http://www.pool.ntp.org/join.html).
+	#server 0.centos.pool.ntp.org iburst	//注释
+	#server 1.centos.pool.ntp.org iburst	//注释
+	#server 2.centos.pool.ntp.org iburst	//注释
+	#server 3.centos.pool.ntp.org iburst	//注释
+	server 10.239.140.133 iburst			//添加冲master获取时间
+重启chrony服务, 服务重启后就与master时间同步了
+
+	$ systemctl start chronyd
+	$ systenctl restart chronyd
+	$ systemctl enable chronyd
+work node上不需要查看端口, 因为node的chrony不需要开启接受请求时间端口, 因此可以没有
+
+3. work node上执行执行chronyc命令查看与master机器时间同步情况
+
+	$ chronyc sources
+	210 Number of sources = 1
+	MS Name/IP address         Stratum Poll Reach LastRx Last sample
+	^* master-node                  10   6    77    40    -10us[ -111us] +/-   67us
+^* 表示时间已经同步完成
+^? 表示还没有同步完成, 需要等一会, 如果等一会还不行说明配置出错需要找原因
+
+#### **第三种timedatectl(实测没啥效果):**
+
+	//设置系统时区为 中国/上海
+	$ timedatectl set-timezone Asia/Shanghai
+	//将当前的UTC时间写入硬件时钟
+	$ timedatectl set-local-rtc 0
+	// 重启依赖于系统时间的服务
+	$ systemctl restart rsyslog
+	$ systemctl restart crond
+
+
+#### **第四种ntpdate:**
+
 	$ ntpdate time.windows.com 		// 同步 windows 系统时间
+
 ### **设置docker的proxy**
 	$ mkdir docker.service.d
 	$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
