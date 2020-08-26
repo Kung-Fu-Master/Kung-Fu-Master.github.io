@@ -191,7 +191,12 @@ List the buckets
 
 	$ kubectl delete -f operator.yaml
 	$ kubectl delete -f common.yaml
-4. /var/lib/rook: Path on each host in the cluster where configuration is cached by the ceph mons and osds. so need to clean the files in the path.
+4. 删掉未删除的crd, 如果以前创建过Object bucket的话.
+
+
+	$ kubectl -n rook-ceph patch crd objectbuckets.objectbucket.io --type merge -p '{"metadata":{"finalizers": [null]}}'
+	$ kubectl -n rook-ceph patch crd objectbucketclaims.objectbucket.io --type merge -p '{"metadata":{"finalizers": [null]}}'
+5. /var/lib/rook: Path on each host in the cluster where configuration is cached by the ceph mons and osds. so need to clean the files in the path.
 
 
 	$ rm -rf /var/lib/rook/
@@ -199,7 +204,7 @@ Additional: If there are ceph related files in the "/var/lib/kubelet/plugins/" a
 
 	$ rm -rf /var/lib/kubelet/plugins/*
 	$ rm -rf /var/lib/kubelet/plugins_registry/*
-5. Delete the data on hosts
+6. Delete the data on hosts
 
 
 	#!/usr/bin/env bash
