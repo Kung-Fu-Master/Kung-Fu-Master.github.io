@@ -1,5 +1,5 @@
 ---
-title: Ceph Storage Conception 01
+title: Ceph 01 Storage Conception
 tags: storage
 categories:
 - storage

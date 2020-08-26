@@ -85,7 +85,7 @@ top: 1
 ![](Rolling_update1.JPG)
 ![](Rolling_update2.JPG)
 
-## **架构设计 **
+## **架构设计**
 ![](k8s_architecture1.JPG)
 ![](k8s_architecture2.JPG)
 
@@ -243,7 +243,7 @@ master-node和worknode都需要设置.
 	$ clock -w
 	重启系统（init 6）后便发现系统时间被修改了
 
-#### **第二种chrony:**
+#### **第二种chrony**
 1. 配置master机器
 
 
@@ -391,22 +391,27 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 	$ source ~/.bashrc
 
 > 2. 在worker节点执行:
+检查/etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf有没有残留的kubelet服务配置文件, 有的话删掉.
+environment_initialization.sh
 
-	$ systemctl enable docker.service
-	$ kubeadm reset
-	$ swapoff -a
-	$ setenforce 0
-	$ systemctl stop firewalld.service
-	$ sysctl net.bridge.bridge-nf-call-iptables=1
-	$ systemctl daemon-reload		// 重新加载 systemctl 的配置文件
-	$ systemctl restart kubelet
-	 // $ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X		// will reset iptables
+	systemctl enable docker.service
+	kubeadm reset
+	swapoff -a
+	setenforce 0
+	systemctl stop firewalld.service
+	sysctl net.bridge.bridge-nf-call-iptables=1
+	systemctl daemon-reload
+	systemctl restart kubelet
+加入集群
+
+	// $ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X		// will reset iptables
 	$ kubeadm join ......
 
 > 3. 再次在master节点上执行
 如果不执行下面命令安装weave pod, kube-system命名空间下的coredns会一直处于containercreating状态.
 
 	$ kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')
+	$ kubectl get cs
 
 ## **k8s重新生成token**
 主机上执行如下命令，主机IP:10.239.140.186

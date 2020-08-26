@@ -1,5 +1,5 @@
 ---
-title: Greenplum Deployment on Kubernetes
+title: Greenplum 01 deployment on Kubernetes
 tags: storage
 categories:
 - storage

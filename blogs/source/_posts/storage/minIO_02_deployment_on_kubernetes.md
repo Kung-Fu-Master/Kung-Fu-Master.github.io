@@ -1,5 +1,5 @@
 ---
-title: MinIO deployment on kubernetes
+title: MinIO 02 deployment on kubernetes
 tags: storage
 categories:
 - storage
@@ -28,6 +28,10 @@ Enable TLS:
 	
 	$ export $(cat default.env)
 	$ kubectl apply -k direct-csi
+执行完上述操作后会在work node的/var/lib/kubelet/plugins_registry/生成下列sock文件
+
+	$ ls /var/lib/kubelet/plugins_registry/
+	direct.csi.min.io-reg.sock
 
 ## Create Operator Deployment
 1. Create namespace minio for minIO to deploy.
@@ -110,6 +114,93 @@ Alternatively, use the command below to generate a self-signed wildcard certific
 然后再重新部署minio
 
 	$ kubectl apply -f minioinstance.yaml
+执行完上述操作后会在work node生成以下文件夹
 
+	$ ls /var/lib/kubelet/plugins
+	direct-csi-min-io/  kubernetes.io/
 
+## **查看pvc和pv,查看WorkNode pvc volume存储**
+
+	$ kubectl get pvc -n minio
+	[root@hci-node01 minIO]# k get pvc -n minio
+	NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS        AGE
+	data0-minio-0   Bound    pvc-fc3a42f2-78d7-4dfe-8ad5-a0e3c745f638   10Gi       RWO            direct.csi.min.io   19h
+	data1-minio-0   Bound    pvc-b9f227cd-7d6c-4728-b27f-00d4d5c42a16   10Gi       RWO            direct.csi.min.io   19h
+转到minio-0这个pod部署到的work node机器上查看
+
+	$ cd /var/lib/kubelet/plugins/kubernetes.io/csi/pv
+	$ ls
+	  pvc-fc3a42f2-78d7-4dfe-8ad5-a0e3c745f638/ pvc-b9f227cd-7d6c-4728-b27f-00d4d5c42a16/
+	$ cd pvc-b9f227cd-7d6c-4728-b27f-00d4d5c42a16/globalmount/mybucket-01/ // 自己创建了一个buckt: mybucket-01
+	$ ls
+	  file-Name/				// file-Name是通过mc命令行工具加进mybucket-01
+	$ touch test.txt
+	$ ls
+	  file-Name/  test.txt		// test.txt是登陆work node后手动复制或创建的文件.
+但是在此work node机器上的 /mnt/data1/目录下也能查看到文件
+
+	$ cd /mnt/data1/
+	$ ls
+	b1ac2515-e6ba-11ea-98f8-064de4d3a4ce/  b1ac2983-e6ba-11ea-98f8-064de4d3a4ce/
+	$ ls b1ac2515-e6ba-11ea-98f8-064de4d3a4ce/
+	file-Name/ test.txt		// 发现此目录也出现了test.txt文件
+上面登陆work node向pv volume添加的文件在master机器上用mc客户端是查不到的.
+
+## **删除minio Cluster**
+
+	$ kubectl delete -f minioinstance.yaml
+	$ kubectl delete -f minio-operator.yaml
+	$ kubectl delete secret tls-ssl-minio -n minio
+	$ kubectl delete -k direct-csi		// 不要手动删除storageclass资源而要用这种方式.
+	  namespace "direct-csi" deleted
+	  serviceaccount "direct-csi-min-io" deleted
+	  clusterrole.rbac.authorization.k8s.io "direct-csi-min-io" deleted
+	  clusterrolebinding.rbac.authorization.k8s.io "direct-csi-min-io" deleted
+	  configmap "direct-csi-config" deleted
+	  secret "direct-csi-min-io" deleted
+	  service "direct-csi-min-io" deleted
+	  deployment.apps "direct-csi-controller-min-io" deleted
+	  daemonset.apps "direct-csi-min-io" deleted
+	  csidriver.storage.k8s.io "direct.csi.min.io" deleted
+	$ kubectl delete <pvc about minio>
+	$ kubectl delete <pv about minio>	// minio pv资源不会随着minio的pvc资源删除而删除,因此需要再次删除
+删除pv shell脚本, 同样改成pvc, 再加上-n <Namespace>就可以删除pvc了:
+
+	#!/bin/bash
+	
+	pv_results=$(kubectl get pv | grep minio | awk '{print $1}')
+	pv_arr=(${pv_results})
+	for ((i=0; i<${#pv_arr[*]}; i++ ))
+	do
+	kubectl delete pv ${pv_arr[i]}
+	done
+
+执行完上面删除操作后再到work node删除minio生成的指定文件如data,pvc等
+
+	// 到work node上删除data
+	$ cd /mnt
+	$ rm -rf data0/ data1/
+	// 删除pv
+	$ cd /var/lib/kubelet/plugins/
+	$ rm -rf direct-csi-controller-min-io
+	$ rm -rf direct-csi-min-io
+	$ rm -rf kubernetes.io/csi/pv/pvc-***<pv about minio>
+
+## **遇到的问题**
+
+### **问题1:** 删除其它机器pvc绑定的 /var/lib/kubelet/plugins/* 出错
+
+	$ rm -rf /var/lib/kubelet/plugins/*
+	rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount’: Device or resource busy
+	rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount’: Device or resource busy
+解决方法:
+
+	$ umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount
+	$ umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount
+再进行删除即可
+
+### **问题2:** minio pod删除不掉一直处于Terminating状态
+强制删除pod命令:
+
+	$ kubectl delete pod <PodName> -n <NAMESPACE> --force --grace-period=0
 

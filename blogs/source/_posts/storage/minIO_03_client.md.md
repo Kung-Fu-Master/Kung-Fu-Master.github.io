@@ -53,6 +53,10 @@ MinIO Client (mc) provides a modern alternative to UNIX commands like ls, cat, c
 	admin       manage MinIO servers
 	update      update mc to latest release
 
+## 添加minio server
+
+	$ mc config host add <MinIOName> http://127.0.0.1:9000 <username> <password> S3v4
+
 ## **Note**
 当MinIO server配置TLS时候，使用`mc`的命令中需要添加 `--insecure`, 如:
 

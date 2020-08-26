@@ -1,5 +1,5 @@
 ---
-title: Ceph Storage Deployment on Kubernetes
+title: Ceph 02 deployment on Kubernetes
 tags: storage
 categories:
 - storage
@@ -219,4 +219,15 @@ If the cluster resource still exists even though you have executed the delete co
 
 	$ kubectl -n rook-ceph patch crd cephclusters.ceph.rook.io --type merge -p '{"metadata":{"finalizers": [null]}}'
 
+## 遇到的问题
+删除其它机器pvc绑定的/var/lib/kubelet/plugins/*出错
+
+	$ rm -rf /var/lib/kubelet/plugins/*
+	rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount’: Device or resource busy
+	rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount’: Device or resource busy
+解决方法:
+
+	$ umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount
+	$ umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount
+再进行删除即可
 
