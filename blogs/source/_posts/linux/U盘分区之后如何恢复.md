@@ -5,7 +5,7 @@ categories:
 - linux
 ---
 
-## 操作步骤
+## **第一种操作步骤**
 1. 插入U盘。
 2. 按windows键，右键点击运行，再左键点击以管理员身份运行。
 3. 输入diskpart,按enter。
@@ -29,4 +29,7 @@ disk 1
 "新建简单卷"方法:
 打开磁盘管理后，选中U盘所在Disk 如Disk1， 右击鼠标，选中第一个新建卷，默认下一步，期间"Volume lable"输入盘volume名字就可以了.
 
+## **第二种使用DiskGenius软件**
+![](1.PNG)
+![](2.PNG)
 

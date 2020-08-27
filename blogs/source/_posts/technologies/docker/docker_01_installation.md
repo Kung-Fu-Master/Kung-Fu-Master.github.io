@@ -75,18 +75,41 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 	$ export http_proxy=child-prc.intel.com:913
 	$ export https_proxy=child-prc.intel.com:913 // https的proxy与上面的http的要一样
 
-## 安装docker:
+## **安装docker**
 
+### Ubuntu安装docker
 	$ apt-get install docker
 	$ apt-get install docker.io
+
+### Centos安装docker
+	$ yum update
+	$ yum install -y yum-utils
+	// 配置docker yum源
+	$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+	// 查看可安装的版本
+	$ yum list docker-ce --showduplicates | sort -r
+	// 安装指定版本
+	$ yum install docker-ce-<VERSION STRING>	// 如docker-ce-19.03.9-3.el7
+	// 启动docker服务
+	$ systemctl start docker
+	$ systemctl enable docker
+
+### 配置docker的proxy
 	$ mkdir -p /etc/systemd/system/docker.service.d
 	$ touch /etc/systemd/system/docker.service.d/http-proxy.conf
-	添加如下内容
 	[Service]
 	Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
-	Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
+	
+	$ touch /etc/systemd/system/docker.service.d/https-proxy.conf
+	[Service]
+	Environment="HTTPS_PROXY=http://child-prc.intel.com:913"
+	
+	$ touch /etc/systemd/system/docker.service.d/no-proxy.conf
+	[Service]
+	Environment="NO_PROXY=10.239.140.133,10.239.141.123,10.239.141.194,10.239.131.156,master-node,node-1,node-2,laboratory"
 
-> Additional: 也可以在Docker服务启动配置中增加 --regis七ry-mirror=proxy_URL来指定镜像代理服务地址（如https://registry.docker-en.com)
+### Additional
+可以在Docker服务启动配置中增加 --registry-mirror=proxy_URL来指定镜像代理服务地址（如https://registry.docker-en.com)
 
 	$ cd /etc/docker
 	$ touch daemon.json
@@ -98,7 +121,9 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 	$ systemctl restart docker
 	$ docker search redis
 
-## 安装docker compose:		// 关于此程序说明可以参考 https://www.runoob.com/docker/docker-compose.html
+## **安装docker compose**
+// 关于此程序说明可以参考 https://www.runoob.com/docker/docker-compose.html
+
 	 https://github.com/docker/compose/releases
 	 curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 	 chmod +x /usr/local/bin/docker-compose

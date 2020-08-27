@@ -249,7 +249,7 @@ master-node和worknode都需要设置.
 
 	//master-node安装
 	$ yum install chrony -y
-	$ vim /etc/chrony.config
+	$ vim /etc/chrony.conf
 	......
 	# Please consider joining the pool (http://www.pool.ntp.org/join.html)
 	#server 0.centos.pool.ntp.org iburst	//注释掉或删掉
@@ -265,7 +265,7 @@ master-node和worknode都需要设置.
 重启chrony
 
 	$ systemctl start chronyd
-	$ systenctl restart chronyd
+	$ systemctl restart chronyd
 	$ systemctl enable chronyd
 查看chrony端口，判断服务是否起来
 
@@ -319,6 +319,9 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 	$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
 	[Service]
 	Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
+
+	$ vim /etc/systemd/system/docker.service.d/https-proxy.conf
+	[Service]
 	Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
 
 	$ vim /etc/systemd/system/docker.service.d/no-proxy.conf

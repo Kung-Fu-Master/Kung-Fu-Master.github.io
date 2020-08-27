@@ -121,10 +121,12 @@ set tabstop=4
 	ONBOOT=yes			// ONBOOT=no，改为ONBOOT=yes
 	
 	//重启网络
-	$ ifup ens33		// ifup 网卡名字
+	$ ifup <网卡名字如：ens33>		// ifup 网卡名字
+	$ service network restart	// 重启网络
+
 ### 配置yum代理
 
-	$ echo proxy=http://Proxy:port
+	$ echo proxy=http://Proxy:port >> /etc/yum.conf
 	$ yum install vim
 ### 配置系统proxy
 
@@ -151,4 +153,39 @@ set tabstop=4
 
 	启动sshd
 	$ /bin/systemctl start sshd.service
+
+## **遇到的问题**
+### **缺少网卡驱动**
+在裸组装机而不是虚拟机上装Centos7之后$ ifconfig发现只有 lo环回网络地址，缺少网卡如"enps3"等
+解决方法是在网上查找网卡对应的驱动， 然后下载安装(本次没有找到对应网卡版本的驱动但安装后仍然成功查到网址并能正常使用)
+
+	$ ip addr			//发现只有lo网路地址, 或者还有其它的如virbr0等的虚拟网络地址, 但都不是想要的网络IP
+	$ lsmod | grep e1000
+	  e1000e                263116  0
+	  ptp                    19231  1 e1000e
+	$ modprobe e1000e
+	$ lspci -vvv | less
+	$ rmmod e1000e		//移除原来的网卡驱动
+	$ rmmod e1000
+	$ lsmod | grep e1000
+	
+	
+	$ lspci				//查看设备，其中有Intel网卡, I219-V为网卡设备号
+	  00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (12) I219-V
+	根据网卡设备号I219-V在网上查找相应驱动, 并下载解压 e1000e-3.8.4.tar.gz
+	$ tar -zxvf e1000e-3.8.4.tar.gz
+	$ cd e1000e-3.8.4
+	$ cd src/
+	$ make
+	$ ls				//会编译生成内核文件e1000e.ko
+	  e1000e.ko
+	$ insmod e1000e.ko	//将内核文件加载进内核
+	$ dmesg
+	$ lsmod | grep e1000e
+	$ ifconfig			//再次查看发现有网络IP了
+	$ make install		//设置开机后会自动加载内核网络文件
+	$ dmidecode -vvv | less		//查看下网卡信息
+
+
+
 
