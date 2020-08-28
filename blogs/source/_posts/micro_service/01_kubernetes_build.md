@@ -154,6 +154,15 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 ### **kubeadm, kubelet, kubectl**
 > 每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的worknode上也安装(也就是下载或拷贝)kubectl二进制文件工具.
 
+#### **卸载旧版本kubernetes**
+
+	$ kubectl delete node --all
+	$ for service in kube-apiserver kube-controller-manager kubectl kubelet kube-proxy kube-scheduler; do
+	  systemctl stop $service
+	  done
+	$ yum -y remove kubeadm kubectl kubelet
+
+#### **安装新版kubernetes**
 Ubuntu:
 
 	$ sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
@@ -207,10 +216,10 @@ master-node和worknode都需要设置.
 	$ sysctl net.bridge.bridge-nf-call-ip6tables=1
 有的说明还可以关闭网络管理器,关闭核心防护,清空iptabels, 编辑主机名
 
-	$ systemctl list-unit-files --type=service | grep NetworkManager // 查看NetworkManager是否enabled
-	$ systemctl status NetworkManager	// 查看NetworkManager是否running
-	$ systemctl stop NetworkManager		// 关闭网络, 没有IP地址无法远程连接终端, 慎用.
-	$ systemctl disable NetworkManager
+	$ // systemctl list-unit-files --type=service | grep NetworkManager // 查看NetworkManager是否enabled
+	$ // systemctl status NetworkManager	// 查看NetworkManager是否running
+	$ // systemctl stop NetworkManager		// 关闭网络, 没有IP地址无法远程连接终端, 慎用.
+	$ // systemctl disable NetworkManager
 	$ setenforce 0
 	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 	$ iptables -F	// 清空iptables
@@ -219,11 +228,17 @@ master-node和worknode都需要设置.
 > 用户空间的iptables制定防火墙规则，内核空间的netfilter实现防火墙功能netfilter（内核空间）位于Linux内核中的包过滤防火墙功能体系，称为Linux防火墙的“内核态”
 > iptables(用户空间)位于/sbin/iptables，是用来管理防火墙的命令的工具，为防火墙体系提供过滤规则/策略，决定如何过滤或处理到达防火墙主机的数据包，称为Linux防火墙的“用户态"
 
+> $ getenforce // 获得当前SELinux的模式。
+> * －enforcing        强制模式：SELinux 被启动，并强制执行所有的安全策略规则。
+> * －permissive     宽容模式：SELinux 被启用，但安全策略规则并没有被强制执行。当安全策略规则应该拒绝访问时，访问仍然被允许。然而，此时会向日志文件发送一条消息，表示该访问应该被拒绝。
+> * －disabled         禁用模式：SELinux 被关闭，默认的 DAC 访问控制方式被使用。对于那些不需要增强安全性的环境来说，该模式是非常有用的。
+> $ setenforce // 修改当前SELinux的模式
+
 	关闭selinux:		// 限制访问linux资源文件上下文
 	$ getenforce			// 查看是否disabled
 	$ setenforce 0			//临时关闭selinux(Security-Enhanced Linux), 终端会输出"setenforce: SELinux is disabled"
 	$ vim /etc/selinux/config --> 将 SELINUX=permissive 改为 SELINUX=disabled, 设置重启后自动关闭selinux
-	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config	//永久关闭(试了好像没反应)
+	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config	//永久关闭
 	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config(另一种)
 ### **同步系统时间**
 > 涉及到验证签发的证书的有效性, 如果签发证书的服务器时间比使用证书的服务器时间早, 就会导致校验不成功或证书错误, 一直等到使用证书的服务器时间也运行到证书开始生效的时间后才会解决这个问题.

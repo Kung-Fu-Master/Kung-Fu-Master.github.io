@@ -69,6 +69,12 @@ kubectl 会被经常使用。很快你就会发现每次不得不打全命令是
 给Node添加污点可以让配置tolerations的Pod部署上来，而不让平常的Pod部署.
 配置tolerations的Pod可以部署到添加污点的机器也可以部署到其它平常机器
 
+	// 查看node机器污点
+	$ kubectl describe node/<Node-Name> | grep Taint
+	  Taints:             node-role.kubernetes.io/master:NoSchedule
+	// 去掉污点
+	$  kubectl taint nodes <Node-Name> node-role.kubernetes.io/master:NoSchedule-
+
 	$ kubectl taint nodes NodeName gpu=true:NoSchedule
 
 	apiVersion: apps/v1
