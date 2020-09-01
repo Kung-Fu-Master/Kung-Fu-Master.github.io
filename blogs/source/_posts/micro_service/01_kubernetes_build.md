@@ -396,17 +396,21 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 	10.239.140.186 alpha
 > 1. 需要在master节点上执行 
 
-	$ rm -rf /etc/kubernetes/pki/etcd/
-	$ rm -rf /var/lib/etcd
-	$ rm -rf $HOME/.kube
-	$ kubeadm reset		// 出现有什么没有清理干净的可以手动删除掉, 如cni等,再reset, 如果还出现,可以忽略掉没有清理干净的信息提示, 执行kubeadm init.
-	$ swapoff -a
-	$ setenforce 0
-	$ systemctl stop firewalld.service
-	$ sysctl net.bridge.bridge-nf-call-iptables=1
-	$ kubeadm init, 再用返回的 "kubeadm join..." 在其它节点执行
-	$ echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
-	$ source ~/.bashrc
+	rm -rf /etc/kubernetes/pki/etcd/
+	rm -rf /var/lib/etcd
+	rm -rf $HOME/.kube
+	kubeadm reset		// 出现有什么没有清理干净的可以手动删除掉, 如cni等,再reset, 如果还出现,可以忽略掉没有清理干净的信息提示, 执行kubeadm init.
+	systemctl stop kubelet
+	systemctl stop docker
+	systemctl restart kubelet
+	systemctl restart docker
+	swapoff -a
+	setenforce 0
+	systemctl stop firewalld.service
+	sysctl net.bridge.bridge-nf-call-iptables=1
+	kubeadm init		//再用返回的 "kubeadm join..." 在其它节点执行
+	echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
+	source ~/.bashrc
 
 > 2. 在worker节点执行:
 检查/etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf有没有残留的kubelet服务配置文件, 有的话删掉.
@@ -414,12 +418,15 @@ environment_initialization.sh
 
 	systemctl enable docker.service
 	kubeadm reset
+	systemctl stop kubelet
+	systemctl stop docker
+	systemctl restart kubelet
+	systemctl restart docker
 	swapoff -a
 	setenforce 0
 	systemctl stop firewalld.service
 	sysctl net.bridge.bridge-nf-call-iptables=1
 	systemctl daemon-reload
-	systemctl restart kubelet
 加入集群
 
 	// $ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X		// will reset iptables

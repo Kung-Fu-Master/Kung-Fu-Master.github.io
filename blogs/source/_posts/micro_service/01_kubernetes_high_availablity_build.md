@@ -35,6 +35,18 @@ top: 1
 	systemctl disable firewalld
 	setenforce 0
 	sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+	systemctl stop kubelet
+	systemctl stop docker
+	systemctl restart kubelet
+	systemctl restart docker
+	sysctl net.bridge.bridge-nf-call-iptables=1
+	sysctl net.bridge.bridge-nf-call-ip6tables=1
+	iptables -F
+	// 有时候在公司开发机上部署不成功, 需要在~/.bashrc添加NO_PROXY
+	cat << EOF >> ~/.bashrc
+	export NO_PROXY=Node01-IP,Node02-IP,VIP-IP,127.0.0.1,
+	EOF
+
 
 ## **kube-vip方式部署高可用k8s集群**
 official website:  
@@ -254,3 +266,10 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 	
 	// 去掉污点
 	$  kubectl taint nodes <Node-Name> node-role.kubernetes.io/master:NoSchedule-
+
+
+## 网卡上添加删除虚拟网址
+网卡上增加一个IP： ifconfig eth0:1 192.168.0.1 netmask 255.255.255.0
+
+删除网卡的第二个IP地址: ip addr del 192.168.0.1 dev eth0
+
