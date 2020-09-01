@@ -43,9 +43,11 @@ top: 1
 	sysctl net.bridge.bridge-nf-call-ip6tables=1
 	iptables -F
 	// 有时候在公司开发机上部署不成功, 需要在~/.bashrc添加NO_PROXY
+	// 尤其要加上虚拟出来的VIP-IP
 	cat << EOF >> ~/.bashrc
 	export NO_PROXY=Node01-IP,Node02-IP,VIP-IP,127.0.0.1,
 	EOF
+	source ~/.bashrc
 
 
 ## **kube-vip方式部署高可用k8s集群**
