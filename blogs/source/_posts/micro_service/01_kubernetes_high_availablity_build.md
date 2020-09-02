@@ -259,6 +259,45 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 添加work node节点
 
 	$ sudo kubeadm join 192.168.0.200:6443 --token 9vr73a.a8uxyaju799qwdjv --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866
+## **查看kube-vip, api-server服务进程和监听端口**
+
+	$ netstat -nltp | grep 10000	// 列出监听端口10000的进程
+	Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+	tcp        0      0 10.239.140.133:10000    0.0.0.0:*               LISTEN      21353/kube-vip
+	
+	$ netstat -nltp | grep 6443		// 列出监听端口6443的进程
+	Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+	tcp6       0      0 :::6443                 :::*                    LISTEN      15700/kube-apiserve
+
+	$ netstat -antp		// 列出所有tcp进程, State不仅包括Listen的, 还包括已建立链接状态为Established的进程.
+	Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+	tcp6       0      0 :::6443                 :::*                    LISTEN      15700/kube-apiserve
+	tcp        0      0 10.239.140.133:10000    0.0.0.0:*               LISTEN      21353/kube-vip
+	tcp        0      0 10.239.140.133:10000    10.239.141.145:48554    ESTABLISHED 21353/kube-vip
+`Local Address`可以看作是服务端IP和提供服务的监听端口, `Foreign Address`可以看作是客户端IP和发起链接请求的IP地址和请求端口.  
+`ESTABLISHED`表示客户端与服务端已经建立tcp长链接.  
+`LISTEN`表示服务端提供服务的端口仍处于监听状态, 等待客户端发起请求.  
+TCP才能在Foreign Address看到链接的客户端IP和端口, 而UDP无状态是没有的.  
+由以上输出可看到:
+ * kube-vip服务进程编号为21353, 监听端口为10000, 所在本机IP为10.239.140.133
+ * api-server服务进程编号为15700, 监听端口为6443
+
+查看所有链接本机6443服务端口的客户端IP地址, 地址一致的合并, 然后连接数从高到底排序.
+
+	$ netstat -antp | grep :6443 | awk '{print $5}' | awk -F ":" '{print $1}' | sort | uniq -c | sort -r -n
+	      4 10.239.4.100	// 表示从IP地址为10.239.4.100的客户端请求访问本机6443服务端口的进程数为4
+	      3 10.239.4.80
+	      3 10.239.141.194
+	      3 10.239.141.145
+	      3
+	      2 10.40.0.6
+	      2 10.239.140.53
+	      2 10.239.140.133
+	      2 10.109.19.69
+	      1 10.40.0.9
+	      1 10.40.0.2
+	      1 10.40.0.1
+	      1 10.109.19.68
 
 ## 查看并去掉node污点(taint)
 
@@ -271,7 +310,9 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 
 
 ## 网卡上添加删除虚拟网址
-网卡上增加一个IP： ifconfig eth0:1 192.168.0.1 netmask 255.255.255.0
+网卡上增加一个IP
 
-删除网卡的第二个IP地址: ip addr del 192.168.0.1 dev eth0
+	ifconfig eth0:1 192.168.0.1 netmask 255.255.255.0
+删除网卡的第二个IP地址
 
+	ip addr del 192.168.0.1 dev eth0

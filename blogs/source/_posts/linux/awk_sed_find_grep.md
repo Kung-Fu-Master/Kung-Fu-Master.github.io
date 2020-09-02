@@ -1,11 +1,11 @@
 ---
-title: Linux command, find, grep,sed, awk
+title: awk, sed, find, grep
 tags:
 categories:
 - linux
 ---
 
-*************************************************************************************************************
+## **grep**
 uname - a
 	查看内核版本
 root@Alpha:# uname -a
@@ -30,8 +30,7 @@ root@Alpha:~/zhan/system/day4# grep  -r  "exit"  process_work.c   -n
 29:             exit(1);
 root@Alpha:~/zhan/system/day4#
 ```
-*************************************************************************************************************
-
+## **find**
 find     find --help
 find ./ -name "exit"
 ```
@@ -65,7 +64,7 @@ find ./ -maxdepth 1 -type f -size +2k -exec ls -l {} \;
 	-exec指明要执行"{}"里面的内容，"{}"的内容由ls -l 传参, 执行完要有结束标志分号";"， "\"符号转义字符将分号";"转义
 ```
 
-*************************************************************************************************************
+## **sed**
 sed  --Stream Editor(流编辑器)
 早起Unix系统 -- ed 编辑器 , 很多sed命令和vi的末行命令是相同的
 			    |       | 
@@ -117,7 +116,7 @@ pattern2中的\1表示与pattern1的第一个()括号相匹配的内容，\2表�
 sed默认使用Basic正则表达式规范，如果制定了-r选项则使用Extended规范，那么()括号就不必转移了，
 如：sed -r 's/([0-9])([0-9])/-\1-~\2~/' testfile
 
-# sed '/def/p' out    --- "p"表示打印输出包含echo内容的行
+	sed '/def/p' out    --- "p"表示打印输出包含echo内容的行
 	root@Alpha:~/zhan/test# sed '/def/p' abc.c
 	abc
 	def
@@ -158,14 +157,28 @@ sed默认使用Basic正则表达式规范，如果制定了-r选项则使用Exte
 	root@Alpha:~/zhan/test#
 ```
 
-	
-
-*************************************************************************************************************
+## **awk**
 awk 是开发awk命令的三个人名字的首字母，不是单词缩写，不能读'a wa k'
 sed是以行为单位处理文件，awk比sed强，不仅以行为单位，还能以列为单位处理文件，awk缺省的行分隔符是换行，缺省的列分隔符是连续的空格和Tab，但是行分隔符和列分隔符都可以自定义
-ps aux | awk '{print $0}'    取全部，相当于ps aux
-ps aux | awk '{print $2}'    按列拆分
 
+	ps aux | awk '{print $0}'    取全部，相当于ps aux
+	ps aux | awk '{print $2}'    按列拆分
+`查看所有链接本机6443服务端口的客户端IP地址, 地址一致的合并, 然后连接数从高到底排序.`
+
+	$ netstat -antp | grep :6443 | awk '{print $5}' | awk -F ":" '{print $1}' | sort | uniq -c | sort -r -n
+	      4 10.239.4.100	// 表示从10.239.4.100客户端请求访问本机6443服务端口的进程数为4
+	      3 10.239.4.80
+	      3 10.239.141.194
+	      3 10.239.141.145
+	      3
+	      2 10.40.0.6
+	      2 10.239.140.53
+	      2 10.239.140.133
+	      2 10.109.19.69
+	      1 10.40.0.9
+	      1 10.40.0.2
+	      1 10.40.0.1
+	      1 10.109.19.68
 Awk option 'script' file1 file2 ……
 Awk option -f scriptfile file1 file2 ……
 和sed一样，awk处理的文件既可以由标准输入重定向得到，也可以当命令行参数传入，编辑命令可以直接当命令行参数传入，也可以用-f参数指定一个脚本文件，如果一条awk命令只有actions部分，则actions作用于待处理文件的每一行，编辑命令格式为:
@@ -180,20 +193,20 @@ productA   30   REORDER
 productB   76
 productC   55   REORDER
 
-# awk '$2 < 75 {printf "%s %s\n", $0, "reorder";} $2 >= 75 {printf "%s\n", $0;}' testfile
+	awk '$2 < 75 {printf "%s %s\n", $0, "reorder";} $2 >= 75 {printf "%s\n", $0;}' testfile
 ProductA 70 reorder
 ProductB 35 reorder
 ProductC 75
 
-# ps aux | awk '$2>32000 && $2<50000 {print $2 " recorder";}'
+	ps aux | awk '$2>32000 && $2<50000 {print $2 " recorder";}'
 	root@Alpha:~/zhan/test# ps aux | awk '$2>32000 && $2<50000 {print $2 " recorder"}'
 	32106 recorder
 	32146 recorder
 	……
 	root@Alpha:~/zhan/test#
-# ps aux | awk '$2>32000 && $2<50000 {print $2}'                           与下面命令等价
-# ps aux | awk '$2>32000 && $2<50000 {printf("%s\n", $2);}'        花括号前的";"分号去掉也可以
-$ root@Alpha:~/zhan/test# ps aux|awk ' $2 > 30000 && $2 < 40000 {var = var + 1} END {print var}'
+	ps aux | awk '$2>32000 && $2<50000 {print $2}'                           与下面命令等价
+	ps aux | awk '$2>32000 && $2<50000 {printf("%s\n", $2);}'        花括号前的";"分号去掉也可以
+	root@Alpha:~/zhan/test# ps aux|awk ' $2 > 30000 && $2 < 40000 {var = var + 1} END {print var}'
 	root@Alpha:~/zhan/test# ps aux|awk ' $2 > 30000 && $2 < 40000 {var = var + 1} END {print var}'
 	18
 	root@Alpha:~/zhan/test#
