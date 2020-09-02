@@ -1,5 +1,5 @@
 ---
-title: HTTP, TCP, Socket
+title: HTTP, TCP, Socket, grpc
 tags:
 categories:
 - blogs
@@ -17,7 +17,7 @@ categories:
 > 表示层 (Presentation Layer)：数据的表示、安全、压缩。比如我们要用基于Unix系统的mac电脑给pc机发送数据，表示层为我们解决了通信间语法的问题。
 > 应用层 (Application)：网络服务与最终用户的一个接口。比如不同的文件类型要用不同的应用程序打开，应用层中就规定了不同应用程序的数据格式.
 
-### http和tcp的联系
+## http和tcp的联系
 > * http是基于tcp，就相当于生活中的吃饭时候你都会用到碗，这个碗就是tcp，吃饭这件事情就相当于http，因为我们http发送数据之前，会先进行tcp三次握手，记住这时候只是发送一些状态码的确认等，并没有对http的数据进行发送。
 
 > * http长连接和短连接，其实就是tcp长连接与短连接，在HTTP/1.0中默认使用短连接。也就是说，客户端和服务器每进行一次HTTP操作，就建立一次连接，请求结束就中断连接，HTTP1.1就使用长连接，
@@ -30,7 +30,7 @@ categories:
 > * 长连接和短连接简短概括
 短连接就相当于每次一碗饭就去换一个碗，长连接就是每次吃饭都使用这个碗
 
-### tcp和udp的区别
+## tcp和udp的区别
 > tcp是面向连接的，udp不是面向连接的，怎么说呢？就相当于我们生活中打电话或者微信聊天，要先嘟嘟嘟连接，之后才可以打电话聊天，这个就是面向连接的，也是比较可靠的，udp是不用先去做连接的，所以叫做面向非连接，类似生活中发短信，直接发送过去
 
 有人会问了，为什么http是基于tcp而不是udp呢？
@@ -38,24 +38,43 @@ categories:
 
 ![](socket.jpg)
 
-### IP：
+## IP：
 网络层协议；（高速公路）
 为计算机网络相互连接进行通信而设计的协议。
 > IP协议对应于网络层，TCP协议对应于传输层，而HTTP协议对应于应用层。注意TPC/IP位于传输层，它主要用来解决数据如何在网络中传输，与IP协议要区分开
 
-### TCP和UDP：
+## TCP和UDP：
 传输层协议；（卡车）
 > TCP和UDP使用IP协议从一个网络传送数据包到另一个网络。把IP想像成一种高速公路，它允许其它协议在上面行驶并找到到其它电脑的出口。TCP和UDP是高速公路上的“卡车”，它们携带的货物就是像HTTP，文件传输协议FTP这样的协议等。
 
-### HTTP：
+## **HTTP**
+### **HTTP/1.x**
 > 应用层协议；（货物）。HTTP(超文本传输协议)是利用TCP在两台电脑(通常是Web服务器和客户端)之间传输信息的协议。客户端使用Web浏览器发起HTTP请求给Web服务器，Web服务器发送被请求的信息给客户端。
 HTTP是应用层协议，主要用于包装数据
+HTTP/1.x 的协议是 文本协议，是给人看的，对机器不友好，如果要对机器友好，二进制协议才是更好的选择.  
 
-### SOCKET：
+HTTP/1.x 另一个问题就在于它的交互模式，一个连接每次只能一问一答，也就是client 发送了 request 之后，必须等到 response，才能继续发送下一次请求.  
+
+### **HTTP/2.x**
+HTTP/2 是一个二进制协议，这也就意味着它的可读性几乎为 0，但幸运的是，我们还是有很多工具，譬如 Wireshark， 能够将其解析出来  
+ * Stream： 一个双向流，一条连接可以有多个 streams。
+ * Message： 也就是逻辑上面的 request，response。
+ * Frame:：数据传输的最小单位。每个 Frame 都属于一个特定的 stream 或者整个连接。一个 message 可能有多个 frame 组成
+HTTP/2 通过 stream 支持了连接的多路复用，提高了连接的利用率.  
+
+## **gPRC**
+gRPC 是 Google 基于 HTTP/2 以及 protobuf 的，要了解 gRPC 协议，只需要知道 gRPC 是如何在 HTTP/2 上面传输就可以了.  
+gRPC 的 service 接口是基于 protobuf 定义的，我们可以非常方便的将 service 与 HTTP/2 关联起来.  
+ * Path : /Service-Name/{method name}
+ * Service-Name : ?( {proto package name} "." ) {service name}
+ * Message-Type : {fully qualified proto message name}
+ * Content-Type : "application/grpc+proto"
+
+## SOCKET：
 > 套接字，TCP/IP网络的API。(港口码头/车站)Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用已实现进程在网络中通信。
 Socket相当于调用接口(API)，用来调取TCP/IP协议, Socket接口定义了许多函数或例程，用以开发TCP/IP网络上的应用程序。
 
-### TCP/IP：
+## TCP/IP：
 > 代表传输控制协议/网际协议，指的是一系列协议，TCP/IP 模型在 OSI 模型的基础上进行了简化，变成了四层，从下到上分别为：网络接口层、网络层、传输层、应用层。
 
 ###TCP/UDP区别
@@ -63,7 +82,7 @@ Socket相当于调用接口(API)，用来调取TCP/IP协议, Socket接口定义�
 
 > UDP: (用户数据报协议，User Data Protocol)：（类似发短信） 面向非连接 、传输不可靠（可能丢包）、无序、传输少量数据（数据报模式）、速度快，对系统资源的要求少，程序结构较简单 ，UDP支持一对一，一对多，多对一和多对多的交互通信，UDP的首部开销小，只有8个字节。
 
-### tcp三次握手建立连接
+## tcp三次握手建立连接
 ![](tcp-ip-handshark.png)
 > 第一次握手：客户端发送syn包(seq=x)到服务器，并进入SYN_SEND状态，等待服务器确认；
 > 第二次握手：服务器收到syn包，必须确认客户的SYN（ack=x+1），同时自己也发送一个SYN包（seq=y），即SYN+ACK包，此时服务器进入SYN_RECV状态；
@@ -74,7 +93,7 @@ Socket相当于调用接口(API)，用来调取TCP/IP协议, Socket接口定义�
 主机A再发出一个数据包确认主机B的要求同步：“我现在就发，你接着吧！”，这是第三次对话。
 三次“对话”的目的是使数据包的发送和接收同步，经过三次“对话”之后，主机A才向主机B正式发送数据。
 
-### Websocket
+## Websocket
 Websocket协议解决了服务器与客户端全双工通信的问题。
 
 注:什么是单工、半双工、全工通信？
@@ -82,14 +101,14 @@ Websocket协议解决了服务器与客户端全双工通信的问题。
 信息能双向传送但不能同时双向传送称为半双工；
 信息能够同时双向传送则称为全双工。
 
-### WebSocket和Socket区别
+## WebSocket和Socket区别
 可以把WebSocket想象成HTTP(应用层)，HTTP和Socket什么关系，WebSocket和Socket就是什么关系。
 HTTP 协议有一个缺陷：通信只能由客户端发起，做不到服务器主动向客户端推送信息。
 WebSocket 协议在2008年诞生，2011年成为国际标准。所有浏览器都已经支持了。
 它的最大特点就是，服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于服务器推送技术的一种。
 
 
-### 使用Socket建立网络
+## 使用Socket建立网络
 > 网络上两个程序通过双向通信实现数据交换，socket又叫套接字，每个应用程序开启后，都会在传输层端口上绑定一个socket，不同应用程序之间通过寻找端口找到socket实现数据通信。
 Socket连接过程分为三个步骤：服务器监听，客户端请求，连接确认。
 
