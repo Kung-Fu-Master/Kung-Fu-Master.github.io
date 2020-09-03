@@ -185,7 +185,13 @@ set tabstop=4
 	$ ifconfig			//再次查看发现有网络IP了
 	$ make install		//设置开机后会自动加载内核网络文件
 	$ dmidecode -vvv | less		//查看下网卡信息
-
+机器运行期间执行过$ yun update, 选择yes, 可能会涉及到内核的升级或改变, 重新开机后会默认选择新添加的内核启动, 登陆后发现没有又没有网卡驱动.
+**第一种解决方法**
+可以在登陆时选择原来的内核启动就可以了.
+**第二种解决方法**
+因为换不同内核, 需要重新安装这个第三方网卡驱动, 重新进入e1000e-3.8.4/src目录$ make clean, $ make, $ make install  
+查看有没有旧的内核驱动, 如果又需要先卸载$ lsmod | grep e1000e, $ rmmod e1000e.ko  
+然后执行$ insmod e1000e.ko, 如果报insmod: ERROR: could not insert module xxxxx.ko: Unknown symbol in module错误可以先忽略直接重启系统选择新的内核启动问题就解决了.  
 
 
 

@@ -147,44 +147,48 @@ Alternatively, use the command below to generate a self-signed wildcard certific
 上面登陆work node向pv volume添加的文件在master机器上用mc客户端是查不到的.
 
 ## **删除minio Cluster**
-
-	$ kubectl delete -f minioinstance.yaml
-	$ kubectl delete -f minio-operator.yaml
-	$ kubectl delete secret tls-ssl-minio -n minio
-	$ kubectl delete -k direct-csi		// 不要手动删除storageclass资源而要用这种方式.
-	  namespace "direct-csi" deleted
-	  serviceaccount "direct-csi-min-io" deleted
-	  clusterrole.rbac.authorization.k8s.io "direct-csi-min-io" deleted
-	  clusterrolebinding.rbac.authorization.k8s.io "direct-csi-min-io" deleted
-	  configmap "direct-csi-config" deleted
-	  secret "direct-csi-min-io" deleted
-	  service "direct-csi-min-io" deleted
-	  deployment.apps "direct-csi-controller-min-io" deleted
-	  daemonset.apps "direct-csi-min-io" deleted
-	  csidriver.storage.k8s.io "direct.csi.min.io" deleted
-	$ kubectl delete <pvc about minio>
-	$ kubectl delete <pv about minio>	// minio pv资源不会随着minio的pvc资源删除而删除,因此需要再次删除
-删除pv shell脚本, 同样改成pvc, 再加上-n <Namespace>就可以删除pvc了:
-
+chean.sh
 	#!/bin/bash
 	
+	# delete minio pod
+	kubectl delete -f minioinstance.yaml
+	
+	# delete pvc
+	pvc_results=$(kubectl get pvc -n minio | grep minio | awk '{print $1}')
+	pvc_arr=(${pvc_results})
+	for ((i=0; i<${#pvc_arr[*]}; i++ ))
+	do
+	kubectl delete pvc ${pvc_arr[i]} -n minio
+	done
+	
+	# delete pv
 	pv_results=$(kubectl get pv | grep minio | awk '{print $1}')
 	pv_arr=(${pv_results})
 	for ((i=0; i<${#pv_arr[*]}; i++ ))
 	do
 	kubectl delete pv ${pv_arr[i]}
 	done
-
+	
+	# delete minio operator
+	kubectl delete -f minio-operator.yaml -n minio
+	
+	# delete minio sc
+	kubectl delete -k direct-csi
+	
+	# delete secret
+	kubectl delete secret tls-ssl-minio -n minio
+	
+	# delete ns
+	kubectl delete ns minio
 执行完上面删除操作后再到work node删除minio生成的指定文件如data,pvc等
 
 	// 到work node上删除data
-	$ cd /mnt
-	$ rm -rf data0/ data1/
+	$ rm -rf /mnt/minio_data0/ /mnt/minio_data1/
 	// 删除pv
-	$ cd /var/lib/kubelet/plugins/
-	$ rm -rf direct-csi-controller-min-io
-	$ rm -rf direct-csi-min-io
-	$ rm -rf kubernetes.io/csi/pv/pvc-***<pv about minio>
+	$ rm -rf /var/lib/kubelet/plugins/direct-csi-controller-min-io
+	$ rm -rf /var/lib/kubelet/plugins/direct-csi-min-io
+	$ rm -rf /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-***<pv about minio>
+	$ rm -rf /var/lib/kubelet/plugins_registry/<minio>.sock
 
 ## **遇到的问题**
 
@@ -203,4 +207,16 @@ Alternatively, use the command below to generate a self-signed wildcard certific
 强制删除pod命令:
 
 	$ kubectl delete pod <PodName> -n <NAMESPACE> --force --grace-period=0
+
+### **问题3:** 有个node上pod部署不成功
+场景描述： 清理minio重新部署时应该有一步是要删除$ rm -rf /var/lib/kubelet/plugins/*, 但是不小心执行$ rm -rf /var/lib/kubelet/plugins/, 把plugins文件夹给删除了.  
+之后再部署minio pod发现如下错误
+
+	$ kubectl describe po/minio-2 -n minio
+	......
+	Warning  FailedMount  21s (x2 over 2m23s)  kubelet, hci-node03  MountVolume.MountDevice failed for volume "pvc-a7f404b2-d1a0-4d8a-a00a-ee40abb85760" : kubernetes.io/csi: attacher.MountDevice failed to create newCsiDriverClient: driver name direct.csi.min.io not found in the list of registered CSI drivers
+	Warning  FailedMount  21s (x2 over 2m23s)  kubelet, hci-node03  MountVolume.MountDevice failed for volume "pvc-d8d4ba24-f6e9-4a86-ac8a-3ce1cd6c36b6" : kubernetes.io/csi: attacher.MountDevice failed to create newCsiDriverClient: driver name direct.csi.min.io not found in the list of registered CSI drivers
+解决方法是登陆hci-node03机器, 重启kubelet服务, 因为kubelet服务默认挂载pod路径是上面的plugins/, 手动删除可能会有影响但没深究.  
+
+	$ systemctl restart kubelet
 
