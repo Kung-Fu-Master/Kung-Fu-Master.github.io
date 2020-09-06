@@ -3,6 +3,7 @@ title: git
 tags: git
 categories:
 - technologies
+- git
 ---
 
 ## 查看github 贡献最多和增长最快链接:

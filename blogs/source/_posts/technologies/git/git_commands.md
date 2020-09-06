@@ -3,6 +3,7 @@ title: git commands
 tags: git
 categories:
 - technologies
+- git
 ---
 
 ## **git 放弃本地修改**
