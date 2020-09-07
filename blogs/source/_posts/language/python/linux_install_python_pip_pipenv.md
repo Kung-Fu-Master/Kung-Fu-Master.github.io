@@ -52,7 +52,8 @@ ubuntu18.04+python3，这个系统是默认自带了python3，且版本是python
 ## 安装pipenv
 python里如果多个多个项目同时引用包，就会涉及到包版本的问题，包不同版本管理的问题可以用虚拟环境来管理
 创建虚拟环境，这里是用官方推荐的pipenv来创建
-	安装pipenv
+安装pipenv
+
 	第一种: pip3 install pipenv (亲测可用)
 	第二种: pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pipenv 使用国内源安装pipenv
 	$ pip3 list	// 查看 pipnev是否安装完成
@@ -60,13 +61,25 @@ python里如果多个多个项目同时引用包，就会涉及到包版本的�
 	 * -bash: pipenv: command not found
 	原因：未建立软链接:
 	ln -s /usr/local/python3/bin/pipenv /usr/bin/pipenv
+
+在使用pipenv之前，必须彻底的忘记pip这个东西
+新建一个准备当环境的文件夹pipenvtest，并cd进入该文件夹：
+确定python版本
+
+	$ pipenv --three 会使用当前系统的Python3创建环境
+	$ pipenv --python 3.6 指定某一Python版本创建环境
+	// 然后该目录下会有一个Pipfile文件, 内容为:
+	[[source]]				// 安装包时下载的地址
+	name = "pypi"
+	url = "https://pypi.org/simple"
+	verify_ssl = true
 	
-	在使用pipenv之前，必须彻底的忘记pip这个东西
-	新建一个准备当环境的文件夹pipenvtest，并cd进入该文件夹：
-	*. 确定python版本
-	  pipenv --three 会使用当前系统的Python3创建环境
-	  pipenv --python 3.6 指定某一Python版本创建环境
-	  然后该目录下会有一个Pipfile文件, 内容为:
+	[dev-packages]			// 依赖包
+	
+	[packages]				// 已将安装的安装包
+	
+	[requires]				// 环境配置要求
+	python_version = "3.6"
 
 ![](pipfile.JPG)
 	

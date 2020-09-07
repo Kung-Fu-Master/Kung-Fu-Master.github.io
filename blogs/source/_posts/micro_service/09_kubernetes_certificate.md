@@ -1,5 +1,5 @@
 ---
-title: 08 Kubernetes Certificates
+title: 09 Kubernetes Certificates
 tags:
 - kubernetes
 categories:
