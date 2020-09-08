@@ -6,15 +6,24 @@ categories:
 - go
 ---
 
+## **go追本溯源**
+Go语言由Google公司的Ken Thompson(肯·汤普森), Rob Pike(罗布·派克)和Robert Griesemer(罗伯特·格瑞史莫)三位大师合作创造, 2017年9月开始设计, 2009年11月使用BSD授权许可正式对外公布.  
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
-Go环境安装:
+Ken Thompson(肯·汤普森): 1983年图灵奖得主, UNIX和C语言的发明人之一, 操作系统Plan 9的主要作者, 和Rob Pike还合作创造了UTF-8编码格式.  
+
+Rob Pike(罗布·派克): UNIX核心成员之一
+
+Robert Griesemer(罗伯特·格瑞史莫): 参与设计开发了谷歌javascript V8引擎和java HotSpot虚拟机.  
+
+Go = C + Python
+
+## **Go环境安装**
 go: https://golang.google.cn/dl/
+
 	 go1.14.1.linux-amd64.tar.gz	
 	 tar -C /usr/local -xzf go1.12.17.linux-amd64.tar.gz
 	 vim ~/.bashrc 添加 export PATH=$PATH:/usr/local/go/bin
 	 source ~/.bashrc
-
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 ### 1. go环境安装

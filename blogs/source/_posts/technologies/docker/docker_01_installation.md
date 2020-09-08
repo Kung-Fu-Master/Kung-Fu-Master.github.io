@@ -83,14 +83,25 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 
 ### Centos安装docker
 	$ yum update
-	$ yum install -y yum-utils
-	// 配置docker yum源
+	yum-utils 提供了 yum-config-manager ，并且 device mapper 存储驱动程序需要 device-mapper-persistent-data 和 lvm2
+	$ yum install -y yum-utils device-mapper-persistent-data lvm2
+	配置docker yum源
+	第一种: 官方源
 	$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-	// 查看可安装的版本
+	第二种: 阿里云
+	$ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+	第三种: 清华云
+	$ yum-config-manager --add-repo https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+	安装docker
+	第一种: 安装最新版本的 Docker Engine-Community 和 containerd
+	sudo yum install docker-ce docker-ce-cli containerd.io
+	第二种: 查看可安装的版本
 	$ yum list docker-ce --showduplicates | sort -r
-	// 安装指定版本
-	$ yum install docker-ce-<VERSION STRING>	// 如docker-ce-19.03.9-3.el7
-	// 启动docker服务
+	软件包名称是软件包名称（docker-ce）加上版本字符串（第二列），从第一个冒号（:）一直到第一个连字符，并用连字符（-）分隔。例如：docker-ce-18.09.1.
+	安装指定版本
+	如docker-ce-19.03.9
+	$ yum install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io
+	启动docker服务
 	$ systemctl start docker
 	$ systemctl enable docker
 
