@@ -16,7 +16,7 @@ Windows 10 : 设置 -> 应用(APPS) -> 应用和功能(APP & features) -> 管理
 	//自动启动 systemctl enable sshd
 	2. $cd ~/.ssh/
 	此目录如果没有authorized_keys文件需要touch新建一个，里面需要存放Window10的公匙(id_rsa.pub,另外id_rsa是Window10的密匙).
-3. 安装VS code， 安装扩展(Extensions)"Remote-Developoment"插件，会自动安装其他的Remote插件，其中会包含Remote-SSH
+3. 安装VS code， 安装扩展(Extensions)"Remote Developoment"插件，会自动安装其他的Remote插件，其中会包含Remote-SSH
 安装完成出现如下选项
 ![](2.png)
 
@@ -32,9 +32,10 @@ Windows 10 : 设置 -> 应用(APPS) -> 应用和功能(APP & features) -> 管理
 右击要连接的linux，选择在当前页面或新打开Vscode
 ![](5.png)
 
-输入linux登录密码，这个过程可能需要输入密码多次…
+输入linux登录密码，如果出现需要输入密码多次可能之前链接过, 在linux `/root/.vscode-server` 生成有文件，删掉, 再重新用Vscode链接…
 ![](6.png)
 观察VScode右下角等待连接成功
+Setting up SSH Host UserName:(details) Downloading VS Code Server
 ![](7.png)
 
 最后点击Open folder就可以了
@@ -53,4 +54,10 @@ Windows 10 : 设置 -> 应用(APPS) -> 应用和功能(APP & features) -> 管理
 
 ## VScode 连接Linux Waiting for /root/.vscode-server/bin/***/vscode-scp-done.flag and vscode-server.tar.gz to exist
 解决方法如下链接:
-![参考链接](https://blog.csdn.net/Ding19950107/article/details/103713556)
+[参考链接](https://blog.csdn.net/Ding19950107/article/details/103713556)
+
+	$ ps -aux | grep vscode
+	$ kill -9 PID
+	$ rm -rf ~/.vscode-server
+再重新用Vscode链接
+
