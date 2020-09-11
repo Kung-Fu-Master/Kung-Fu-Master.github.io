@@ -4,6 +4,15 @@ categories:
 - linux
 ---
 
+## **cmake 安装**
+
+	$ wget https://github.com/Kitware/CMake/releases/download/v3.17.0/cmake-3.17.0-Linux-x86_64.tar.gz
+	$ tar -zxvf cmake-3.17.0-Linux-x86_64.tar.gz
+	$ ln -s /<PATH>/cmake-3.17.0-Linux-x86_64/bin/cmake /usr/bin/cmake
+	$ cmake -version
+
+
+## **函数使用说明**
 参考链接:https://www.jianshu.com/p/aaa19816f7ad
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 1. add_library
@@ -104,21 +113,24 @@ target_compile_options(test_elf
 )
 ```
 
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 
+## **遇到的问题**
 
+	$ mkdir build
+	$ cd build
+	$ cmake ..
+	出现如下错误
+	......
+	CMake Error at /usr/local/cmake-3.17.0-Linux-x86_64/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake:164 (message):
+	  Could NOT find PythonLibs (missing: PYTHON_LIBRARIES PYTHON_INCLUDE_DIRS)
+	Call Stack (most recent call first):
+	  /usr/local/cmake-3.17.0-Linux-x86_64/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake:445 (_FPHSA_FAILURE_MESSAGE)
+	  /usr/local/cmake-3.17.0-Linux-x86_64/share/cmake-3.17/Modules/FindPythonLibs.cmake:310 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+	  python/CMakeLists.txt:2 (find_package)
+原因是没有安装python的开发版
 
-
-
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
-
-
-
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
-
-
-
-※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+	$ yum install python-devel 
+网上还有这种操作的, 可以pass掉`cmake -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/python2.7/config/libpython2.7.so ..`
 
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※

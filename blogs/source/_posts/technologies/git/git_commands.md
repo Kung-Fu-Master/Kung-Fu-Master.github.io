@@ -99,6 +99,13 @@ categories:
 [https://git-scm.com/book/zh/v2/Git-分支-分支的新建与合并](https://git-scm.com/book/zh/v2/Git-分支-分支的新建与合并)
 
 
+## **git diff 加上颜色**
 
+	$ git config color.ui true
+
+## **git reset到指定commit log**
+
+	$ git log
+	$ git reset --hard <Commit-ID>
 
 
