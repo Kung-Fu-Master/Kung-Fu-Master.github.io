@@ -48,6 +48,15 @@ categories:
 
 	$ ssh root@<node-IP>
 	$ ssh root@<Node-Name>	//前提是已在/etc/hosts中做过了IP与主机名的映射
+
+## ssh-copy-id
+在一台机器上执行`ssh-keygen`命令之后可以使用`ssh-copy-id`快速拷贝到其它机器
+
+	ssh-copy-id root@node01
+	ssh-copy-id root@node02
+	ssh-copy-id root@node03
+
+
 ## known_hosts
 用ssh命令第一次访问某台机器时会记录此机器的指纹(fingerprint)信息到本地/root/.ssh/known_hosts文件中
 

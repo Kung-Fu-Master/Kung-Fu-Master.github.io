@@ -1,12 +1,14 @@
 ---
-title: cfssl
-tags: security
+title: 01 部署etcd集群
+tags:
+- kubernetes
 categories:
-- technologies
-- security
+- microService
+- kubernetes
+top: 1
 ---
 
-## Kubernetes 证书
+## **部署etcd集群**
 
 | 组件 | 使用的证书 |
 | :------: | :------: |
@@ -16,79 +18,6 @@ categories:
 | kube-proxy | ca.pem, kube-proxy.pem, kube-proxy-key.pem |
 | kubectl | ca.pem, admin.pem, admin-key.pem |
 
-## cfssl
-
-cfssl用来生成证书比openssl要简单直观些
-
-
-## cfssl安装
-安装cfssl相关的三个工具: 
-
-	// 生成证书
-	$ wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
-	// 用于将json文本导入生成证书
-	$ wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
-	// 查看证书相关信息
-	$ wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64
-	$ chmod +x cfssl_linux-amd64 cfssljson_linux-amd64 cfssl-certinfo_linux-amd64
-	$ mv cfssl_linux-amd64 /usr/local/bin/cfssl
-	$ mv cfssljson_linux-amd64 /usr/local/bin/cfssljson
-	$ mv cfssl-certinfo_linux-amd64 /usr/local/bin/cfssl-certinfo
-	$ cfssl --help
-
-## cfssl 生成证书
-生成证书模板
-
-	$ cfssl print-defaults config > config.json
-	{
-	    "signing": {
-	        "default": {
-	            "expiry": "168h"
-	        },
-	        "profiles": {
-	            "www": {
-	                "expiry": "8760h",
-	                "usages": [
-	                    "signing",
-	                    "key encipherment",
-	                    "server auth"
-	                ]
-	            },
-	            "client": {
-	                "expiry": "8760h",
-	                "usages": [
-	                    "signing",
-	                    "key encipherment",
-	                    "client auth"
-	                ]
-	            }
-	        }
-	    }
-	}
-生成证书请求模板
-
-	$ cfssl print-defaults csr > csr.json
-	{
-	    "CN": "example.net",
-	    "hosts": [
-	        "example.net",
-	        "www.example.net"
-	    ],
-	    "key": {
-	        "algo": "ecdsa",
-	        "size": 256
-	    },
-	    "names": [
-	        {
-	            "C": "US",
-	            "L": "CA",
-	            "ST": "San Francisco"
-	        }
-	    ]
-	}
-
-
-## **k8s生成组件证书实例**
 所有k8s证书,配置,安装包都放到/opt/kubernetes/目录下
 
 	mkdir -p /opt/kubernetes/{ssl,cfg,bin}
@@ -354,4 +283,3 @@ https://github.com/etcd-io/etcd/releases/tag/v3.2.12
 出现以下错误:
 	etcd.service: main process exited, code=exited, status=2/INVALIDARGUMENT
 很明显是运行etcd命令时候的参数错误, 改对参数就可以了.
-
