@@ -213,7 +213,7 @@ jiuxi-svc.yaml
 让VirtualService规则生效的话，前提条件是所有的服务都被istio注入sidecar, 使这些服务处于istio的服务网格控制下.  
 在没有注入sidecar的istio控制之外来访问，VirtualService制定的服务规则不会生效.  
 Envoy + VirtualService --> traffic routing  
-web service(VirtualService,组件是envoy)充当[方向代理](https://www.jianshu.com/p/3b82ff3321b4)服务器.  
+web service(VirtualService,组件是envoy)充当[反向代理](https://www.jianshu.com/p/3b82ff3321b4)服务器.  
 VirtualService主要包含两部分: hosts field(hosts), routing rules(如http或tcp下的路由规则).  
 ![](scenario_3.PNG)
 jiuxi-vs.yaml

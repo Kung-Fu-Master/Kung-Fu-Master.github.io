@@ -119,7 +119,24 @@ Server机上访问
 	$ ssh -L MyLabIP:8443:127.0.0.1:8443 root@10.67.108.211	//如果不在本机运行上面命令需要加上要转发8443端口的主机IP
 	浏览器输入https://127.0.0.1:31440
 
+## istio dashboard端口转发
+### 如在master机器A上运行istio dashboard
 
+	istioctl dashboard kiali
+	http://localhost:38610/kiali
+查看kiali服务监听端口
+
+	netstat -nltp | grep 38610
+	tcp        0      0 127.0.0.1:38610         0.0.0.0:*               LISTEN      303611/istioctl
+	tcp6       0      0 ::1:38610               :::*                    LISTEN      303611/istioctl
+
+### 在可打开浏览器的机器B上运行如下端口转发命令
+
+	ssh -fL 38610:127.0.0.1:38610 root@<master-IP>
+	root@<master-IP>'s password:	//输入密码登陆即可
+然后再打开机器B终端, 运行终端打开浏览器命令如下, 或直接在浏览器输入http://127.0.0.1:38610
+
+	firefox
 
 
 

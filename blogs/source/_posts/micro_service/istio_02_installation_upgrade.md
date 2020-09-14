@@ -95,6 +95,9 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 	  √ No Validation issues found when analyzing namespace: book-info
 
 ## **Istio upgrade and rollback**
+因为技术变更太快, 请先参考官网最新教程：
+Official website: https://istio.io/latest/zh/docs/setup/upgrade/istioctl-upgrade/
+
 istio1.6 提供了简单的升级命令方式，直接通过命令 $ istioctl upgrade 就可以更新Istio control plane in-place
 且提供了金丝雀发布方式，更新和回滚过程可以看到有两个istiod在istio-system命名空间下.
 

@@ -172,6 +172,20 @@ top: 1
 	ls
 	admin-key.pem  admin.pem  ca-key.pem  ca.pem  kube-proxy-key.pem  kube-proxy.pem  server-key.pem  server.pem
 
+## **关闭防火墙或开发端口**
+### 关闭防火墙
+
+	setenforce 0
+	systemctl stop firewalld.service
+	sysctl net.bridge.bridge-nf-call-iptables=1
+
+### 如果使用firewalld作为防火墙，则需要开放端口
+
+	firewall-cmd --zone=public --add-port=2379/tcp --permanent
+	firewall-cmd --zone=public --add-port=2380/tcp --permanent
+	firewall-cmd --reload
+	firewall-cmd --list-all
+
 ## **etcd安装**
 etcd是由coreos公司开发在GitHub上开源的存储键值对的数据库
 
@@ -215,6 +229,7 @@ https://github.com/etcd-io/etcd/releases/tag/v3.2.12
 	
 	[Service]
 	Type=notify
+	WorkingDirectory=/var/lib/etcd/					//看网上配置有这个参数, 自己配置过程中没有加入
 	EnvironmentFile=-/opt/kubernetes/cfg/etcd		//指定服务启动配置文件
 	ExecStart=/opt/kubernetes/bin/etcd \			//服务启动选项
 	--name=${ETCD_NAME} \
