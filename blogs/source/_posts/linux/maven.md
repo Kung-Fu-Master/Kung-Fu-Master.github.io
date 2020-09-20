@@ -118,12 +118,10 @@ yum安装完maven后默认的本地仓库地址:
 
 6. 可以发现在项目目录下多出了如下两个文件
 
-
 	ls /<Project path>/
 	pom.xml src/
 
 7. 编译, 测试
-
 
 	// 1. 编译, 会在项目目录下生成一个target/文件夹
 	mvn compile
@@ -139,6 +137,13 @@ yum安装完maven后默认的本地仓库地址:
 	// 4. 清理, 删除target文件夹
 	mvn clean
 中途可能会出错遇到一些问题, 具体查看下面的Problems.
+
+## 下载指定jar包
+在 Maven 官网上查找，可以很方便地查询到自己需要的 jar文件 和 pom引用.  
+Maven 官网 地址如下：  
+https://mvnrepository.com/
+
+
 
 
 ## Problems
@@ -164,6 +169,22 @@ Maven编报错：No compiler is provided in this environment. Perhaps you are ru
 
 	    <maven.compiler.source>1.8</maven.compiler.source>
 	    <maven.compiler.target>1.8</maven.compiler.target>
+
+### 问题3: ImportOrder
+java导入包编译时候出错报ImportOrder: Wrong order for 'io.minio.errors.MinioException' import
+原因是checkstyle对java import包的顺序有要求
+**方法一:** 修改pom.xml直接禁用:
+
+	<plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-checkstyle-plugin</artifactId>
+	    <configuration>
+	        <skip>true</skip>
+	    </configuration>
+	</plugin>
+**方法二:** 根据checkstyle定义, 修改导入包顺序
+checkstyle导入包顺序定义官网：[ImportOrder](https://checkstyle.sourceforge.io/config_imports.html#ImportOrder)  
+记住要按字典顺序排序导入这一条: ensures that imports within each group are in lexicographic order
 
 
 
