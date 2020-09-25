@@ -1,5 +1,5 @@
 ---
-title: 01 部署etcd集群
+title: 01 部署external etcd集群
 tags:
 - kubernetes
 categories:
@@ -288,6 +288,13 @@ https://github.com/etcd-io/etcd/releases/tag/v3.2.12
 	member 8af8f5fa5f0b0b39 is healthy: got healthy result from https://10.239.131.206:2379
 	member 91dd39fb14e3de97 is healthy: got healthy result from https://10.239.140.133:2379
 	cluster is healthy
+
+## 移除etcd集群
+分别登陆各台部署etcd的机器上执行如下命令:
+
+	systemctl stop etcd
+	systemctl disable etcd
+	rm -rf /usr/lib/systemd/system/etcd.service
 
 
 ## **遇到的问题**

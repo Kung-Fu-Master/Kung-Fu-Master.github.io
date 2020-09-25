@@ -80,6 +80,16 @@ By providing the `--api s3v4` directly and it shouldn't call the validation call
 	$ mc config host add myminio https://127.0.0.1:30007 minio minio123 --api S3v4
 	// 移除 host
 	$ mc config host remove myminio
+
+	再次查看host
+	./mc config host list | grep myminio -A 5
+	myminio
+	  URL       : http://127.0.0.1:30007
+	  AccessKey : hceminio
+	  SecretKey : hceminio123
+	  API       : S3v4
+	  Path      : auto
+
 **查看bucket, object**
 
 	//查看所有bucket

@@ -112,6 +112,26 @@ categories:
 	docker build --build-arg user=edisonzhou Dockerfile .
 
 
+## 配置proxy
+### 第一种: 配置proxy环境变量, 有时候需要加http和https两个proxy, 而下面两个还没找出怎么加两个proxy.
+
+	ENV http_proxy=http://child-prc.intel.com:913
+	ENV https_proxy=http://child-prc.intel.com:913
+	ENV HTTP_PROXY=http://child-prc.intel.com:913
+	ENV HTTPS_PROXY=http://child-prc.intel.com:913
+
+### 第二种: 在Dockerfile中命令行加上proxy
+
+	RUN pip install Flask-JSON==0.3.3 --proxy=http://child-prc.intel.com:913
+
+### (推荐)第三种: 在构建image命令行上加proxy, 这样不会写道image里,给其他人用时候不会暴漏自己公司的proxy
+
+	docker build --pull -t "productpage:${VERSION}" -t "productpage:latest" --build-arg HTTP_PROXY=http://child-prc.intel.com:913 --build-arg HTTPS_PROXY=http://child-prc.intel.com:913 .
+然后在Dockerfile里面你应该添加
+
+	ARG HTTP_PROXY
+	ARG HTTPS_PROXY
+
 ## Use cases
 ### Case1: 编译执行在一个image里
 
@@ -266,6 +286,7 @@ Dockerfile
 	发现进程的ID在容器中与主机上不同, 容器使用独立的PID Linux命名空间并且有着独立的系列号，完全独立于进程树.
 	正如拥有独立的进程树一样，每个容器也拥有独立的文件系统.
 	容器内的应用不仅拥有独立的文件系统，还有进程、用户、主机名和网络接口.
+
 
 ## 遇到的问题
 docker pull ubuntu等系统镜像后登陆上去，配置公司proxy后无法连接网络，apt-get update无法执行
