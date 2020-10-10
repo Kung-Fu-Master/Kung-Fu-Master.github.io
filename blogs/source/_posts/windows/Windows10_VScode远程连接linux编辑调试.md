@@ -61,3 +61,13 @@ Setting up SSH Host UserName:(details) Downloading VS Code Server
 	$ rm -rf ~/.vscode-server
 再重新用Vscode链接
 
+## VScode链接远程机器一致让输入远程机器密码
+解决方法是登陆远程机器然后删除/root/.vscode-server/bin/ 下最新的文件夹如
+
+	cd /root/.vscode-server/bin
+	ls -alh 
+	  drwxr-xr-x 2 root root 106 Oct  9 10:00 58bb7b2331731bf72587010e943852e13e6fd3cf
+	  drwxr-xr-x 6 root root 150 Sep 13 18:28 a0479759d6e9ea56afa657e454193f72aef85bd0
+	  drwxr-xr-x 6 root root 150 Sep 16 13:44 e790b931385d72cf5669fcefc51cdf65990efa5d
+	rm -rf 58bb7b2331731bf72587010e943852e13e6fd3cf
+之后再次尝试用VScode连接远程机器就可以了
