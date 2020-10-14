@@ -80,4 +80,43 @@ All API access is over HTTPS, and accessed from https://api.github.com. All data
 	Cache-Control: max-age=0, private, must-revalidate
 	X-Content-Type-Options: nosniff
 
+## Simple Samples
+
+	from flask import Flask
+	
+	app = Flask(__name__)
+	
+	@app.route('/')
+	def hello_world():
+	    return "Hello World!!!"
+	
+	@app.route('/index/<user>')
+	def hello_user(user):
+	    return "Hello %s" % user
+	
+	@app.route('/productpage')
+	def hello_productpage():
+	    return "Hello productpage!!!"
+	
+	# POST方法浏览器输入出错可以通过命令行方式访问, 如下指定POST方式访问
+	# pipenv shell
+	# python app.py
+	# curl -X POST 127.0.0.1:9900/index --noproxy 127.0.0.1
+	@app.route('/index', methods=['POST'])
+	def hello_post():
+	    return "Hello POST Methods!!!"
+	
+	if __name__ == "__main__":
+	    app.run(host='127.0.0.1', port=9900, debug=True)
+
+
+## 教程视频
+
+Restful API
+
+NodeJS:			https://www.bilibili.com/video/BV1KE411j7WX?p=4
+NodeJS:			https://www.bilibili.com/video/BV1Hh411Z7Ra?from=search&seid=18040937623809243636
+python Flask:	https://www.bilibili.com/video/BV1Rf4y127Cy?p=6
+java:			https://www.bilibili.com/video/BV1et411T7SS?p=8
+java Spring boot: https://study.163.com/course/introduction.htm?courseId=1005213034#/courseDetail?tab=1
 
