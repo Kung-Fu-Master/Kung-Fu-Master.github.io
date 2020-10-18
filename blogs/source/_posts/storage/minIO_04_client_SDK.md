@@ -7,6 +7,9 @@ categories:
 
 ## Reference
 
+参考下载并生成AWS s3 SDK
+[Setting Up the AWS SDK for C++](https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/setup.html)
+
 [source code](https://github.com/aws/aws-sdk-cpp)
 [SDK_usage_guide.md](https://github.com/aws/aws-sdk-cpp/blob/master/Docs/SDK_usage_guide.md)
 [Using CMake Exports with the AWS SDK for C++](https://aws.amazon.com/blogs/developer/using-cmake-exports-with-the-aws-sdk-for-c/)
@@ -47,7 +50,8 @@ gcc/g++ 4.9+
 	$ tar -zxvf 1.8.55.tar.gz
 	$ mkdir build_dir
 	$ cd build_dir
-	$ cmake /home/***/aws-sdk-cpp-1.8.55/ -DCMAKE_BUILD_TYPE=Debug
+	(编译全部, 会耗费一个小时左右时间, 推荐使用以下只编译S3 service)$ cmake /home/***/aws-sdk-cpp-1.8.55/ -DCMAKE_BUILD_TYPE=Debug
+	$ cmake /home/***/aws-sdk-cpp-1.8.55/ -D CMAKE_BUILD_TYPE=[Debug | Release] -D BUILD_ONLY="s3"
 	make
 	make install // 安装头文件等到系统/usr/local/include目录
 
