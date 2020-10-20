@@ -118,3 +118,141 @@ categories:
 	1 1.3 !
 
 
+## string类
+在C语言中，有两种方式表示字符串：
+ * 一种是用字符数组来容纳字符串，例如char str[10] = "abc"，这样的字符串是可读写的；
+ * 一种是使用字符串常量，例如char *str = "abc"，这样的字符串只能读，不能写。
+两种形式总是以\0作为结束标志.
+
+### copy-on-write
+只有当字符串被修改的时候才创建各自的拷贝，这种实现方式称为写时复制（copy-on-write）策略.  
+当字符串只是作为值参数（value parameter）或在其他只读情形下使用，这种方法能够节省时间和空间.  
+
+	string s1("12345");
+	string s2 = s1;
+	cout << (s1 == s2) << endl;
+	s1[0] = '6';
+	cout << "s1 = " << s1 << endl;  //62345
+	cout << "s2 = " << s2 << endl;  //12345
+	cout << (s1 == s2) << endl;
+
+在 GCC 下的运行结果:
+
+	1
+	s1 = 62345
+	s2 = 12345
+	0
+
+### length
+string 是 C++ 中常用的一个类.  
+与C风格的字符串不同，string 的结尾没有结束标志'\0'.  
+
+	string s = "http://c.biancheng.net";
+	int len = s.length();
+	cout<< len <<endl; // 输出 8
+
+### c_str()
+在实际编程中，有时候必须要使用C风格的字符串（例如打开文件时的路径），为此，string 类为我们提供了一个转换函数 c_str()
+c_str()能够将 string 字符串转换为C风格的字符串，并返回该字符串的 const 指针（const char*）
+
+	string path = "D:\\demo.txt";
+	FILE *fp = fopen(path.c_str(), "rt");
+
+### cin >> 输入字符串 string
+可以像对待普通变量那样对待 string 变量，也就是用>>进行输入，用<<进行输出.  
+
+	string s;
+	cin >> s;  //输入字符串
+	cout << s << endl;  //输出字符串
+运行结果：
+
+	http://c.biancheng.net  http://vip.biancheng.net↙
+	http://c.biancheng.net
+
+虽然我们输入了两个由空格隔开的网址，但是只输出了一个，这是因为输入运算符>>默认会忽略空格，遇到空格就认为输入结束，所以最后输入的http://vip.biancheng.net没有被存储到变量 s。
+
+### 访问字符串中的字符
+
+	string s = "1234567890";
+	for(int i=0,len=s.length(); i<len; i++){
+	    cout<<s[i]<<" ";
+	}
+	cout<<endl;
+	s[5] = '5';
+	cout<<s<<endl;
+运行结果：
+
+	1 2 3 4 5 6 7 8 9 0
+	1234557890
+
+### 字符串的拼接
+可以使用+或+=运算符来直接拼接字符串, 再也不需要使用C语言中的 strcat()、strcpy()、malloc() 等函数来拼接字符串了，再也不用担心空间不够会溢出了.  
+用+来拼接字符串时，运算符的两边可以都是 string 字符串，也可以是一个 string 字符串和一个C风格的字符串，还可以是一个 string 字符串和一个字符数组，或者是一个 string 字符串和一个单独的字符.  
+
+	string s1 = "first ";
+	string s2 = "second ";
+	char *s3 = "third ";
+	char s4[] = "fourth ";
+	char ch = '@';
+	string s5 = s1 + s2;
+	string s6 = s1 + s3;
+	string s7 = s1 + s4;
+	string s8 = s1 + ch;
+	
+	cout<<s5<<endl<<s6<<endl<<s7<<endl<<s8<<endl;
+运行结果：
+
+	first second
+	first third
+	first fourth
+	first @
+
+### string 字符串的增删改查
+
+#### insert()
+insert() 函数可以在 string 字符串中指定的位置插入另一个字符串，它的一种原型为：
+
+	string& insert (size_t pos, const string& str);
+pos 表示要插入的位置，也就是下标；str 表示要插入的字符串，它可以是 string 字符串，也可以是C风格的字符串。  
+实例:
+
+	string s1 = "1234567890";
+	string s2 = "aaa";
+	s1.insert(5, s2);
+运行结果：
+
+	12345aaa67890
+
+#### erase()
+erase() 函数可以删除 string 中的一个子字符串。它的一种原型为：
+
+	string& erase (size_t pos = 0, size_t len = npos);
+pos 表示要删除的子字符串的起始下标，len 表示要删除子字符串的长度。如果不指明 len 的话，那么直接删除从 pos 到字符串结束处的所有字符（此时 len = str.length - pos）。
+
+#### substr()
+substr() 函数用于从 string 字符串中提取子字符串，它的原型为：
+
+	string substr (size_t pos = 0, size_t len = npos) const;
+pos 为要提取的子字符串的起始下标，len 为要提取的子字符串的长度。
+
+#### find() 函数
+find() 函数用于在 string 字符串中查找子字符串出现的位置，它其中的两种原型为：
+
+	size_t find (const string& str, size_t pos = 0) const;
+	size_t find (const char* s, size_t pos = 0) const;
+第一个参数为待查找的子字符串，它可以是 string 字符串，也可以是C风格的字符串。第二个参数为开始查找的位置（下标）；如果不指明，则从第0个字符开始查找.  
+
+#### rfind() 函数
+rfind() 和 find() 很类似，同样是在字符串中查找子字符串，不同的是 find() 函数从第二个参数开始往后查找，而 rfind() 函数则最多查找到第二个参数处，如果到了第二个参数所指定的下标还没有找到子字符串，则返回一个无穷大值4294967295.  
+
+#### find_first_of() 函数
+find_first_of() 函数用于查找子字符串和字符串共同具有的字符在字符串中首次出现的位置
+
+
+
+
+
+
+
+
+
