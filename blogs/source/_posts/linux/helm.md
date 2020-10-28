@@ -15,3 +15,16 @@ Manually download and install the Helm release version: [release](https://github
 	$ mv linux-amd64/helm /usr/local/bin/helm
 
 From there, you should be able to run the client and add the stable repo: `helm help`
+
+
+
+## Trobleshooting
+
+### User "system:serviceaccount:kube-system:default" cannot get resource "namespaces" in API group "" in the namespace "greenplum"
+Reference Link: https://github.com/fnproject/fn-helm/issues/21
+
+	$ kubectl create serviceaccount --namespace kube-system tiller
+	$ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+	$ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+
+

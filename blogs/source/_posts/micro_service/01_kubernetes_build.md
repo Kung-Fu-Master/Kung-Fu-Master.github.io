@@ -146,11 +146,60 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 > 每台虚拟机 内存要大于等于 2 G ，CPU核数需要大于等于 4 核
 
 ### **每个node都在 /etc/environment 添加如下信息**
+
 	http_proxy="http://child-prc.intel.com:913/"
 	https_proxy="http://child-prc.intel.com:913/"
 	ftp_proxy="ftp://child-prc.intel.com:913/"
 	no_proxy="K8S_MASTER_IP,K8S_MASTER_HostName"  如: no_proxy="10.67.108.200,hci-node01"
 
+### **安装docker**
+#### **删除旧版本docker**
+
+	yum remove -y docker \
+	                  docker-client \
+	                  docker-client-latest \
+	                  docker-common \
+	                  docker-latest \
+	                  docker-latest-logrotate \
+	                  docker-logrotate \
+	                  docker-selinux \
+	                  docker-engine-selinux \
+	                  docker-engine
+
+#### **配置docker源**
+
+	sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+	sudo yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
+
+#### **yum 查看docker可用版本**
+
+	yum list docker-ce --showduplicates | sort -r
+	yum list docker-ce-cli --showduplicates | sort -r
+	yum list containerd.io --showduplicates | sort -r
+
+#### **安装docker**
+
+	// 安装最新版docker
+	yum install docker-ce docker-ce-cli containerd.io
+	// 安装指定版docker
+	yum install docker-ce-19.03.8-3.el7
+	yum install docker-ce-cli-19.03.8-3.el7
+	yum install containerd.io-1.2.13-3.1.el7
+
+#### **设置docker的proxy**
+
+	$ mkdir docker.service.d
+	$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
+	[Service]
+	Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
+
+	$ vim /etc/systemd/system/docker.service.d/https-proxy.conf
+	[Service]
+	Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
+
+	$ vim /etc/systemd/system/docker.service.d/no-proxy.conf
+	[Service]
+	Environment="NO_PROXY=10.239.140.133,10.239.141.123,master-node,node-1"
 ### **kubeadm, kubelet, kubectl**
 > 每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的worknode上也安装(也就是下载或拷贝)kubectl二进制文件工具.
 
@@ -189,6 +238,7 @@ Centos:
 	$ setenforce 0
 	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 	$ yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes // 禁掉除了这个之外的别的仓库,也就是用这个新加的kubernetes仓库来安装kubeadm等.  
+	$ (特定版本)yum install -y kubectl-1.19.0 kubelet-1.19.0 kubeadm-1.19.0 --disableexcludes=kubernetes
 	$ systemctl enable --now kubelet
 
 	$ kubeadm version		// 通过 kubectl 命令行客户端向运行在主节点上的 Kubemetes API 服务器发出 REST 请求以与集群交互
@@ -198,6 +248,16 @@ Centos:
 	$ systemctl enable --now kubelet
 	$ kubeadm reset
 	$ sudo hostnamectl set-hostname master-node //修改机器名字, 重开终端就可以看到机器名变了
+
+#### **k8s配置自动补全命令**
+
+	#安装bash自动补全插件
+	yum install bash-completion -y
+	#设置kubectl与kubeadm命令补全，下次login生效
+	kubectl completion bash >/etc/bash_completion.d/kubectl
+	kubeadm completion bash > /etc/bash_completion.d/kubeadm
+
+
 ### **机器环境配置**
 master-node和worknode都需要设置.  
 关闭交换区, K8s认为swap性能开销比较大, 性能会大幅降低, 使用swap做云基础架构会减少性能, 因此k8s关闭swap.  
@@ -328,21 +388,8 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 #### **第四种ntpdate:**
 
 	$ ntpdate time.windows.com 		// 同步 windows 系统时间
-
-### **设置docker的proxy**
-	$ mkdir docker.service.d
-	$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
-	[Service]
-	Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
-
-	$ vim /etc/systemd/system/docker.service.d/https-proxy.conf
-	[Service]
-	Environment="HTTPS_PROXY=http://child-prc.intel.com:913/"
-
-	$ vim /etc/systemd/system/docker.service.d/no-proxy.conf
-	[Service]
-	Environment="NO_PROXY=10.239.140.133,10.239.141.123,master-node,node-1"
 ### **安装镜像(可跳过)**
+
 	$ kubeadm config images list // 查看kubeadm 下载过的images
 	$ docker images
 	$ docker pull gcr.io/google_containers/kube-apiserver-amd64:v1.9.3

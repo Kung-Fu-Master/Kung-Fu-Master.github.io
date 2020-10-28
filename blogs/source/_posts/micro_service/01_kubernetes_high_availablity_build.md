@@ -16,8 +16,10 @@ top: 1
 | 10.239.131.156 | laboratory | master |
 | 10.239.141.123 | node-1 | master |
 | 10.239.141.194 | node-2 | worker |
+| 10.239.140.51 | master-node | Virtual IP |
 
 总共四台机器，三台做master, 一台做work node, 部署好后可以把master上污点去掉, 照样可以部署k8s资源.
+Virtual IP是部署过程中在机器网卡上添加的虚拟IP, 操作下方有涉及到.
 
 ![](finish_setup.PNG)
 
@@ -212,12 +214,16 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 这个 --upload-certs 标志用来将在所有控制平面实例之间的共享证书上传到集群.  
 当 --upload-certs 与 kubeadm init 一起使用时，主控制平面的证书被加密并上传到 kubeadm-certs 密钥中.  
 
+**查看网卡地址上是否多出了一个虚拟IP为:10.239.140.51**
+
+	$ ip addr
+
 ### **2. laboratory和node-1机器上**
 > 先不要在路径/etc/kubernetes/manifests/添加 kube-vip.yaml 文件, this is due to some bizarre kubeadm/kubelet behaviour.  
 > 等laboratory和node-1机器都添加进master集群后再添加kube-vip.yaml, kubeadm会自动检测/etc/kubernetes/manifests/文件变化并部署pod.  
 直接运行如下命令添加进master集群.
 
-	kubeadm join 192.168.0.75:6443 --token <tkn> \
+	kubeadm join 10.239.140.133:6443 --token <tkn> \
 	    --discovery-token-ca-cert-hash sha256:<hash> \
 	    --control-plane --certificate-key <key> 
 **配置k8s访问环境变量**  
@@ -261,7 +267,7 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 ### **4. node-2机器上**
 添加work node节点
 
-	$ sudo kubeadm join 192.168.0.200:6443 --token 9vr73a.a8uxyaju799qwdjv --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866
+	$ sudo kubeadm join 10.239.140.133:6443 --token 9vr73a.a8uxyaju799qwdjv --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866
 ## **查看kube-vip, api-server服务进程和监听端口**
 
 	$ netstat -nltp | grep 10000	// 列出监听端口10000的进程
@@ -309,8 +315,9 @@ TCP才能在Foreign Address看到链接的客户端IP和端口, 而UDP无状态�
 	  Taints:             node-role.kubernetes.io/master:NoSchedule
 	
 	// 去掉污点
-	$  kubectl taint nodes <Node-Name> node-role.kubernetes.io/master:NoSchedule-
-
+	$ kubectl taint nodes <Node-Name> node-role.kubernetes.io/master:NoSchedule-
+	// 去掉所有控制平面host污点
+	$ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 ## 网卡上添加删除虚拟网址
 网卡上增加一个IP
