@@ -25,6 +25,8 @@ Reference Link: https://github.com/fnproject/fn-helm/issues/21
 
 	$ kubectl create serviceaccount --namespace kube-system tiller
 	$ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+	// 安装tiller
+	$ helm init --service-account tiller --skip-refresh
 	$ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 
 

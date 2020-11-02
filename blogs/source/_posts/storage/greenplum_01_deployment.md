@@ -165,7 +165,18 @@ The above command unpacks the distribution into a new directory named ```greenpl
 	$ kubectl apply -f ./my-gp-instance.yaml -n gpinstance-1
 	$ kubectl apply -f ./my-gp-instance.yaml -n gpinstance-2
 ## **Test whether the Greenplum Cluster deployment is successful**
+查看greenplum logs
 
+	$ k logs po/master-0 -n greenplum
+	......
+	*******************************
+	Adding host based authentication to master-0 pg_hba.conf
+	*******************************
+	......
+	*******************************
+	Running createdb
+	*******************************
+需要等待一段时间才能执行下方操作
 
 	$ kubectl exec -it master-0 -n greenplum -- bash -c "source /opt/gpdb/greenplum_path.sh; psql"
 	 psql (8.3.23)
@@ -176,6 +187,10 @@ The above command unpacks the distribution into a new directory named ```greenpl
 	1. 先进入master-0: kubectl exec -it master-0 -n greenplum -- bash, 再查找greenplum_path.sh
 	2. 执行`$ source /opt/gpdb/greenplum_path.sh`, 再 `$ exit`退出, 然后就可以用以上命令了
 (Enter `\q` to exit the psql utility.)
+
+**If you are redeploying a cluster that configured to use a standby master, wait until all pods reach the Running status. Then connect to the master-0 pod and execute the gpstart command manually. For example:**
+
+	$ kubectl exec -it master-0 -n greenplum -- bash -c "source /opt/gpdb/greenplum_path.sh; gpstart"
 
 ## **Delete a greenplum cluster and uninstall pivotal greenplum for kubernetes**
 
