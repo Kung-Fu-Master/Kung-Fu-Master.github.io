@@ -22,7 +22,7 @@ categories:
 
 ### 配置阿里云镜像仓库
 
-	vim /etc/maven/setting.xml
+	vim /etc/maven/settings.xml
 	// 定位到mirrors节点下添加下面配置
 	  <mirrors>
 	     <mirror>
@@ -35,7 +35,7 @@ categories:
 
 ### 配置proxy
 
-	vim /etc/maven/setting.xml
+	vim /etc/maven/settings.xml
 	    <proxy>
 	       <id>my-proxy1</id>
 	       <active>true</active>
@@ -58,14 +58,14 @@ yum安装完maven后默认的本地仓库地址:
 
 配置新的本地仓库:
 
-	vim /etc/maven/setting.xml
+	vim /etc/maven/settings.xml
 	// 定位到这个节点进行编写
 	<localRepository>/home/maven/repo</localRepository>
 
 ### 指定JDK版本
 配置创建项目的版本默认为 JDK8
 
-	vim /etc/maven/setting.xml
+	vim /etc/maven/settings.xml
 	  <profiles>
 	    <profile>    
 	         <id>jdk-1.8</id>    

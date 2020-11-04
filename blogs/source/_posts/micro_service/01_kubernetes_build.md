@@ -516,6 +516,16 @@ environment_initialization.sh
 	$ bash
 试试 输入 `kubectl get n` 按 `tab` 查看提示.
 
+## **reset iptables**
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+
+	The reset process does not reset or clean up iptables rules or IPVS tables. If you wish to reset iptables, you must do so manually:
+	
+	iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+	If you want to reset the IPVS tables, you must run the following command:
+	
+	ipvsadm -C
+
 ## **Additional**
 
 ### **重新reset K8s集群，然后kubeadm init遇到如下问题**
@@ -573,6 +583,39 @@ Istio 部署bookinfo 到bookinfo命名空间， 发现只部署了svc，RS，但
 	   value: 10.239.140.186,10.239.140.200		// master和一个worker节点的NodeIP.
 稍等一会$ kubectl get po -n bookinfo 就可以看到pod慢慢部署成功了.
 
+### **部署网络weave出错**
 
+	Unable to update cni config: No networks found in /etc/cni/net.d
+	由于设置了代理导致的错误, kubelet 无法通过代理链接到 kube-apiserve
+	
+	解决办法:
+	
+	unset http_proxy https_proxy
+	# or
+	export no_proxy=<your_kube_apiserver_ip>
+
+### **去掉污点Taints**
+
+	# 允许调度 pod
+	kubectl taint node {node name} node-role.kubernetes.io/master-
+	# example
+	kubectl taint node host1 node-role.kubernetes.io/master-
+	
+	# 禁止调度 pod
+	kubectl taint node {node name} node-role.kubernetes.io/master=master
+	# example
+	kubectl taint node host1 node-role.kubernetes.io/master=master
+
+### **重新生成证书**
+
+	有时可能过了一段时间需要添加新的 node
+	# 生成一个 token
+	kubeadm token generate
+	# 获取证书的 hash 值
+	openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | \
+	>    openssl dgst -sha256 -hex | sed 's/^.* //'
+	# kubeadm join --token <token> <master-ip>:<master-port> --discovery-token-ca-cert-hash sha256:<hash>
+	# example
+	kubeadm join --token xf96mj.aq2c5v14r62rf2aw 172.16.50.10:6443  --discovery-token-ca-cert-hash sha256:a18c59189884451f71305a0107d15b79a8ac091ef9a8b9e394cad5d4b9f18162
 
 

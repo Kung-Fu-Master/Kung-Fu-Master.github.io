@@ -13,7 +13,11 @@ categories:
 
 	$ journalctl -fu docker
 	$ journalctl -fu kubelet
+查看服务日志详细内容:
+
+	journalctl -u kubelet --no-pager
 
 ## 重新加载系统配置
 
 	$ systemctl daemon-reload
+
