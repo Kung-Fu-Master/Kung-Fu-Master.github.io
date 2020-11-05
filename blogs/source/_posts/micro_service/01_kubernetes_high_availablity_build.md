@@ -5,7 +5,6 @@ tags:
 categories:
 - microService
 - kubernetes
-top:
 ---
 
 ## **准备机器**

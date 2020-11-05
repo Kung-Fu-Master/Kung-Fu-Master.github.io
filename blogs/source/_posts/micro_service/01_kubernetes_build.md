@@ -5,7 +5,6 @@ tags:
 categories:
 - microService
 - kubernetes
-top: 1
 ---
 
 ## **Kubernetes 简介**
