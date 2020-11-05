@@ -4,7 +4,7 @@ tags: kubernetes
 categories:
 - microService
 - kubernetes
-top: 7
+top:
 ---
 
 ## Etcd

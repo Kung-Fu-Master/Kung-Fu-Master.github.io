@@ -5,7 +5,7 @@ tags:
 categories:
 - microService
 - kubernetes
-top: 1
+top:
 ---
 
 ## **部署etcd集群**
