@@ -172,7 +172,7 @@ Dockerfile添加如下内容
 	ubuntu                               18.04               4e5021d210f6        6 weeks ago         64.2MB
 
  * 第一种执行应用方式: 启动容器直接运行可执行文件
-	$ docker run -rm dockerfile-01
+	$ docker run --rm dockerfile-01
 		Hello World!
  * 第二种执行应用方式: 启动容器，进入容器，再手动执行可执行文件
 	$ docker run -itd --name test01 dockerfile-01 /bin/bash
@@ -207,10 +207,9 @@ Dockfile内容如下
 	$ docker build -t dockerfile-01:2.0 .
 	$ docker images
 	REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
-	dockerfile-01                        2.0                 f29fa900630d        5 seconds ago       64.2MB
-	<none>                               <none>              8bd7003b9cd8        2 minutes ago       207MB
+	dockerfile-01                        2.0                 f29fa900630d        5 seconds ago       63.3MB
 	dockerfile-01                        1.0                 cd9a95fccaa9        45 minutes ago      207MB
-	ubuntu                               18.04               4e5021d210f6        6 weeks ago         64.2MB
+	ubuntu                               18.04               4e5021d210f6        6 weeks ago         63.2MB
 	
 可以看到新生成的两个image， 一个image为<none>:<none> 大小为207MB, 另一个image为dockerfile-01:2.0 大小为64.2MB
 以后就可以用dockerfile-01:2.0作为项目中的应用docker容器
@@ -287,8 +286,28 @@ Dockerfile
 	正如拥有独立的进程树一样，每个容器也拥有独立的文件系统.
 	容器内的应用不仅拥有独立的文件系统，还有进程、用户、主机名和网络接口.
 
+## Dockerfile逆向
+
+	$ docker history dockerfile-01:1.0
+	IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+	01c4f6c6dc0b        3 hours ago         /bin/sh -c #(nop)  CMD ["./test.o"]             0B
+	9237cc69b6b9        3 hours ago         /bin/sh -c gcc -g test.c -o test.o              10.8kB
+	4e775aeb3a93        3 hours ago         /bin/sh -c apt-get install gcc -y               124MB
+	4524eb24d841        3 hours ago         /bin/sh -c apt-get update                       34.2MB
+	91c7861b5cb3        3 hours ago         /bin/sh -c #(nop)  ENV http_proxy=http://chi…   0B
+	1ca351444c36        3 hours ago         /bin/sh -c #(nop) COPY file:48688e4f8a2a718c…   102B
+	82e8f67a2e3f        3 hours ago         /bin/sh -c #(nop) WORKDIR /home/zhan            0B
+	21555537a646        3 hours ago         /bin/sh -c mkdir -p /home/zhan                  0B
+	14b43e5758aa        3 hours ago         /bin/sh -c #(nop)  LABEL maintainer=tester.c…   0B
+	56def654ec22        6 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+	<missing>           6 weeks ago         /bin/sh -c mkdir -p /run/systemd && echo 'do…   7B
+	<missing>           6 weeks ago         /bin/sh -c [ -z "$(apt-get indextargets)" ]     0B
+	<missing>           6 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   745B
+	<missing>           6 weeks ago         /bin/sh -c #(nop) ADD file:4974bb5483c392fb5…   63.2MB
+
 
 ## 遇到的问题
+### docker proxy
 docker pull ubuntu等系统镜像后登陆上去，配置公司proxy后无法连接网络，apt-get update无法执行
 解决方案: 修改主机上的文件 /etc/docker/daemon.json 内容如下, 添加主机IP:
 
@@ -299,7 +318,14 @@ docker pull ubuntu等系统镜像后登陆上去，配置公司proxy后无法连
 	$ systemctl restart docker.service
 再次登陆容器配置好proxy, apt-get update就可以执行了
 
+### 删除所有<none>镜像
 
+一条命令ko
+
+	docker rmi `docker images | grep  "<none>" | awk '{print $3}'`
+如果确定所有none镜像确实没用，直接加个-f强制删除，谨慎
+
+	docker rmi -f `docker images | grep  "<none>" | awk '{print $3}'`
 
 
 
