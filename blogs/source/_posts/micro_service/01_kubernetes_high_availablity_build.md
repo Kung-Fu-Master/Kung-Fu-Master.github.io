@@ -15,7 +15,7 @@ categories:
 | 10.239.131.156 | laboratory | master |
 | 10.239.141.123 | node-1 | master |
 | 10.239.141.194 | node-2 | worker |
-| 10.239.140.51 | master-node | Virtual IP |
+| 10.239.140.51 | k8s-vip | Virtual IP |
 
 总共四台机器，三台做master, 一台做work node, 部署好后可以把master上污点去掉, 照样可以部署k8s资源.
 Virtual IP是部署过程中在机器网卡上添加的虚拟IP, 操作下方有涉及到.
@@ -46,13 +46,25 @@ Virtual IP是部署过程中在机器网卡上添加的虚拟IP, 操作下方有
 	sysctl net.bridge.bridge-nf-call-iptables=1
 	sysctl net.bridge.bridge-nf-call-ip6tables=1
 	iptables -F
+
+**`Note:`**
+
 	// 有时候在公司开发机上部署不成功, 需要在~/.bashrc添加NO_PROXY
-	// 尤其要加上虚拟出来的VIP-IP
+	// 不要忘了添加 127.0.0.1 和 虚拟出来的 Virtual IP
 	cat << EOF >> ~/.bashrc
-	export NO_PROXY=Node01-IP,Node02-IP,VIP-IP,127.0.0.1,
+	export NO_PROXY=127.0.0.1,master-node-IP,laboratory-IP,Node01-IP,Node02-IP,k8s-vip-IP, master-node,laboratory,Node01,Node02,k8s-vip
 	EOF
 	source ~/.bashrc
 
+修改 /etc/hosts文件内容
+
+	vim /etc/hosts
+	......
+	10.239.140.133 master-node
+	10.239.131.156 laboratory
+	10.239.141.123 node-1
+	10.239.141.194 node-2
+	10.239.140.51 k8s-vip
 
 ## **kube-vip方式部署高可用k8s集群**
 official website:  
@@ -205,7 +217,7 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 执行部署K8s集群命令
 
 	$ kubeadm init --control-plane-endpoint vip.mycluster.local:8443 [additional arguments ...] //具体实例如下
-	$ kubeadm init --control-plane-endpoint "10.239.140.133:6443" --apiserver-advertise-address 10.239.140.133 --apiserver-bind-port 6443 --upload-certs --kubernetes-version "v1.19.0"
+	$ kubeadm init --control-plane-endpoint "10.239.140.51:6443" --apiserver-advertise-address 10.239.140.133 --apiserver-bind-port 6443 --upload-certs --kubernetes-version "v1.19.0"
 	$ kubectl get pods -A
 	  NAMESPACE     NAME                                     READY   STATUS    RESTARTS   AGE
 	  <...>
@@ -306,6 +318,35 @@ TCP才能在Foreign Address看到链接的客户端IP和端口, 而UDP无状态�
 	      1 10.40.0.2
 	      1 10.40.0.1
 	      1 10.109.19.68
+
+## **去掉apiserver配置的proxy**
+部署完集群后在公司环境一定要去掉apiserver的proxy配置, 否则会遇到如下问题
+
+问题1: The connection to the server 10.239.140.200:6443 was refused - did you specify the right host or port?
+问题2: 执行systemctl status kubelet发现 类似如下错误
+
+	Failed to get status for pod "kube-controller-manager-master-node_kube-system(185ec5bf52273f72fe5c4a72e3fbab62)": Get "https://10.239.140.200:6443/api/v1/namespaces/kube-system/pods/kube-controller-manager-master-node": dial tcp 10.239.140.200:6443: connect: connection refused
+问题2： 执行kubectl get po -n kube-system 发现 controller-manager 和 scheduler 组件运行不正常
+解决方案如下就是登陆每台master注释掉如下内容
+
+	登陆每台master注释如下内容
+	vim /etc/kubernetes/manifests/kube-apiserver.yaml
+	......
+	    #env:
+	    #- name: NO_PROXY
+	    #  value: node-1,laboratory,node-2,k8s-vip,127.0.0.1,10.239.140.200
+	    #- name: http_proxy
+	    #  value: http://child-prc.intel.com:913
+	    #- name: HTTPS_PROXY
+	    #  value: http://child-prc.intel.com:913
+	    #- name: https_proxy
+	    #  value: http://child-prc.intel.com:913
+	    #- name: HTTP_PROXY
+	    #  value: http://child-prc.intel.com:913
+	......
+
+**Note:**添加注释保存退出后apiserver, controller manager, scheduler组件会重启, 如果没有重启可以执行 `kubectl delete po/<组件名> -n kube-system` 删掉然后就发现重启了.
+
 
 ## 查看并去掉node污点(taint)
 
