@@ -61,11 +61,17 @@ Reference Link: https://stackoverflow.com/questions/48734524/kubernetes-api-serv
 
 	kubectl delete po/kube-apiserver-master-node -n kube-system
 
-## **POD强制删除**
-进行强制删除
+## **强制删除**
+
+一般删除步骤为：先删pod再删pvc最后删pv.
+
+### **POD强制删除**
 
 	kubectl -n <namespace> delete po <podName> --grace-period=0 --force
+### **pv/pvc强制删除**
 
+	kubectl patch pv opspv -p '{"metadata":{"finalizers":null}}'
+	kubectl patch pvc opspvc  -p '{"metadata":{"finalizers":null}}' -n kube-ops
 
 ## **Node机器重启后重新加入K8s集群**
 
