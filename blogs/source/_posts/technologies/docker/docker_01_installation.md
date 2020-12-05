@@ -243,9 +243,29 @@ Ctrl+d 或输入 exit 命令来退出容器：
 
 ### 删除容器
 	$ docker rm 1e560fca3906
+	$ docker rm <Container Name>  // 可以通过docker ps | grep 1e560fca3906 最后一列查看Container名字
 	－f, --force=false ： 是否强行终止并删除一个运行中的容器 ；
 	－l, --link=false ：删除容器的连接 ，但保留容器；
 	－v, --volumes=false ：删除容器挂载的数据卷
+
+### 端口映射
+**1. 指定ip、指定宿主机port、指定容器port.**  
+将容器的9900端口映射到指定地址127.0.0.1的9900端口上
+
+
+	docker run --name python-media_data -p 127.0.0.1:9900:9900 media_data:0.1
+
+**2. 指定ip、未指定宿主机port（随机）、指定容器port.**  
+将容器的4000端口映射到127.0.0.1的任意端口上
+
+
+	docker run -it -d -p 127.0.0.1::4000 docker.io/centos:latest /bin/bash
+
+**3. 未指定ip、指定宿主机port、指定容器port.**  
+将容器的80端口映射到宿主机的8000端口上
+
+
+	docker run -itd -p 8000:80 docker.io/centos:latest /bin/bash
 
 ### 查看容器内的进程，端口映射，统计信息，容器详情, 容器文件变更， 更新容器配置等
  * 查看窑器内进程

@@ -6,6 +6,9 @@ categories:
 - docker
 ---
 
+Reference Link：
+(官网): https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+
 ## Dockerfile brief introduction
 > 在Docker中创建镜像最常用的方式，就是使用Dockerfile。Dockerfile是一个Docker镜像的描述文件，我们可以理解成火箭发射的A、B、C、D…的步骤。Dockerfile其内部包含了一条条的指令，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。
 ![](01.png)
@@ -39,9 +42,21 @@ categories:
 	PS：如果是URL或压缩包，会自动下载或自动解压。
 
 ### COPY
-拷贝文件或目录到镜像中，用法同ADD，只是不支持自动下载和解压，例如：
+原路径：可以是多个，甚至可以是通配符  
+目标路径：可以是容器内的绝对路径，也可以是相对于工作目录的相对路径(工作目录可以用 WORKDIR 指令来指定，不需要事先创建，会自动创建)  
+拷贝文件或目录到镜像中，用法同ADD，只是不支持自动下载和解压，例如：  
 
 	COPY ./start.sh /start.sh
+	# 拷贝start.sh和src下的所有源文件到image的/home/workfile目录
+	COPY ./start.sh ./src/*.cpp /home/workfile
+	# 利用 通配符 进行复制
+	COPY hom* /mydir/
+	COPY hom?.txt /mydir/
+	
+	# 拷贝文件夹, 必须在image目录中定义folder name
+	COPY folder /home/folder
+note : COPY 会将原文件的各种数据都保留，比如 读、写、执行权限，可以通过 --chown=<user>:<group> 选项来改变文件的所属用户及所属组。  
+Although `ADD` and `COPY` are functionally similar, generally speaking, `COPY` is preferred. That’s because it’s more transparent than `ADD`.  
 
 ### WORKDIR
 为RUN、CMD、ENTRYPOINT以及COPY和AND设置工作目录，例如：
@@ -60,7 +75,7 @@ categories:
 	EXPOSE 80 443
 
 ### CMD
-启动容器时执行的Shell命令，例如：
+启动容器时执行的Shell命令，`会被docker run命令行指定的参数所覆盖`, 例如：
 
 	CMD ["-C", "/start.sh"] 
 	CMD ["/usr/sbin/sshd", "-D"] 
