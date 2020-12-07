@@ -41,6 +41,7 @@ Reference Link:
 ![](06.png)
 
 ## 7. (添加ISO和网络)From the Setting click on Storage, and then add the ISO file to the optical drive to install the operating system.
+**NOTE:**如下图System选项下Proessor默认处理器数量是1, 可以根据个人需要设置成3+
 
 ![](07.jpg)
 
@@ -74,6 +75,8 @@ virtualbox默认的网络连接方式如下
 ## 11. Setup your time settings, location, network, and then click “Begin Installation”.
 
 ![](14.png)
+![](14.1.jpg)
+**NOTE:** 以太网默认enp0s3打开之后会显示**`已连接`**并且自动生成**`IP地址`**
 
 ## 12. During the installation, you set the root and the user account.
 

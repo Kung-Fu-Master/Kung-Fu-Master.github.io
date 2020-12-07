@@ -185,9 +185,28 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 	yum install docker-ce-cli-19.03.8-3.el7
 	yum install containerd.io-1.2.13-3.1.el7
 
+#### **启动docker**
+
+	$ systemctl daemon-reload
+	$ systemctl start docker
+	$ systemctl enable docker
+
 #### **设置docker的proxy**
 
-	$ mkdir docker.service.d
+**第一种:**
+
+	$ touch /etc/systemd/system/docker.service.d/proxy.conf
+	Add proxy in this newly created file
+	$ vim /etc/systemd/system/docker.service.d/proxy.conf
+	[Service]
+	Environment="HTTP_PROXY=http://child-prc.intel.com:913"
+	Environment="HTTPS_PROXY=http://child-prc.intel.com:913"
+	Environment="NO_PROXY=10.67.108.211,10.67.109.142,10.67.109.147,10.67.109.144,10.67.108.220,127.0.0.1,hce-node01,hce-node02,hce-node03,hce-node04"
+
+
+**第二种:**
+
+	$ mkdir /etc/systemd/system/docker.service.d
 	$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
 	[Service]
 	Environment="HTTP_PROXY=http://child-prc.intel.com:913/"
@@ -199,6 +218,23 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 	$ vim /etc/systemd/system/docker.service.d/no-proxy.conf
 	[Service]
 	Environment="NO_PROXY=10.239.140.133,10.239.141.123,master-node,node-1"
+之后再次加载os系统配置项然后重启docker
+
+	$ systemctl daemon-reload
+	$ systemctl start docker
+
+#### **Add docker daemon**
+
+	$ vim /etc/docker/daemon.json
+	{
+	"insecure-registries" :["hce-node01:5000"],
+	"registry-mirrors": ["https://registry.docker-cn.com"] // 或者"registry-mirrors": ["https://uxk0ognt.mirror.aliyuncs.com"]
+	}
+	
+	$ systemctl daemon-reload
+	$ systemctl restart docker
+
+
 ### **kubeadm, kubelet, kubectl**
 > 每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的worknode上也安装(也就是下载或拷贝)kubectl二进制文件工具.
 
@@ -222,7 +258,25 @@ Ubuntu:
 	$ sudo apt-get install -y kubelet
 Centos:
 
-	$ cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+	// 关闭交换区
+	$ swapoff -a
+	Edit /etc/fstab to comment out swap partition line so that it remains disabled after reboot
+	
+	$ vim /etc/sysctl.d/k8s.conf
+	net.bridge.bridge-nf-call-ip6tables = 1
+	net.bridge.bridge-nf-call-iptables = 1
+	$ sysctl --system
+	
+	// 关闭防火墙
+	$ systemctl stop firewalld.service
+	$ systemctl disable firewalld
+	
+	//Set SELinux in permissive mode (effectively disabling it)
+	$ setenforce 0
+	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+
+	// 配置kubernetes安装源
+	cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 	[kubernetes]
 	name=Kubernetes
 	baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -232,10 +286,8 @@ Centos:
 	gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 	exclude=kubelet kubeadm kubectl
 	EOF
-	
-	# Set SELinux in permissive mode (effectively disabling it)
-	$ setenforce 0
-	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+
+	// 安装kubernetes组件
 	$ yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes // 禁掉除了这个之外的别的仓库,也就是用这个新加的kubernetes仓库来安装kubeadm等.  
 	$ (特定版本)yum install -y kubectl-1.19.0 kubelet-1.19.0 kubeadm-1.19.0 --disableexcludes=kubernetes
 	$ systemctl enable --now kubelet
@@ -360,11 +412,12 @@ master-node和worknode都需要设置.
 重启chrony服务, 服务重启后就与master时间同步了
 
 	$ systemctl start chronyd
-	$ systenctl restart chronyd
+	$ systemctl restart chronyd
 	$ systemctl enable chronyd
 work node上不需要查看端口, 因为node的chrony不需要开启接受请求时间端口, 因此可以没有
 
 3. work node上执行执行chronyc命令查看与master机器时间同步情况
+
 
 	$ chronyc sources
 	210 Number of sources = 1
