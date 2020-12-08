@@ -14,6 +14,10 @@ Deployment on kubernetes:
 Enable TLS:  
   [https://github.com/minio/operator/blob/master/docs/tls.md](https://github.com/minio/operator/blob/master/docs/tls.md)
 
+(csdn)https://www.cnblogs.com/aloneysir/p/12874984.html
+
+部署分布式MinIO至少需要部署4个实例.
+
 ## Prerequisites
 1. Kubernetes version v1.17.0 and above for compatibility. MinIO Operator uses k8s/client-go v0.18.0.
 2. kubectl configured to refer to a Kubernetes cluster.
