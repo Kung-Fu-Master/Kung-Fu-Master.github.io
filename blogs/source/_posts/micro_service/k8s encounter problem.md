@@ -88,9 +88,14 @@ Reference Link: https://stackoverflow.com/questions/48734524/kubernetes-api-serv
 	systemctl stop firewalld.service
 	sysctl net.bridge.bridge-nf-call-iptables=1
 
-### **重启后如果Node机器未自动加入集群, 运行如下命令重新加入**
+### **重新加入Node机器**
+重启后如果Node机器未自动加入集群, 运行如下命令重新加入
+
 现在重启的Node机器上执行如下命令reset
 
+	rm -rf /etc/kubernetes/pki/etcd/
+	rm -rf /var/lib/etcd
+	rm -rf $HOME/.kube
 	kubeadm reset
 	systemctl stop kubelet
 	systemctl stop docker
@@ -110,5 +115,39 @@ Reference Link: https://stackoverflow.com/questions/48734524/kubernetes-api-serv
 
 	kubeadm join 10.239.140.201:6443 --token 3vm6e8.wjlspdqpjau62riz     --discovery-token-ca-cert-hash sha256:99f1f55a10e439883030b810be5d3d364d12c508765984cc9ab633db6dbfada9
 
+### **重新加入master机器**
+
+最好把iptables也清理一下 `iptables -F`
+
+去到现有的master节点上生成token
+
+	#生成token
+	[root@master2 ~]# kubeadm  token create --print-join-command
+	kubeadm join 10.239.140.201:6443 --token 9ks5ps.g0fhcxbzl604k8v0     --discovery-token-ca-cert-hash sha256:2d291498e3c0739c53f33b85c4498fc7ef2ab362926e970671159b4f392d43dc
+	
+	#生成key
+	[root@master2 ~]# kubeadm init phase upload-certs --upload-certs
+	W0805 14:41:18.070434   16460 version.go:101] could not fetch a Kubernetes version from the internet: unable to get URL "https://dl.k8s.io/release/stable-1.txt": Get https://storage.googleapis.com/kubernetes-release/release/stable-1.txt: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+	W0805 14:41:18.070565   16460 version.go:102] falling back to the local client version: v1.16.2
+	[upload-certs] Storing the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
+	[upload-certs] Using certificate key:
+	6314a9877893263374fdf33bedf9a225640a97215784c8c8f387549966d0565d
+拿到上述内容之后，拼接；前面的token加上-control-plane --certificate-key ,在要加入的master机器节点上运行，加入集群。
+
+	kubeadm join 172.31.17.49:9443 --token kjjguy.pmqxvb1nmgf1nq4q     --discovery-token-ca-cert-hash sha256:dcadd5b87024c304e5e396ba06d60a4dbf36509a627a6a949c126172e9c61cfb --control-plane --certificate-key 6314a9877893263374fdf33bedf9a225640a97215784c8c8f387549966d0565d
 
 
+## **机器重启IP改变重新加入集群**
+机器重启后重新加入集群
+
+### (不推荐)第一种:
+ * 修改/etc/hosts里的机器IP
+ * 修改/etc/systemd/system/docker.service.d/no-proxy.conf或proxy.conf里的机器IP
+ * 修改~/.bashrc里的export NO_PROXY=***对应的机器IP
+ * 修改/etc/kubernetes/manifests/kube-apiserver.yaml的机器IP
+ * 修改/etc/kubernetes/manifests/etcd.yaml的机器IP
+ ......
+以上可见非常麻烦，因此推荐如下方法
+
+### 第二种: 重新reset机器再加入集群
+参考本文章上面方法

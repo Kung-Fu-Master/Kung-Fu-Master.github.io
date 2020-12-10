@@ -72,6 +72,8 @@ https://github.com/kubernetes/kubeadm/blob/master/docs/ha-considerations.md#kube
 https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md  
 
 ## **在三台master机器上添加kube-vip配置文件**
+
+### kube-vip 0.1.1本地安装config.yaml版本
 **master-node机器上**
 
 	$ touch /etc/kube-vip/config.yaml
@@ -173,13 +175,55 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 	  # [...]
 > Use 6443 for both the VIP and the API-Servers, in order to do this we need to specify that the api-server is bound to it's local IP. To do this we use the --apiserver-advertise-address flag as part of the init, this means that we can then bind the same port to the VIP and we wont have a port conflict.
 
+### **kube-vip 0.1.5本地安装config.yaml版本**
+**master-node机器上**
+
+	$ touch /etc/kube-vip/config.yaml
+	localPeer:
+	  id: master-node
+	  address: 10.239.140.137
+	  port: 10000
+	remotePeers:
+	- id: laboratory
+	  address: 10.239.131.157
+	  port: 10000
+	- id: node01
+	  address: 10.239.140.50
+	  port: 10000
+	# [...]
+	vip: 10.239.140.201
+	gratuitousARP: true
+	singleNode: false
+	startAsLeader: true
+	interface: p8p1
+	loadBalancers:
+	- name: API Server Load Balancer
+	  type: tcp
+	  port: 6443
+	  bindToVip: true
+	  backends:
+	  - port: 6444
+	    address: 10.239.140.137
+	  - port: 6444
+	    address: 10.239.131.157
+	  - port: 6444
+	    address: 10.239.140.50
+	  # [...]
+
+
 ## **部署High Availability K8s集群**
 ### **1. master-node机器上**
 现在master-node机器上配置好K8s集群, 然后再把其它两个master加进来就可以了.  
 
+#### **0.1.1版本:**
+
 	docker run -it --rm plndr/kube-vip:0.1.1 /kube-vip sample manifest \
 	    | sed "s|plndr/kube-vip:'|plndr/kube-vip:0.1.1'|" \
 	    | sudo tee /etc/kubernetes/manifests/kube-vip.yaml
+#### **0.1.5版本:**
+
+	sudo docker run -it --rm plndr/kube-vip:0.1.5 sample manifest | sudo tee /etc/kubernetes/manifests/kube-vip.yaml
+
 > Ensure that image: plndr/kube-vip:<x> is modified to point to a specific version (0.1.5 at the time of writing), refer to docker hub for details.  
 > Also ensure that the hostPath points to the correct kube-vip configuration, if it isn’t the above path.  
 
@@ -214,16 +258,31 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 	      path: /etc/kube-vip/config.yaml	// 跟上面的conf.yaml文件路径对应
 	    name: config
 	status: {}
-执行部署K8s集群命令
+#### **执行部署K8s集群命令**
 
-	$ kubeadm init --control-plane-endpoint vip.mycluster.local:8443 [additional arguments ...] //具体实例如下
-	$ kubeadm init --control-plane-endpoint "10.239.140.51:6443" --apiserver-advertise-address 10.239.140.133 --apiserver-bind-port 6443 --upload-certs --kubernetes-version "v1.19.0"
+##### (0.1.1版本)
+
+	kubeadm init --control-plane-endpoint "10.239.140.51:6443" --apiserver-advertise-address 10.239.140.133 --apiserver-bind-port 6443 --upload-certs --kubernetes-version "v1.19.0"
+ * --control-plane-endpoin: 指定设置的Virtual IP和端口.
+ * --apiserver-advertise-address: 指定第一台宿主机IP, 当Virtual IP所用port端口与apiserver port端口设置成相同时需要此参数.
+ * --apiserver-bind-port: 指定apiserver运行所在的port, 此处与Virutal IP(做load balancing)所运行的port相同都是6443
+ * --upload-certs: kubeadm部署方式下能够让证书自动上传.
+
+##### (0.1.5版本)
+
+	kubeadm init --control-plane-endpoint "10.239.140.201:6443" --apiserver-bind-port 6444 --upload-certs --kubernetes-version "v1.19.0"
+ * --control-plane-endpoint: 指定Virtual IP地址和port为6443
+ * --apiserver-bind-port: 指定apiserver运行所在的port为6444
+这个 --upload-certs 标志用来将在所有控制平面实例之间的共享证书上传到集群.  
+当 --upload-certs 与 kubeadm init 一起使用时，主控制平面的证书被加密并上传到 kubeadm-certs 密钥中.  
+
+查看部署情况
+
+
 	$ kubectl get pods -A
 	  NAMESPACE     NAME                                     READY   STATUS    RESTARTS   AGE
 	  <...>
 	  kube-system   kube-vip-controlplane01                  1/1     Running   0          10m
-这个 --upload-certs 标志用来将在所有控制平面实例之间的共享证书上传到集群.  
-当 --upload-certs 与 kubeadm init 一起使用时，主控制平面的证书被加密并上传到 kubeadm-certs 密钥中.  
 
 **查看网卡地址上是否多出了一个虚拟IP为:10.239.140.51**
 

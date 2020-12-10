@@ -44,3 +44,25 @@ categories:
 	[root@k8s-master pki]#
 	
 
+## master节点重新加入集群
+
+最好把iptables也清理一下 iptables -F
+
+去到现有的master节点上生成token
+
+### 生成token
+
+	[root@master2 ~]# kubeadm  token create --print-join-command
+	kubeadm join 10.239.140.201:6443 --token 9ks5ps.g0fhcxbzl604k8v0     --discovery-token-ca-cert-hash sha256:2d291498e3c0739c53f33b85c4498fc7ef2ab362926e970671159b4f392d43dc
+
+### 生成key
+	[root@master2 ~]# kubeadm init phase upload-certs --upload-certs
+	W0805 14:41:18.070434   16460 version.go:101] could not fetch a Kubernetes version from the internet: unable to get URL "https://dl.k8s.io/release/stable-1.txt": Get https://storage.googleapis.com/kubernetes-release/release/stable-1.txt: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+	W0805 14:41:18.070565   16460 version.go:102] falling back to the local client version: v1.16.2
+	[upload-certs] Storing the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
+	[upload-certs] Using certificate key:
+	6314a9877893263374fdf33bedf9a225640a97215784c8c8f387549966d0565d
+
+拿到上述内容之后，拼接；前面的token加上-control-plane –certificate-key ,在要加入的master机器节点上运行，加入集群。
+
+	kubeadm join 172.31.17.49:9443 --token kjjguy.pmqxvb1nmgf1nq4q --discovery-token-ca-cert-hash sha256:dcadd5b87024c304e5e396ba06d60a4dbf36509a627a6a949c126172e9c61cfb --control-plane --certificate-key 6314a9877893263374fdf33bedf9a225640a97215784c8c8f387549966d0565d

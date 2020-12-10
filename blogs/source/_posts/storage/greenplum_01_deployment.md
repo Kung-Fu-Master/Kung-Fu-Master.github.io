@@ -268,4 +268,51 @@ When uninstall greenplum, encountered this problem: Object is being deleted: cus
 
 solution refer to this:[delete crd](https://github.com/kubernetes/kubernetes/issues/60538)
 
+## **删除greenplum集群脚本**
+
+	vim clean_greenplum.sh
+	#!/bin/bash
+	
+	workspace=workspace
+	node01=hci-node01
+	node02=hci-node02
+	node03=hci-node03
+	node04=hci-node04
+	greenplum_operator=hci-node02
+	
+	cd greenplum-for-kubernetes-v1.13.0
+	
+	# delete greenplum cluster
+	kubectl delete -f ${workspace}/my-gp-instance.yaml
+	
+	# delete pvc
+	pvc_results=$(kubectl get pvc -n greenplum | grep greenplum | awk '{print $1}')
+	pvc_arr=(${pvc_results})
+	for ((i=0; i<${#pvc_arr[*]}; i++ ))
+	do
+	kubectl delete pvc ${pvc_arr[i]} -n greenplum
+	done
+	
+	# delete pv
+	kubectl delete -f ${workspace}/pv-master.yaml
+	kubectl delete -f ${workspace}/pv-segment.yaml
+	
+	# delete sc
+	kubectl delete -f ${workspace}/workspacegpdb-storage-class.yaml
+	
+	# delete greenplum operator
+	helm delete greenplum-operator
+	helm del --purge greenplum-operator;
+	
+	# delete label on nodes
+	kubectl label nodes ${node01} greenplum-affinity-greenplum-master-
+	kubectl label nodes ${node01} greenplum-affinity-greenplum-segment-
+	kubectl label nodes ${node02} greenplum-affinity-greenplum-master-
+	kubectl label nodes ${node02} greenplum-affinity-greenplum-segment-
+	kubectl label nodes ${node03} greenplum-affinity-greenplum-master-
+	kubectl label nodes ${node03} greenplum-affinity-greenplum-segment-
+	kubectl label nodes ${node04} greenplum-affinity-greenplum-master-
+	kubectl label nodes ${node04} greenplum-affinity-greenplum-segment-
+	kubectl label nodes ${greenplum_operator} greenplum-operator-
+
 
