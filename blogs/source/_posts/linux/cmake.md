@@ -188,6 +188,10 @@ Include的头文件的查找目录，也就是Gcc的[-Idir...]选项
 	    -Werror
 	)
 
+## **-DCMAKE_BUILD_TYPE**
+
+	cmake -DCMAKE_BUILD_TYPE=Debug ..
+通过以上编译能够使用 **`gdb`** 进行调试, 否则无法gdb来调试生成的可执行文件.
 
 ## **遇到的问题**
 

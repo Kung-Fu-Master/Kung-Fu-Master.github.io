@@ -101,7 +101,26 @@ categories:
 
 ## **git diff 加上颜色**
 
-	$ git config color.ui true
+	git config --global color.diff auto
+其它方式:
+
+	git config color.ui true
+### **git diff 显示完整信息**
+
+	git config --global core.pager "less -r"
+
+### **git status 加上颜色**
+
+	git config --global color.status auto
+
+### **git branch 加上颜色**
+
+	git config --global color.branch auto
+
+### **interactive 加上颜色**
+
+	git config --global color.interactive auto
+
 
 ## **git reset到指定commit log**
 
