@@ -77,9 +77,9 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 	  Checked 3 Istio Deployments
 	  Istio is installed successfully
 
-## istioctl command
+## **istioctl command**
 
-### istioctl profile
+### **istioctl profile**
 查看profile list
 
 	$ istioctl profile list
@@ -87,6 +87,23 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 
 	$ istioctl profile dump demo > demo.yaml
 	vim demo.yaml
+
+## **安装 istio到kubernetes**
+
+**第一种:默认安装**
+
+	istioctl install --set profile=demo
+**第二种:**
+
+	cd istio-1.6.4
+	vim manifests/profiles/demo.yaml
+	 ......
+	 34             - port: 80          // Service 端口
+	 35               targetPort: 8080  // 指向Pod的端口, containerPort是container容器暴露出来的端口, 类似Dockerfile中的expose操作
+	 36               nodePort: 31500   // 添加nodePort, 固定service的80端口映射到的宿主机的31500端口
+	 37               name: http2
+	 ......
+	istioctl install -f manifests/profiles/demo.yaml
 
 
 ## **Istioctl analyze**
