@@ -332,7 +332,7 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 	  time=“2020-08-28T15:33:09Z” level=info msg=“The Node [10.239.140.133:10000] is leading”
 **部署CNI网络**
 
-	$ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+	kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 ### **4. node-2机器上**
 添加work node节点
@@ -424,4 +424,6 @@ TCP才能在Foreign Address看到链接的客户端IP和端口, 而UDP无状态�
 	ifconfig eth0:1 192.168.0.1 netmask 255.255.255.0
 删除网卡的第二个IP地址
 
-	ip addr del 192.168.0.1 dev eth0
+	ip addr del 192.168.0.1/32 dev eth0
+上面IP后面加上 `/32` 否则会报 Warning: Executing wildcard deletion to stay compatible with old scripts.
+
