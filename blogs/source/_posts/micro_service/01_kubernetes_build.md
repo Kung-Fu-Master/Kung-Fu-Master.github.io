@@ -154,6 +154,12 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 ### **安装docker**
 #### **删除旧版本docker**
 
+	步骤1:
+	$ rpm -qa | grep docker – – 列出包含docker字段的软件的信息
+	  docker-ce-cli-19.03.12-3.el7.x86_64
+	$ yum remove docker-ce-cli-19.03.12-3.el7.x86_64
+	
+	(optional)步骤2:
 	yum remove -y docker \
 	                  docker-client \
 	                  docker-client-latest \
@@ -177,13 +183,16 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 	yum list containerd.io --showduplicates | sort -r
 
 #### **安装docker**
+**第一种方法:**
 
 	// 安装最新版docker
 	yum install docker-ce docker-ce-cli containerd.io
 	// 安装指定版docker
-	yum install docker-ce-19.03.8-3.el7
-	yum install docker-ce-cli-19.03.8-3.el7
-	yum install containerd.io-1.2.13-3.1.el7
+	yum install docker-ce-19.03.14-3.el7 docker-ce-cli-19.03.14-3.el7 containerd.io-1.3.9-3.1.el7
+**第二种方法: 使用curl升级到最新版**
+
+	curl -fsSL https://get.docker.com -o get-docker.sh
+	sh get-docker.sh
 
 #### **启动docker**
 
