@@ -3,6 +3,7 @@ title: greenplum 遇到的问题
 tags: storage
 categories:
 - storage
+- greenplum
 ---
 
 

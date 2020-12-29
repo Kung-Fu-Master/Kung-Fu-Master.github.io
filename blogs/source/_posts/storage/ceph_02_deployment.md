@@ -3,6 +3,7 @@ title: Ceph 02 deployment on Kubernetes
 tags: storage
 categories:
 - storage
+- ceph
 ---
 
 This document describes the steps to enable Ceph cluster in Kubernetes(k8s)  

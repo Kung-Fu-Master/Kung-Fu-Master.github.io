@@ -3,6 +3,7 @@ title: MinIO 04 client SDK
 tags: storage
 categories:
 - storage
+- minio
 ---
 
 ## Reference

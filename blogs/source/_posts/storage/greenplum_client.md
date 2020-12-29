@@ -3,6 +3,7 @@ title: Greenplum client
 tags: storage
 categories:
 - storage
+- greenplum
 ---
 
 ## python

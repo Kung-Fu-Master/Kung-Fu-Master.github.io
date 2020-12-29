@@ -3,6 +3,7 @@ title: MinIO 01 conception
 tags: storage
 categories:
 - storage
+- minio
 ---
 
 ## **官网**

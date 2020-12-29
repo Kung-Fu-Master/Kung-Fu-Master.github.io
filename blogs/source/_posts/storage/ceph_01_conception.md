@@ -3,6 +3,7 @@ title: Ceph 01 Storage Conception
 tags: storage
 categories:
 - storage
+- ceph
 ---
 
 ## Ceph

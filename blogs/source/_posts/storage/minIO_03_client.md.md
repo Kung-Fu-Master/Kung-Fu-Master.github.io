@@ -3,6 +3,7 @@ title: MinIO 03 client
 tags: storage
 categories:
 - storage
+- minio
 ---
 
 Official web site: [https://docs.min.io/docs/minio-client-quickstart-guide.html](https://docs.min.io/docs/minio-client-quickstart-guide.html)

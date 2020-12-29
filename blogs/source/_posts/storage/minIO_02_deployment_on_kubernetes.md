@@ -3,7 +3,10 @@ title: MinIO 02 deployment on kubernetes
 tags: storage
 categories:
 - storage
+- minio
 ---
+
+
 在storage仓库里也存储了一份当时部署所使用的yaml等资源文件.
 
 Quick start:  

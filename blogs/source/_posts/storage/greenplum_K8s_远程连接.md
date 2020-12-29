@@ -3,6 +3,7 @@ title: greenplum 远程连接k8s部署的greenplum
 tags: storage
 categories:
 - storage
+- greenplum
 ---
 
 
