@@ -3,6 +3,7 @@ title: Restful API
 tags:
 categories:
 - blogs
+- blogs
 ---
 
 ## Rest

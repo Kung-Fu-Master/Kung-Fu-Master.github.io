@@ -3,6 +3,7 @@ title: Hexo 01 部署github blog
 tags:
 categories:
 - blogs
+- blog搭建
 ---
 
 ## **1. 确认电脑安装过git**

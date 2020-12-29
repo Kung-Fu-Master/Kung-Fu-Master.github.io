@@ -2,6 +2,7 @@
 title: telnet 
 categories:
 - blogs
+- blogs
 ---
 
 ## telnet 命令

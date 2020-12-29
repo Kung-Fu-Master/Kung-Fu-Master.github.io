@@ -3,6 +3,7 @@ title: Hexo 03 写博客语法
 tags:
 categories:
 - blogs
+- blog搭建
 ---
 
 ## **表格**

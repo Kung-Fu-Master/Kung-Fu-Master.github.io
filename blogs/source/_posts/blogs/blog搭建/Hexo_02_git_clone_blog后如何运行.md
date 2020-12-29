@@ -3,6 +3,7 @@ title: Hexo 02 git clone blog后如何运行
 tags:
 categories:
 - blogs
+- blog搭建
 ---
 
 ## **1. 确保系统已安装node.js, git工具**

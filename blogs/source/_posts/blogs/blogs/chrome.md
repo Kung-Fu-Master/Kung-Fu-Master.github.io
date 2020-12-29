@@ -3,6 +3,7 @@ title: chrome浏览器一些操作
 tags:
 categories:
 - blogs
+- blogs
 ---
 ## **chrome插件**
 

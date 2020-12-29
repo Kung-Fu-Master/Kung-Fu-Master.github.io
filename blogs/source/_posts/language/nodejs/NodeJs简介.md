@@ -2,6 +2,7 @@
 title: NodeJs简介
 tags:
 categories:
+- language
 - nodejs
 ---
 
