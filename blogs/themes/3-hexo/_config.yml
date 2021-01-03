@@ -86,7 +86,7 @@ menu:
 # 文末声明
 article_txt: 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com
 
-bottom_text: ©2020-2029 Kung-Fu-Master
+bottom_text: ©2016-2020 Yelog
 # 自定义页面最下方的站点版权信息
 # 如果不填，则自定义为 ©2017 author (这个author为hexo根目录_config.yml中配置的)
 
@@ -97,7 +97,7 @@ miit:
   url: http://beian.miit.gov.cn/ # 默认链接为 http://beian.miit.gov.cn/
 
 
-reward: true
+reward: false
 # true 开启打赏功能
 
 searchAll: false
@@ -113,7 +113,7 @@ searchAll: false
 copyright: false
 # Copyright info. of post | 文末版权信息
 
-word_count: true
+word_count: false
 # true 开启字数统计
 # 开启此功能需要安装插件 ：在 hexo根目录 执行npm i hexo-wordcount --save
 
@@ -135,8 +135,8 @@ article_list:
   title: '#383636' # 文章列表标题颜色
   datetime: '#5e5e5f' # 文章发布日期颜色
   hover:
-    background: '#c1bfc1'  # 背景色:提供几种：'#c1bfc1'  '#fbf4a8'  '#e2e0e0'
-    color: '#ffffff'     # 文字颜色 提供几种：'#ffffff'
+    background: '#e2e0e0'  # 背景色:提供几种：'#c1bfc1'  '#fbf4a8'
+    color:     # 文字颜色 提供几种：'#ffffff'
 # 注意：由于颜色如果包含#，使用单引号 ' 引起来
 
 # 文章列表背景图
@@ -146,7 +146,7 @@ article_bg_img:
   opacity: 0.3 # 背景图透明度，范围 0 ～ 1
 
 # 列表样式
-list: thread
+list: normal
 # normal : 普通样式
 # thread : 列表外圈有一个线框
 
@@ -183,7 +183,7 @@ highlight:
   on: true # true开启代码高亮，开启需要关闭博客 _config.yml 中的 highlight
   lineNum: true # true显示行号
   copy: true # 复制功能
-  theme: sublime
+  theme: atom-light
 # 代码高亮主题,效果可以查看 https://highlightjs.org/static/demo/
 # 支持主题：
 # sublime : 参考sublime的高亮主题

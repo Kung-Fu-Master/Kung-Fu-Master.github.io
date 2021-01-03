@@ -1,5 +1,5 @@
 ---
-title: Greenplum client
+title: greenplum client
 tags: storage
 categories:
 - storage

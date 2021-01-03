@@ -1,5 +1,5 @@
 ---
-title: Resources
+title: k8s resources和驱逐策略
 tags: kubernetes
 categories:
 - microService

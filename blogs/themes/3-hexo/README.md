@@ -31,9 +31,7 @@ theme: 3-hexo
 ## 更新
 ```bash
 cd themes/3-hexo
-git pull    //先把git.bak改为.git再执行git pull命令
-            //因为如果3-hexo文件夹中有关联另外一个仓库，则此3-hexo文件夹将无法打开
-            //git pull执行之后再把.git文件夹改为git.bak
+git pull
 ```
 ## 外观
 ### 整体设计
