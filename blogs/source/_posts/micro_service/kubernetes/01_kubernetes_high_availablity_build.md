@@ -318,6 +318,10 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 	vim /etc/kubernetes/admin.conf
 	  server: https://10.239.141.123:6443
 
+#### **配置0.1.5(或者0.1.1)版本kube-vip.yaml**
+
+	sudo docker run -it --rm plndr/kube-vip:0.1.5 sample manifest | sudo tee /etc/kubernetes/manifests/kube-vip.yaml
+
 ### **3. master-node机器上**
 在master-node机器上运行查看pod运行情况.  
 

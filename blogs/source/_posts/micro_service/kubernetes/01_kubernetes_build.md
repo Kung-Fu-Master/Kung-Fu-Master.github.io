@@ -495,7 +495,7 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 ### **查看node节点信息**
 
 	$ kubectl describe node server02
-## **重新(reset)在原来(机器上搭建k8s集群操作**
+## **重新(reset)在原来机器上搭建k8s集群操作**
 > 主机名和IP解析, 通过主机名访问机器, 修改下各个节点 /etc/hosts 文件内容(实验环境没有修改，跳过这个步骤), 也可以只在master上配置, 因为很多操作都是在master上执行
 
 	......
