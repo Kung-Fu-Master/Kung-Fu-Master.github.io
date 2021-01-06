@@ -8,14 +8,41 @@ menu:
 - page: home
   url: /
   icon:
-- page: 前端
-  url: /categories/前端/
+- page: blogs
+  url: /categories/blogs/
   icon:
-- page: 后端
-  url: /categories/后端/
+- page: software
+  url: /categories/software/
   icon:
-- page: 工具
-  url: /categories/工具/
+- page: language
+  url: /categories/language/
+  icon:
+- page: linux
+  url: /categories/linux/
+  icon:
+- page: micro_service
+  url: /categories/microService/
+  icon:
+- page: technologies
+  url: /categories/technologies/
+  icon:
+- page: storage
+  url: /categories/storage/
+  icon:
+- page: software
+  url: /categories/software/
+  icon:
+- page: windows
+  url: /categories/windows/
+  icon:
+- page: reference
+  url: /categories/reference/
+  icon:
+- page: LearnLinks
+  url: /categories/LearnLinks/
+  icon:
+- page: entertainment
+  url: /categories/entertainment/
   icon:
 - page: 时间轴
   url: /archives/
