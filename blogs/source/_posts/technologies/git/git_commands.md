@@ -127,4 +127,37 @@ categories:
 	$ git log
 	$ git reset --hard <Commit-ID>
 
+## **git 创建 merge request**
+1. 切换到要修改的分支
+
+
+	git checkout -b <BRANCH> origin/<BRANCH>
+2. 再要修改的分支基础上, 创建新的分支, 此时不要修改原要修改分支的文件
+
+
+	git checkout -b <NEW-BRANCH-NAME>
+3. 修改文件然后把新建的分支`push`到远程仓库
+
+
+	git add <FILE>
+	git commit -m "<COMMENTS>"
+	git push origin <NEW-BRANCH-NAME>
+4. 登陆gitlab, 选择左边的Merge Requests
+![](merge_request_01.JPG)
+![](merge_request_02.JPG)
+![](merge_request_03.JPG)
+之后填写`Title`, `Description`, `Assignee`(选择自己)
+![](merge_request_04.JPG)
+`Approval rules`是要几个人review 并approve之后才能merge成功, 默认是2个人, 可以改为1个人或更多.  
+![](merge_request_05.JPG)
+
+之后勾选merge成功后删除新建的分支.  
+
+reviewer 可以查看commits或Changes, 如果有疑问可以提交 commits 通知提交merge request的自己修改.  
+
+5. 可以reviewer或自己点击merge按钮进行merge并删除新建的分支
+![](merge_request_06.JPG)
+
+
+
 

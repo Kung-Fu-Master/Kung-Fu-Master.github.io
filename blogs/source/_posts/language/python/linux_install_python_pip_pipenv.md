@@ -5,17 +5,19 @@ categories:
 - language
 - python
 ---
-### 查看python库
+## 查看python库
 	$ python -m site	// python 2 版本
 	$ python3 -m site	// python 3 版本
 
-## 第一种，非源码安装
+## 安装python
+### 第一种，非源码安装
 ubuntu18.04+python3，这个系统是默认自带了python3，且版本是python 3.6.8
 该python 3.6.8中并没有对应的pip3，于是执行命令 sudo apt-get install python3-pip，即可成功安装pip3
 然后即可通过 pip3 install pipenv , 安装自己需要的pipenv模块
 
-## 第二种，源码安装(非常不推荐，容易踩各种坑)
-### Install Python3
+### 第二种，源码安装(非常不推荐，容易踩各种坑)
+Install Python3
+
 	$ yum install zlib-devel.x86_64
 	$ yum -y install zlib1g-dev
 	$ yum -y install libffi-devel
@@ -31,16 +33,16 @@ ubuntu18.04+python3，这个系统是默认自带了python3，且版本是python
 	#第三个是为了安装pip需要用到ssl,后面报错会有提到.
 	$ make -j && make install
 
-### 创建软链接
+## 创建软链接
 	$ ln -s /usr/local/python3/bin/python3 /usr/bin/python3
 	$ ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
 	PATH路径需要有/usr/local/bin, 重启客户端
 
-### 验证是否成功
+## 验证是否成功
 	$ python3 -V
 	$ pip3 -V
 
-### 修改pip安装源
+## 修改pip安装源
 	$ cd ~
 	$ mkdir .pip
 	$ cd .pip
