@@ -12,3 +12,12 @@ hexo部署博客最初始原文件
 
 
 	npm i hexo-generator-json-content@2.2.0 -S
+
+
+## hexo-theme-stun主题
+
+	$ npm install --save hexo-renderer-pug
+
+安装搜索插件
+
+	$ npm install hexo-generator-search --save
