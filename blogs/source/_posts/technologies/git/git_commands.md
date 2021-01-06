@@ -158,6 +158,19 @@ reviewer 可以查看commits或Changes, 如果有疑问可以提交 commits 通�
 5. 可以reviewer或自己点击merge按钮进行merge并删除新建的分支
 ![](merge_request_06.JPG)
 
+## **git 删除 untracked files **
+
+删除 untracked files
+
+	$ git clean -f 
+连 untracked 的目录也一起删掉
+
+	$ git clean -fd
+
+## **git clone 到指定本地目录**
+clone 项目到本地的 `themes/stun` 目录
+
+	$ git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
 
 
 
