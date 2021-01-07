@@ -58,7 +58,7 @@ highlight:
   tab_replace: ''
   wrap: true
   hljs: true
-  first_line: 1
+  #first_line: 1
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')

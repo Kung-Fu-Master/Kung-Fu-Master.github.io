@@ -8,6 +8,8 @@ categories:
 ---
 
 ## **Kubernetes 简介**
+<!-- more -->
+
  ![](1.JPG)
  ![](2.JPG)
  
@@ -146,41 +148,49 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 
 ### **每个node都在 /etc/environment 添加如下信息**
 
-	http_proxy="http://child-prc.intel.com:913/"
-	https_proxy="http://child-prc.intel.com:913/"
-	ftp_proxy="ftp://child-prc.intel.com:913/"
-	no_proxy="K8S_MASTER_IP,K8S_MASTER_HostName"  如: no_proxy="10.67.108.200,hci-node01"
+```bash
+http_proxy="http://child-prc.intel.com:913/"
+https_proxy="http://child-prc.intel.com:913/"
+ftp_proxy="ftp://child-prc.intel.com:913/"
+no_proxy="K8S_MASTER_IP,K8S_MASTER_HostName"  如: no_proxy="10.67.108.200,hci-node01"
+```
 
 ### **安装docker**
 #### **删除旧版本docker**
 
-	步骤1:
-	$ rpm -qa | grep docker – – 列出包含docker字段的软件的信息
-	  docker-ce-cli-19.03.12-3.el7.x86_64
-	$ yum remove docker-ce-cli-19.03.12-3.el7.x86_64
-	
-	(optional)步骤2:
-	yum remove -y docker \
-	                  docker-client \
-	                  docker-client-latest \
-	                  docker-common \
-	                  docker-latest \
-	                  docker-latest-logrotate \
-	                  docker-logrotate \
-	                  docker-selinux \
-	                  docker-engine-selinux \
-	                  docker-engine
+``` bash
+步骤1:
+$ rpm -qa | grep docker – – 列出包含docker字段的软件的信息
+  docker-ce-cli-19.03.12-3.el7.x86_64
+$ yum remove docker-ce-cli-19.03.12-3.el7.x86_64
+
+(optional)步骤2:
+yum remove -y docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+```
 
 #### **配置docker源**
 
-	sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-	sudo yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
+``` bash
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+sudo yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
+```
 
 #### **yum 查看docker可用版本**
 
-	yum list docker-ce --showduplicates | sort -r
-	yum list docker-ce-cli --showduplicates | sort -r
-	yum list containerd.io --showduplicates | sort -r
+```bash
+yum list docker-ce --showduplicates | sort -r
+yum list docker-ce-cli --showduplicates | sort -r
+yum list containerd.io --showduplicates | sort -r
+```
 
 #### **安装docker**
 **第一种方法:**

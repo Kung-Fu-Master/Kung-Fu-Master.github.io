@@ -10,6 +10,7 @@ categories:
 > REST，即Representational State Transfer的缩写。直接翻译的意思是"表现层状态转化"。
 它是一种互联网应用程序的API设计理念：URL定位资源，用HTTP动词（GET,POST,DELETE,DETC）描述操作。
 > REST描述了一个架构样式的网络系统，比如 web 应用程序。它首次出现在 2000 年 Roy Fielding 的博士论文中，Roy Fielding是 HTTP 规范的主要编写者之一。在目前主流的三种Web服务交互方案中，REST相比于SOAP（Simple Object Access protocol，简单对象访问协议）以及XML-RPC更加简单明了，无论是对URL的处理还是对Payload的编码，REST都倾向于用更加简单轻量的方法设计和实现。值得注意的是REST并没有一个明确的标准，而更像是一种设计的风格。
+<!-- more -->
 
 ### 产生背景
 > 近年来移动互联网的发展，前端设备层出不穷（手机、平板、桌面电脑、其他专用设备......），因此，必须有一种统一的机制，方便不同的前端设备与后端进行通信,于是RESTful诞生了，它可以通过一套统一的接口为 Web，iOS和Android提供服务。
