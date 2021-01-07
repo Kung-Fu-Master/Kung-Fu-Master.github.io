@@ -51,13 +51,17 @@ sougou_site_verification:
 # Select your icon name, see: https://fontawesome.com/icons
 menu:
   home: / || fas fa-home
-  categories: /categories/ || fas fa-layer-group
-  archives: /archives/ || fas fa-folder-open
-  tags: /tags/ || fas fa-tags
+  #archives: /archives/ || fas fa-folder-open
   # categories: /categories/ || fas fa-layer-group
   # tags: /tags/ || fas fa-tags
   # You can add a secondary menu like follow.
   # xxx1: javascript:; || fa(s|r|l|d|b) fa-xxx
+  # article: javascript:; || fas fa-users
+  article: javascript:; || fas fa-feather-alt
+  categories: /categories/ || fas fa-layer-group
+  archives: /archives/ || fas fa-folder-open
+  tags: /tags/ || fas fa-tags
+  about: / || fas fa-fingerprint
 
 # Secondary menu
 submenu:
@@ -65,9 +69,11 @@ submenu:
   # xxx1:
   #   xxx1-1: /xxx1-1/ || fa(s|r|l|d|b) fa-xxx
   #   xxx1-2: /xxx1-2/ || fa(s|r|l|d|b) fa-xxx
-  categories:
+  article:
+    categories: /categories/ || fas fa-layer-group
+    archives: /archives/ || fas fa-folder-open
     tags: /tags/ || fas fa-tags
-    about: /about/ || fas fa-about
+  #about: /about/ || fas fa-about
 
 menu_settings:
   # Only show by icon.
@@ -138,21 +144,21 @@ header:
   enable: true
   show_on:
     # Whether to show on the article page.
-    post: true
+    post: false
   # If you set a percentage, it will be calculated based on the height of screen (Supports all CSS units)
-  height: 80%
+  height: 30%
   # Background image of site header.
   bg_image:
-    enable: false
+    enable: true
     # In theme directory (source/images): /images/avatar.png
     # In site directory (source/uploads): /uploads/avatar.png
     # You can also use a link of image.
-    url:
+    url: /images/stun_header.jpg
   # Mask effect of the background image.
   mask:
     enable: false
     # Opacity of the mask (value: 0 ~ 1)
-    opacity: 0.5
+    opacity: 1
   nav:
     # Height of the navigation bar (Supports all CSS units)
     height: 50px
@@ -160,7 +166,7 @@ header:
     bg_color: "#333"
   # The icon that prompts the user to pull down.
   scroll_down_icon:
-    enable: false
+    enable: true
     # Icon name in FontAwesome, see: https://fontawesome.com/icons
     name: fas fa-angle-down
     animation: true
@@ -169,11 +175,11 @@ header:
 body:
   # Background image of site body.
   bg_image:
-    enable: false
+    enable: true
     # In theme directory (source/images): /images/avatar.png
     # In site directory (source/uploads): /uploads/avatar.png
     # You can also use a link of image.
-    url:
+    url: /images/body_bg.jpg
     # Whether to fixed the background image.
     fixed: true
     # Whether to repeat the image as much as possible to cover the entire area.
@@ -184,7 +190,7 @@ body:
     # Opacity of mask (value: 0 ~ 1)
     opacity:
       # Opacity of the mask by default.
-      default: 0.1
+      default: 0.3
       # Opacity of the mask in night mode.
       night_mode: 0.6
 
@@ -278,11 +284,11 @@ back2top:
 sidebar:
   enable: true
   # Optional values: left | right
-  position: right
+  position: left
   # The distance from the top of the page when the sidebar is fixed (Only `px` unit is supported)
   offsetTop: 20px
   # Whether to show horizon line.
-  horizon_line: false
+  horizon_line: true
 
 author:
   enable: true
@@ -321,7 +327,7 @@ social:
   # qq: yournumber || fab fa-qq
 
 social_setting:
-  enable: false
+  enable: true
   # Only show by icon.
   icon_only: true
 
@@ -365,7 +371,7 @@ reading_progress:
 codeblock:
   # The style of code block.
   # Optional values: default | simple | carbon
-  style: carbon
+  style: default
   # The theme of code highlight.
   # Optional values: light | dark | ocean
   highlight: light
@@ -417,7 +423,7 @@ post_meta:
   # Dependency: https://github.com/willin/hexo-wordcount/
   # !!! Don't enable this before install dependency by `npm install hexo-wordcount --save` in hexo root directory.
   word_count:
-    enable: false
+    enable: true
     # Icon name in FontAwesome, see: https://fontawesome.com/icons
     icon: far fa-file-word
 
@@ -429,7 +435,7 @@ post_list:
     archives: false
   # Whether to show the cover image of post.
   cover_image:
-    home: false
+    home: true
 
 # The widget of post.
 post_widget:
@@ -761,7 +767,7 @@ gallery_waterfall:
 # Lazy load the images of post.
 # See: https://github.com/tuupola/lazyload
 lazyload:
-  enable: false
+  enable: true
   # Optional values: gif | block
   placeholder: gif
 

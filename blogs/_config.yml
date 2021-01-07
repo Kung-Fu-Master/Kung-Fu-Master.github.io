@@ -12,6 +12,12 @@ author: Kung-Fu-Master
 language: zh-CN
 timezone: ''
 
+# search
+search:
+  path: search.json
+  field: post
+  content: true
+
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://kung-fu-master.github.io

@@ -16,6 +16,7 @@ menu:
   categories: 分类
   tags: 标签
   about: 关于
+  article: 文章
 
 # 归档页、分类页、标签页
 page:
