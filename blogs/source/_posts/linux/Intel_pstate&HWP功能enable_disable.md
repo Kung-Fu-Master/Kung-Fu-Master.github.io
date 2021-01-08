@@ -14,7 +14,8 @@ Intel_pstate & acpi-cpufreq 驱动切换
 By default it is intel_pstate driver
                Change intel_pstate driver to acpi-cpufreq as follow:
 
-    /etc/default/grub, 
+```
+/etc/default/grub
 change
 GRUB_CMDLINE_LINUX="***quiet"
 to
@@ -22,13 +23,18 @@ GRUB_CMDLINE_LINUX="***quiet intel_pstate=disable"
 then
 UEFI 系统上的指令是 grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 after reboot, then acpi-cpufreq driver willbe used.
-
+```
 
 查看HWP功能是否开启：
-#rdmsr 0x770, 读取1则enable， 读取0则disable
+```shell
+rdmsr 0x770, 读取1则enable， 读取0则disable
+```
+
 关闭HWP功能：
-Vim /etc/default/grub
+```shell
+$ vim /etc/default/grub
 GRUB_CMDLINE_LINUX = "*** intel_pstate=no_hwp"
+```
 
 intel_pstate=disable	disable intel_pstate 驱动
 intel_pstate=passive	Passive mode enabled, default_driver = &intel_cpufreq

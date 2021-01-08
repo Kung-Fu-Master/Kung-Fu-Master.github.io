@@ -148,7 +148,7 @@ minikube是一个工具，可以在本地快速运行一个单点的kubernetes�
 
 ### **每个node都在 /etc/environment 添加如下信息**
 
-```bash
+```
 http_proxy="http://child-prc.intel.com:913/"
 https_proxy="http://child-prc.intel.com:913/"
 ftp_proxy="ftp://child-prc.intel.com:913/"
@@ -158,7 +158,7 @@ no_proxy="K8S_MASTER_IP,K8S_MASTER_HostName"  如: no_proxy="10.67.108.200,hci-n
 ### **安装docker**
 #### **删除旧版本docker**
 
-``` bash
+```shell
 步骤1:
 $ rpm -qa | grep docker – – 列出包含docker字段的软件的信息
   docker-ce-cli-19.03.12-3.el7.x86_64
@@ -179,14 +179,14 @@ yum remove -y docker \
 
 #### **配置docker源**
 
-``` bash
+``` shell
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 sudo yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
 ```
 
 #### **yum 查看docker可用版本**
 
-```bash
+```shell
 yum list docker-ce --showduplicates | sort -r
 yum list docker-ce-cli --showduplicates | sort -r
 yum list containerd.io --showduplicates | sort -r
@@ -195,25 +195,32 @@ yum list containerd.io --showduplicates | sort -r
 #### **安装docker**
 **第一种方法:**
 
+```shell
 	// 安装最新版docker
 	yum install docker-ce docker-ce-cli containerd.io
 	// 安装指定版docker
 	yum install docker-ce-19.03.14-3.el7 docker-ce-cli-19.03.14-3.el7 containerd.io-1.3.9-3.1.el7
+```
 **第二种方法: 使用curl升级到最新版**
 
+```shell
 	curl -fsSL https://get.docker.com -o get-docker.sh
 	sh get-docker.sh
+```
 
 #### **启动docker**
 
+```shell
 	$ systemctl daemon-reload
 	$ systemctl start docker
 	$ systemctl enable docker
+```
 
 #### **设置docker的proxy**
 
 **第一种:**
 
+```shell
 	$ touch /etc/systemd/system/docker.service.d/proxy.conf
 	Add proxy in this newly created file
 	$ vim /etc/systemd/system/docker.service.d/proxy.conf
@@ -221,10 +228,11 @@ yum list containerd.io --showduplicates | sort -r
 	Environment="HTTP_PROXY=http://child-prc.intel.com:913"
 	Environment="HTTPS_PROXY=http://child-prc.intel.com:913"
 	Environment="NO_PROXY=10.67.108.211,10.67.109.142,10.67.109.147,10.67.109.144,10.67.108.220,127.0.0.1,hce-node01,hce-node02,hce-node03,hce-node04"
-
+```
 
 **第二种:**
 
+```shell
 	$ mkdir /etc/systemd/system/docker.service.d
 	$ vim /etc/systemd/system/docker.service.d/http-proxy.conf
 	[Service]
@@ -237,13 +245,18 @@ yum list containerd.io --showduplicates | sort -r
 	$ vim /etc/systemd/system/docker.service.d/no-proxy.conf
 	[Service]
 	Environment="NO_PROXY=10.239.140.133,10.239.141.123,master-node,node-1"
+```
+
 之后再次加载os系统配置项然后重启docker
 
+```shell
 	$ systemctl daemon-reload
 	$ systemctl start docker
+```
 
 #### **Add docker daemon**
 
+```shell
 	$ vim /etc/docker/daemon.json
 	{
 	"insecure-registries" :["hce-node01:5000"],
@@ -252,22 +265,25 @@ yum list containerd.io --showduplicates | sort -r
 	
 	$ systemctl daemon-reload
 	$ systemctl restart docker
-
+```
 
 ### **kubeadm, kubelet, kubectl**
 > 每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的worknode上也安装(也就是下载或拷贝)kubectl二进制文件工具.
 
 #### **卸载旧版本kubernetes**
 
+```shell
 	$ kubectl delete node --all
 	$ for service in kube-apiserver kube-controller-manager kubectl kubelet kube-proxy kube-scheduler; do
 	  systemctl stop $service
 	  done
 	$ yum -y remove kubeadm kubectl kubelet
+```
 
 #### **安装新版kubernetes**
 Ubuntu:
 
+```shell
 	$ sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
 	$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 	$ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
@@ -275,8 +291,10 @@ Ubuntu:
 	$ sudo apt-get install -y kubectl
 	$ sudo apt-get install -y kubeadm
 	$ sudo apt-get install -y kubelet
+```
 Centos:
 
+```shell
 	// 关闭交换区
 	$ swapoff -a
 	Edit /etc/fstab to comment out swap partition line so that it remains disabled after reboot
@@ -318,21 +336,24 @@ Centos:
 	$ systemctl enable --now kubelet
 	$ kubeadm reset
 	$ sudo hostnamectl set-hostname master-node //修改机器名字, 重开终端就可以看到机器名变了
+```
 
 #### **k8s配置自动补全命令**
 
+```shell
 	#安装bash自动补全插件
 	yum install bash-completion -y
 	#设置kubectl与kubeadm命令补全，下次login生效
 	kubectl completion bash >/etc/bash_completion.d/kubectl
 	kubeadm completion bash > /etc/bash_completion.d/kubeadm
-
+```
 
 ### **机器环境配置**
 master-node和worknode都需要设置.  
 关闭交换区, K8s认为swap性能开销比较大, 性能会大幅降低, 使用swap做云基础架构会减少性能, 因此k8s关闭swap.  
 另外重新装系统OS时候就可以不给swap分配分区.  
 
+```shell
 	$ swapoff -a			// 临时关闭交换区，$ free -h 可以查看 Swap: 0B...
 	$ vim /etc/fstab  // 设置重启后自动关闭swapoff, 将含有swap的那一行前面加"#"注释掉就可以了
 	  /dev/mapper/centos-swap swap                    swap    defaults        0 0
@@ -344,8 +365,10 @@ master-node和worknode都需要设置.
 	$ systemctl disable firewalld 			// 设置开机不启动防火墙
 	$ sysctl net.bridge.bridge-nf-call-iptables=1
 	$ sysctl net.bridge.bridge-nf-call-ip6tables=1
+```
 有的说明还可以关闭网络管理器,关闭核心防护,清空iptabels, 编辑主机名
 
+```shell
 	$ // systemctl list-unit-files --type=service | grep NetworkManager // 查看NetworkManager是否enabled
 	$ // systemctl status NetworkManager	// 查看NetworkManager是否running
 	$ // systemctl stop NetworkManager		// 关闭网络, 没有IP地址无法远程连接终端, 慎用.
@@ -353,6 +376,7 @@ master-node和worknode都需要设置.
 	$ setenforce 0
 	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 	$ iptables -F	// 清空iptables
+```
 > Iptables原理
 > linux的防火墙由netfilter和iptables组成
 > 用户空间的iptables制定防火墙规则，内核空间的netfilter实现防火墙功能netfilter（内核空间）位于Linux内核中的包过滤防火墙功能体系，称为Linux防火墙的“内核态”
@@ -364,16 +388,20 @@ master-node和worknode都需要设置.
 > * －disabled         禁用模式：SELinux 被关闭，默认的 DAC 访问控制方式被使用。对于那些不需要增强安全性的环境来说，该模式是非常有用的。
 > $ setenforce // 修改当前SELinux的模式
 
+```shell
 	关闭selinux:		// 限制访问linux资源文件上下文
 	$ getenforce			// 查看是否disabled
 	$ setenforce 0			//临时关闭selinux(Security-Enhanced Linux), 终端会输出"setenforce: SELinux is disabled"
 	$ vim /etc/selinux/config --> 将 SELINUX=permissive 改为 SELINUX=disabled, 设置重启后自动关闭selinux
 	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config	//永久关闭
 	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config(另一种)
+```
 ### **同步系统时间**
 > 涉及到验证签发的证书的有效性, 如果签发证书的服务器时间比使用证书的服务器时间早, 就会导致校验不成功或证书错误, 一直等到使用证书的服务器时间也运行到证书开始生效的时间后才会解决这个问题.
 
 #### **第一种: 手动修改时间**
+
+```shell
 	//查看当前系统时间
 	$ date
 	//修改当前系统时间
@@ -387,11 +415,12 @@ master-node和worknode都需要设置.
 	//保存时钟
 	$ clock -w
 	重启系统（init 6）后便发现系统时间被修改了
-
+```
 #### **第二种chrony**
 1. 配置master机器
 
 
+```shell
 	//master-node安装
 	$ yum install chrony -y
 	$ vim /etc/chrony.conf
@@ -407,18 +436,24 @@ master-node和worknode都需要设置.
 	allow 10.239.0.0/16				// 2. # allow 192.168.31.0/24
 	# Serve time even if not synchronized to a time source.
 	local stratum 10				// 3. 
+```
 重启chrony
 
+```shell
 	$ systemctl start chronyd
 	$ systemctl restart chronyd
 	$ systemctl enable chronyd
+```
 查看chrony端口，判断服务是否起来
 
+```shell
 	$ ss -unl | grep 123
 	UNCONN     0      0            *:123                      *:*
+```
 2. 配置node机器
 
 
+```shell
 	//work node安装
 	$ yum install chrony -y
 	$ vim /etc/chrony.config	//只添加一行，指定从master获取时间
@@ -428,25 +463,31 @@ master-node和worknode都需要设置.
 	#server 2.centos.pool.ntp.org iburst	//注释
 	#server 3.centos.pool.ntp.org iburst	//注释
 	server 10.239.140.133 iburst			//添加冲master获取时间
+```
 重启chrony服务, 服务重启后就与master时间同步了
 
+```shell
 	$ systemctl start chronyd
 	$ systemctl restart chronyd
 	$ systemctl enable chronyd
+```
 work node上不需要查看端口, 因为node的chrony不需要开启接受请求时间端口, 因此可以没有
 
 3. work node上执行执行chronyc命令查看与master机器时间同步情况
 
 
+```shell
 	$ chronyc sources
 	210 Number of sources = 1
 	MS Name/IP address         Stratum Poll Reach LastRx Last sample
 	^* master-node                  10   6    77    40    -10us[ -111us] +/-   67us
 ^* 表示时间已经同步完成
 ^? 表示还没有同步完成, 需要等一会, 如果等一会还不行说明配置出错需要找原因
+```
 
 #### **第三种timedatectl(实测没啥效果):**
 
+```shell
 	//设置系统时区为 中国/上海
 	$ timedatectl set-timezone Asia/Shanghai
 	//将当前的UTC时间写入硬件时钟
@@ -454,66 +495,90 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 	// 重启依赖于系统时间的服务
 	$ systemctl restart rsyslog
 	$ systemctl restart crond
-
+```
 
 #### **第四种ntpdate:**
 
+```shell
 	$ ntpdate time.windows.com 		// 同步 windows 系统时间
+```
 ### **安装镜像(可跳过)**
 
+```shell
 	$ kubeadm config images list // 查看kubeadm 下载过的images
 	$ docker images
 	$ docker pull gcr.io/google_containers/kube-apiserver-amd64:v1.9.3
 	$ docker pull gcr.io/google_containers/kube-controller-manager-amd64:v1.9.3
 	$ docker pull gcr.io/google_containers/kube-scheduler-amd64:v1.9.3
+```
 
 ### **添加机器到K8s集群**
 > 1. 在Master主机 server01 上运行
 
+```shell
 	$ kubeadm init
+```
 返回部分数据如下
 
+```
 	......
 	Then you can join any number of worker nodes by running the following on each as root:
 	
 	kubeadm join 10.239.141.112:6443 --token uvm0zr.ndg144wcga276j16 \
 	    --discovery-token-ca-cert-hash sha256:e1535452b32ed4039fa2f261197c0b91179fb168e8da3dd58b99fc11fe2213b8
 	root@server01:~#
+```
 > 添加kubeadm部署k8s后生成的administrator访问证书到环境变量或~/.kube目录, 使得root或其它user登陆后可以通过kubectl访问或生成k8s资源如pod等, 有如下两种方式.
 
 第一种:
 
+```shell
 	$ export KUBECONFIG=/etc/kubernetes/admin.conf
 	$ echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
 	$ source ~/.bashrc
+```
+
 第二种(其它user而非root登陆后需要做如下操作才能通过kubectl访问或生成k8s资源如pod等):
 
+```shell
 	$ mkdir -p $HOME/.kube
 	$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
 添加容器之间的通信网络, 第三方资源weave, 官网上也推荐部署其它几种通信网络方式
 
+```shell
 	$ kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')
+```
 
 > 2. 之后用上面命令返回的 kubeadm join 10.239.141.112:6443 --t ... 复制 并 在其它node机器(server02和宿主主机) 上运行就可以把node加进上面创建的Cluster了
 
 ### **在master server01 机器上查看集群节点信息**
 
+```shell
 	$ kubectl get nodes
 	$ kubectl get namespaces
+```
+
 ### **查看node节点信息**
 
+```shell
 	$ kubectl describe node server02
+```
 ## **重新(reset)在原来机器上搭建k8s集群操作**
 > 主机名和IP解析, 通过主机名访问机器, 修改下各个节点 /etc/hosts 文件内容(实验环境没有修改，跳过这个步骤), 也可以只在master上配置, 因为很多操作都是在master上执行
 
+```
 	......
 	10.239.141.106 server01
 	10.239.140.184 server02
 	10.239.140.186 alpha
+```
+
 > 1. 需要在master节点上执行 
 
+```shell
 	rm -rf /etc/kubernetes/pki/etcd/
 	rm -rf /var/lib/etcd
 	rm -rf $HOME/.kube
@@ -529,11 +594,13 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 	kubeadm init		//再用返回的 "kubeadm join..." 在其它节点执行
 	echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
 	source ~/.bashrc
+```
 
 > 2. 在worker节点执行:
 检查/etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf有没有残留的kubelet服务配置文件, 有的话删掉.
 environment_initialization.sh
 
+```shell
 	systemctl enable docker.service
 	kubeadm reset
 	systemctl stop kubelet
@@ -545,20 +612,26 @@ environment_initialization.sh
 	systemctl stop firewalld.service
 	sysctl net.bridge.bridge-nf-call-iptables=1
 	systemctl daemon-reload
+```
 加入集群
 
+```shell
 	// $ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X		// will reset iptables
 	$ kubeadm join ......
+```
 
 > 3. 再次在master节点上执行
 如果不执行下面命令安装weave pod, kube-system命名空间下的coredns会一直处于containercreating状态.
 
+```shell
 	$ kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')
 	$ kubectl get cs
+```
 
 ## **k8s重新生成token**
 主机上执行如下命令，主机IP:10.239.140.186
 
+```shell
 	$ kubeadm token create
 	v6rgnu.ydqgkuujayykkanv
 	
@@ -568,8 +641,10 @@ environment_initialization.sh
 
 	$ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 	be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4
+```
 用上面master主机上生成的token在worker节点执行如下命令:
 
+```shell
 	$ kubeadm reset
 	$ swapoff -a
 	$ setenforce 0
@@ -577,25 +652,30 @@ environment_initialization.sh
 	$ sysctl net.bridge.bridge-nf-call-iptables=1
 	$ sysctl net.bridge.bridge-nf-call-ip6tables=1
 	$ kubeadm join --token v6rgnu.ydqgkuujayykkanv --discovery-token-ca-cert-hash sha256:be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4  10.239.140.186:6443
+```
 
 ## **k8s命令自动补全**
 
+```shell
 	$ yum install bash-completion
 	$ echo "source <(kubectl completion bash)" >> ~/.bashrc
 	$ source ~/.bashrc
 	$ bash /usr/share/bash-completion/bash_completion
 	$ bash
+```
 试试 输入 `kubectl get n` 按 `tab` 查看提示.
 
 ## **reset iptables**
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 
+```shell
 	The reset process does not reset or clean up iptables rules or IPVS tables. If you wish to reset iptables, you must do so manually:
 	
-	iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+	$ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 	If you want to reset the IPVS tables, you must run the following command:
 	
-	ipvsadm -C
+	$ ipvsadm -C
+```
 
 ## **Additional**
 
@@ -604,41 +684,50 @@ https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-clu
 > [kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get http://localhost:10248/healthz: dial tcp [::1]:10248: connect: connection refused.
 解决方法:
 
+```shell
 	$ systemctl restart docker
 	$ rm -rf /etc/systemd/system/kubelet.service.d/*
 	$ systemctl daemon-reload
-
+```
 ### **问题2**
 Unable to connect to the server: x509: certificate signed by unknown authority
 需要删除上一次部署后cp到~/.kube的证书文件, 再重新部署一遍k8s集群
 
+```shell
 	$ rm -rf $HOME/.kube
-
+```
 ### **问题3**
 The connection to the server localhost:8080 was refused - did you specify the right host or port?
 需要添加administrator访问证书
 第一种:
 
+```shell
 	$ export KUBECONFIG=/etc/kubernetes/admin.conf
 	$ echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
 	$ source ~/.bashrc
+```
 第二种:
 
+```shell
 	$ mkdir -p $HOME/.kube
 	$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
+```
 ### **问题n**
 https://istio.io/docs/examples/bookinfo/
 Istio 部署bookinfo 到bookinfo命名空间， 发现只部署了svc，RS，但是没有部署pod.
 
+```shell
 	$ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
+```
 用以下命令可以查看出错信息, 发现是webhook相关错误
 
+```shell
 	$ kubectl describe rs/RS-NAME -n bookinfo
-
+```
 解决方法是注释掉kubernetes的proxy
 
+```xml
 /etc/kubernetes/manifests/kube-apiserver.yaml
 
 	 env:									// K8s安装会用系统的proxy，加#注释掉.
@@ -652,21 +741,27 @@ Istio 部署bookinfo 到bookinfo命名空间， 发现只部署了svc，RS，但
 	#  value: http://child-prc.intel.com:913
 	 - name: no_proxy
 	   value: 10.239.140.186,10.239.140.200		// master和一个worker节点的NodeIP.
+```
+
 稍等一会$ kubectl get po -n bookinfo 就可以看到pod慢慢部署成功了.
 
 ### **部署网络weave出错**
 
-	Unable to update cni config: No networks found in /etc/cni/net.d
-	由于设置了代理导致的错误, kubelet 无法通过代理链接到 kube-apiserve
-	
-	解决办法:
-	
-	unset http_proxy https_proxy
+Unable to update cni config: No networks found in /etc/cni/net.d
+
+由于设置了代理导致的错误, kubelet 无法通过代理链接到 kube-apiserve
+
+解决办法:
+
+```shell
+	$ unset http_proxy https_proxy
 	# or
-	export no_proxy=<your_kube_apiserver_ip>
+	$ export no_proxy=<your_kube_apiserver_ip>
+```
 
 ### **去掉污点Taints**
 
+```shell
 	# 允许调度 pod
 	kubectl taint node {node name} node-role.kubernetes.io/master-
 	# example
@@ -676,9 +771,11 @@ Istio 部署bookinfo 到bookinfo命名空间， 发现只部署了svc，RS，但
 	kubectl taint node {node name} node-role.kubernetes.io/master=master
 	# example
 	kubectl taint node host1 node-role.kubernetes.io/master=master
+```
 
 ### **重新生成证书**
 
+```shell
 	有时可能过了一段时间需要添加新的 node
 	# 生成一个 token
 	kubeadm token generate
@@ -688,5 +785,5 @@ Istio 部署bookinfo 到bookinfo命名空间， 发现只部署了svc，RS，但
 	# kubeadm join --token <token> <master-ip>:<master-port> --discovery-token-ca-cert-hash sha256:<hash>
 	# example
 	kubeadm join --token xf96mj.aq2c5v14r62rf2aw 172.16.50.10:6443  --discovery-token-ca-cert-hash sha256:a18c59189884451f71305a0107d15b79a8ac091ef9a8b9e394cad5d4b9f18162
-
+```
 

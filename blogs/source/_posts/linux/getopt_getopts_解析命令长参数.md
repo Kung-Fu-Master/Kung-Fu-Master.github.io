@@ -33,6 +33,7 @@ ${OPTIND} - 1对整个参数列表进行左移操作，最左边的参数就丢�
 ### **实例1**
 touch bash.sh
 
+```shell
 	#!/bin/bash
 	echo 初始 OPTIND: $OPTIND
 	while getopts "a:b:c" arg #选项后面的冒号表示该选项需要参数
@@ -59,8 +60,11 @@ touch bash.sh
 	echo 参数索引位置：$OPTIND
 	echo 准备处理余下的参数：
 	echo "Other Params: $@"
+```
+
 执行并输出:
 
+```shell
 	$ ./bash.sh -a 1 -b 2 -c 3  test -oo xx -test
 	初始 OPTIND: 1
 	a's arg:1
@@ -71,16 +75,18 @@ touch bash.sh
 	参数索引位置：6
 	准备处理余下的参数：
 	Other Params: 3 test -oo xx -test
-
+```
 
 ## **getopt**
 在getopt的较老版本中，存在一些bug，不大好用，在后来的版本中解决了这些问题，我们称之为getopt增强版。通过-T选项，我们可以检查当前的getopt是否为增强版，返回值为4，则表明是增强版的.  
 
+```shell
 	$ getopt -T
 	$ echo $?
 	  4
 	$ getopt -V
 	  getopt from util-linux 2.23.2
+```
 
 $1 和 ${1}的效果是一样的, 但是不用花括号的话，$10 会被认为是 $1 和一个字符 0.  
  * -o 表示短选项，两个冒号表示该选项有一个可选参数，可选参数必须紧贴选项
@@ -104,6 +110,7 @@ $1 和 ${1}的效果是一样的, 但是不用花括号的话，$10 会被认为
 ### **实例1**
 touch get_opt.sh
 
+```shell
 	#!/bin/bash
 	echo $@
 	#-o或--options选项后面接可接受的短选项，如ab:c::，表示可接受的短选项为-a -b -c，其中-a选项不接参数，-b选项后必须接参数，-c选项的参数为可选的
@@ -161,12 +168,14 @@ touch get_opt.sh
 	do
 	    echo "processing $arg"
 	done
+```
+
 执行:
 **Note: 对于用`::`来声明的可选参数**
  * 短参数如-c必须紧挨后面参数值,如-c456而不是-c 456.`  
  * 长参数如--clong后面必须加`=`, 否则参数值会判断为空, 如`--clong=456`, 如果写成--clong 456那么解析时候--clong后面参数为空
 
-
+```shell
 	$ chmod +x get_opt.sh
 	$ ./get_opt.sh -b 123 -a -c456 file1 file2
 	-b 123 -a -c456 file1 file2
@@ -193,5 +202,5 @@ touch get_opt.sh
 	Option a
 	processing file1
 	processing file2
-
+```
 

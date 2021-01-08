@@ -11,17 +11,20 @@ Reference Link:
 https://stackoverflow.com/questions/41082924/c-difference-between-new-charsize-and-new-charsize
 https://blog.csdn.net/huangshanchun/article/details/50008959
 
+```cpp
 	char * text = new char[size];
-
+```
 vs.
 
+```cpp
 	char * text = new char[size]();
-
+```
 new char[size]() would zero-initialize the array. new char[size] would leave it uninitialized, containing random garbage.
 
 
 在C++ 中new char[]() 编译器默认将其初始化为0，new char[]则不会初始化, 有时候输出会看到垃圾数据。
 
+```cpp
 	#include<iostream>
 	using namespace std;
 	 
@@ -34,4 +37,4 @@ new char[size]() would zero-initialize the array. new char[size] would leave it 
 		cout<<"q:"<<q<<endl;
 		cin.get();
 	}
-
+```

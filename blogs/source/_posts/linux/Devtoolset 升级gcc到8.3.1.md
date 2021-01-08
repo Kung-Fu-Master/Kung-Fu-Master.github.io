@@ -7,12 +7,16 @@ categories:
 设置gcc到8.0再用 -mavx512f 参数
 To install the full tools-set including gfortran on centos 7:
 
+```shell
 	yum install centos-release-scl
 	yum install devtoolset-8                       //yum install devtoolset-7, 升级到gcc 7.3
 	scl enable devtoolset-8 -- bash           //scl enable devtoolset-7 -- bash, 只在当前终端生效
+```
 enable the tools:
 
+```shell
 	source /opt/rh/devtoolset-8/enable 
+```
 you may wish to put the command above in .bash_profile or ~/.bashrc
 
 ref: https://unix.stackexchange.com/questions/477360/centos-7-gcc-8-installation

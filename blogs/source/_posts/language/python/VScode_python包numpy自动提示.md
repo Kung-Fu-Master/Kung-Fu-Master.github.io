@@ -16,17 +16,20 @@ categories:
 3. 设置VScode
 文件 – 设置 – 首选项，搜索autoComplete，点击"在settings.json中编辑"，添加模块路径
 
+```
+"python.autoComplete.extraPaths": [
+    "/usr/local/lib64/python3.6/site-packages/",
+    "/usr/lib64/python3.6/",
+]
+```
 
-	"python.autoComplete.extraPaths": [
-	    "/usr/local/lib64/python3.6/site-packages/",
-	    "/usr/lib64/python3.6/",
-	]
 修改之后**重启VScode**, 就可以了
 
 ## python代码保存自动格式化
 VScode创建python文件会自动提示安装autopep8, 或者通过以下命令进行安装
 
-	pip install -U autopep8
-
+```shell
+pip install -U autopep8
+```
 
 

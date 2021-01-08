@@ -24,6 +24,7 @@ Pod 控制器中使用标签选择器来指定哪些 pod 属于同一 Service。
 创建service yaml文件 kubia-svc.yaml
 
 
+```xml
 	apiVersion: v1
 	kind: Service
 	metadata:
@@ -39,18 +40,23 @@ Pod 控制器中使用标签选择器来指定哪些 pod 属于同一 Service。
 	    targetPort: https	// 含有label:app=kubia的pod需要将https映射pod本身8443或其它端口，否则这里只能填写端口号
 	  selector:
 	    app: kubia			// 具有app=kubia标签的pod都属于该服务
+```
+
 创建了 一个名叫kubia的服务，它将在端口80接收请求并将连接路由到具有标签选择器是app=kubia的pod的8080端口上.
 在发布完YAML文件后， 可以在命名空间下列出来所有的服务资源, 新的服务已经被分配了一个内部集群IP, 只能在集群内部可以被访问.
 
+```shell
 	$ kubectl get svc
 	NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 	kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP   23h
 	kubia        ClusterIP   10.98.229.76   <none>        80/TCP    20s
+```
 
  * 第二步，创建两个pod，一个添加标签app=kubia，另一个用来执行测试通过kubectl exec来访问第一个pod
 kubia.yaml
 
 
+```xml
 	apiVersion: v1
 	kind: Pod
 	metadata:
@@ -61,9 +67,11 @@ kubia.yaml
 	  containers:
 	  - image: luksa/kubia
 	    name: kubia
+```
 
 kubia-label.yaml
 
+```xml
 	 apiVersion: v1					// api服务版本
 	 kind : Pod						// 资源类型
 	 metadata:
@@ -81,15 +89,19 @@ kubia-label.yaml
 	       containerPort: 8080		// 用上面的名字定义这个端口号的别名
 	     - name: https
 	       containerPort: 8443
+```
+
 查看POD并执行一个POD去通过上面创建的service(通过label)包含的pod提供的服务.
 其中pod kubia-label中container运行的服务进程监听了8080端口, POD对外也暴露了8080端口
 
+```shell
 	$ kubectl get pod --show-labels
 	NAME           READY   STATUS    RESTARTS   AGE    LABELS
 	kubia          1/1     Running   0          101m   <none>
 	kubia-label    1/1     Running   0          98m    app=kubia
 	kubia-label1   1/1     Running   0          99s    app=kubia
 	kubia-label2   1/1     Running   0          79s    app=kubia
+```
 
  * 第三步: 执行一个pod用curl命令访问另一个pod提供的服务
 双横杠(--)代表着kubectl命令项的结束.在两个横杠之后的内容是指在pod内部需要执行的命令.
@@ -97,6 +109,7 @@ k8s 服务代理接续curl请求连接，三个包含label为app=kubia的pod任�
 访问服务三种方式,加不加端口都可以
 
 
+```shell
 	<p>$ kubectl exec kubia -- curl -s http://10.98.229.76:http</p>
 	$ kubectl exec kubia -- curl -s http://10.98.229.76:80
 	$ kubectl exec kubia -- curl -s http://10.98.229.76
@@ -106,6 +119,7 @@ k8s 服务代理接续curl请求连接，三个包含label为app=kubia的pod任�
 	You've hit kubia-label2
 	$ kubectl exec kubia -- curl -s http://10.98.229.76
 	You've hit kubia-label1
+```
 
 ### Affinity 亲和性
 Kubernetes 仅仅支持两种形式的会话亲和性服务： None 和 ClientIP
@@ -114,16 +128,18 @@ Kubernetes 服务不是在 HTTP 层面上工作。服务处理 TCP 和 UDP 包�
 因为 cookie 是 HTTP 协议中的一部分，服务并不知道它们，这就解释了为什么会话亲和性不能基千 cookie。
 如果希望特定客户端产生的所有请求每次都指向同 一个 pod, 可以设置服务的 sessionAffinity 属性为 ClientIP (而不是 None,None 是默认值）
 
+```xml
 	apiVersion: vl
 	kind: Service
 	spec:
 	  sessionAffinity: ClientIP
 	......
-
+```
 
 ## 环境变量发现service
 ### 创建replicaSet 管理 3 个 POD
 
+```xml
 	apiVersion: apps/v1
 	kind: ReplicaSet
 	metadata:
@@ -148,13 +164,18 @@ Kubernetes 服务不是在 HTTP 层面上工作。服务处理 TCP 和 UDP 包�
 	          containerPort: 8080
 	        - name: https
 	          containerPort: 8443
+```
 
+```shell
 	$ kubectl get svc 
 	NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 	kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          29h
 	kubia        ClusterIP   10.111.88.195   <none>        80/TCP,443/TCP   3h46m
+```
+
 查看pod所在的service对应的IP和端口
 
+```shell
 	$ kubectl exec kubia-5rvfq env
 	......
 	KUBERNETES_SERVICE_PORT=443
@@ -163,10 +184,12 @@ Kubernetes 服务不是在 HTTP 层面上工作。服务处理 TCP 和 UDP 包�
 	KUBERNETES_SERVICE_HOST=10.96.0.1
 	KUBIA_SERVICE_HOST=10.111.88.195	// 服务所在的端口
 	......
+```
 pod 是否使用 内 部的 DNS 服务器是根据 pod 中 spec 的 dnsPolicy 属性来决定的
 
 进入容器后执行如下命令
 
+```shell
 	$ kubectl exec kubia-5rvfq -it -- bash		// -- 表示kubectl 命令执行完了，开始执行pod容器里要运行的命令
 	$ curl http://kubia.default.svc.cluster.local
 	$ curl http://kubia.default
@@ -184,21 +207,28 @@ pod 是否使用 内 部的 DNS 服务器是根据 pod 中 spec 的 dnsPolicy �
 	PING kubia.default.svc.cluster.local (10.111.88.195): 56 data bytes
 	^C--- kubia.default.svc.cluster.local ping statistics ---
 	4 packets transmitted, 0 packets received, 100% packet loss
+```
+
 上面的 curl 这个服务是工作的，但是却 ping 不通。这是 因为服务的集群 IP 是一个虚拟 IP，并且只有在与服务端口结合时才有意义。 
 
 查看kube-system下面kube-dns信息
 
+```shell
 	$ kubectl get svc -n kube-system
 	NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
 	kube-dns   ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   2d3h
+```
 
 ### 删除service
 
+```shell
 	$ kubectl delete svc kubia
+```
 
 ## Service samples
 ### 查看service
 
+```shell
 	$ kubectl get svc -n kube-system
 	$ kubectl get svc -n istio-system
 	NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                                      AGE
@@ -221,13 +251,17 @@ pod 是否使用 内 部的 DNS 服务器是根据 pod 中 spec 的 dnsPolicy �
 	现在有外部 IP 了，应用就可以从任何地方通过 http://104.155.74.57:8080 访问
 	$ curl 104.155.74.57:8080
 	You’ve hit kubia-4jfyf
+```
 
 ### 查看service的CRD信息
 
+```shell
 	$ kubectl get svc istio-ingressgateway -n istio-system -oyaml
+```
 
 ## endpoint 服务
 
+```shell
 	$ kubectl describe svc kubia
 	Name:              kubia
 	Namespace:         default
@@ -251,15 +285,19 @@ pod 是否使用 内 部的 DNS 服务器是根据 pod 中 spec 的 dnsPolicy �
 	kubia-5rvfq   1/1     Running   0          15h   10.44.0.2   server02   <none>           <none>
 	kubia-8cgnm   1/1     Running   0          15h   10.44.0.1   server02   <none>           <none>
 	kubia-8kv8d   1/1     Running   0          15h   10.44.0.3   server02   <none>           <none>
+```
 Endpoint 资源和其他Kubernetes 资源一样，所以可以使用 kubectl info 来获取它的基本信息
 
+```shell
 	$ kubectl get endpoints kubia
 	NAME    ENDPOINTS                                                  AGE
 	kubia   10.44.0.1:8443,10.44.0.2:8443,10.44.0.3:8443 + 3 more...   16h
+```
 
 Endpoint是一个单独的资源并不 是服务的一个属性, 必须手动创建
 external-service.yaml
 
+```xml
 	apiVersion: v1
 	kind: Service
 	metadata:
@@ -267,8 +305,11 @@ external-service.yaml
 	spec:
 	  ports:
 	  - port: 80
+```
+
 external-service-endpoints.yaml
 
+```xml
 	apiVersion: v1
 	kind: Endpoints
 	metadata:
@@ -279,8 +320,10 @@ external-service-endpoints.yaml
 	    - ip: 22.22.22.22
 	    ports:
 	    - port: 80
+```
 部署service和endpoint
 
+```shell
 	$ kubectl create -f external-service.yaml
 	$ kubectl create -f external-service-endpoints.yaml
 	$ kubectl describe svc/external-service
@@ -296,6 +339,7 @@ external-service-endpoints.yaml
 	Endpoints:         11.11.11.11:80,22.22.22.22:80
 	Session Affinity:  None
 	Events:            <none>
+```
 
 ## 暴露service
  • 将服务的类型设置成NodePort -- 每个集群节点都会在节点上打开一个端口， 对于NodePort服务， 每个集群节点在节点本身（因此得名叫NodePort)上打开一个端口，并将在该端口上接收到的流量重定向到基础服务。
@@ -310,12 +354,14 @@ external-service-endpoints.yaml
 客户端发送请求的节点并不重要, 整个互联网可以通过任何节点上的30123(用户自己定义的)端口访问到pod,如下所示
 如在个人机器上生成如下service和pod，可以在以前做的项目的任何机器上通过如下访问
 
+```shell
 	curl -s http://10.239.140.186:30123 (master节点的NodeIP:port)访问服务
 	curl -s http://10.239.140.200:30123 (worker02节点的NodeIP:port)访问服务
-
+```
 
 kubia-svc-nodeport.yaml
 
+```xml
 	apiVersion: v1
 	kind: Service
 	metadata:
@@ -328,7 +374,9 @@ kubia-svc-nodeport.yaml
 	    nodePort: 30123			// 通过集群节点(master或worker)的NodeIP，加上30123端口可以访问服务
 	  selector:
 	    app: kubia
+```
 
+```shell
 	$ kubectl create -f kubia-svc-nodeport.yaml
 	
 	$ kubectl get svc
@@ -358,27 +406,32 @@ kubia-svc-nodeport.yaml
 	kubia-5rvfq   1/1     Running   0          17h   10.44.0.2   server02   <none>           <none>
 	kubia-8cgnm   1/1     Running   0          17h   10.44.0.1   server02   <none>           <none>
 	kubia-8kv8d   1/1     Running   0          17h   10.44.0.3   server02   <none>           <none>
+```
 查看server02机器IP
 
+```shell
 	$kubectl get node -o wide
 	NAME       STATUS   ROLES    AGE     VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
 	alpha      Ready    master   2d18h   v1.18.2   10.239.140.186   <none>        Ubuntu 18.04.4 LTS   5.3.0-28-generic    docker://19.3.6
 	server02   Ready    <none>   2d17h   v1.18.2   10.239.140.200   <none>        Ubuntu 18.04.4 LTS   4.15.0-76-generic   docker://19.3.6
+```
 两种访问方式
  * 第一种: 通过NodeIP:Port 访问:
 
 
+```shell
 	$ curl -s http://10.239.140.200:30123
 	You've hit kubia-8kv8d
 	$ curl -s http://10.239.140.186:30123
 	You've hit kubia-5rvfq
-
+```
  * 第二种: 通过 service的CLUSTER-IP：port 进入port进行访问
 
 
+```shell
 	$ kubectl exec kubia -- curl -s http://10.103.7.50:80
 	You've hit kubia-8kv8d
-
+```
 
 ### LoadBalancer 方式访问
 > 如果Kubemetes在不支持Load Badancer服务的环境中运行， 则不会调配负载平衡器， 但该服务仍将表现得像 一 个NodePort服 务。 这是因为LoadBadancer服务是NodePo江服务的扩展
@@ -387,6 +440,7 @@ kubia-svc-nodeport.yaml
 
 kubia-svc-loadbalancer.yaml
 
+```xml
 	apiVersion: v1
 	kind: Service
 	metadata:
@@ -398,7 +452,9 @@ kubia-svc-loadbalancer.yaml
 	    targetPort: 8080
 	  selector:
 	    app: kubia
+```
 
+```shell
 	$ kubectl create -f kubia-svc-loadbalancer.yaml
 
 	$ kubectl describe svc/kubia-loadbalancer
@@ -421,14 +477,18 @@ kubia-svc-loadbalancer.yaml
 	NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 	kubernetes           ClusterIP      10.96.0.1       <none>        443/TCP          43h
 	kubia-loadbalancer   LoadBalancer   10.99.184.62    <pending>     80:30994/TCP     4m11s
+```
+
 可以看到Kubemetes在不支持Load Badancer服务的环境中运行 EXTERNAL-IP显示为 <pending>状态，但仍然可以像NodePort方式一样访问服务
 
+```shell
 	$ kubectl exec kubia -- curl -s http://10.99.184.62:80
 	You've hit kubia-8cgnm
 	$ curl -s 10.239.140.186:30994		// masterIP：svcPort
 	You've hit kubia-5rvfq
 	$ curl -s 10.239.140.200:30994		// worker01：svcPort
 	You've hit kubia-8kv8d
+```
 如果支持LoadBalancer且获得EXTERNAL-IP为 130.211.53.173
 可以通过 $ curl http://130.211.53.173 进行访问
 
@@ -439,12 +499,14 @@ kubia-svc-loadbalancer.yaml
 > Ingress 对象提供的功能之前，必须强调只有 Ingress控制器在集群中运行，Ingress 资源才能正常工作。 不同的 Kubernetes 环境使用不同的控制器实现， 但有些并不提供默认控制器
 Ingress通常向外暴露 Service.Type=NodePort 或者 Service.Type=LoadBalancer 类型的服务，因此先创建一个NodePort类型svc.
 
+```shell
 	$ kubectl get svc
 	NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 	kubia-nodeport        NodePort       10.103.7.50     <none>        80:30123/TCP     144m
-
+```
 创建kubia-ingress.yaml资源文件
 
+```xml
 	apiVersion: networking.k8s.io/v1beta1
 	kind: Ingress
 	metadata:
@@ -458,18 +520,26 @@ Ingress通常向外暴露 Service.Type=NodePort 或者 Service.Type=LoadBalancer
 	        backend:
 	          serviceName: kubia-nodeport	// 将所有请求发送到kubia-nodeport服务的80端口
 	          servicePort: 80
+```
+
 > kubectl创建ingress.yaml资源文件遇到webhook ...错误时修改master节点上/etc/kubernetes/manifests/kube-apiserver.yaml，将K8s默认用系统配置的proxy注释掉，稍后再运行kubectl create ...就可以了
 
+```shell
 	$ kubectl create -f kubia-ingress.yaml
 	$ kubectl get ingress		// 自己机器上没有获得ADDRESS这列IP
 	NAME    CLASS    HOSTS               ADDRESS            PORTS   AGE
 	kubia   <none>   kubia.example.com   192.168.99.100     80      92s
+```
 > 一旦知道 IP 地址，通过配置 DNS 服务器将 kubia.example.com 解析为此 IP地址，或者在/ect/hosts(Windows系统为C:\windows\system32\drivers\etc\hosts ）文件中添加下面一行内容：
 
+```
 	192 168.99.100 kubia.example.com
+```
 通过Ingress访问pod, 环境都己经建立完毕，可以通过 http ：此ubia.example.com 地址访 问服务 （使用浏览器或者 curl 命令）
 
+```shell
 	$ curl http://kubia.example.com
+```
 > 客户端如何通过 Ingress 控制器连接到 其 中 一个 pod。客户端首先对 kubia.example.com 执行 DNS 查 找， DNS 服务器（或本地操作系统）返回了In gress 控制器的 IP。
 > 客户端然后 向 Ingress 控制器发送 HTTP 请求，并在 Host 头中指定 kubia . example.com。
 > 控制器从该头部确定客户端尝试访 问哪个服务，通过与该服务关联 的 Endpo int 对象查看 pod IP ， 并将客户端的请求转发给其中一个pod。
@@ -482,6 +552,7 @@ Ingress规范的 rules 和 paths 都是数组，因此它们可以包含多个�
 kubia-ingress.yaml
 
 
+```xml
 	apiVersion: networking.k8s.io/v1beta1
 	kind: Ingress
 	metadata:
@@ -510,10 +581,13 @@ kubia-ingress.yaml
 	        backend:
 	          serviceName: bar
 	          servicePort: 80
+```
 
+```shell
 	$ kubectl get ingress
 	NAME    CLASS    HOSTS                               ADDRESS   PORTS   AGE
 	kubia   <none>   kubia.example.com,bar.example.com             80      3s
+```
 DNS 需要将 foo .example.com 和 bar.example.com 域名都指向 Ingress 控制器的 IP 地址.
 然后像上面一样配置/ect/hosts文件内容,就可以通过域名访问了
 
@@ -539,6 +613,7 @@ DNS 需要将 foo .example.com 和 bar.example.com 域名都指向 Ingress 控�
 通过kubectl ed江命令来向已存在的ReplicationController中的pod模板添加探针
 kubia-replicaset-renameport.yaml
 
+```xml
 	apiVersion: apps/v1
 	kind: ReplicaSet
 	metadata:
@@ -568,18 +643,23 @@ kubia-replicaset-renameport.yaml
 	          containerPort: 8080
 	        - name: https
 	          containerPort: 8443
+```
+
 创建RS资源并查看READY状态
 
+```shell
 	$ kubectl create -f kubia-replicaset-renameport.yaml
 	$ kubectl get po
 	NAME          READY   STATUS    RESTARTS   AGE
 	kubia-2xk54   0/1     Running   0          6m20s
 	kubia-bj4tz   0/1     Running   0          6m20s
 	kubia-hr9bx   0/1     Running   0          6m21s
+```
 
 通过创建/var/ready文件使其中一个文件的就绪探针返回成功，该文件的存在可以模拟就绪探针成功
 准备就绪探针会定期检查 默认情况下每 10 秒检查一次, 最晚 10 秒钟内， 该 pod 应该已经准备就绪.
 
+```shell
 	$ kubectl exec po/kubia-2xk54 -- touch /var/ready
 	$ kubectl get po
 	NAME          READY   STATUS    RESTARTS   AGE
@@ -591,13 +671,17 @@ kubia-replicaset-renameport.yaml
 	......
 	Readiness:      exec [ls /var/ready] delay=0s timeout=1s period=10s #success=1 #failure=3
 	......
+```
 
 修改创建过的RS的资源文件里的readiness命令是不生效的, 除非删了重建, 查看readiness Probe如下
 
+```shell
 	$ kubectl edit rc kubia
+```
 
 ### 再次测试 readiness
 
+```shell
 	$ kubectl get po
 	NAME          READY   STATUS    RESTARTS   AGE
 	kubia-2xk54   1/1     Running   0          6m20s
@@ -618,22 +702,30 @@ kubia-replicaset-renameport.yaml
 	kubia-2xk54   0/1     Running   0          6m40s   10.44.0.2   server02   <none>           <none>
 	kubia-bj4tz   1/1     Running   0          6m40s   10.44.0.3   server02   <none>           <none>
 	kubia-hr9bx   0/1     Running   0          6m40s   10.44.0.1   server02   <none>           <none>
+```
 查看SVC
 
+```shell
 	$ kubectl get svc	// 也可以通过kubectl exec kubia-bj4tz env 来查看POD所支持的所有SVC的IP等信息
 	NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 	kubia                 ClusterIP      10.111.88.195   <none>        80/TCP,443/TCP   22h
 	kubia-loadbalancer    LoadBalancer   10.102.224.77   <pending>     80:32671/TCP     3h8m
+```
 
 两种访问方式，POD和Node
 第一种POD访问SvcIP:SvcPort方式
 
+```shell
 	$kubectl exec kubia -- curl -s  http://10.111.88.195:80		// SvcIP:SvcPort, SvcPort映射到PodIP, 可以通过describe svc查看
 	You've hit kubia-bj4tz
+```
 第二种NodeIP:NodePOrt方式
 
+```shell
 	$ curl -s 10.239.140.186:32671		// NodeIP:NodePort
 	You've hit kubia-bj4tz
+```
+
 应该通过删除 pod 或更改 pod 标签而不是手动更改探针来从服务中手动移除pod.
 如果想要从某个服务中手动添加或删除 pod, 请将 enabled=true 作为标签添加到 pod, 以及服务的标签选择器中。 当想要从服务中移除 pod 时，删除标签
 应该始终定义一 个就绪探针， 即使它只是向基准 URL 发送 HTTP 请求一样简单。
@@ -646,6 +738,7 @@ headless 服务仍然提供跨 pod 的负载平衡， 但是通过 DNS 轮询机
 > 将服务 spec中的clusterIP字段设置为None 会使服务成 为headless 服务，因为Kubemetes 不会 为其分配集群IP, 客户端可通过该IP将其连接到支持它的pod
 kubia-svc-headless.yaml
 
+```xml
 	apiersion: v1
 	kin: Service
 	metdata:
@@ -662,7 +755,7 @@ kubia-svc-headless.yaml
 	$ kubectl get svc
 	NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 	kubia-headless        ClusterIP      None            <none>        80/TCP           103s
-
+```
 
 
 

@@ -6,12 +6,16 @@ categories:
 ---
 
 ## **grep**
+
+```shell
 uname - a
 	查看内核版本
 root@Alpha:# uname -a
 Linux Alpha 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+```
 
 *************************************************************************************************************
+```shell
 grep      grep --help
 	-c
 	-i    不区分大小写
@@ -21,6 +25,8 @@ grep      grep --help
 	-s
 	-v
 ```
+
+``` shell
 grep -n "IndexIVFFlat*" *.py  //查找本目录所有后缀为.py的文件是否包含IndexIVFFlat*内容
 grep 'test' aa bb cc
 grep -r "exit" ./ --color=auto

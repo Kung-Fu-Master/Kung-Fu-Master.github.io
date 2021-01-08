@@ -15,6 +15,7 @@ Deployment 是一种更高阶资源， 用千部署应用程序并以声明的�
 Deployment可以同时管理多个版本的 pod, 所以在命名时不需要指定应用的版本号
 kubia-svc-loadbalancer.yaml
 
+```xml
 	apiVersion: v1
 	kind: Service
 	metadata:
@@ -26,8 +27,11 @@ kubia-svc-loadbalancer.yaml
 	    targetPort: 8080
 	  selector:
 	    app: kubia
+```
+
 kubia-deployment-v1.yaml
 
+```xml
 	apiVersion: apps/v1
 	kind: Deployment
 	metadata:
@@ -46,11 +50,16 @@ kubia-deployment-v1.yaml
 	      containers:
 	      - image: luksa/kubia:v1
 	        name: nodejs
+```
+
 创建deployment
 
+```shell
 	$ kubectl create -f kubia-deployment-v1.yaml --record
+```
 查看deployment过程
 
+```shell
 	$ kubectl rollout status deployment kubia
 	Waiting for deployment "kubia" rollout to finish: 1 out of 3 new replicas have been updated...
 	Waiting for deployment "kubia" rollout to finish: 1 out of 3 new replicas have been updated...
@@ -62,9 +71,11 @@ kubia-deployment-v1.yaml
 	Waiting for deployment "kubia" rollout to finish: 1 old replicas are pending termination...
 	Waiting for deployment "kubia" rollout to finish: 1 old replicas are pending termination...
 	deployment "kubia" successfully rolled out
+```
 当使用 ReplicationController 创建 pod 时， 它们的名称是由 Controller 的名称加上一个运行时生成的随机字符串.
 由 Deployment 创建的三个 pod 名称中均包含一个额外的数字, 这个数字实际上对应 Deployment 和 ReplicaSet 中的 pod 模板的哈希值
 
+```shell
 	$ kubectl get po
 	kubia-59d857b444-2nrr7   1/1     Running   0          5m15s
 	kubia-59d857b444-f9pnx   1/1     Running   0          5m15s
@@ -78,12 +89,17 @@ kubia-deployment-v1.yaml
 	NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 	kubernetes           ClusterIP      10.96.0.1       <none>        443/TCP        4d22h
 	kubia-loadbalancer   LoadBalancer   10.100.58.157   <pending>     80:31170/TCP   3s
+```
 查看master node 的IP为10.239.140.186
 
+```shell
 	$ curl 10.239.140.186:31170
 	This is v1 running in pod kubia-59d857b444-wzgnj
+```
+
 查看deployment详细信息
 
+```xml
 	$ kubectl describe deployment kubia
 	Name:                   kubia
 	Namespace:              default
@@ -117,6 +133,8 @@ kubia-deployment-v1.yaml
 	  Type    Reason             Age    From                   Message
 	  ----    ------             ----   ----                   -------
 	  Normal  ScalingReplicaSet  7m12s  deployment-controller  Scaled up replica set kubia-59d857b444 to 3
+```
+
 略微减慢滚动升级的速度， 以便观察升级过程确实是以滚动的方式执行的。 可以通过在Deployment上设置minReadySeconds属性来实现
 minReadySeconds的主要功能是避免部署出错版本的应用， 而不只是单纯地减慢部署的速度.
 minReadySeconds属性指定新创建的pod至少要成功运行多久之后，才能将其视为可用.
@@ -124,13 +142,16 @@ minReadySeconds属性指定新创建的pod至少要成功运行多久之后，�
 
 如kubectl patch命令将其设置为10秒
 
+```shell
 	$ kubectl patch deployment kubia -p '{"spec": {"minreadyseconds": 10}}'
+```
 ## 重新部署几种方式
 重建(recreate)，滚动(rollingUpdate)，蓝绿，金丝雀
 
 ### recreate
 停止Pod并重新创建Pod
 
+```xml
 	apiVersion: apps/v1
 	kind: Deployment
 	metadata:
@@ -159,13 +180,14 @@ minReadySeconds属性指定新创建的pod至少要成功运行多久之后，�
 	        backend:
 	          serviceName: web-recreate
 	          servicePort: 80
-
+```
 
 ### 滚动更新deployment
 滚动更新过程svc的IP等不会变，只是改变pod版本，修改pod的镜像就可以了
 > 实际上， 如何达到新的系统状态的过程是由 Deployment 的升级策略决定的，默认策略是执行滚动更新（策略名为 RollingUpdate)。 另 一种策略为 Recreate, 它会一次性删除所有旧版本的 pod, 然后创建新的 pod, 整个行为类似千修改ReplicationController 的 pod 模板， 然后删除所有的 pod
 使用kubectl set image命令来更改任何包含容器资源的镜像(ReplicationController、ReplicaSet、 Deployment等）
 
+```xml
 	apiVersion: apps/v1
 	kind: Deployment
 	metadata:
@@ -188,15 +210,22 @@ minReadySeconds属性指定新创建的pod至少要成功运行多久之后，�
 	        version: v1.0
 	    spec:
 	......
+```
 
+```shell
 	$ kubectl set image deployment kubia nodejs=luksa/kubia:v2
 	deployment.apps/kubia image updated
+```
 创建rs，然后新的rs会创建一个pod，然后原来的rs删除一个pod，新的rs再创建一个pod，依次完成设定的3个pod都完成更新.
 通过命令定时查看输出:
 
+```shell
 	$ while sleep 0.2; do curl "http://web-rollingupdate.mooc.com/hello?name=michael"; echo ""; done
+```
+
 查看Pod:
 
+```shell
 	$ kubectl get po
 	NAME                     READY   STATUS              RESTARTS   AGE
 	fortune                  2/2     Running             0          3d
@@ -205,30 +234,38 @@ minReadySeconds属性指定新创建的pod至少要成功运行多久之后，�
 	kubia-59d857b444-lr2zw   1/1     Running             0          72s
 	kubia-7d5c456ffc-69gg5   0/1     ContainerCreating   0          2s
 	kubia-7d5c456ffc-vmz74   1/1     Running             0          14s
+```
 
 滚动更新后旧的 ReplicaSet 仍然会被保留
 
+```shell
 	$ kubectl get rs
 	NAME               DESIRED   CURRENT   READY   AGE
 	kubia-59d857b444   3         3         3       9m27s
 	kubia-7d5c456ffc   1         1         0       3s
+```
 再等待一会再查看rs
 
+```shell
 	$ kubectl get rs
 	NAME               DESIRED   CURRENT   READY   AGE
 	kubia-59d857b444   0         0         0       10m
 	kubia-7d5c456ffc   3         3         3       72s
+```
 
 Deployment可以非常容易地回滚到先前部署的版本，它可以让Kubernetes 取消最后一次部署的 Deployment
 
+```shell
 	$ kubectl set image deployment kubia nodejs=luksa/kubia:v2
 	$ kubectl get rs
 	NAME               DESIRED   CURRENT   READY   AGE
 	kubia-59d857b444   0         0         0       3h3m
 	kubia-79b84b44f4   3         3         3       96s
 	kubia-7d5c456ffc   0         0         0       174m
+```
 undo 命令也可以在滚动升级过程中运行，并直接停止滚动升级。 在升级过程中已创建的 pod 会被删除并被老版本的 pod 替代
 
+```shell
 	$ kubectl rollout undo deployment kubia
 	deployment.apps/kubia rolled back
 	$ kubectl get rs
@@ -236,58 +273,72 @@ undo 命令也可以在滚动升级过程中运行，并直接停止滚动升级
 	kubia-59d857b444   0         0         0       3h7m
 	kubia-79b84b44f4   0         0         0       5m19s
 	kubia-7d5c456ffc   3         3         3       177m
+```
 
 kubectl rollout history 来显示升级的版本
 
+```shell
 	$ kubectl rollout history deployment kubia
 	deployment.apps/kubia
 	REVISION  CHANGE-CAUSE
 	1         kubectl create --filename=kubia-deployment-v1.yaml --record=true
 	2         kubectl create --filename=kubia-deployment-v1.yaml --record=true
 	3         kubectl create --filename=kubia-deployment-v1.yaml --record=true
+```
 
 ### 回滚到一个特定的 Deployment 版本
 
+```shell
 	$ kubectl rollout undo deployment kubia --to-revision=l
 	deployment.apps/kubia rolled back
+```
 > 旧版本的 ReplicaSet 过多会导致 ReplicaSet 列表过于混乱，可以通过指定Deployment 的 re visionHistoryLimit 属性来限制历史版本数量。默认值是 2
 
+```shell
 	$ kubectl rollout history deployment kubia
 	deployment.apps/kubia
 	REVISION  CHANGE-CAUSE
 	2         kubectl create --filename=kubia-deployment-v1.yaml --record=true
 	3         kubectl create --filename=kubia-deployment-v1.yaml --record=true
 	4         kubectl create --filename=kubia-deployment-v1.yaml --record=true
+```
 
 ### 滚动升级速率
 在 Deployment 的滚动升级期间，有两个属性会决定一次替换多少个pod: maxSurge 和 maxUnavailable。可以通过 Deployment 的 strategy 字 段下rollingUpdate 的子属性来配置.
 
+```xml
 	spec:
 	  strategy:
 	    rollingUpdate:
 	      maxSurge· 1
 	      maxUnavailable: 0
 	    type: RollingUpdate
+```
 
 > * maxSurge: 决定了 Deployment 配置中期望的副本数之外，最多允许超出的 pod 实例的数量。默认值为 25%，所以 pod 实例最多可以比期望数量多25%. 这个值也可以不是百分数而是绝对值(例如，可以允许最多多出一个成两个pod).
 > * maxUnavailable: 决定了在滚动升级期间 ，相对于期望副本数能够允许有多少 pod 实例处于不可用状态。默认值也是25%, 所以可用 pod 实例的数量不能低于期望副本数的75%. 与 maxSurge 一样，也可以指定绝对值而不是百分比.
 
 ### 暂停滚动升级
 
+```shell
 	$ kubectl set image deployment kubia nodejs=luksa/kubia:v4
 	deployment "kubia" image updated
 	$ kubectl rollout pause deployment kubia
 	deployment "kubia" paused
+```
 
 ### 恢复滚动升级
 如果部署被暂停， 那么在恢复部署之前， 撤销命令不会撤销它
 
+```shell
 	$ kubectl rollout resume deployment kubia
 	deployment "kubia" resumed
+```
 
 ### readinessProbe
 kubia-deployment-v3-with-readinesscheck.yaml
 
+```xml
 	apiVersion: apps/v1
 	kind: Deployment
 	metadata:
@@ -318,19 +369,23 @@ kubia-deployment-v3-with-readinesscheck.yaml
 	          httpGet:				// 就绪探针会执行发送HTTP GET请求到容器
 	            path: /
 	            port: 8080
+```
+
 直接使用kubectl apply来升级Deployment
 apply命令可以用YAML 文件中声明的字段来更新Deployment。不仅更新镜像，而且还添加了就绪探针， 以及在 YAML 中添加或修改的其他声明。 
 如果新的 YAML也包含rep巨 cas字段， 当它与现有Deployment中的数量不一致时， 那么apply 操作也会对Deployment进行扩容.
 
+```shell
 	$ kubectl apply -f kubia-deployment-v3-with-readinesscheck.yaml
 	deployment "kubia" configured
-
+```
 
 ### 取消滚动升级
 默认情况下， 在10分钟内不能完成滚动升级的话， 将被视为失败。 如果运行kubectl describe deployment命令， 将会显示一条ProgressDeadlineExceeded的记录.
 判定Deployment滚动升级失败的超时时间， 可以通过设定Deployment spec中的progressDeadlineSeconds来指定.
 如果达到了progressDeadlineSeconds指定的时间， 则滚动升级过程会自动取消.
 
+```shell
 	$ kubectl describe deployment kubia
 	Conditions:
 	  Type           Status  Reason
@@ -338,8 +393,10 @@ apply命令可以用YAML 文件中声明的字段来更新Deployment。不仅更
 	  Available      True    MinimumReplicasAvailable
 	  Progressing    True    ReplicaSetUpdated
 	......
+```
 过了3，4分钟后再次执行
 
+```shell
 	$ kubectl describe deployment kubia
 	Name:                   kubia
 	......
@@ -351,17 +408,21 @@ apply命令可以用YAML 文件中声明的字段来更新Deployment。不仅更
 	OldReplicaSets:  kubia-59d857b444 (3/3 replicas created)
 	NewReplicaSet:   kubia-7d6c89d47b (1/1 replicas created)
 	......
+```
 
 因为滚动升级过程不再继续， 所以只能通过rollout undo命令来取消滚动升级, 其实就是回滚上一个版本.
 
+```shell
 	$ kubectl rollout undo deployment kubia
 	deployment.apps/kubia rolled back
+```
 
 ### 蓝绿部署
 可以通过修改Service下的不同version值，选择应用不同版本的Pod来提供服务.
 新版本运行起来一段时间没问题后才可以删除旧版本.
 一般保持有两个版本的应用也就是Pod保持运行状态, 只有下个版本部署一段时间没问题后，第一个版本的可以删除.
 
+```xml
 	apiVersion: apps/v1
 	kind: Deployment
 	metadata:
@@ -401,6 +462,7 @@ apply命令可以用YAML 文件中声明的字段来更新Deployment。不仅更
 	  type: ClusterIP
 	---
 	......
+```
 
 ### 金丝雀发布
 > 在蓝绿部署的基础之上，去掉version, 修改selector就是金丝雀部署.
@@ -410,9 +472,10 @@ apply命令可以用YAML 文件中声明的字段来更新Deployment。不仅更
 ### 删除deployment
 删除deployment会连带删除创建的replicaset和由replicaset创建的pod
 
+```shell
 	$ kubectl delete deployment kubia
 	deployment.apps "kubia" deleted
-
+```
 
 
 

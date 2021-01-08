@@ -22,6 +22,7 @@ pod 中的所有容器都可以使用卷， 但必须先将它挂载在每个需
 
 fortune-pod.yaml
 
+```xml
 	apiVersion: v1
 	kind: Pod
 	metadata:
@@ -45,15 +46,20 @@ fortune-pod.yaml
 	  volumes:
 	  - name: html
 	    emptyDir: {}
+```
+
 作为卷来使用的 emptyDir 是在承载 pod 的工作节点的实际磁盘上创建的，因此其性能取决于节点的磁盘类型。
 也可以通知 Kubemetes 在 tmfs 文件系统(存在内存而非硬盘)上创建 emptyDir. 因此，将 emptyDir 的 medium 设置为Memory
 
+```xml
 	  volumes:
 	  - name: html
 	    emptyDir
 	      medium: Memory
+```
 创建pod
 
+```shell
 	$ kubectl create -f fortune-pod.yaml
 
 	$ kuberctl port-forward fortune 8080:80
@@ -61,8 +67,11 @@ fortune-pod.yaml
 	Forwarding from [::1]:8080 -> 80
 	Handling connection for 8080
 	......
+```
+
 查看 pod 描述
 
+```shell
 	$ kubectl describe po/fortune
 	......
 	Containers:
@@ -82,7 +91,7 @@ fortune-pod.yaml
 	    SecretName:  default-token-b79jt
 	    Optional:    false
 	......
-
+```
 测试访问两种方式:
 
  * 第一种浏览器访问:
@@ -93,24 +102,29 @@ fortune-pod.yaml
 不去掉公司的proxy访问命令里加上 noproxy
 
 
+```shell
 	$ curl http://127.0.0.1:8080 --noproxy "*"	// "*" 对所有路径的访问都不经过配置的proxy
+```
 也可以去掉公司的proxy, 需要先执行 $ export http_proxy= 把公司的proxy去掉
 再执行如下命令即可访问
 
 
+```shell
 	$ curl -s http://127.0.0.1:8080
 	$ curl -s http://localhost:8080
 	$ wget http://127.0.0.1:8080
+```
 
 开启两个终端进入这两个container，每过10s分别运行如下各自container里的cat html命令，发现HTML内容不断变化但两个容器的html内容一样
 如果打开浏览器，发现浏览器输出跟这两个container里相应路径下html的内容都是一样同步变化的
 
+```shell
 	$ kubectl exec po/fortune -c web-server -it -- sh
 	$ cat /usr/share/nginx/html/index.html
 
 	$ kubectl exec po/fortune -c html-generator -it -- sh
 	$ cat /var/htdocs/index.html
-
+```
 
 ## gitRepo 卷
 > gitRepo 容器就像 emptyDir 卷一样， 基本上是一个专用目录， 专门用于包含卷的容器并单独使用。 当 pod 被删除时， 卷及其内容被删除。 然而， 其他类型的卷并不创建新目录， 而是将现有的外部目录挂载到 pod 的容器文件系统中.
@@ -123,6 +137,7 @@ fortune-pod.yaml
 > 不应该使用hostPath 卷作为存储数据库数据的目录. 因为卷的内容存储在特定节点的文件系统中, 当数据库 pod 被重新安排在另一个节点时， 会找不到数据, 这会使 pod 对预定规划的节点很敏感
 > 请记住仅当需要在节点上读取或写入系统文件时才使用 hos七Path, 切勿使用它们来持久化跨 pod的数据.
 
+```shell
 	$ kubectl get pods -n kube-system
 	NAME                                  READY   STATUS    RESTARTS   AGE
 	......
@@ -152,6 +167,7 @@ fortune-pod.yaml
 	    Type:          HostPath (bare host directory volume)
 	    Path:          /etc/kubernetes/pki
 	    HostPathType:  DirectoryOrCreate
+```
 Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc/kubernetes/pki三个目录.
 
 
@@ -163,6 +179,7 @@ Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc
 > 持久卷声明可以当作 pod 中的一个卷来使用， 其他用户不能使用相同的持久卷，除非先通过删除持久卷声明绑定来释放.
 ![](PV_PVC.PNG)
 
+```shell
 	$ kubectl get pv
 
 	$ kubectl get pvc -n default
@@ -171,7 +188,7 @@ Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc
 	wp-pv-claim      Bound    pvc-4b83da7a-4552-4806-9f68-af96d4a56d96   20Gi       RWO            rook-ceph-block   5d2h
 
 	$ kubectl get sc	// storageclass的简写(sc)
-
+```
 
 
 ## Additional:
@@ -179,6 +196,7 @@ Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc
 
 创建CephFS
 
+```xml
 	apiVersion: ceph.rook.io/v1
 	kind: CephFilesystem
 	metadata:
@@ -195,9 +213,11 @@ Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc
 	  metadataServer:
 	    activeCount: 1
 	    activeStandby: true
+```
 
 创建sc(StorageClass), sc是不需要提前创建好PV, 而是根据PVC需求动态创建PV.
 
+```xml
 	apiVersion: storage.k8s.io/v1
 	kind: StorageClass
 	metadata:
@@ -227,13 +247,14 @@ Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc
 	  csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
 	  
 	reclaimPolicy: Delete
-
+```
 
 创建PVC和deployment
 > PV 是K8S全局资源
 > PVC 是指定在某个Namespace下的K8S资源, 如果PVC访问属性为ReadWriteMany， 多个不同Pod挂载此相同的PVC到容器指定目录, 该目录将共享文件
 > 多个不同Pod挂载不同的PVC到容器指定目录，则文件不能共享
 
+```xml
 	apiVersion: v1
 	kind: PersistentVolumeClaim
 	metadata:
@@ -292,7 +313,7 @@ Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc
 	                     values:
 	                     - helm
 	                 topologyKey: kubernetes.io/hostname
-
+```
 
 
 

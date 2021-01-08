@@ -7,6 +7,7 @@ categories:
 
 ## 查看所有打开的终端
 
+```shell
 	$ w -f // 或者只输入`w`查看打开的所有终端, `w`是who的简写而不是write
 	   16:41:45 up 53 days, 47 min,  5 users,  load average: 0.17, 0.31, 0.38
 	  USER     TTY        LOGIN@   IDLE   JCPU   PCPU WHAT
@@ -15,16 +16,20 @@ categories:
 	  ai       pts/1     18Jun20 53days  3:28m  3:28m /usr/lib/virtualbox/VirtualBox
 	  ai       pts/2     16:29   10:49   0.07s  0.02s bash
 	  root     pts/3     16:27    9:37   0.02s  0.02s -bash
+```
 
 ## 向指定终端发送消息
 
+```shell
 	$ write ai pts/2
 	  123
+```
 
 ## 广播消息, 向所有终端发送消息
 
+```shell
 	$ wall 123
 	  Broadcast message from root@master-node (pts/0) (Mon Aug 10 16:40:49 2020):
 	  123
-
+```
 

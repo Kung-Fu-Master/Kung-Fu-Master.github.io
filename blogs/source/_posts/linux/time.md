@@ -12,6 +12,7 @@ categories:
 
 查看当前系统时间
 
+```shell
 	date
 	Tue Sep 15 16:00:51 CST 2020
 	//`CST` 代表China Standard Time
@@ -19,11 +20,13 @@ categories:
 	date -R
 	Tue, 15 Sep 2020 16:00:55 +0800
 	// +0800表示我们国家的东八区; -0800表示西八区，是美国旧金山所在的时区
-修改当前系统时间 date -s "2018-2-22 19:10:30"
-查看硬件时间 hwclock --show
-修改硬件时间 hwclock --set --date "2018-2-22 19:10:30"
-同步系统时间和硬件时间 hwclock --hctosys
-保存时钟 clock -w
+```
+
+修改当前系统时间 `date -s "2018-2-22 19:10:30"`
+查看硬件时间 `hwclock --show`
+修改硬件时间 `hwclock --set --date "2018-2-22 19:10:30"`
+同步系统时间和硬件时间 `hwclock --hctosys`
+保存时钟 `clock -w`
 重启系统（init 6）后便发现系统时间被修改了
 
 init0:关机
@@ -39,7 +42,9 @@ init是Linux系统操作中不可缺少的程序之一。所谓的init进程，�
 
 ## 选择时区
 
-	tzselect 
+```shell
+	tzselect
+```
 然后根据提示输入5选择`5) Asia`回车, 然后9选择`9) China`回车,然后1选择`1) Beijing Time`.  
 tzselect命令只告诉你选择的时区的写法，并不会生效。所以现在它还不是东8区北京时间。你可以在.profile、.bash_profile或者/etc/profile中设置正确的TZ环境变量并导出。 例如在.bash_profile里面设置 TZ='Asia/Shanghai'; export TZ并使其生效。
 

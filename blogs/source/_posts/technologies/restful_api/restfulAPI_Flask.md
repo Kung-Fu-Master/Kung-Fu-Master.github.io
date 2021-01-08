@@ -64,6 +64,7 @@ https://developer.github.com/v3/#schema
 Schema  
 All API access is over HTTPS, and accessed from https://api.github.com. All data is sent and received as JSON.  
 
+```shell
 	curl -i https://api.github.com/users/octocat/orgs
 	HTTP/1.1 200 OK
 	Server: nginx
@@ -79,9 +80,11 @@ All API access is over HTTPS, and accessed from https://api.github.com. All data
 	Content-Length: 5
 	Cache-Control: max-age=0, private, must-revalidate
 	X-Content-Type-Options: nosniff
+```
 
 ## Simple Samples
 
+``` js
 	from flask import Flask
 	
 	app = Flask(__name__)
@@ -108,7 +111,7 @@ All API access is over HTTPS, and accessed from https://api.github.com. All data
 	
 	if __name__ == "__main__":
 	    app.run(host='127.0.0.1', port=9900, debug=True)
-
+```
 
 ## 教程视频
 

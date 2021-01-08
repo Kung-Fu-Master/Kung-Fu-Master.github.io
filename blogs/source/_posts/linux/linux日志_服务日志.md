@@ -7,17 +7,26 @@ categories:
 
 ## 查看linux 系统日志
 
+```shell
 	$ cat /var/log/messages
+```
 
 ## 查看某个服务日志
 
+```shell
 	$ journalctl -fu docker
 	$ journalctl -fu kubelet
+```
+
 查看服务日志详细内容:
 
+```shell
 	journalctl -u kubelet --no-pager
+```
 
 ## 重新加载系统配置
 
+```shell
 	$ systemctl daemon-reload
+```
 

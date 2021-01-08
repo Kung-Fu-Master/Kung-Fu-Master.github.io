@@ -11,7 +11,9 @@ categories:
 
 ### 安装一个rpm包
 
-	$ rpm -ivh **.rpm
+```shell
+$ rpm -ivh **.rpm
+```
 -i ：安装的意思
 -v ：可视化
 -h ：显示安装进度
@@ -20,35 +22,48 @@ categories:
 
 ### 升级一个rpm包
 
-	$ rpm -Uvh filename -U ：即升级的意思
+```shell
+$ rpm -Uvh filename -U ：即升级的意思
+```
 
 ### 卸载一个rpm包
 
-	$ rpm -e filename 这里的filename是通过rpm的查询功能所查询到的
+```shell
+$ rpm -e filename 这里的filename是通过rpm的查询功能所查询到的
+```
 
 ### 查询一个包是否安装
 
-	$ rpm -q rpm包名（这里的包名，是不带有平台信息以及后缀名的）
+```shell
+$ rpm -q rpm包名（这里的包名，是不带有平台信息以及后缀名的）
+```
 
 ### 查询当前系统中所安装的所有rpm包, 列出前十个
 
-	$ rpm -qa | head -n 10
+```shell
+$ rpm -qa | head -n 10
+```
 
 ### rpm包的相关信息
 
-	$ rpm -qi 包名 （同样不需要加平台信息与后缀名）
+```shell
+$ rpm -qi 包名 （同样不需要加平台信息与后缀名）
+```
 
 ### 列出rpm包安装的文件
 
-	$ rpm -ql 包名
+```shell
+$ rpm -ql 包名
+```
 通过上面的命令可以看出vim是通过安装vim-enhanced-7.0.109-6.el5这个rpm包得来的。那么反过来如何通过一个文件去查找是由安装哪个rpm包得来的
 
 ### 列出某一个文件属于哪个rpm包
 
-	$ rpm -qf 文件的绝对路径
-	$ rpm -qf `which tree`
-	$ rpm -qf `which screen`
-
+```shell
+$ rpm -qf 文件的绝对路径
+$ rpm -qf `which tree`
+$ rpm -qf `which screen`
+```
 ### rpm包安装的时候要手动配置环境变量
 
 
@@ -57,6 +72,7 @@ categories:
 
 ### 设置proxy
 
+```xml
 	# vim /etc/yum.conf
 	[main]
 	cachedir=/var/cache/yum/$basearch/$releasever
@@ -71,9 +87,11 @@ categories:
 	bugtracker_url=http://bugs.centos.org/set_project.php?project_id=23&ref=http://bugs.centos.org/bug_report_page.php?category=yum
 	distroverpkg=centos-release
 	proxy=http://child-prc.intel.com:913
+```
 
 ### k8s repo
 
+```shell
 	$ touch /etc/yum.repos.d/kubernetes.repo
 	[kubernetes]
 	name=Kubernetes
@@ -82,25 +100,37 @@ categories:
 	gpgcheck=1
 	repo_gpgcheck=1
 	gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+```
 
 ### 安装rpm包
 
  * 列出所有可用的rpm包
 
-	$ yum list
+```shell
+$ yum list
+```
+
  * 搜索一个rpm包
 
-	$ yum search [相关关键词]
+```shell
+$ yum search [相关关键词]
+```
+
  * 安装一个rpm包
 
-	$ yum install [-y] [rpm包名]
+```shell
+$ yum install [-y] [rpm包名]
+```
  * 卸载一个rpm包
 
-	$ yum remove [-y] [rpm包名]
+```shell
+$ yum remove [-y] [rpm包名]
+```
  * 升级一个rpm包
 
-	$ yum update [-y] [rpm包]
-
+```shell
+$ yum update [-y] [rpm包]
+```
 
 
 

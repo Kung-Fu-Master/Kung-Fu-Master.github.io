@@ -49,8 +49,9 @@ Token是服务端生成的一串字符串，以作客户端进行请求的一个
  * signature（签名）
 中间用点分隔开，并且都会使用 Base64 编码，所以真正的 Token 看起来像这样：
 
+```
 	eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5naGFvLm5ldCIsImV4cCI6IjE0Mzg5NTU0NDUiLCJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlfQ.SwyHTEx_RQppr97g4J5lKXtabJecpejuef8AqKYMAJc
-
+```
 
 ## **Header 头部**
  * 令牌的类型
@@ -60,14 +61,17 @@ Token是服务端生成的一串字符串，以作客户端进行请求的一个
 头部里包含的东西可能会根据 JWT 的类型有所变化，比如一个加密的 JWT 里面要包含使用的加密的算法。唯一在头部里面要包含的是 alg 这个属性，如果是加密的 JWT，这个属性的值就是使用的签名或者解密用的算法。如果是未加密的 JWT，这个属性的值要设置成 none。  
 示例：
 
+```js
 	{
 	  "typ": "JWT",
 	  "alg": "HS256"
 	}
+```
 意思是这个 JWT 用的算法是 HS256。上面的内容得用 base64url 的形式编码一下，所以就变成这样：
 
+```
 	eyJhbGciOiJIUzI1NiJ9
-
+```
 ## **Payload 有效负载**
 有效负载包含了"声明(claims)", 有三种类型的claims：
  * registered claims 已注册的 (不是强制的，而是推荐,iss（发行者）、exp（到期时间）、sub（主题）、aud（受众）和其他)
@@ -85,6 +89,7 @@ Payload 里面是 Token 的具体内容，这些内容里面有一些是标准�
 
 比如下面这个 Payload ，用到了 iss 发行人，还有 exp 过期时间这两个标准字段。另外还有两个自定义的字段，一个是 name ，还有一个是 admin 。
 
+```js
 	{
 	  "sub": "1234567890",
 	  "name": "John Doe",
@@ -92,9 +97,12 @@ Payload 里面是 Token 的具体内容，这些内容里面有一些是标准�
 	  "exp": "1438955445",
 	  "admin": true
 	}
+```
 使用 base64url 编码以后就变成了这个样子：
 
+```
 	 eyJpc3MiOiJuaW5naGFvLm5ldCIsImV4cCI6IjE0Mzg5NTU0NDUiLCJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlfQ
+```
 **请注意，对于已签名的令牌，此信息虽然受保护不受篡改，但任何人都可以读取。除非经过加密，否则不要将机密信息放在JWT的有效负载或头部**.
 
 ## **Signature 签名**
@@ -105,15 +113,20 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
  * payload
  * secret
 
-
+```
 	const encodedString = base64UrlEncode(header) + "." + base64UrlEncode(payload); 
 	HMACSHA256(encodedString, 'secret');
+```
 处理完成以后看起来像这样：
 
+```
 	 SwyHTEx_RQppr97g4J5lKXtabJecpejuef8AqKYMAJc
+```
 最后这个在服务端生成并且要发送给客户端的 Token 看起来像这样：
 
+```
 	 eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5naGFvLm5ldCIsImV4cCI6IjE0Mzg5NTU0NDUiLCJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlfQ.SwyHTEx_RQppr97g4J5lKXtabJecpejuef8AqKYMAJc
+```
 输出的内容是三个由点分隔的Base64 URL字符串。它可以在HTML和HTTP环境中轻松传递，它比XML的标准（如SAML）更加紧凑.  
 客户端收到这个 Token 以后把它存储下来，下回向服务端发送请求的时候就带着这个 Token 。服务端收到这个 Token ，然后进行验证，通过以后就会返回给客户端想要的资源。
 
@@ -132,6 +145,7 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 这种算法需要一个密钥（密码）.  
 在项目里随便添加一个 .js 文件，比如 index.js，在文件里添加下面这些代码：  
 
+``` js
 	const jwt = require('jsonwebtoken')
 	// Token 数据
 	const payload = {
@@ -144,6 +158,7 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 	const token = jwt.sign(payload, secret, { expiresIn: '1day' })
 	// 输出签发的 Token
 	console.log(token)
+```
 非常简单，就是用了刚刚为项目安装的 jsonwebtoken 里面提供的 jwt.sign 功能，去签发一个 token。这个 sign 方法需要三个参数：
  * playload：签发的 token 里面要包含的一些数据。
  * secret：签发 token 用的密钥，在验证 token 的时候同样需要用到这个密钥。
@@ -151,9 +166,12 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 
 在命令行下面，用 node 命令，执行一下项目里的 index.js 这个文件（node index.js），会输出应用签发的 token：
 
+```
 	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlLCJpYXQiOjE1MjkwMzM5MDYsImV4cCI6MTUyOTEyMDMwNn0.DctA2QlUCrM6wLWkIO78wBVN0NLpjoIq4T5B_2WJ-PU
+```
 上面的 Token 内容并没有加密，所以如果用一些 JWT 解码功能，可以看到 Token 里面包含的内容，内容由三个部分组成，像这样：
 
+```
 	// header
 	{
 	  "alg": "HS256", 
@@ -168,6 +186,8 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 	}
 	// signature
 	DctA2QlUCrM6wLWkIO78wBVN0NLpjoIq4T5B_2WJ-PU
+```
+
 > 假设用户通过了某种身份验证，你就可以使用上面的签发 Token 的功能为用户签发一个 Token。一般在客户端那里会把它保存在 Cookie 或 LocalStorage 里面。
 > 用户下次向我们的应用请求受保护的资源的时候，可以在请求里带着我们给它签发的这个 Token，后端应用收到请求，检查签名，如果验证通过确定这个 Token 是我们自己签发的，那就可以为用户响应回他需要的资源。
 
@@ -176,20 +196,28 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 
 在项目下面创建一个新的目录，里面可以存储即将生成的密钥与公钥文件。
 
+```shell
 	$ cd ~/desktop/jwt-demo
 	$ mkdir config
 	$ cd config
+```
+
 **密钥:**
 先生成一个密钥文件：
 
+```shell
 	 ssh-keygen -t rsa -b 2048 -f private.key
+```
 **公钥:**
 基于上面生成的密钥，再去创建一个对应的公钥：
 
+```shell
 	 openssl rsa -in private.key -pubout -outform PEM -out public.key
+```
 **签发 JWT（RS256 算法）**
 用 RS256 算法签发 JWT 的时候，需要从文件系统上读取创建的密钥文件里的内容。
 
+```js
 	 const fs = require('fs')
 	 // 获取签发 JWT 时需要用的密钥
 	 const privateKey = fs.readFileSync('./config/private.key')
@@ -198,6 +226,7 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 	 const tokenRS256 = jwt.sign(payload, privateKey, { algorithm: 'RS256' })
 	 // 输出签发的 Token
 	 console.log('RS256 算法：', tokenRS256)
+```
 
 # **验证Json Web Token(JWT)**
 
@@ -206,6 +235,7 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 验证 JWT 的用效性，确定一下用户的 JWT 是我们自己签发的，首先要得到用户的这个 JWT Token，然后用 jwt.verify 这个方法去做一下验证。这个方法是 Node.js 的 jsonwebtoken 这个包里提供的，在其它的应用框架或者系统里，你可能会找到类似的方法来验证 JWT。  
 打开项目的 index.js 文件，里面添加几行代码：
 
+``` js
 	// 验证 Token
 	jwt.verify(token, 'bad secret', (error, decoded) => {
 	  if (error) {
@@ -214,27 +244,38 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 	  }
 	  console.log(decoded)
 	})
+```
+
 把要验证的 Token 数据，还有签发这个 Token 的时候用的那个密钥告诉 verify 这个方法，在一个回调里面有两个参数，error 表示错误，decoded 是解码之后的 Token 数据。
 
 执行：
 
+```shell
 	$ node ~/desktop/jwt-demo/index.js
+```
 输出：
 
+```
 	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlLCJpYXQiOjE1MjkwMzQ3MzMsImV4cCI6MTUyOTEyMTEzM30.swXojmu7VimFu3BoIgAxxpmm2J05dvD0HT3yu10vuqU
 	invalid signature
+```
 注意输出了一个 invalid signature ，表示 Token 里的签名不对，这是因为我们组长 verify 方法提供的密钥并不是签发 Token 的时候用的那个密钥。这样修改一下：
 
+```shell
 	jwt.verify(token, secret, (error, decoded) => { ...
+```
 再次运行，会输出类似的数据：
 
+```
 	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoid2FuZ2hhbyIsImFkbWluIjp0cnVlLCJpYXQiOjE1MjkwMzUzODYsImV4cCI6MTUyOTEyMTc4Nn0.mkNrt4TfcfmP22xd3C_GQn8qnUmlB39dKT9SpIBTBGI
 	{ name: 'wanghao', admin: true, iat: 1529035386, exp: 1529121786 }
+```
 
 ## **RS256 算法验证Json Web Token(JWT)**
 验证 JWT（RS256 算法）
 验证使用 RS256 算法签发的 JWT，需要在文件系统上读取公钥文件里的内容。然后用 jwt 的 verify 方法去做验证。
 
+```js
 	// 获取验证 JWT 时需要用的公钥
 	const publicKey = fs.readFileSync('./config/public.key')
 	
@@ -246,6 +287,7 @@ Signature这部分内容有三个部分，先是用 Base64 编码的 header.payl
 	  }
 	  console.log(decoded)
 	})
+```
 
 # **使用场景**
 ![](token_scene1.png)

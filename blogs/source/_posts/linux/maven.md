@@ -9,6 +9,7 @@ categories:
 
 安装maven前提是安装有jdk, yum安装maven时候会自动安装JDK.
 
+```shell
 	(optional)// 多出来这两步是因为原来机器kernel版本台老, 原生的yum库安装maven自带JDK也比较老, 所以clean再cache, 然后安装maven
 	yum clean all
 	(optional)
@@ -19,9 +20,11 @@ categories:
 	
 	// 查找包路径
 	rpm -qa|grep apache-maven
+```
 
 ### 配置阿里云镜像仓库
 
+```xml
 	vim /etc/maven/settings.xml
 	// 定位到mirrors节点下添加下面配置
 	  <mirrors>
@@ -32,9 +35,11 @@ categories:
 	        <url>http://maven.aliyun.com/nexus/content/groups/public</url>
 	     </mirror>
 	  </mirrors>
+```
 
 ### 配置proxy
 
+```xml
 	vim /etc/maven/settings.xml
 	    <proxy>
 	       <id>my-proxy1</id>
@@ -50,21 +55,27 @@ categories:
 	       <host>child-prc.intel.com</host>
 	       <port>913</port>
 	    </proxy>
+```
 
 ### 配置本地仓库
 yum安装完maven后默认的本地仓库地址:
 
+```shell
 	ls /root/.m2/repository
+```
 
 配置新的本地仓库:
 
+```xml
 	vim /etc/maven/settings.xml
 	// 定位到这个节点进行编写
 	<localRepository>/home/maven/repo</localRepository>
+```
 
 ### 指定JDK版本
 配置创建项目的版本默认为 JDK8
 
+```xml
 	vim /etc/maven/settings.xml
 	  <profiles>
 	    <profile>    
@@ -80,10 +91,12 @@ yum安装完maven后默认的本地仓库地址:
 	           </properties>    
 	    </profile>
 	  <profiles>
+```
 
 ### (optional)设置tomcat用户名和密码
 如果tomcat安装时候或安装后tomcat的配置文件没有设置用户名和密码此处可忽略
 
+```xml
 	  <servers>
 	    <server>
 	      <id>tomcat8</id>
@@ -91,14 +104,17 @@ yum安装完maven后默认的本地仓库地址:
 	      <password>123456</password>
 	    </server>
 	  </servers>
+```
 
 ### 测试maven
 
+```shell
 	// 查看maven版本
 	mvn -v
 	
 	// 自动到配置的Ali的Maven中央仓库下载缺省的或者Maven中央仓库更新的各种配置文件和类库（jar包)到Maven配置的本地仓库`/home/maven/repo`中
 	mvn help:system
+```
 
 ## VScode远程连接Centos, 搭建maven项目简单步骤
 首先需要安装一些VScode扩展插件
@@ -124,11 +140,14 @@ yum安装完maven后默认的本地仓库地址:
 
 6. 可以发现在项目目录下多出了如下两个文件
 
+```shell
 	ls /<Project path>/
 	pom.xml src/
+```
 
 7. 编译, 测试
 
+```shell
 	// 1. 编译, 会在项目目录下生成一个target/文件夹
 	mvn compile
 	ls 
@@ -142,6 +161,8 @@ yum安装完maven后默认的本地仓库地址:
 	
 	// 4. 清理, 删除target文件夹
 	mvn clean
+```
+
 中途可能会出错遇到一些问题, 具体查看下面的Problems.
 
 ## 下载指定jar包
@@ -163,6 +184,7 @@ VScode写的单元测试方法存储在hce/src/test/java/下的calculate/和hell
 
 pom.xml:(junit和junit.jupiter区别没有比较过, 可以在(maven包官网)[https://mvnrepository.com/]搜索junit查看, 这里是用junit.jupiter)
 
+```xml
 	  <properties>
 	    <junit.version>5.6.0</junit.version>
 	  </properties>
@@ -181,8 +203,11 @@ pom.xml:(junit和junit.jupiter区别没有比较过, 可以在(maven包官网)[h
 	      <scope>test</scope>
 	    </dependency>
 	  </dependencies>
+```
+
 Calculate.java
 
+```java
 	package calculate;
 	
 	/**
@@ -200,9 +225,11 @@ Calculate.java
 	        return multiplicand * multiplier;
 	    }
 	}
-	
+```
+
 Hello.java
 
+```java
 	package hello;
 	
 	/**
@@ -232,10 +259,11 @@ Hello.java
 	        return null;
 	    }
 	}
-	
+```
 
 TestCalculate.java
 
+```java
 	package calculate;
 	
 	import org.junit.jupiter.api.Test;
@@ -269,9 +297,11 @@ TestCalculate.java
 	        System.out.println("multiply successfully!");
 	    }
 	}
-	
+```
+
 TestHello.java
 
+```java
 	package hello;
 	
 	import org.junit.jupiter.api.BeforeAll;
@@ -323,11 +353,12 @@ TestHello.java
 	        System.out.println("test something else successfully!");
 	    }
 	}
-	
+```
 
 打开终端, 到hce项目根目录, 依次执行`mvn compile`编译
 ![](5.PNG)
 
+```shell
 	[root@hci-node01 hce]# mvn compile
 	[INFO] Scanning for projects...
 	[INFO] 
@@ -356,10 +387,12 @@ TestHello.java
 	[INFO] Final Memory: 28M/1570M
 	[INFO] ------------------------------------------------------------------------
 	[root@hci-node01 hce]#
+```
 
 再执行`mvn test`进行单元测试.
 ![](6.PNG)
 
+```shell
 	[root@hci-node01 hce]# mvn test
 	[INFO] Scanning for projects...
 	[INFO] 
@@ -424,6 +457,7 @@ TestHello.java
 	[INFO] Final Memory: 39M/1581M
 	[INFO] ------------------------------------------------------------------------
 	[root@hci-node01 hce]#
+```
 
 ## Problems
 
@@ -432,6 +466,7 @@ Detected Maven Version: 3.5.2 is not in the allowed range 3.6.3.
 原因是如linux系统装的maven版本是3.5.2, 用VScode新建maven项目时候自动生成的pom.xml添加maven版本号为3.6.3, 因此可以修改pom.xml里的maven版本, 改为机器安装的maven版本就可以了.
 修改相应错误产生的包中的pox.xml文件的 requireMavenVersion, 改为所需的3.5.2
 
+```xml
 	            <configuration>
 	              <rules>
 	                <requireMavenVersion>
@@ -440,6 +475,8 @@ Detected Maven Version: 3.5.2 is not in the allowed range 3.6.3.
 	              </rules>
 	              <fail>true</fail>
 	            </configuration>
+```
+
 ### 问题2：No compiler
 Maven编报错：No compiler is provided in this environment. Perhaps you are running on a JRE rather a JDK?  
 
@@ -447,14 +484,17 @@ Maven编报错：No compiler is provided in this environment. Perhaps you are ru
 
 **第二步:** 查看pox.xml文件中的compiler和linux系统中`java -v`和`javac -v`版本是否一致.
 
+```xml
 	    <maven.compiler.source>1.8</maven.compiler.source>
 	    <maven.compiler.target>1.8</maven.compiler.target>
+```
 
 ### 问题3: ImportOrder
 java导入包编译时候出错报ImportOrder: Wrong order for 'io.minio.errors.MinioException' import
 原因是checkstyle对java import包的顺序有要求
 **方法一:** 修改pom.xml直接禁用:
 
+```xml
 	<plugin>
 	    <groupId>org.apache.maven.plugins</groupId>
 	    <artifactId>maven-checkstyle-plugin</artifactId>
@@ -462,6 +502,8 @@ java导入包编译时候出错报ImportOrder: Wrong order for 'io.minio.errors.
 	        <skip>true</skip>
 	    </configuration>
 	</plugin>
+```
+
 **方法二:** 根据checkstyle定义, 修改导入包顺序
 checkstyle导入包顺序定义官网：[ImportOrder](https://checkstyle.sourceforge.io/config_imports.html#ImportOrder)  
 记住要按字典顺序排序导入这一条: ensures that imports within each group are in lexicographic order

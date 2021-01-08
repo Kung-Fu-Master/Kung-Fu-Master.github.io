@@ -1,5 +1,5 @@
 ---
-title: dd
+title: dd 命令
 tags: 
 categories:
 - linux
@@ -37,24 +37,32 @@ conv=<关键字>，关键字可以有以下11种：
 
 在Linux 下制作启动盘，可使用如下命令：
 
+```shell
 	$ dd if=boot.img of=/dev/fd0 bs=1440k
+```
 
 将testfile文件中的所有英文字母转换为大写，然后转成为testfile_1文件，在命令提示符中使用如下命令：
 
+```shell
 	$ dd if=testfile_2 of=testfile_1 conv=ucase 
+```
 
 由标准输入设备读入字符串，并将字符串转换成大写后，再输出到标准输出设备
 
+```shell
 	$ dd conv=ucase 
+```
+
 输入以上命令后按回车键，输入字符串，再按回车键，按组合键Ctrl+D 退出
 
+```shell
 	$ dd conv=ucase 
 	hello		// 输入字符串后按回车键  
 	HELLO		// 按组合键Ctrl+D才会输出并退出，转换成大写结果  
 	0+1 records in
 	0+1 records out
 	6 bytes (6 B) copied, 5.79589 s, 0.0 kB/s
-
+```
 
 
 

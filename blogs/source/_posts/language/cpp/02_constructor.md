@@ -6,7 +6,8 @@ categories:
 - cpp
 ---
 
-
+## constructor
+``` cpp
 	#include <iostream>
 	
 	using namespace std;
@@ -52,6 +53,6 @@ categories:
 	    system("pause");
 	    return 0;
 	}
-
+```
 
 

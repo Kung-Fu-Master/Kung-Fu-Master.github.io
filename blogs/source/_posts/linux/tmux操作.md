@@ -8,53 +8,69 @@ categories:
 ## Tmux安装
 ubuntu版本下直接apt-get安装
 
+```shell
 	sudo apt-get install tmux
+```
 centos7版本下直接yum安装
 
+```shell
 	yum install -y tmux
-
+```
 ## 创建会话
 默认创建一个会话，以数字命名。（不推荐）
 
+```shell
 	tmux
+```
 新建会话，比如新创建一个会话以"ccc"命名
 
+```shell
 	tmux new -s ccc
-
+```
 加上参数-d，表示在后台新建会话
 
+```shell
 	tmux new -s shibo -d
+```
 查看创建得所有会话
 
+```shell
 	tmux ls
+```
 登录一个已知会话。即从终端环境进入会话。
 第一个参数a也可以写成attach。后面的aaa是会话名称。
 
+```shell
 	tmux a -t aaa
+```
 退出会话不是关闭：
 登到某一个会话后, 依次按键`ctrl-b + d`, 这样就会退化该会话, 但不会关闭会话。
 如果直接ctrl + d, 就会在退出会话的通话也关闭了该会话！
 
 ## 重命名会话
 
-	tmux ls  
-	wangshibo: 1 windows (created Sun Sep 30 10:17:00 2018) [136x29] (attached)
+```shell
+$ tmux ls  
+wangshibo: 1 windows (created Sun Sep 30 10:17:00 2018) [136x29] (attached)
 
-	tmux rename -t wangshibo kevin
+$ tmux rename -t wangshibo kevin
 
-	tmux ls
-	kevin: 1 windows (created Sun Sep 30 10:17:00 2018) [136x29] (attached)
+$ tmux ls
+kevin: 1 windows (created Sun Sep 30 10:17:00 2018) [136x29] (attached)
+```
 
 ## 关闭会话（销毁会话）
 
-	tmux ls
-	aaa: 2 windows (created Wed Aug 30 16:54:33 2017) [112x22]
-	bbb: 1 windows (created Wed Aug 30 19:02:09 2017) [112x22]
-	
-	tmux kill-session -t bbb
-	
-	tmux ls
-	aaa: 2 windows (created Wed Aug 30 16:54:33 2017) [112x22]
+```shell
+$ tmux ls
+aaa: 2 windows (created Wed Aug 30 16:54:33 2017) [112x22]
+bbb: 1 windows (created Wed Aug 30 19:02:09 2017) [112x22]
+
+$ tmux kill-session -t bbb
+
+$ tmux ls
+aaa: 2 windows (created Wed Aug 30 16:54:33 2017) [112x22]
+```
 
 ## tmux快捷键
 ctrl+b,shift + / 查看tmux所有快捷键

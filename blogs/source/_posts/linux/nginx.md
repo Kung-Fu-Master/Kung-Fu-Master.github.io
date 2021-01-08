@@ -8,8 +8,13 @@ categories:
 
 ### nginx端口转发
 
-	vim /usr/lib/webserver/nginx/conf/nginx.conf 
+```shell
+vim /usr/lib/webserver/nginx/conf/nginx.conf 
+```
+
 重启:
 
+```shell
 	cd ../sbin/
 	./nginx -s reload
+```

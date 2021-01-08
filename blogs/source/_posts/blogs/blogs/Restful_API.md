@@ -34,10 +34,12 @@ categories:
 简单来说就是url地址中只包含名词表示资源，使用http动词表示动作进行操作资源
 举个例子：左边是错误的设计，而右边是正确的
 
+``` 
 	 GET /blog/getArticles --> GET /blog/Articles  获取所有文章
 	 GET /blog/addArticles --> POST /blog/Articles  添加一篇文章
 	 GET /blog/editArticles --> PUT /blog/Articles  修改一篇文章 
 	 GET /rest/api/deleteArticles?id=1 --> DELETE /blog/Articles/1  删除一篇文章
+```
 
 ### 各大平台API为什么不使用restful的风格
 > 这就好象是中文已经用了上千年，突然有几位教授大谈“回字的14种写法”，这只能算是新瓶装旧酒、学究式的文章。一旦媒体不忽悠了，也就过气了。而媒体关注了几个月之后，关注点已经放到云、大数据等等明显是更长久、更工程化的概念上了，懒得对小伎俩去宣传了。

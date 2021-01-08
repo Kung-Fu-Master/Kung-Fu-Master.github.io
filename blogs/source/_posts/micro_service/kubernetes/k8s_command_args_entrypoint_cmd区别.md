@@ -9,13 +9,17 @@ categories:
 ## **Dockerfile 中ENTRYPOINT,CMD的比较**
 ### ENTRYPOINT 的两种格式：
 
+```
 	ENTRYPOINT ["executable", "param1", "param2"] (exec格式，推荐)
 	ENTRYPOINT command param1 param2 (shell 格式)
+```
 
 ### CMD指令有三种格式：
 
+```
 	CMD ["executable","param1","param2"] (exec 格式，推荐)
 	CMD command param1 param2 (shell 格式)
+```
 
 **注意：**
  * Dockerfile 中多个CMD 最后一个生效
@@ -36,26 +40,35 @@ categories:
 
 Dockerfile：
 
-
+```xml
 	FROM alpine:latest
 	COPY "executable_file" /
 	ENTRYPOINT [ "./executable_file" ]
+```
+
 Kubernetes yaml文件：
 
+```xml
 	spec:
 	   containers:
 	     - name: container_name
 	       image: image_name
 	       args: ["arg1","arg2","arg3"]
+```
+
 4. 如果command和args都写了，那么Dockerfile的配置被忽略，执行command并追加上args参数。比如：
 
 
+```xml
 	command：/test.sh,p1,p2
 	
 	args: p3,p4
+```
 **另：** 多命令执行使用`sh,-c,[command;command,...]`的形式，单条命令的参数填写在具体的command里面，例如：
 
+```xml
 	command：["/bin/sh", "-c", "echo '123'; ./test.sh,p1,p2,p3,p4"]
+```
 args: 不用填
 
 

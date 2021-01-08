@@ -23,36 +23,51 @@ https://github.com/coreos/etcd
 
 ###  二进制文件方式下载
 
+```shell
 	$ curl -L https://github.com/coreos/etcd/releases/download/v3.3.1/etcd-v3.3.1-linux-amd64.tar.gz
 	$ tar xzvf etcd-v3.3.llinux-amd64.tar.gz
 	$ cd etcd-v3.3.llinux-amd64.tar.gz | ls
 	其中 etcd 是服务主文件， etcdctl 是提供给用户的命令客户端, 其他都是文档文件.
 	$ sudo cp etcd* /usr/local/bin/
+```
 Etcd 安装到此完成
 
+```shell
 	$ etcd --version
+```
 直接执行 Etcd 命令，将启动一个服务节点，监昕在本地的 2379 （客户端请求端口）和 2380 （其他节点连接端口 ） 
 
+```shell
 	$ etcd
+```
 可以通过 REST API 直接查看集群健康状态：
 
+```shell
 	$ curl -L http://127.0.0.1:2379/health
 	{”health”: ”true”}
+```
 也可以使用自带的 etcdctl 命令进行查看（实际上是封装了阻STAPI 调用）：
 
+```shell
 	$ etcdctl cluster-health
+```
 通过 etcdctl 设置和获取键值, 设置键值对 testkey："hello world"
 
+```shell
 	$ etcdctl put testkey "hello world111"
+```
 也可以直接通过 HTTP 访问本地 2379 端口的方式来进行操作，例如查看 test key 的值：
 
+```shell
 	$ curl -L -X PUT http://localhost:2379/v2/keys/testkey -d value="hello world"
+```
 
 ### Docker 镜像方式下载
 镜像名称为 quay.io/coreos/etcd:v3.3.1，可以通过下面的命令启动 etcd 服务监听到本地的 2379 和 2380 端口
 
+```shell
 	$ docker run -p 2379:2379 -p 2380:2380 -v /etc/ssl/certs/:/etc/ssl/certs/ quay.io/coreos/etcd:v3.3.1
-
+```
 
 ## Etcd 集群管理
 启动各个节点上的 etcd 服务, 指向主节点etcd存储
@@ -74,20 +89,33 @@ Etcd 安装到此完成
 
 Enter etcd pod:
 
+```shell
 	$ kubectl exec etcd-hci-node01 -n kube-system -i -t – sh
+```
+
 Get all key:
 
+```shell
 	$ ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key get / --prefix --keys-only
+```
+
 Check the value of the key:
 
+```shell
 	$ ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key get /registry/statefulsets/kafka/kafka -w=json
+```
+
 向etcd数据库添加key,value
 
+```shell
 	$ ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key put testkey "hello world111"
+```
+
 获取添加的key, value值
 
+```shell
 	$ ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key get testkey
-
+```
 
 
 

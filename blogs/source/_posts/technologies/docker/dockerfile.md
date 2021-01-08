@@ -17,35 +17,45 @@ Reference Link：
 ### From
 指明构建的新镜像是来自于哪个基础镜像
 
+```
 	From ubuntu:18.04
+```
 
 ### MAINTAINER
 指明镜像维护着及其联系方式（一般是邮箱地址），例如：
 
+```
 	MAINTAINER Edison Zhou <edisonchou@hotmail.com>
+```
 不过，MAINTAINER并不推荐使用，更推荐使用LABEL来指定镜像作者，例如：
 
+```
 	LABEL maintainer="edisonzhou.cn"
-
+```
 ### RUN
 构建镜像时运行的Shell命令，例如：
 
+```
 	RUN ["yum", "install", "httpd"]
 	RUN yum install httpd
+```
 
 ### ADD
 拷贝文件或目录到镜像中，例如：
 
+```
 	ADD <src>...<dest>
 	ADD html.tar.gz /var/www/html
 	ADD https://xxx.com/html.tar.gz /var/www/html
 	PS：如果是URL或压缩包，会自动下载或自动解压。
+```
 
 ### COPY
 原路径：可以是多个，甚至可以是通配符  
 目标路径：可以是容器内的绝对路径，也可以是相对于工作目录的相对路径(工作目录可以用 WORKDIR 指令来指定，不需要事先创建，会自动创建)  
 拷贝文件或目录到镜像中，用法同ADD，只是不支持自动下载和解压，例如：  
 
+```
 	COPY ./start.sh /start.sh
 	# 拷贝start.sh和src下的所有源文件到image的/home/workfile目录
 	COPY ./start.sh ./src/*.cpp /home/workfile
@@ -55,56 +65,66 @@ Reference Link：
 	
 	# 拷贝文件夹, 必须在image目录中定义folder name
 	COPY folder /home/folder
+```
 note : COPY 会将原文件的各种数据都保留，比如 读、写、执行权限，可以通过 --chown=<user>:<group> 选项来改变文件的所属用户及所属组。  
 Although `ADD` and `COPY` are functionally similar, generally speaking, `COPY` is preferred. That’s because it’s more transparent than `ADD`.  
 
 ### WORKDIR
 为RUN、CMD、ENTRYPOINT以及COPY和AND设置工作目录，例如：
 
+```
 	WORKDIR /home/zhan
+```
 
 ### VOLUME
 指定容器挂载点到宿主机自动生成的目录或其他容器，例如：
 
+```
 	VOLUME ["/var/lib/mysql"]
 	PS：一般不会在Dockerfile中用到，更常见的还是在docker run的时候指定-v数据卷。
+```
 
 ### EXPOSE
 声明容器运行的服务端口，例如：
 
+```
 	EXPOSE 80 443
+```
 
 ### CMD
 启动容器时执行的Shell命令，`会被docker run命令行指定的参数所覆盖`, 例如：
 
+```
 	CMD ["-C", "/start.sh"] 
 	CMD ["/usr/sbin/sshd", "-D"] 
 	CMD /usr/sbin/sshd -D
+```
 
 ### ENTRYPOINT
 启动容器时执行的Shell命令，同CMD类似，只是由ENTRYPOINT启动的程序不会被docker run命令行指定的参数所覆盖，而且，这些命令行参数会被当作参数传递给ENTRYPOINT指定指定的程序，例如：
 
+```
 	ENTRYPOINT ["/bin/bash", "-C", "/start.sh"]
 	ENTRYPOINT /bin/bash -C '/start.sh'
 	PS：Dockerfile文件中也可以存在多个ENTRYPOINT指令，但仅有最后一个会生效。
-
+```
 ### ENV
 设置环境内环境变量，例如：
-
+```
 	ENV MYSQL_ROOT_PASSWORD 123456
 	ENV JAVA_HOME /usr/local/jdk1.8.0_45
 	ENV http_proxy http://proxy:913
-
+```
 ### USER
 为RUN、CMD和ENTRYPOINT执行Shell命令指定运行用户，例如：
-
+```
 	USER <user>[:<usergroup>]
 	USER <UID>[:<UID>]
 	USER edisonzhou
-
+```
 ### HEALTHCHECK
 告诉Docker如何测试容器以检查它是否仍在工作，即健康检查，例如：
-
+```
 	HEALTHCHECK --interval=5m --timeout=3s --retries=3 \
 		CMD curl -f http:/localhost/ || exit 1
 	其中，一些选项的说明：
@@ -116,45 +136,56 @@ Although `ADD` and `COPY` are functionally similar, generally speaking, `COPY` i
 	0：容器成功是健康的，随时可以使用
 	1：不健康的容器无法正常工作
 	2：保留不使用此退出代码
-
+```
 ### ARG
 在构建镜像时，指定一些参数，例如：
-
+```
 	FROM centos:6
 	ARG user # ARG user=root
 	USER $user
 	这时，我们在docker build时可以带上自定义参数user了，如下所示：
 	docker build --build-arg user=edisonzhou Dockerfile .
-
+```
 
 ## 配置proxy
 ### 第一种: 配置proxy环境变量, 有时候需要加http和https两个proxy, 而下面两个还没找出怎么加两个proxy.
-
+```
 	ENV http_proxy=http://child-prc.intel.com:913
 	ENV https_proxy=http://child-prc.intel.com:913
 	ENV HTTP_PROXY=http://child-prc.intel.com:913
 	ENV HTTPS_PROXY=http://child-prc.intel.com:913
+```
 
 ### 第二种: 在Dockerfile中命令行加上proxy
 
+```shell
 	RUN pip install Flask-JSON==0.3.3 --proxy=http://child-prc.intel.com:913
-
+```
 ### (推荐)第三种: 在构建image命令行上加proxy, 这样不会写道image里,给其他人用时候不会暴漏自己公司的proxy
 
+```shell
 	docker build --pull -t "productpage:${VERSION}" -t "productpage:latest" --build-arg HTTP_PROXY=http://child-prc.intel.com:913 --build-arg HTTPS_PROXY=http://child-prc.intel.com:913 .
+```
+
 然后在Dockerfile里面你应该添加
 
+```
 	ARG HTTP_PROXY
 	ARG HTTPS_PROXY
+```
 
 ## Use cases
 ### Case1: 编译执行在一个image里
 
+```shell
 	$ cd /home/zhan
 
 	$ touch test.c 
+```
+
 test.c添加如下内容
 
+``` c
 	#include <stdio.h>
 	
 	int main(int argc, char* argv[])
@@ -162,10 +193,15 @@ test.c添加如下内容
 		printf("Hello World!\n");
 		return 0;
 	}
+```
 
+``` shell
 	$ touch Dockerfile 
+```
+
 Dockerfile添加如下内容
 
+```
 	From ubuntu:18.04
 	LABEL maintainer="tester.com"
 	RUN mkdir -p /home/zhan
@@ -177,30 +213,42 @@ Dockerfile添加如下内容
 	RUN gcc -g test.c -o test.o
 	#CMD ["/bin/bash"]
 	CMD ["./test.o"]
+```
 
 构建image
 
+``` shell
 	$ docker build -t dockerfile-01:1.0 .
 	$ docker images
 	REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
 	dockerfile-01                        1.0                 cd9a95fccaa9        45 minutes ago      207MB
 	ubuntu                               18.04               4e5021d210f6        6 weeks ago         64.2MB
+```
 
  * 第一种执行应用方式: 启动容器直接运行可执行文件
+
+``` shell
 	$ docker run --rm dockerfile-01
-		Hello World!
+	Hello World!
+```
+
  * 第二种执行应用方式: 启动容器，进入容器，再手动执行可执行文件
+
+``` shell
 	$ docker run -itd --name test01 dockerfile-01 /bin/bash
 	$ docker exec -it test01 /bin/bash
-		root@bfb87ec4b27a:/home/zhan# ls
-		test.c  test.o
-		root@bfb87ec4b27a:/home/zhan#
+	root@bfb87ec4b27a:/home/zhan# ls
+	test.c  test.o
+	root@bfb87ec4b27a:/home/zhan#
+```
+
 进入容器可以看到直接到/home/zhan目录，有test.c和test.o两个文件
 
 ### Case2: 编译执行在两个image里
 因为编译生成的image非常大，因此把编译生成的文件再copy到另一个image就减小了体积
 Dockfile内容如下
 
+``` shell
 	From ubuntu:18.04 as builder # 基于ubuntu:18.04创建第一个image
 	LABEL maintainer="tester.com"
 	RUN mkdir -p /home/zhan
@@ -216,45 +264,53 @@ Dockfile内容如下
 	# 从上面的 image "builder" 拷贝编译好的可执行文件/home/zhan/test.o文件到当前image的/root/目录
 	COPY --from=builder /home/zhan/test.o .
 	CMD ["./test.o"]
+```
 
 构建image
 
+``` shell
 	$ docker build -t dockerfile-01:2.0 .
 	$ docker images
 	REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
 	dockerfile-01                        2.0                 f29fa900630d        5 seconds ago       63.3MB
 	dockerfile-01                        1.0                 cd9a95fccaa9        45 minutes ago      207MB
 	ubuntu                               18.04               4e5021d210f6        6 weeks ago         63.2MB
-	
+```
+
 可以看到新生成的两个image， 一个image为<none>:<none> 大小为207MB, 另一个image为dockerfile-01:2.0 大小为64.2MB
 以后就可以用dockerfile-01:2.0作为项目中的应用docker容器
 
 * 第一种执行应用方式: 启动容器直接运行可执行文件
 
-
+``` shell
 	$ docker run --rm dockerfile-01:2.0
-		Hello World!
+	Hello World!
+```
+
 * 第二种执行应用方式: 启动容器，进入容器，再手动执行可执行文件
 
-
+``` shell
 	$ docker run -itd --name test02 dockerfile-01:2.0 /bin/bash
-		baef91591402ac368816b8baf9251859db9aa9e378845d88009ad8dffdcb8028
+	baef91591402ac368816b8baf9251859db9aa9e378845d88009ad8dffdcb8028
 	$ docker exec -it test02 /bin/bash
-		root@baef91591402:~# ls
-		test.o
-		root@baef91591402:~#
+	root@baef91591402:~# ls
+	test.o
+	root@baef91591402:~#
+```
+
 进入容器可以看到直接进入/root目录，只有可执行文件test.o
 
 
 ### Additional
 
 找一个目录新建两个文件app.js和Dockerfile
-
+``` shell
 	root@alpha:/home/zhan/images_test# ls
 	app.js  Dockerfile
-
+```
 app.js
 
+``` js
 	const http = require('http');
 	const os = require('os');
 	console.log("Kubia server starting ...");
@@ -267,15 +323,19 @@ app.js
 	
 	var www = http.createServer(handler);
 	www.listen(8080);
+```
 
 Dockerfile
 
+```
 	FROM node:7
 	ADD app.js /app.js
 	ENTRYPOINT ["node","app.js"]
+```
 
 运行如下命令
 
+``` shell
 	$ docker build -t kubia .
 	$ docker images
 	$ docker run --name kubia-container -p 8081:8080 -d kubia:latest
@@ -300,9 +360,11 @@ Dockerfile
 	发现进程的ID在容器中与主机上不同, 容器使用独立的PID Linux命名空间并且有着独立的系列号，完全独立于进程树.
 	正如拥有独立的进程树一样，每个容器也拥有独立的文件系统.
 	容器内的应用不仅拥有独立的文件系统，还有进程、用户、主机名和网络接口.
+```
 
 ## Dockerfile逆向
 
+``` shell
 	$ docker history dockerfile-01:1.0
 	IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
 	01c4f6c6dc0b        3 hours ago         /bin/sh -c #(nop)  CMD ["./test.o"]             0B
@@ -319,28 +381,35 @@ Dockerfile
 	<missing>           6 weeks ago         /bin/sh -c [ -z "$(apt-get indextargets)" ]     0B
 	<missing>           6 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   745B
 	<missing>           6 weeks ago         /bin/sh -c #(nop) ADD file:4974bb5483c392fb5…   63.2MB
-
+```
 
 ## 遇到的问题
 ### docker proxy
 docker pull ubuntu等系统镜像后登陆上去，配置公司proxy后无法连接网络，apt-get update无法执行
 解决方案: 修改主机上的文件 /etc/docker/daemon.json 内容如下, 添加主机IP:
 
+```
 	{ "insecure-registries": ["10.239.140.186"] }
+```
+
 之后重启docker
 
+``` shell
 	$ systemctl daemon-reload
 	$ systemctl restart docker.service
+```
 再次登陆容器配置好proxy, apt-get update就可以执行了
 
 ### 删除所有<none>镜像
 
 一条命令ko
 
+``` shell
 	docker rmi `docker images | grep  "<none>" | awk '{print $3}'`
+```
 如果确定所有none镜像确实没用，直接加个-f强制删除，谨慎
 
+``` shell
 	docker rmi -f `docker images | grep  "<none>" | awk '{print $3}'`
-
-
+```
 

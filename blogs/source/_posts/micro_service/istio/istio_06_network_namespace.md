@@ -16,6 +16,7 @@ categories:
 ## ping和traceroute命令
 操作网络OSI模型2层链路层网命令ping, traceroute
 
+```shell
 	//ping
 	$ ping -c 3 127.0.0.1	//ping 3次 环回地址
 	$ ping -c 3 127.33.99.11	//环回地址不止是指127.0.0.1, 只要是以127开头的网段都可以.
@@ -24,6 +25,7 @@ categories:
 	$ yum install -y net-tools
 	$ yum install -y traceroute
 	$ traceroute 127.0.0.1
+```
 
 ## ip命令查看管理网络命名空间(namespace)
 `ip 命令`是在`centos 7`引入进来的, 基本不用以前的ifconfig命令.  
@@ -33,18 +35,23 @@ categories:
 
 ### **ip 基本命令**
 
+```shell
 	$ ip netns add eden			//添加Linux network namespace, 与宿主机的网络命名空间隔离
 	$ ip netns ls				//查看
 	$ ip netns delete eden		//删除 network namespace
 	$ ip netns add greenland
+```
 进入新建的网络命名空间(与`docker exec -it container cmd...`非常类似).  
 
+```shell
 	$ ip netns exec greenland bash		// 进入网络命名空间, 但是用的User和主机提示符跟原来相同
 	$ ip link			//查看有什么设备
 	$ ip addr			//查看ip设备地址
 	$ exit
+```
 重命名网络命名空间的User和主机提示符
 
+```shell
 	$ ip netns exec greenland bash -rcfile <(echo "PS1=\"greenland\"")	// 修改User和主机提示符为greenland
 	greenland> ip link					// 1. 查看网络设备是处于"state DOWN mode DEFAULT"
 	greenland> ping -c 3 127.0.0.1		// 2. 返回: connect: Network is unreachable
@@ -57,10 +64,12 @@ categories:
 	greenland> iptables -nvL -t nat		// 查看iptables
 	greenland> ifconfig					// 返回没有内容因为设备都处于没有启动状态
 	greenland> exit						// 退出
+```
 不进入网络命名空间而直接执行新建的网络命名空间里的命令
 
+```shell
 	$ ip netns exec greenland ip addr		// 去掉bash, 不进入网络命名空间
-
+```
 ### **实例: 西门庆和潘金莲的私会**
 **类比西门庆(李瓶儿)和潘金莲(武大郎)在各自家里(network namespace)通过连接打造好的相关联放在各自家里固定位置(IP address)的一半梯子(跨network namespace)来互相访问**
 ![](link_1.PNG)

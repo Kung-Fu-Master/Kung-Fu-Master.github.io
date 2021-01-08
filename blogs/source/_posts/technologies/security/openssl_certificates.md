@@ -12,19 +12,26 @@ categories:
 特点：纯文本文件, 以-----BEGIN CERTIFICATE-----开头, 以-----END CERTIFICATE-----结尾,  
 内容是 base64 编码. 但使用文本编辑器只能查看表面的结构, 需要输入命令例如  
 
+```shell
 	$ openssl x509 -in 某个PEM格式数字证书.pem -text -noout
+```
+
 才能看到原始的数字证书信息.  
 
+```
 	-----BEGIN CERTIFICATE-----
 	MIID7TCCAtWgAwIBAgIJAOIRDhOcxsx6MA0GCSqGSIb3DQEBCwUAMIGLMQswCQYD
 	……
 	xAJz+w8tjrDWcf826VN14IL+/Cmqlg/rIfB5CHdwVIfWwpuGB66q/UiPegZMNs8a
 	3g==
 	-----END CERTIFICATE-----
+```
 ## **DER编码（Distinguished Encoding Rules）**
 特点：二进制文件格式, 一般应使用 Windows/Java 开发工具打开, 也可以使用openssl命令行工具提取其中信息或进行编码转换.  
 
+```shell
 	$ openssl x509 -in 某个DER格式的数字证书.der -inform der -text -noout  
+```
 上面这个命令查看二进制文件中的证书信息.  
 
 ## **文件扩展名**
@@ -35,10 +42,12 @@ categories:
  * **KEY** - 通常用来存放一个公钥或者私钥,并非X.509证书,编码同样的,可能是PEM,也可能是DER.  
 查看KEY的办法:  
 
-
+```shell
 	$ openssl rsa -in mykey.key -text -noout
+```
 如果是DER格式的话,同理应该这样了:
 
+```shell
 	$ openssl rsa -in mykey.key -text -noout -inform der
 
 	$ cd /home/zhan/istio-1.6.0/samples/certs/
@@ -49,43 +58,49 @@ categories:
 	        Not Before: Jan 24 19:15:51 2018 GMT
 	        Not After : Dec 31 19:15:51 2117 GMT
 	-A n这样的shell写法，输出当前行之后的n行内容
-
+```
 
  * **CSR - Certificate Signing Request**,即证书签名请求,这个并不是证书,而是向权威证书颁发机构获得签名证书的申请,其核心内容是一个**公钥和个人信息**,在生成这个申请的时候, 要对应生成的有一个私钥,私钥要自己保管好, client端把包含public key的csr文件发给CA, 用CA的private key给csr文件做签名(sign)生成client端证书. **CSR文件**内容一般包含: **个人信息,公钥public key,加密算法(非对称加密算法RSA2048, 对称机密算法AES256等),签名算法(sign algorithm)等信息.**  
 查看的办法:
 
-
+```shell
 	$ openssl req -noout -text -in my.csr
-(如果是DER格式的话照旧命令行加上-inform der,这里不写了)
+```
 
+(如果是DER格式的话照旧命令行加上-inform der,这里不写了)
 
 ## **证书编码的转换**
 
  • PEM转为DER：
 
-
+```shell
 	$ openssl x509 -in cert.crt -outform der -out cert.der
+```
  • DER转为PEM：
 
-
+```shell
 	$ openssl x509 -in cert.crt -inform der -outform pem -out cert.pem
+```
 ## **获得证书的步骤**
 
 <table><tr><td bgcolor=#54FF9F> • 向权威证书颁发机构申请证书</td></tr></table>
 用以下命令生成一个csr:
 
-
+```shell
 	$ openssl req -newkey rsa:2048 -new -nodes -keyout my.key -out my.csr
 	$ ls
 	my.csr  my.key
+```
 把**csr**交给权威证书颁发机构,权威证书颁发机构对此进行签名,完成.保留好csr,**当权威证书颁发机构颁发的证书过期的时候,你还可以用同样的csr来申请新的证书,key保持不变.**
 
 <table><tr><td bgcolor=#54FF9F> • 或者生成自签名的证书</td></tr></table>
 
-
+```shell
 	$ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
 	$ ls
 	cert.pem  key.pem
+```
+
 在生成证书的过程中会要你填一堆的东西,其实真正要填的只有Common Name,通常填写你服务器的域名,如"yourcompany.com",或者你服务器的IP地址,其它都可以留空的.
 生产环境中还是不要使用自签的证书,否则浏览器会不认,或者如果你是企业应用的话能够强制让用户的浏览器接受你的自签证书也行.向权威机构要证书通常是要钱的,但现在也有免费的,仅仅需要一个简单的域名验证即可.有兴趣的话查查"沃通数字证书".
 
@@ -98,11 +113,13 @@ categories:
 通常是rsa算法  
 <table><tr><td bgcolor=#54FF9F>**ca-key.pem**</td></tr></table>
 
+```shell
 	$ openssl genrsa -out ca/ca-key.pem 2048
 	查看key
 	$ openssl rsa -in ca/ca-key.pem -text -noout
 	如果是DER格式的话,同理应该这样
 	$ openssl rsa -in ca/ca-key.pem -text -noout -inform der
+```
 
 2.创建证书请求：  
 > 因此在用户向CA申请数字证书时，用户首先需要在自己的电脑中先产生一个公私钥对。用户需要保管好自己的私钥，然后再把公钥和你的个人信息发送给CA机构，CA机构通过你的公钥和个人信息最终签发出数字证书。  
@@ -111,6 +128,7 @@ categories:
 在制作csr文件的时，必须使用自己的私钥来签署申，还可以设定一个密钥.
 <table><tr><td bgcolor=#54FF9F>**ca-req.csr**</td></tr></table>
 
+```shell
 	$ openssl req -new -out ca/ca-req.csr -key ca/ca-key.pem
 	  Country Name (2 letter code) [AU]:cn
 	  State or Province Name (full name) [Some-State]:zhejiang
@@ -119,33 +137,43 @@ categories:
 	  Organizational Unit Name (eg, section) []:test
 	  Common Name (eg, YOUR name) []:root
 	  Email Address []:sky
+```
 
 3.自签署证书 ：
 <table><tr><td bgcolor=#54FF9F>**ca/ca-cert.pem**</td></tr></table>
 
+```shell
 	$ openssl x509 -req -in ca/ca-req.csr -out ca/ca-cert.pem -signkey ca/ca-key.pem -days 3650
 	查看证书格式:
 	$ openssl x509 -in ca/ca-cert.pem -text -noout
+```
 
 4.将证书导出成浏览器支持的.p12格式 ：
 
+```shell
 	$ openssl pkcs12 -export -clcerts -in ca/ca-cert.pem -inkey ca/ca-key.pem -out ca/ca.p12
+```
 密码：changeit
 
 ### **二.生成server证书。**
 1.创建私钥 ：
 <table><tr><td bgcolor=#54FF9F>**server/server-key.pem**</td></tr></table>
 
+```shell
 	$ openssl genrsa -out server/server-key.pem 2048
 	查看key
 	$ openssl rsa -in server/server-key.pem -text -noout
 	如果是DER格式的话,同理应该这样
 	$ openssl rsa -in server/server-key.pem -text -noout -inform der
+```
 
 2.创建证书请求 ：
 <table><tr><td bgcolor=#54FF9F>**server/server-req.csr**</td></tr></table>
 
+```shell
 	$ openssl req -new -out server/server-req.csr -key server/server-key.pem
+```
+```text
 	  Country Name (2 letter code) [AU]:cn
 	  State or Province Name (full name) [Some-State]:zhejiang
 	  Locality Name (eg, city) []:hangzhou
@@ -153,8 +181,12 @@ categories:
 	  Organizational Unit Name (eg, section) []:test
 	  Common Name (eg, YOUR name) []:192.168.1.246 注释：一定要写服务器所在的ip地址
 	  Email Address []:sky
-	查看csr文件内容:
+```
+查看csr文件内容:
+```shell
 	$ $ openssl req -in server-req.csr -text -noout // -noout 不用输出csr文件原始内容
+```
+``` text
 	Certificate Request:
 	    Data:
 	        Version: 0 (0x0)
@@ -200,17 +232,25 @@ categories:
 	         52:90:b0:11:96:c6:28:e0:de:0c:eb:f2:b1:66:ce:04:48:7f:
 	         11:90:09:1d:fd:ca:a7:25:66:32:a2:64:33:1a:5e:a9:85:50:
 	         8a:2d:90:a5
+```
 
 3.自签署证书 ：
 <table><tr><td bgcolor=#54FF9F>**server/server-cert.pem**</td></tr></table>
 
+```shell
 	$ openssl x509 -req -in server/server-req.csr -out server/server-cert.pem -signkey server/server-key.pem -CA ca/ca-cert.pem -CAkey ca/ca-key.pem -CAcreateserial -days 3650
+```
+```
 	 * -CA选项指明用于被签名的csr证书
 	 * -CAkey选项指明用于签名的密钥
 	 * -CAcreateserial指明文件不存在时自动生成
-	查看证书格式:
+```
+查看证书格式:
+```shell
 	$ openssl x509 -in server/server-cert.pem -text -noout
-	可以查看到证书里所包含的public key等相关信息:
+```
+可以查看到证书里所包含的public key等相关信息:
+```
 	Certificate:
 	Data:
 	    Version: 1 (0x0)
@@ -261,10 +301,13 @@ categories:
 	     99:78:36:30:ae:78:4b:c3:1a:6b:b8:db:62:23:b8:ab:22:11:
 	     11:81:95:5d:46:f0:45:15:77:1f:6b:c0:bf:9d:a2:d2:b4:62:
 	     c9:b5:2b:dd
-	
+```
+
 4.将证书导出成浏览器支持的.p12格式 ：
 
+```shell
 	$ openssl pkcs12 -export -clcerts -in server/server-cert.pem -inkey server/server-key.pem -out server/server.p12
+```
 密码：changeit
 
 Additional：
@@ -277,21 +320,26 @@ client端将server端发过来的信息用Hash得到摘要B(digest)与解密得�
 
 如果要生成RSA公钥, command如下:
 
+```shell
 	$ openssl rsa -in server/server-key.pem -pubout -out server/server-public-key.pem
+```
 
 ### **三.生成client证书。**
 1.创建私钥 ：
 <table><tr><td bgcolor=#54FF9F>**client/client-key.pem**</td></tr></table>
 
+```shell
 	$ openssl genrsa -out client/client-key.pem 2048
 	查看key
 	$ openssl rsa -in client/client-key.pem -text -noout
 	如果是DER格式的话,同理应该这样
 	$ openssl rsa -in client/client-key.pem -text -noout -inform der
+```
 
 2.创建证书请求 ：
 <table><tr><td bgcolor=#54FF9F>**client/client-req.csr**</td></tr></table>
 
+```shell
 	$ openssl req -new -out client/client-req.csr -key client/client-key.pem
 	  Country Name (2 letter code) [AU]:cn
 	  State or Province Name (full name) [Some-State]:zhejiang
@@ -304,25 +352,32 @@ client端将server端发过来的信息用Hash得到摘要B(digest)与解密得�
 	  to be sent with your certificate request
 	  A challenge password []:123456
 	  An optional company name []:tsing
+```
 
 3.自签署证书 ：
 <table><tr><td bgcolor=#54FF9F>**client/client-cert.pem**</td></tr></table>
 
+```shell
 	$ openssl x509 -req -in client/client-req.csr -out client/client-cert.pem -signkey client/client-key.pem -CA ca/ca-cert.pem -CAkey ca/ca-key.pem -CAcreateserial -days 3650
 	 * -CA选项指明用于被签名的csr证书
 	 * -CAkey选项指明用于签名的密钥
 	 * -CAcreateserial指明文件不存在时自动生成
 	查看证书格式:
 	$ openssl x509 -in client/client-cert.pem -text -noout
+```
 
 4.将证书导出成浏览器支持的.p12格式 ：
 
+```shell
 	$ openssl pkcs12 -export -clcerts -in client/client-cert.pem -inkey client/client-key.pem -out client/client.p12
+```
 密码：changeit
 
 Additional. 生成RSA公钥:
 
+```shell
 	$ openssl rsa -in client/client-key.pem -pubout -out client/client-public-key.pem
+```
 
 请一定严格根据里面的步骤来，待实验成功后，修改你自己想要修改的内容。我就是一开始没有安装该填写的来，结果生成的证书就无法配对成功。
 

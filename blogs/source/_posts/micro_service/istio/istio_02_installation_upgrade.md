@@ -8,6 +8,7 @@ categories:
 
 ## **Download the specific version of Istio**
 
+```shell
 	$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.6.4 sh -
 	$ cd istio/bin/
 	$ ./istioctl -h
@@ -49,11 +50,14 @@ categories:
 	    istioctl options         Displays istioctl global options
 	  
 	  Use "istioctl [command] --help" for more information about a command.
+```
 
 ## **istio目录介绍**
 
+``` shell
 	$ll istio-*
 	  bin/ ,***, manifests/, samples/, tools/
+```
 bin/目录存放istioctl客户端工具.  
 manifests/目录存放istio安装表单.  
 samples/目录存放一些使用样例.  
@@ -65,6 +69,7 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 **Istioctl 与 Kubectl关系**
 从一开始istioctl和kubectl工具有一定的融合部分，如apply, delete等共同功能, 随着istioctl版本提升启用了一些与kubectl重合的功能并完善开发了自己的一套功能.
 
+```shell
 	// 查看pilot和envoy配置策略等的同步情况, pilot是否完全将配置信息同步到envoy
 	$ ./istioctl proxy-status
 	// 查询属于某个pod的envoy规则等
@@ -76,25 +81,29 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 	  Checked 25 custom resource definitions	// 可以看到Istio 1.6.4只有25个crd
 	  Checked 3 Istio Deployments
 	  Istio is installed successfully
+```
 
 ## **istioctl command**
 
 ### **istioctl profile**
 查看profile list
 
+```shell
 	$ istioctl profile list
+```
 输出profile
-
+```shell
 	$ istioctl profile dump demo > demo.yaml
 	vim demo.yaml
-
+```
 ## **安装 istio到kubernetes**
 
 **第一种:默认安装**
-
+```shell
 	istioctl install --set profile=demo
+```
 **第二种:**
-
+```shell
 	cd istio-1.6.4
 	vim manifests/profiles/demo.yaml
 	 ......
@@ -104,13 +113,13 @@ official website: https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 	 37               name: http2
 	 ......
 	istioctl install -f manifests/profiles/demo.yaml
-
+```
 
 ## **Istioctl analyze**
-
+```shell
 	$ istioctl analyze -n book-info
 	  √ No Validation issues found when analyzing namespace: book-info
-
+```
 ## **Istio upgrade and rollback**
 因为技术变更太快, 请先参考官网最新教程：
 Official website: https://istio.io/latest/zh/docs/setup/upgrade/istioctl-upgrade/
@@ -122,12 +131,12 @@ istio1.6 提供了简单的升级命令方式，直接通过命令 $ istioctl up
 
 **升级步骤**
 查看升级前的istioctl 版本
-
+```shell
 	$ istioctl version
 	client versin: 1.5.0			// 指istioctl 这个二进制客户端工具
 	control plane version: 1.5.0	// istio部署在k8s上的控制面资源, 如pilot等
 	dataplane version: 1.5.0		// istio部署在k8s上的数据面资源, 如envoy
-
+```
 **1. 升级istioctl客户端二进制工具**
 Download istio最新版本如istio-1.6.8, 解压缩`tar -zxvf istio-1.6.8.tar.gz`进入istio-1.6.8/bin  
 linux Path环境变量中的老版本istioctl去掉添加新版本的istioctl客户端工具.  
@@ -135,37 +144,51 @@ linux Path环境变量中的老版本istioctl去掉添加新版本的istioctl客
 **2. 升级istio在k8s上的数据面和控制面**
 升级时候要保证升级的是同样的profile, 如demo, 或者default
 
+```shell
 	$ istioctl profile list 		// 查看istioctl有哪些profile
 	$ istioctl profile dump demo > demo.yaml	// 先dump出跟老版本相同选择的新版本的profile, 如新老版本都采用demo 这个profile
+```
+
 第一种:根据新版本的demo.yaml来进行升级
 
+```shell
 	$ vim demo.yaml 	//先修改下dump出来的新版本的demo.yaml
 	jwtPolicy: third-party-jwt ---> 改为 jwtPolicy: first-party-jwt
 	如果这里不修改会报证书无法挂载情况.
 	$ istioctl upgrade -f demo.yaml
+```
 第二种:
 
-	$ istioctl manifest apply -set profile=demo --set values.global.jwtPolicy=first-party-jwt
+```shell
+$ istioctl manifest apply -set profile=demo --set values.global.jwtPolicy=first-party-jwt
+```
 查看升级后的istioctl 版本
 
+```shell
 	$ istioctl version
 	client versin: 1.6.8			// 指istioctl 这个二进制客户端工具
 	control plane version: 1.6.8	// istio部署在k8s上的控制面资源, 如pilot等
 	dataplane version: 1.5.0 (1 proxies), 1.6.8 (3 proxies)	// istio部署在k8s上的数据面资源, 如envoy, 发现还有老版本注入的envoy, 也需要`手动`或`自动升级`
+```
 **3. 升级已经注入到pod中的sidecar**
 如果以前采用的是自动sidecar注入, 则将所有pods通过滚动更新来更新sidecar
 
+```shell
 	$ kubectl rollout restart deployment --namespace <namespace with auto injection>
+```
 如果以前采用的是手动sidecar注入, 则更新sidecar通过执行如下命令:
 
+```shell
 	$ kubectl apply -f < (istioctl kube-inject -f <original-application-deployment.yaml>) //实例如下
 	$ istioctl kube-inject -f nginx.yaml | kubectl apply -f -
+```
 通过`kubectl get pods -n <Namespace>` 来观察到新版本生成后老版本的pod才terminate.  
 重新查看istioctl version
 
+```shell
 	$ istioctl version
 	client versin: 1.6.8
 	control plane version: 1.6.8
 	dataplane version: 1.6.8 (4 proxies)
-
+```
 

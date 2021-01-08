@@ -8,6 +8,7 @@ categories:
 ## **查看分区**
 查看磁盘格式类型, UUID, 挂载点
 
+```shell
 	$ lsblk -f
 	 NAME            FSTYPE      LABEL UUID                                   MOUNTPOINT
 	 sda
@@ -29,8 +30,11 @@ categories:
 	   ├─centos-root xfs               51083aeb-a167-4fe9-aced-fa14c2a18953   /
 	   ├─centos-swap swap              ebcd1018-d259-4d2c-bfd0-46abdc143201
 	   └─centos-home xfs               ada9d310-ffee-4b08-9350-3e222614c11b   /home
+```
+
 查看磁盘大小等信息
 
+```shell
 	$ lsblk
 	 NAME                                    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
 	 sda                                       8:0    0   1.8T  0 disk
@@ -52,9 +56,11 @@ categories:
 	   ├─centos-root                         253:0    0    50G  0 lvm  /
 	   ├─centos-swap                         253:1    0     4G  0 lvm
 	   └─centos-home                         253:2    0 421.8G  0 lvm  /home
+```
 
 ## **执行分区**
 
+```shell
 	$ fdisk /dev/sda
 	 WARNING: fdisk GPT support is currently new, and therefore in an experimental phase. Use at your own discretion.
 	 Welcome to fdisk (util-linux 2.23.2).
@@ -110,14 +116,18 @@ categories:
 	 The kernel still uses the old table. The new table will be used at
 	 the next reboot or after you run partprobe(8) or kpartx(8)
 	 Syncing disks.
+```
 
 ## **不重启机器,Kernel重新加载磁盘table**
 查看磁盘文件
-
+```shell
 	$ ls /dev/sda*
 	 /dev/sda  /dev/sda1  /dev/sda2  /dev/sda3  /dev/sda4  /dev/sda5 	// 没有sda6磁盘
+```
+
 进行Kernel sync disks
 
+```shell
 	$ partprobe /dev/sda
 	$ lsblk -f
 	 NAME            FSTYPE      LABEL UUID                                   MOUNTPOINT
@@ -131,35 +141,46 @@ categories:
 	 sdc             LVM2_member       3x1Vwv-POeH-igqu-yuRn-ex2l-oDp3-9FaFPi
 	 └─ceph--c0d1ccc4--5130--4697--b9a2--e9c58cbc5f7b-osd--data--91d305f7--cfc5--4ca1--b787--35fefcc6f938
 	 ......
+```
 
 ## **删除分区**
 
+```shell
 	$ fdisk /dev/sda
 	 m 		// 查看命令
 	 d 		// 删除分区
 	 6 		// 选择要删除的partition
 	 w 		// 输入 w  保存，这个时候分区以及删除了
+```
 
 ## **格式化分区**
 在设备上格式化成指定格式的文件系统；  centos 7以后的版本默认使用xfs格式； 也可以指定 ext3\4格式
 
+```shell
 	$ mkfs.ext4 /dev/sdb1
 	  mke2fs 1.42.9 (28-Dec-2013)
 	          Using EXT2FS Library version 1.42.9
-	 * fs：指定建立文件系统时的参数；
-	 * -t<文件系统类型>：指定要建立何种文件系统；
-	 * -v：显示版本信息与详细的使用方法；
-	 * -V：显示简要的使用方法；
-	 * -c：在制做档案系统前，检查该partition是否有坏轨。
+```
+ * fs：指定建立文件系统时的参数；
+ * -t<文件系统类型>：指定要建立何种文件系统；
+ * -v：显示版本信息与详细的使用方法；
+ * -V：显示简要的使用方法；
+ * -c：在制做档案系统前，检查该partition是否有坏轨。
+
+
 格式为xfs,所以使用mkfs.xfs命令。**`如果已有其他文件系统创建在此分区，必须加上"-f"参数来覆盖它`**
 
+```shell
 	mkfs.xfs -f  -i size=512 -l size=128m,lazy-count=1 -d agcount=64 /dev/xvda3
-	-i size=512 : 默认的值是256KB，当内容小于这个值时，写到inode中，超过这个值时，写到block中。
-	-l size=128m :默认值的是10m，修改这个参数成128m，可以显著的提高xfs文件系统删除文件的速度，当然还有其它，如拷贝文件的速度。
-	-l lazy-count=1: 值可以是0或者1；默认值是0;在一些配置上显著提高性能；
-	-d agcount=4 : 默认值是根据容量自动设置的。可以设置成1/2/4/16等等，这个参数可以调节对CPU的占用率，值越小，占用率越低；因为我的硬盘为2T的大硬盘，所以设置64；
+```
+
+ * -i size=512 : 默认的值是256KB，当内容小于这个值时，写到inode中，超过这个值时，写到block中。
+ * -l size=128m :默认值的是10m，修改这个参数成128m，可以显著的提高xfs文件系统删除文件的速度，当然还有其它，如拷贝文件的速度。
+ * -l lazy-count=1: 值可以是0或者1；默认值是0;在一些配置上显著提高性能；
+ * -d agcount=4 : 默认值是根据容量自动设置的。可以设置成1/2/4/16等等，这个参数可以调节对CPU的占用率，值越小，占用率越低；因为我的硬盘为2T的大硬盘，所以设置64；
 **Use Case:**
 
+```shell
 	$ mkfs.xfs -f /dev/sda6        格式化sda6磁盘
 	 mkfs.xfs -f /dev/sda6
 	 meta-data=/dev/sda6              isize=512    agcount=4, agsize=655360 blks
@@ -183,13 +204,18 @@ categories:
 	 ├─sda1          xfs               eadc654f-b75a-4d81-8e17-910031209006   /var/lib/kubelet/pods/0ef567bf-3636-455b-a585-6a9d8ab1b2dd/volumes/kubernetes.io~local-volume/local-pv-f
 	 ......
 	 └─sda6          xfs               8c653ffc-4b28-47d1-9e7f-32f8d969757a
+```
 
 ## **挂载分区**
 
+```shell
 	$ mkdir /d1 
 	$ mount /dev/sda6 /d1 
+```
+
 **设置开机自动挂载新建分区**
 
+```shell
 	$ vim /etc/fstab
 	 #
 	 # /etc/fstab
@@ -206,27 +232,32 @@ categories:
 	 UUID=516c6d3c-c639-4092-82b6-0a82d09edff3 /mnt/disks/516c6d3c-c639-4092-82b6-0a82d09edff3 xfs defaults 0 2
 	 UUID=a7b1ca2d-5d08-411e-83e5-9fff59d554be /mnt/disks/a7b1ca2d-5d08-411e-83e5-9fff59d554be xfs defaults 0 2
 	 UUID=8c653ffc-4b28-47d1-9e7f-32f8d969757a /mnt/disks/My-Directory xfs default 0 2
+```
+
 /etc/fstab文件负责配置Linux开机时自动挂载的分区
 
-	 第一列可以是实际分区名，也可以是实际分区的卷标（Lable）
-	 第二列是挂载点,挂载点必须为当前已经存在的目录
-	 第三列为此分区的文件系统类型
-	 第四列是挂载的选项，用于设置挂载的参数
-	 * auto: 系统自动挂载，fstab默认就是这个选项
-	 * defaults: rw, suid, dev, exec, auto, nouser, and async.
-	 * noauto 开机不自动挂载
-	 * nouser 只有超级用户可以挂载
-	 * ro 按只读权限挂载
-	 * rw 按可读可写权限挂载
-	 * user 任何用户都可以挂载
-	 请注意光驱和软驱只有在装有介质时才可以进行挂载，因此它是noauto
-	 第五列是dump备份设置,当其值设置为1时，将允许dump备份程序备份；设置为0时，忽略备份操作；
-	 第六列是fsck磁盘检查设置,其值是一个顺序。当其值为0时，永远不检查；而 / 根目录分区永远都为1。其它分区从2开始，数字越小越先检查，如果两个分区的数字相同，则同时检查。
+```
+第一列可以是实际分区名，也可以是实际分区的卷标（Lable）
+第二列是挂载点,挂载点必须为当前已经存在的目录
+第三列为此分区的文件系统类型
+第四列是挂载的选项，用于设置挂载的参数
+* auto: 系统自动挂载，fstab默认就是这个选项
+* defaults: rw, suid, dev, exec, auto, nouser, and async.
+* noauto 开机不自动挂载
+* nouser 只有超级用户可以挂载
+* ro 按只读权限挂载
+* rw 按可读可写权限挂载
+* user 任何用户都可以挂载
+请注意光驱和软驱只有在装有介质时才可以进行挂载，因此它是noauto
+第五列是dump备份设置,当其值设置为1时，将允许dump备份程序备份；设置为0时，忽略备份操作；
+第六列是fsck磁盘检查设置,其值是一个顺序。当其值为0时，永远不检查；而 / 根目录分区永远都为1。其它分区从2开始，数字越小越先检查，如果两个分区的数字相同，则同时检查。
+```
 
 ## **卸载分区**
 
+```shell
 	$ umount /dev/sda6
-
+```
 
 
 

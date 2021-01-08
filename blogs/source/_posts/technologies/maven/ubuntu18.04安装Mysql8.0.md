@@ -9,16 +9,24 @@ categories:
 # Mysql 安装:
 
 ### 1. 下载deb包
+```
 	https://dev.mysql.com/downloads/repo/apt/
+```
 
 ### 2. 跟新dpkg
+
+```shell
 	$ dpkg -i mysql-apt-config_0.8.15-1_all.deb
 	$ apt update
+```
 
 ### 3. 安装mysql8
+
+```shell
 	$ apt install mysql-server
 	输入密码123456
 	最后加密方式选择Legacy(5.x)
+```
 
 # Mysql 卸载:
 
@@ -48,13 +56,17 @@ sudo apt autoclean
 # Mysql登录
 
 ### 第一种命令行方式:
-```
- $ mysql -uroot -p123456
+
+``` shell
+mysql -uroot -p123456
 ```
 ### 第二种mysql-workbench
- * $ apt update
- * $ apt install mysql-workbench
- * $ mysql-workbench		// 可以通过键入 mysql-workbench或单击 MySQL Workbench 图标 (Activities -> MySQL Workbench) 从命令行启动它。
+
+```shell
+apt update
+apt install mysql-workbench
+mysql-workbench		// 可以通过键入 mysql-workbench或单击 MySQL Workbench 图标 (Activities -> MySQL Workbench) 从命令行启动它。
+```
 
 ### 第三种Navigat 工具方式：
  - Navicat是可以管理多种数据库Mysql, redis, MongoDB等等的软件，收费
@@ -65,5 +77,7 @@ sudo apt autoclean
  * 密码: 123456
  
 # 重启Mysql server
- * $ systemctl restart mysql	// Ubuntu18.04重启mysql会出错, 目前没解决，只是卸载mysql重装，最好别重启mysql服务
 
+```shell
+systemctl restart mysql	// Ubuntu18.04重启mysql会出错, 目前没解决，只是卸载mysql重装，最好别重启mysql服务
+```

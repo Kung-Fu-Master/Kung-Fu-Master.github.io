@@ -45,8 +45,9 @@ AES128和AES256主要区别是密钥长度不同（分别是128bits,256bits)、�
 SHA-256算法是按照位作为输入，所以进行计算前必须把原始消息（比如字符串、文件等）转换成位字符串。
 比如，对字符串“abc”产生消息摘要，‘a’=97 ‘b’=98 ‘c’=99，先转换成24位的字符串：
 
+```
 	 01100001 01100010 01100011
-
+```
 ### 对转换得到的位字符串进行补位操作
 
 ### 消息扩展、分组处理
@@ -74,14 +75,20 @@ Hash函数的安全性很大程度上取决于抗强碰撞的能力，即攻击�
 
 **列出当前系统所支持的密码套件列表**
 
+```shell
 	$ openssl ciphers -V 'ALL:COMPLEMENTOFALL'
+```
 **测试某个服务器是否支持特定的密码套件：**
 
+```shell
 	$ openssl s_client -cipher "ECDHE-RSA-AES128-SHA" -connect www.qq.com:443 -tls1_1
-	# 参数说明
-	# -cipher 参数表示本次连接支持的密码套件
-	# -connect 表示连接服务器的 443 端口
-	# -tls1_1 表示客户端最高支持的 TLS/SSL 版本是 TLS v1.1
+```
+参数说明: 
+
+ * -cipher 参数表示本次连接支持的密码套件
+ * -connect 表示连接服务器的 443 端口
+ * -tls1_1 表示客户端最高支持的 TLS/SSL 版本是 TLS v1.1
+
 TLS deployment, viw version etc.[Security/Server Side TLS](https://wiki.mozilla.org/Security/Server_Side_TLS)
 
 

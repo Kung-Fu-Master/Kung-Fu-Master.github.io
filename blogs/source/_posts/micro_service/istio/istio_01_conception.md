@@ -24,10 +24,13 @@ categories:
 ### Envoy
 ![](envoy_xds.png)
 
-	Listeners: 设置监听IP:Port, 到达sidecar的请求都会到这里来.
-	Routes: 根据route, 如: - match: {prefix:”/”} route: {cluster: service_envoy}选择 Cluster.
-	Clusters: 找到相应的Cluster name: service_envoy, 定义了一些轮询规则等.
-	Endpoints: 指定路由转发到哪里, IP:Port
+```
+Listeners: 设置监听IP:Port, 到达sidecar的请求都会到这里来.
+Routes: 根据route, 如: - match: {prefix:”/”} route: {cluster: service_envoy}选择 Cluster.
+Clusters: 找到相应的Cluster name: service_envoy, 定义了一些轮询规则等.
+Endpoints: 指定路由转发到哪里, IP:Port
+```
+
 Envoy是经过CNCF(Cloud Native Computing Foundation,云原生计算基金会(是一个开源软件基金会，它致力于云原生（Cloud Native）技术的普及和可持续发展。)非常成功毕业的sidecar软件.
 从CNCF毕业的软件还有Prometheus, Kubernetes.
 

@@ -10,7 +10,9 @@ top:
 ## Resources
 查看某台机器的资源
 
+```shell
 	$ kubectl describe node hci-node01
+```
 
 ### memory, CPU
 requests, limits关键字.
@@ -18,6 +20,7 @@ requests, limits关键字.
 如Node只有10GB内存，一个container request memory配置7GB内存大小，那么其余container只能分配剩余的3GB内存大小.
 配置K8s的container文件
 
+```xml
 	apiVersion: v1
 	......
 	spec:
@@ -33,9 +36,11 @@ requests, limits关键字.
 	      limits:
 	        memory: 1000Mi
 	        cpu: 200m
+```
 
 登陆container运行的机器，查看容器设置参数
 
+```shell
 	$ docker inspect containerID
 	......
 	"CpuShares" 102,		// 100m转为为0.1内核，再用0.1 * 1024 = 102，当很多个容器运行在某台机器上发生CPU资源抢占时候用该值作为权重进行分配
@@ -43,21 +48,27 @@ requests, limits关键字.
 	......
 	"CPUPeriod": 100000,	// docker 默认值, 单位是ns, 转化为毫秒是100
 	"CpuQuota": 20000,		// 0.2 core * 100000 = 20000, 与上面一起使用，表示100ms内最多分配给容器的cpu量是0.2个core
+```
+
 当容器里进程所用内存超过requests值时, 占用资源最多的进程会被kill掉, 但是容器不会退出重启.
 而CPU超出limits值时进程不会退出，因为CPU是可压缩资源，而内存不是.
 
+```shell
 	$ docker stats ContainerID			// 查看container CPU和内存使用情况
+```
 
 进入容器通过以下command命令模拟多个后台进程占用CPU
 
+```shell
 	$ dd if=/dev/zero of=/dev/null &	//
 	$ killall dd						// 删除所有dd命令
+```
 一般情况都是设置requests == limits
-
 
 ### LimitRange
 在一个namespace下对Pod和container申请的CPU和memory资源进行限制
 
+```xml
 	apiVersion: v1
 	kind: LimitRange
 	metadata:
@@ -90,14 +101,20 @@ requests, limits关键字.
 	      cpu: 5
 	      memory: 4
 	    type: Container			// 上面显示类型为Container
+```
+
 运行如下命令查看limits限制
 
+```shell
 	$ kubectl describe limits -n namespaces
+```
+
 > 当新建deployment或RS或Pod时，会根据LimitRange限制检测新建的Pod或Container是否满足条件，否则创建失败, 可以通过kubectl get ** -o yaml查看事件message.
 
 ### ResourceQuota
 对每个namespace能够使用的资源进行限制.
 
+```xml
 	apiVersion: v1
 	kind: ResourceQuota
 	metadata:
@@ -114,23 +131,30 @@ requests, limits关键字.
 	    replicationcontrollers: 20
 	    secrets: 10
 	    services: 10
+```
+
 查看quota类型资源
 
+```shell
 	$ kubectl get quota -n NS
 	$ kubectl describe quota *** -n NS		// 查看硬件资源是否使用饱和
-
+```
 
 ### Eviction-Pod驱逐
 常见驱逐策略配置
  * 在1m30s时间内可利用内存持续小于1.5GB时进行驱逐
 
-
+```
 	--eviction-soft=memory.available<1.5Gi
 	--eviction-soft-grace-period=memory.available=1m30s
+```
+
  * 当可利用内存小于100MB或磁盘小于1GB或剩余的节点小于5%立即执行驱逐策略
 
 
+```
 	--eviction-hard=memory.available<100Mi,nodefs.available<1Gi,nodefs.inodesFree<5%
+```
 
 驱逐策略:
 磁盘紧缺时候:
@@ -148,6 +172,7 @@ requests, limits关键字.
 ### label
 key=value 贴标签(Node, Deployment, Service, Pod)
 
+```xml
 	#deploy
 	apiVersion: apps/v1
 	kind: Deployment
@@ -189,12 +214,15 @@ key=value 贴标签(Node, Deployment, Service, Pod)
 	  selector:
 	    app: web-demo
 	  type: ClusterIP
+```
+
 查询Pod
 
+```shell
 	$ kubectl get pods -l "group in (dev, test)" -n NS
 	$ kubectl get pods -l "group notin (dev)" -n NS
 	$ kubectl get pods  -l group=dev,group=test -n NS
-
+```
 
 
 

@@ -36,6 +36,7 @@ istio traffic management API Resource
 
 jiuxi-client.yaml
 
+```xml
 	$ touch jiuxi-client.yaml
 	apiVersion: apps/v1
 	kind: Deployment
@@ -56,9 +57,15 @@ jiuxi-client.yaml
 	        image: busybox
 	        imagePullPolicy: IfNotPresent
 	        command: [ "/bin/sh", "-c", "sleep 3600" ]
+```
+
+```shell
 	$ kubectl apply -f jiuxi-client.yaml
+```
+
 jiuxi-deploy.yaml
 
+```xml
 	$ touch jiuxi-deploy.yaml
 	apiVersion: apps/v1
 	kind: Deployment
@@ -110,9 +117,14 @@ jiuxi-deploy.yaml
 	      - name: tomcat
 	        image: docker.io/kubeguide/tomcat-app:v1
 	        imagePullPolicy: IfNotPresent
+```
+```shell
 	$ kubectl apply -f jiuxi-deploy.yaml
+```
+
 jiuxi-svc.yaml
 
+```xml
 	$ touch jiuxi-svc.yaml
 	apiVersion: v1
 	kind: Service
@@ -139,25 +151,35 @@ jiuxi-svc.yaml
 	    port: 8080
 	    targetPort: 8080
 	    protocol: TCP
+```
+```shell
 	$ kubectl apply -f jiuxi-svc.yaml
+```
 也可以写完上面三个yaml文件后直接执行下面命令一次全部部署
 
+```shell
 	$ kubectl apply -f .
+```
 查看service最终有没有跟pod绑定:
 
+```shell
 	$ kubectl get endpoints
 	$ curl http://<ENDPOINTS-IP>:8080
+```
 登陆client pod
 
+```shell
 	$ kubectl exec -it client-*** -- sh
 	/ # wget -q -O - http://tomcat-svc:8080		// wget --help
 	/ # wget -q -O - http://httpd-svc:8080		//-q: quiet静态访问,不进行下载文件; -O: 输出文件, '-'会输出到控制台
 	/ # wget -q -O - http://<httpd-svc-clusterIP>:8080	//效果跟上面一样
+```
 
 ### **scenario 2**
 ![](scenario_2.PNG)
 修改添加jiuxi-svc.yaml内容
 
+```xml
 	$ touch jiuxi-svc.yaml
 	apiVersion: v1
 	kind: Service
@@ -197,17 +219,24 @@ jiuxi-svc.yaml
 	    port: 8080
 	    targetPort: 8080
 	    protocol: TCP
+```
+```shell
 	$ kubectl apply -f jiuxi-svc.yaml
+```
 查看service最终有没有跟pod绑定,并多次执行curl 操作查看是否实现轮询:
 
+```shell
 	$ kubectl get endpoints
 	$ curl http://<web-svc-ENDPOINTS-IP>:8080
+```
 登陆client pod
 
+```shell
 	$ kubectl exec -it client-*** -- sh
 	//多次执行wget操作查看是否轮询访问httpd和tomcat服务
 	/ # wget -q -O - http://web-svc:8080
 	/ # wget -q -O - http://<web-svc-clusterIP>:8080	//效果跟上面一样
+```
 
 ### **scenario 3**
 让VirtualService规则生效的话，前提条件是所有的服务都被istio注入sidecar, 使这些服务处于istio的服务网格控制下.  
@@ -216,8 +245,10 @@ Envoy + VirtualService --> traffic routing
 web service(VirtualService,组件是envoy)充当[反向代理](https://www.jianshu.com/p/3b82ff3321b4)服务器.  
 VirtualService主要包含两部分: hosts field(hosts), routing rules(如http或tcp下的路由规则).  
 ![](scenario_3.PNG)
+
 jiuxi-vs.yaml
 
+```xml
 	$ touch jiuxi-vs.yaml
 	apiVersion: networking.istio.io/v1alpha3
 	kind: VirtualService
@@ -234,24 +265,30 @@ jiuxi-vs.yaml
 	    - destination:
 	        host: httpd-svc
 	      weight: 20
+```
 部署VirtualService并查看是否部署成功
 
+```shell
 	$ kubectl apply -f jiuxi-vs.yaml
 	$ kubectl get virtualservices.networking.istio.io
 	NAME       GATEWAYS     HOSTS      AGE
 	web-svc-vs              [web-svc]  9s
+```
 VirtualService是istio资源，不能通过`kubectl get svc`查看, 也因此相对K8s的Service来说是虚拟服务:VirtualService  
 
 注入sidecar
 
+```shell
 	$ istioctl kube-inject jiuxi-client.yaml | kubectl apply -f -
 	$ istioctl kube-inject jiuxi-deploy.yaml | kubectl apply -f -
+```
 登陆client, 在istio服务网格内访问服务
 
+```shell
 	$ kubectl exec -it client-*** -- sh
 	/ # wget -q -O - http://web-svc:8080	//多次执行查看效果
 	/ # wget -q -O - http://<web-svc-clusterIP>:8080	//效果跟上面一样
-
+```
 
 ## **Elements of Routing Rules**
 更多istio路由规则请访问istio官网: Istio -> Reference -> Configuration -> Traffic Management -> VirtualService:
@@ -263,6 +300,7 @@ VirtualService的优先级是yaml文件越往上的路由规则优先级越高.
 实例：
 
 
+``` xml
 	apiVersion: networking.istio.io/v1alpha3
 	kind: VirtualService
 	metadata:
@@ -284,9 +322,13 @@ VirtualService的优先级是yaml文件越往上的路由规则优先级越高.
 	  - route:
 	    - destination:
 	        host: tomcat-svc
+```
 复制上面的jiuxi-vs.yaml为jiuxi-vs-with-condition.yaml并修改内容如下:
 
+```shell
 	$ touch jiuxi-vs.yaml
+```
+```xml
 	apiVersion: networking.istio.io/v1alpha3
 	kind: VirtualService
 	metadata:
@@ -310,12 +352,14 @@ VirtualService的优先级是yaml文件越往上的路由规则优先级越高.
 	    - destination:
 	        host: httpd-svc
 	$ kubectl apply -f jiuxi-vs-with-condition.yaml
+```
 登陆client, 在istio服务网格内访问服务
 
+```shell
 	$ kubectl exec -it client-*** -- sh
 	/ # wget -q -O - http://web-svc:8080	//多次执行查看效果, 只访问到httpd服务
 	/ # wget -q -O - http://web-svc:8080 --header 'end-user: jiuxi'	//多次执行发现多次访问到tomcat服务
-
+```
 
 
 

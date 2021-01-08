@@ -7,5 +7,12 @@ sudo apt-get install openssh-server
 查看主机的IP地址，使用命令：
 ifconfig
 
-• 启动ssh命令：service sshd start
-• 停止ssh命令：service sshd stop
+ • 启动ssh命令：
+```shell
+service sshd start
+```
+
+ • 停止ssh命令：
+```shell
+service sshd stop
+```

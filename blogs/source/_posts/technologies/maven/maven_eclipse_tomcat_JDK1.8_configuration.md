@@ -14,12 +14,14 @@ $ vim apache-maven-3.6.3\conf\settings.xml
 $ C:\Users\UserName\.m2\settings.xml (没有.m2路径就不设)
 
 1. 设置local repository: // maven从中央仓库下载到本地仓库
-```
+
+```xml
     <localRepository>C:\Users\UserName\***\software_package\Maven\maven_repository</localRepository>
 ```
 
 2. 设置proxy:
-```
+
+```xml
     <proxy>
        <id>my-proxy1</id>
        <active>true</active>
@@ -37,7 +39,8 @@ $ C:\Users\UserName\.m2\settings.xml (没有.m2路径就不设)
 ```
 
 3. 设置tomcat用户名和密码，如果tomcat安装时候或安装后tomcat的配置文件没有设置用户名和密码此处可忽略
-```
+
+```xml
     <server>
       <id>tomcat8</id>
       <username>admin</username>
@@ -46,7 +49,8 @@ $ C:\Users\UserName\.m2\settings.xml (没有.m2路径就不设)
 ```
 
 设置aliyun 镜像:
-```
+
+```xml
   <mirrors>
     <mirror>
         <id>nexus-aliyun</id>
@@ -59,9 +63,11 @@ $ C:\Users\UserName\.m2\settings.xml (没有.m2路径就不设)
 ```
 
 打开cmd控制台输入：mvn -v 查看版本
+
+```shell
 $ mvn help:system		// 可看到数据正常下载即为成功
 // $ ping repo1.maven.org //此远程repo好像不能访问，不过没关系，上面成功即可
-
+```
 
 ※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 
@@ -75,7 +81,8 @@ http://tomcat.apache.org/
 
 打开C:\Program Files\Tomcat 8.5\conf\tomcat-users.xml
 添加如下内容, 设置tomcat密码，也可以不设置，设置后需要在maven的**\config\settings.xml配置文件中也添加tomcat密码
-```
+
+``` xml
 <role rolename="manager"/>
 <role rolename="manager-gui"/>
 <role rolename="admin"/>
@@ -105,7 +112,7 @@ https://www.eclipse.org/downloads/
 	-> 点击下面出现的 "i Furtherconfiguration available..." -> Conten directory: 内容改为 "src/main/webapp" 
 	-> 勾选中下面的Generate web.xml deployment descripter -> Apply -> Apply and Close
 3. 在 src/main/webapp 目录下新建个index.js文件内容如下:
-```
+``` html
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -124,11 +131,15 @@ https://www.eclipse.org/downloads/
 5. 浏览器输入http://localhost:8080/test_demo/即可看到信息: Hello test demo
 
 创建Parent/jar/web项目:
-	File -> New -> Other -> Maven -> Maven Project 按照网上操作即可创建maven pom/jar/war三种项目，其中pom是父类管理其它jar和war(web)等project
+
+```
+File -> New -> Other -> Maven -> Maven Project 按照网上操作即可创建maven pom/jar/war三种项目，其中pom是父类管理其它jar和war(web)等project
+```
 
 > 创建好maven项目后，修改jar或war的pom.xml(项目对象模型(Project Object Modet,POM))文件后
 	鼠标右击pom.xml -> Maven -> Update Project... -> 可勾选下面的Force Update of Snapshots/Releases -> OK
-```
+
+```xml
 #> eclipse for java ee 创建好maven web项目后会出错，原因是缺少webDemo/src/main/webapp/WEB-INF/web.xml
 #第一种：	手动创建文件夹WEB-INF和文件web.xml,然后添加如下内容
 #<?xml version="1.0" encoding="UTF-8"?>

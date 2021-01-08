@@ -24,6 +24,7 @@ Reference Link:
 添加 `--kubelet-insecure-tls` to the components.yaml
 Reference Link: https://github.com/kubernetes-sigs/metrics-server/issues/131#issuecomment-418405881
 
+```xml
 	vim components
 	129     spec:
 	130       containers:
@@ -35,13 +36,18 @@ Reference Link: https://github.com/kubernetes-sigs/metrics-server/issues/131#iss
 	136         - --kubelet-use-node-status-port
 	137         image: k8s.gcr.io/metrics-server/metrics-server:v0.4.1
 	138         imagePullPolicy: IfNotPresent
+```
+
 部署
 
+```shell
 	kubectl apply -f components.yaml
 	kubectl get deployment metrics-server -n kube-system
+```
 
 ### **查看系统资源利用情况**
 
+```shell
 	$ kubectl top nodes
 	NAME          CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
 	laboratory    239m         1%     8778Mi          27%
@@ -76,6 +82,7 @@ Reference Link: https://github.com/kubernetes-sigs/metrics-server/issues/131#iss
 	weave-net-97jn5                       7m           68Mi
 	weave-net-hwl2m                       3m           95Mi
 	weave-net-pvh76                       2m           52Mi
+```
 
 ## **Kubernetes Dashboard部署**
 
@@ -86,19 +93,24 @@ Reference Link
 (aws)https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html
 (csdn)https://blog.csdn.net/networken/article/details/85607593
 
+```shell
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.5/aio/deploy/recommended.yaml
 	kubectl get po -n kubernetes-dashboard
+```
 
 ### **User Guide**
 
 Accessing Dashboard: https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md#kubectl-port-forward
 总共有三种方式, 介绍一种简单的, 其它的Node Port， kube proxy等方式请参考上面链接.
 
+```shell
 	kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443
+```
 
 ### **创建user**
 (官网)https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 
+```xml
 	cat > dashboard-adminuser.yaml << EOF
 	apiVersion: v1
 	kind: ServiceAccount
@@ -120,32 +132,44 @@ Accessing Dashboard: https://github.com/kubernetes/dashboard/blob/master/docs/us
 	  name: admin-user
 	  namespace: kubernetes-dashboard  
 	EOF
+```
+
 部署 user
 
+```shell
 	kubectl apply -f dashboard-adminuser.yaml
+```
+
 查看admin-user账户的token
 
+```shell
 	kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+```
 **说明：** 上面创建了一个叫admin-user的服务账号，并放在kubernetes-dashboard 命名空间下，并将cluster-admin角色绑定到admin-user账户，这样admin-user账户就有了管理员的权限。默认情况下，kubeadm创建集群时已经创建了cluster-admin角色，我们直接绑定即可。  
 ### **浏览器登陆查看**
 
+```shell
 	// 一个终端打开浏览器如: firefox
 	firefox
 	
 	// 终端上输入https://localhost:8080
 	// 输入上面的admin-user的token登陆即可查看
+```
 
 ## **FAQ遇到的问题**
 
 ### **问题1:部署完metrics-server后运行kubectl get nodes出错**
 
+```shell
 	$ kubectl get nodes
 	The connection to the server 10.239.140.201:6443 was refused - did you specify the right host or port?
+```
 解决方案:
 1. 确定在components.yam里添加**`- --kubelet-insecure-tls`**
 2. 在公司中下载东西需要添加proxy, 部署完之后, 确定在**`/etc/kubernetes/manifests/kube-apiserver.yaml`**里注释掉proxy相关信息
 
 
+```xml
 	vim /etc/kubernetes/manifests/kube-apiserver.yaml
 	41     ......
 	42     env:
@@ -160,4 +184,4 @@ Accessing Dashboard: https://github.com/kubernetes/dashboard/blob/master/docs/us
 	51     #- name: HTTP_PROXY
 	52     #  value: http://child-prc.intel.com:913
 	53     ......
-
+```

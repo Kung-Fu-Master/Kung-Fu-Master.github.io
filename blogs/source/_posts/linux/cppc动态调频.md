@@ -7,6 +7,7 @@ categories:
 CPPC的全称是Collaborative Processor Performance Control
 CPC的全称是Per cpu table called，是bios提供的一组acpi表(ACPI表示高级配置和电源管理接口（Advanced Configuration and Power Management Interface))，用于设置cpu的频率。这组acpi表如下：
 
+```
 1. /*
 2. * An example CPC table looks like the following.
 3. *
@@ -52,49 +53,54 @@ CPC的全称是Per cpu table called，是bios提供的一组acpi表(ACPI表示�
 43. *		)
 44. *	}
 45. */
+```
+
 那cppc表具体要怎么工作呢？具体在driver/cpufreq/cppc_cpufreq.c中。
 这里的cppc_cpufreq_init是入口函数，这个函数向cpufreq的framework注册了一个可以调频的cpu driver
 
-1. static int __init cppc_cpufreq_init(void)
-2. {
-3. ret = cpufreq_register_driver(&cppc_cpufreq_driver);
-4. if (ret)
-5. goto out;
-6. }
-7. static struct cpufreq_driver cppc_cpufreq_driver = {
-8. .flags = CPUFREQ_CONST_LOOPS,
-9. .verify = cppc_verify_policy,
-10. .target = cppc_cpufreq_set_target,
-11. .get = cppc_cpufreq_get_rate,
-12. .init = cppc_cpufreq_cpu_init,
-13. .stop_cpu = cppc_cpufreq_stop_cpu,
-14. .name = "cppc_cpufreq",
-15. };
-16. //cppc_cpufreq_driver 最终的函数就是target，最终cpu调频就是通过target 这个回调函数来实现
-17. static int cppc_cpufreq_set_target(struct cpufreq_policy *policy,
-18. unsigned int target_freq,
-19. unsigned int relation)
-20. {
-21. struct cppc_cpudata *cpu;
-22. struct cpufreq_freqs freqs;
-23. u32 desired_perf;
-24. int ret = 0;
-25. cpu = all_cpu_data[policy->cpu];
-26. //得到要设置的频率
-27. desired_perf = cppc_cpufreq_khz_to_perf(cpu, target_freq);
-28. /* Return if it is exactly the same perf */
-29. if (desired_perf == cpu->perf_ctrls.desired_perf)
-30. return ret;
-31. cpu->perf_ctrls.desired_perf = desired_perf;
-32. freqs.old = policy->cur;
-33. freqs.new = target_freq;
-34. cpufreq_freq_transition_begin(policy, &freqs);
-35. //通过acpi 提供的的接口来设置cpu 频率
-36. ret = cppc_set_perf(cpu->cpu, &cpu->perf_ctrls);
-37. cpufreq_freq_transition_end(policy, &freqs, ret != 0);
-38. if (ret)
-39. pr_debug("Failed to set target on CPU:%d. ret:%d\n",
-40. cpu->cpu, ret);
-41. return ret;
-42. }
+```shell
+static int __init cppc_cpufreq_init(void)
+{
+ret = cpufreq_register_driver(&cppc_cpufreq_driver);
+if (ret)
+goto out;
+}
+static struct cpufreq_driver cppc_cpufreq_driver = {
+.flags = CPUFREQ_CONST_LOOPS,
+.verify = cppc_verify_policy,
+ .target = cppc_cpufreq_set_target,
+ .get = cppc_cpufreq_get_rate,
+ .init = cppc_cpufreq_cpu_init,
+ .stop_cpu = cppc_cpufreq_stop_cpu,
+ .name = "cppc_cpufreq",
+ };
+ //cppc_cpufreq_driver 最终的函数就是target，最终cpu调频就是通过target 这个回调函数来实现
+ static int cppc_cpufreq_set_target(struct cpufreq_policy *policy,
+ unsigned int target_freq,
+ unsigned int relation)
+ {
+ struct cppc_cpudata *cpu;
+ struct cpufreq_freqs freqs;
+ u32 desired_perf;
+ int ret = 0;
+ cpu = all_cpu_data[policy->cpu];
+ //得到要设置的频率
+ desired_perf = cppc_cpufreq_khz_to_perf(cpu, target_freq);
+ /* Return if it is exactly the same perf */
+ if (desired_perf == cpu->perf_ctrls.desired_perf)
+ return ret;
+ cpu->perf_ctrls.desired_perf = desired_perf;
+ freqs.old = policy->cur;
+ freqs.new = target_freq;
+ cpufreq_freq_transition_begin(policy, &freqs);
+ //通过acpi 提供的的接口来设置cpu 频率
+ ret = cppc_set_perf(cpu->cpu, &cpu->perf_ctrls);
+ cpufreq_freq_transition_end(policy, &freqs, ret != 0);
+ if (ret)
+ pr_debug("Failed to set target on CPU:%d. ret:%d\n",
+ cpu->cpu, ret);
+ return ret;
+ }
+```
+
 这里的cppc_set_perf实现在driver/acpi/cppc_acpi.c中实现，通过这个接口可以通过固件来设置cpu频率。

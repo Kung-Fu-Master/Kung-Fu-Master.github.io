@@ -7,7 +7,8 @@ categories:
 
 ## Centos
 
+```shell
 	$ systemctl list-units --type=service
-
+```
 
 

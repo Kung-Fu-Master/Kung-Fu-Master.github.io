@@ -1,6 +1,19 @@
+---
+title: 查看动态库.so包含的函数
+tags: 
+categories:
+- linux
+---
+
 
 Linux下查看动态库中是否包含某个函数
+
+```shell
 	strings libdrv.so | grep BrdReInitAllGMPU
+```
 
 linux下查看动态链接库so文件的依赖的相关组建
+
+```shell
 	ldd libJNativeCpp.so
+```

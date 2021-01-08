@@ -13,6 +13,7 @@ categories:
 k8s安装插件原理简单来说是kubectl会在linux的$PATH路径里查找以`kubectl-`开头的可执行文件,都认为是kubectl的插件.  
 因此想要做自定义k8s插件需要在文件名前加上`kubectl-`.  
 
+```shell
 	// 查看kubectl版本
 	$ kubectl --version
 	Client Version: version.Info{Major:"1", Minor:"19", GitVersion:"v1.19.0", GitCommit:"e19964183377d0ec2052d1f1fa930c4d7575bd50", GitTreeState:"clean", BuildDate:"2020-08-26T14:30:33Z", GoVersion:"go1.15", Compiler:"gc", Platform:"linux/amd64"}
@@ -45,9 +46,11 @@ k8s安装插件原理简单来说是kubectl会在linux的$PATH路径里查找以
 	
 	// 增加可执行权限
 	$ chmod +x /root/bin/kubectl-foo
+```
 
 简单执行k8s自定义的插件
 
+```shell
 	$ kubectl foo
 	I am a plugin named kubectl-foo
 	
@@ -56,13 +59,6 @@ k8s安装插件原理简单来说是kubectl会在linux的$PATH路径里查找以
 	
 	$ kubectl foo config
 	/etc/kubernetes/admin.conf
-
-
-
-
-
-
-
-
+```
 
 

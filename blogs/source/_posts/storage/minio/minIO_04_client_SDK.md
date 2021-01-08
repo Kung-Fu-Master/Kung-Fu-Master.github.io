@@ -24,29 +24,39 @@ categories:
 ### **c++ SDK**
 
 gcc/g++ 4.9+
+
+```shell
 	$ g++ -v
 	......
 	gcc version 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC)
+```
 
 安装cmake
 
+```shell
 	$ cmake --version
 	cmake version 3.17.0
 	CMake suite maintained and supported by Kitware (kitware.com/cmake).
+```
 安装依赖库openssl & curl
 
+```shell
 	$ yum install openssl-devel libcurl-devel
+```
 升级curl
 
+```shell
 	$ rpm -Uvh https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/libmetalink-0.1.3-1.el7.x86_64.rpm
 	$ yum --showduplicates list curl --disablerepo="*" --enablerepo="city*"
 	$ curl.x86_64                                            7.72.0-2.0.cf.rhel7                                             @city-fan.org
 	......
 	Available Packages
 	curl.x86_64                                            7.72.0-2.0.cf.rhel7                                             city-fan.org
+```
 
 #### Download aws sdk
 
+```shell
 	$ wget https://github.com/aws/aws-sdk-cpp/archive/1.8.55.tar.gz
 	$ tar -zxvf 1.8.55.tar.gz
 	$ mkdir build_dir
@@ -55,18 +65,23 @@ gcc/g++ 4.9+
 	$ cmake /home/***/aws-sdk-cpp-1.8.55/ -D CMAKE_BUILD_TYPE=[Debug | Release] -D BUILD_ONLY="s3"
 	make
 	make install // 安装头文件等到系统/usr/local/include目录
+```
 
 #### 开发SDK
 拷贝aws sdk的头文件和动态库到项目目录
 
+```shell
 	// 拷贝整个aws头文件到项目目录
 	cp /usr/local/include/aws ***/cpp/include/
 	
 	// 拷贝aws两个动态库到项目目录
 	cp /usr/local/lib64/libaws-cpp-sdk-core.so ***/cpp/libs/
 	cp /usr/local/lib64/libaws-cpp-sdk-s3.so ***/cpp/libs/
+```
 
 查看项目目录
+
+```shell
 	$ ls cpp
 	CMakeLists.txt  include/  libs/  main/  src/
 
@@ -100,8 +115,11 @@ gcc/g++ 4.9+
 	└── src
 	    ├── CMakeLists.txt
 	    └── minio_client_sdk.cpp
+```
+
 #### **cpp/CMakeLists.txt**
 
+```
 	CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
 	
 	project(minio_SDK)
@@ -114,11 +132,13 @@ gcc/g++ 4.9+
 	add_subdirectory(${PROJECT_SOURCE_DIR}/main)
 	
 	#MESSAGE(STATUS ${SRC_LIST})
+```
 
 #### **cpp/main**
 
 **cpp/main/CMakeLists.txt**
 
+```
 	#头文件搜索目录,PROJECT_SOURCE_DIR为cmake预定义变量，项目的顶层目录
 	include_directories(${PROJECT_SOURCE_DIR}/include)
 	
@@ -133,9 +153,11 @@ gcc/g++ 4.9+
 	
 	#指定多个链接库
 	target_link_libraries(main minio_client_SDK aws-cpp-sdk-core aws-cpp-sdk-s3)
+```
 
 **cpp/main/main.cpp**
 
+```cpp
 	#include <iostream>
 	#include <aws/s3/S3Client.h>
 	#include <minio_client_sdk.h>
@@ -164,10 +186,12 @@ gcc/g++ 4.9+
 	
 	    return 0;
 	}
+```
 
 #### **cpp/src**
 **cpp/src/CMakeLists.txt**
 
+```
 	#指定头文件搜索目录，若顶层CMakeLists.txt也指定了文件搜索目录，则该处可以省略
 	#头文件查找优先级高于系统默认目录/usr/include和/usr/local/include
 	include_directories(${PROJECT_SOURCE_DIR}/include)
@@ -180,9 +204,11 @@ gcc/g++ 4.9+
 	#将SRC_LIST变量中的所有.cpp文件编译生成库名为add的静态库
 	#SHARED为生成动态库, STATIC为生成静态库.
 	ADD_LIBRARY(minio_client_SDK SHARED ${SRC_LIST})
+```
 
 **cpp/src/minio_client_sdk.cpp**
 
+```cpp
 	#define MINIO_CLIENT_SDK
 	#include <iostream>
 	#include <fstream>
@@ -366,10 +392,12 @@ gcc/g++ 4.9+
 	        return true;
 	    }
 	}
+```
 
 #### **cpp/include**
 **cpp/include/minio_client_sdk.h**
 
+```cpp
 	#include <iostream>
 	#include <aws/core/Aws.h>
 	#include <aws/s3/S3Client.h>
@@ -389,15 +417,17 @@ gcc/g++ 4.9+
 	bool download_Object(S3Client *m_client, string bucketName, string objectKey, string pathKey);
 	bool upload_Object(S3Client *m_client, string bucketName, string objectKey, string pathKey);
 	bool delete_Object(S3Client *m_client, string bucketName, string objectKey);
+```
 
 #### **编译执行**
 
+```shell
 	$ cd cpp
 	$ mkdir build
 	$ cd build
 	$ cmake ..
 	$ make
 	$ ./bin/main
-
+```
 
 
