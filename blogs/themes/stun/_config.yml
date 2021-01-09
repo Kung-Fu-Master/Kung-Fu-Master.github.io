@@ -374,6 +374,7 @@ codeblock:
   style: default
   # The theme of code highlight.
   # Optional values: light | dark | ocean
+  #如果代码没有高亮样式，请确保 Hexo 根目录下的 _config.yml 文件中 highlight.hljs 设为 false
   highlight: light
   # Whether to wrap when code overflow.
   word_wrap: false
