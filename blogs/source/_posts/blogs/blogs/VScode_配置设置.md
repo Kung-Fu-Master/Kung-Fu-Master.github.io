@@ -1,12 +1,12 @@
 ---
-title: VScode代码自动格式化
+title: VScode 配置设置
 tags:
 categories:
 - blogs
 - blogs
 ---
 
-## 代码保存自动格式化设置
+## VScode代码保存自动格式化
 
 一、实现vs code中代码格式化快捷键：【Shift】+【Alt】+F
 <!-- more -->
@@ -33,4 +33,10 @@ VScode创建python文件会自动提示安装autopep8, 或者通过以下命令�
 ```shell
 $ pip install -U autopep8
 ```
+
+## VScode 配置中文
+
+![](vscode_chinese.png)
+
+
 
