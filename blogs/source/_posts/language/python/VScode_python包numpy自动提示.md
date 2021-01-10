@@ -38,6 +38,8 @@ categories:
 
 3. VScode 文件 – 设置 – 首选项，搜索autoComplete，点击"在settings.json中编辑"，添加模块路径
 
+ > **Note:** 有时候设置VScode的python模块自动提示不成功, 原因是要设置Anaconda路径到上图中下面的 **`系统变量`** 的 **`Path`**, 再重启 **cmd** 端口或 **powershell** 输入 `python` 即可查看到正常输入, 重启VScode后python模块即可自动提示.
+
 ```
 "python.autoComplete.extraPaths": [
     "D:\\Anaconda3\\Lib\\site-packages",
