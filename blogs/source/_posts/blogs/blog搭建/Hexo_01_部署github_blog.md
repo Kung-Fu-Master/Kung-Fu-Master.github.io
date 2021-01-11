@@ -6,12 +6,90 @@ categories:
 - blog搭建
 ---
 
-## **1. 确认电脑安装过git**
+## **1. 确认电脑安装过git, nodeJS**
 <!-- more -->
 
+### git install 
 ```
 	鼠标右击有`git GUI`和`git Bash`选项，随便新建一个文件夹，进入。
 ```
+
+### nodeJS install 
+
+1. 在使用之前，先类掌握3个东西，明白它们是用来干什么的：
+npm:  nodejs 下的包管理器。
+
+webpack: 它主要用途是通过CommonJS 的语法把所有浏览器端需要发布的静态资源作相应的准备，比如资源的合并和打包。
+
+vue-cli: 用户生成Vue工程模板。（帮你快速开始一个vue的项目，也就是给你一套vue的结构，包含基础的依赖库，只需要npm install 就可以安装。
+
+2. nodejs下载网址：https://nodejs.org/en/     【如果嫌下载的慢，可以下载其他网站上的，别人有现成的，下载的比较快】
+3. 下载好后，双击安装
+4. 中途有个选择安装路径
+5. 接下去一路“next”，最后点击finish
+
+#### npm 配置proxy和镜像源
+
+1. 首先查看下目前配置: `npm config list` 查看是否已经配置了
+
+2. 设置网络代理的命令如下: `npm config set proxy="http://<proxy>:<port>"`
+经过上面设置使用了http开头的源，因此不需要设https_proxy了，否则还要增加一句:
+```
+npm config set https-proxy http://<proxy>:<port>
+```
+取消代理:
+```
+npm config delete proxy
+npm config delete https-proxy
+```
+
+3. 国外源速度不稳定，可设置国内淘宝源。查看现有源: `npm config get registry`
+**Note:** 外企配置上面相应proxy后可以不用配置国内淘宝源, 配置淘宝源后反而更慢.
+```
+https://registry.npmjs.org/  --> https://registry.npm.taobao.org/
+```
+
+4.设置淘宝源: `npm config set registry https://registry.npm.taobao.org`
+
+5.再次查看即可确认源已修改。用新源更新一波: `npm update`
+
+#### npm配置包下载包保存路径
+
+  * 首先你可以使用cmd命令进行查看当前电脑的npm 安装路径。
+```
+npm config ls
+```
+
+  * 在要保存的路径下创建两个文件夹：
+```
+D:\***\node_global_modules\
+D:\***\node_cache\
+```
+
+  * 添加好目录后 执行以下代码：
+```
+npm config set prefix "D:\***\node_global_modules\"
+npm config set cache "D:\***\node_cache\"
+```
+
+  * 修改环境变量
+
+在path中追加修改
+```
+D:\***\node_cache\
+D:\***\node_global_modules\
+```
+
+  * 测试，重新打开一个cmd命令行，安装一个插件试试，执行
+```
+npm install cordova -g // -g意思是安装到全局目录下
+```
+安装完毕后打开设置的安装路径看下是否成功
+在你设置的目录node_global_modules 中出现要下载的文件夹则表示设置成功
+
+#### 升级hexo
+
+npm i hexo-cli -g
 
 ## **2. 以管理员身份打开cmd， cd到当前目录**
 
