@@ -253,5 +253,22 @@ print(tang_array)
 values = np.array([2.5, 6.5, 9.5])
 # 只返回搜索插入的位置, 原数组不变
 print(np.searchsorted(tang_array, values))  # [3 6 9]
+
+# ********不同行或列同时进行排序********
+tang_array = np.array([[1, 0, 6],
+                       [1, 7, 0],
+                       [2, 3, 1],
+                       [2, 4, 0]])
+print(tang_array)
+# 数组第一列按照从大到小排列, 之后第三列再按照从小到大排列, 总共排列了两次
+index = np.lexsort([-1*tang_array[:, 0], tang_array[:, 2]])
+print(index)  # [3 1 2 0], 返回lexsort第一个参数排序后index值
+print(tang_array[index])
+"""输出
+[[2 4 0]
+ [1 7 0]
+ [2 3 1]
+ [1 0 6]]
+"""
 ```
 
