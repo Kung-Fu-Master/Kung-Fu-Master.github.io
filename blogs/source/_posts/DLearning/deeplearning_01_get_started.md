@@ -1,8 +1,8 @@
 ---
 title: deeplearning 01 getting started
-tags: deeplearning
+tags: DLearning
 categories:
-- deeplearning
+- DLearning
 ---
 
 Referenece: [csdn 深度学习入门视频课程](https://edu.csdn.net/course/detail/3921)
