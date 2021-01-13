@@ -1,5 +1,5 @@
 ---
-title: 01 Kubernetes build
+title: 01 Kubernetes build with kubeadm
 tags:
 - kubernetes
 categories:
