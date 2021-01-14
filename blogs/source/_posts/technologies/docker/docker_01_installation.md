@@ -11,6 +11,8 @@ categories:
  * Docker 引擎：包括支持在桌面系统或云平台安装 Docker，以及为企业提供简单安全弹性的容器集群编排和管理；
  * DockerHub ：官方提供的云托管服务，可以提供公有或私有的镜像仓库；
  * DockerCloud ：官方提供的容器云服务，可以完成容器的部署与管理，可以完整地支持容器化项目，还有 CI 、 CD 功能 
+
+<!-- more -->
 用户可以通过如下命令检查自己的内核版本详细信息 ：
 
 ```shell
@@ -263,12 +265,8 @@ Ctrl+d 或输入 exit 命令来退出容器：
 之后，可将导出的 tar 文件传输到其他机器上，然后再通过导人命令导入到系统中，实现容器的迁移 
 
 ### 导入容器(container)快照到本地image库
- * 第一种导入方式:
 
-```shell
-	$ docker load -i ubuntu_18.04.tar
-```
- * 第二种导入方式:
+导入容器镜像方式:
 
 ```shell
 	$ cat export_ubuntu_container.tar | docker import - in_container/ubuntu:v1.0
@@ -279,10 +277,11 @@ Ctrl+d 或输入 exit 命令来退出容器：
 	  ubuntu_test             18.04               a4850ad0370a        About an hour ago   64.2MB
 ```
 
-> 既可以使用 $ docker load -i ubuntu_18.04.tar 命令来导入镜像存储文件到本地镜像库，也可以使用 $ cat export_ubuntu_container.tar | docker import - in_container/ubuntu:v1.0 命令来导入一个容器快照到本地镜像库。
-> 这两者的区别在于： 容器快照文件将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），而镜像存储文件将保存完整记录，体积更大。
-> 此外，从容器快照文件导人时可以重新指定标签等元数据信息 
+既可以使用 `docker load -i ubuntu_18.04.tar` 命令来导入`镜像` 存储文件到本地镜像库，也可以使用 `cat export_ubuntu_container.tar | docker import - in_container/ubuntu:v1.0` 命令来导入一个 `容器快照` 到本地镜像库。
+这两者的区别在于： 容器快照文件将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），而镜像存储文件将保存完整记录，体积更大。
+此外，从容器快照文件导人时可以重新指定标签等元数据信息 
 
+**`NOTE:`** 不能使用 `$ docker load -i ubuntu_18.04.tar` 来导入容器快照, 否则会出错
 
 ### 清理所有终止状态的容器
 ```shell
