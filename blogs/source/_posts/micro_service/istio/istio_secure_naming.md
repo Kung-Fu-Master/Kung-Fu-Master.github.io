@@ -12,7 +12,7 @@ reference: https://istio.io/latest/docs/concepts/security/#secure-naming
 <!-- more -->
 
 Sidecar and perimeter proxies work as [Policy Enforcement Points](https://www.jerichosystems.com/technology/glossaryterms/policy_enforcement_point.html) (PEPs) to secure communication between clients and servers.
-Sidecar 和边缘代理作为 Policy Enforcement Points(PEPs) 以保护客户端和服务器之间的通信安全.
+**`Sidecar`** 和 **`边缘代理`** 作为 Policy Enforcement Points(PEPs) 以保护客户端和服务器之间的通信安全.
 
 服务器身份（Server identities）被编码在证书里，但服务名称（service names）通过服务发现或 DNS 被检索。安全命名信息将服务器身份映射到服务名称。身份 A 到服务名称 B 的映射表示“授权 A 运行服务 B“。控制平面监视 apiserver，生成安全命名映射，并将其安全地分发到 PEPs。 以下示例说明了为什么安全命名对身份验证至关重要。
 
