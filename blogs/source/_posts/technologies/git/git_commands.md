@@ -93,10 +93,11 @@ git checkout -- <filePathName> // git checkout -- README.md
 ```
 3. 切换分支
 
-``` shell
-	$ git checkout -b v0.9rc1 origin/v0.9rc1	//如果本地已经有v0.9rc1分支了就可以直接`git checkout v0.9rc1`
-	Branch v0.9rc1 set up to track remote branch v0.9rc1 from origin.
-	Switched to a new branch 'v0.9rc1'
+``` 
+$ git pull	//拉去远程分支最新的文件, 之后再此分支基础上创建新的分支
+$ git checkout -b v0.9rc1 origin/v0.9rc1	//如果本地已经有v0.9rc1分支了就可以直接`git checkout v0.9rc1`
+Branch v0.9rc1 set up to track remote branch v0.9rc1 from origin.
+Switched to a new branch 'v0.9rc1'
 ```
 已经切换到v0.9rc1分支了
 
@@ -219,4 +220,14 @@ clone 项目到本地的 `themes/stun` 目录
 	$ git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
 ```
 
+## 删除新建的分支
 
+git 删除本地分支
+```
+git branch -D br
+```
+
+git 删除远程分支
+```
+git push origin :br  (origin 后面有空格)
+```
