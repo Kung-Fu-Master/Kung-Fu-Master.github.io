@@ -6,7 +6,7 @@ categories:
 - numpy
 ---
 
-# numpy基本操作
+## numpy基本操作
 
 ## 属性与赋值
 
@@ -67,7 +67,83 @@ print(array1[1:3])  # 输出: [2 3], 包括左边索引值, 不包括右边索�
 print(array1[-2:])  # 输出: [4 5], ":"后边不写表示取后边所有索引值
 ```
 
+## 数组的生成
+
+```
+array01 = np.arange(10)
+print(array01)  # [0 1 2 3 4 5 6 7 8 9]
+array01 = np.arange(2, 20, 2)  # 从2开始到20结束(不包含20), [2, 20), 每个元素数值间隔2的大小
+print(array01)  # [ 2  4  6  8 10 12 14 16 18]
+
+array01 = np.arange(2, 20, 2, dtype=np.float32)
+print(array01)  # [ 2.  4.  6.  8. 10. 12. 14. 16. 18.]
+
+array01 = np.linspace(0, 10, 10)  # 从0开始到10结束(包含10), [0,10], 等间隔包含10个元素
+print(array01)
+"""
+[ 0.          1.11111111  2.22222222  3.33333333  4.44444444  5.55555556
+  6.66666667  7.77777778  8.88888889 10.        ]
+"""
+
+array01 = np.logspace(0, 1, 5)  # 从0开始到1结束(包含1), [0,1], 以10为底, 等间隔5个元素
+print(array01)
+"""
+[ 1.          1.77827941  3.16227766  5.62341325 10.        ]
+"""
+
+array01 = np.zeros(3)
+print(array01)  # [0. 0. 0.]
+array01 = np.zeros((3, 3))
+print(array01)
+"""
+[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+"""
+array01 = np.ones((3, 3))
+print(array01)
+"""
+[[1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]]
+"""
+array01 = np.ones((3, 3)) * 9
+print(array01)
+"""
+[[9. 9. 9.]
+ [9. 9. 9.]
+ [9. 9. 9.]]
+"""
+
+# 构建与原多维数组一样维度的数组
+a = np.ones((3, 3))
+b = np.ones_like(a)
+b = np.zeros_like(a)
+print(b)
+"""
+[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+"""
+
+# 构建对角矩阵
+
+array01 = np.identity(5)
+print(array01)
+"""
+[[1. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 1.]]
+"""
+```
+
+
+
 ## numpy 数学运算
+
+### 加减乘法运算
 
 ```python
 # ***************************数学运算*******************************
@@ -80,7 +156,8 @@ array3 = array2 + array1
 print(array3)  # 输出: [ 3  5  7  9 11]
 
 # 数组相乘, 位数必须相同, 对应位置元素进行乘法运算
-array4 = array2 * array3
+array4 = array2 * array3 # 与下面等价
+array4 = np.multiply(array2, array3)
 print(array4)  # 输出: [ 6 15 28 45 66]
 
 print(array4[0])  # 输出: 6
@@ -114,6 +191,47 @@ print(array6[1])  # [ 3 10  6]
 
 print(array6[:, 1])  # [ 2 10  8]
 ```
+
+### 内积运算
+各个元素想乘再求和
+
+```
+x = np.array([2, 2])
+y = np.array([5, 5])
+print(np.dot(x, y)) # 20
+
+x.shape = 2, 1
+y.shape = 1, 2
+print(np.dot(x, y))
+"""
+[[10 10]
+ [10 10]]
+"""
+```
+
+
+### 与或非运算
+
+#### 逻辑与
+```
+x = np.array([1, 0, 1, 4])
+y = np.array([1, 1, 1, 2])
+print(x == y) # [ True False  True False]
+
+print(np.logical_and(x, y))  # [ True False  True  True]
+```
+
+#### 逻辑或
+```
+print(np.logical_or(x, y))  # [ True  True  True  True]
+```
+
+#### 逻辑非
+
+```
+print(np.logical_not(x, y))  # [0 1 0 0]
+```
+
 
 ## 浅拷贝与深拷贝
 
@@ -271,4 +389,292 @@ print(tang_array[index])
  [1 0 6]]
 """
 ```
+
+## 数组形状
+```
+tang_array = np.arange(10)
+print(tang_array)  # [0 1 2 3 4 5 6 7 8 9]
+print(tang_array.shape)  # (10,), 一维数组, 上面一维数组输出可以与下面的二维数组输出形式对比下
+tang_array.shape = 2, 5  # 元素个数要保持一致.
+print(tang_array)
+""" 输出:
+[[0 1 2 3 4]
+ [5 6 7 8 9]]
+"""
+tang_array = np.arange(10)
+tang_array = tang_array.reshape(2, 5)
+print(tang_array)  # reshape 原数组没有改变
+"""
+[[0 1 2 3 4]
+ [5 6 7 8 9]]
+"""
+```
+
+### 给数组加轴和去掉轴
+
+```
+tang_array = np.arange(10)
+tang_array = tang_array[np.newaxis, :]
+print(tang_array)  # [[0 1 2 3 4 5 6 7 8 9]]
+print(tang_array.shape)  # (1, 10), 二维数组, 表示一行十列, 一个样本, 十个元素特征值
+
+tang_array = np.arange(10)
+tang_array = tang_array[:, np.newaxis]
+print(tang_array)
+""" 输出
+[[0]
+ [1]
+ [2]
+ [3]
+ [4]
+ [5]
+ [6]
+ [7]
+ [8]
+ [9]]
+"""
+print(tang_array.shape)  # (10, 1), 二维数组, 表示十行一列, 十个样本, 每个样本一个元素特征值
+
+tang_array = tang_array[:, np.newaxis, np.newaxis]
+print(tang_array.shape)  # (10, 1, 1, 1)
+tang_array = tang_array.squeeze()  # 压缩多余的轴
+print(tang_array.shape)  # (10,)
+```
+
+### 矩阵的转置
+```
+tang_array = tang_array.reshape(2, 5)
+#tang_array = tang_array.transpose(), 下面方式更简单
+tang_array = tang_array.T
+print(tang_array)
+""" 输出：
+[[0 5]
+ [1 6]
+ [2 7]
+ [3 8]
+ [4 9]]
+"""
+```
+
+### 多维数组的连接和拉长
+
+```
+a = np.array([[1, 2], [3, 4]])
+b = np.array([[5, 6], [7, 8]])
+c = np.concatenate((a, b))
+c = np.concatenate((a, b), axis=0)  # b作为其它样本拼接在a样本下面
+c = np.vstack((a, b))  # 等价于上面
+print(c)
+"""输出：
+[[1 2]
+ [3 4]
+ [5 6]
+ [7 8]]
+"""
+
+
+c = np.concatenate((a, b), axis=1)  # b作为a每个样本其它元素特征拼接在每个样本后面
+c = np.hstack((a, b))  # 等价于上面
+print(c)
+"""输出：
+[[1 2 5 6]
+ [3 4 7 8]]
+"""
+
+d = c.flatten()  # 把多维数组拉长成一维数组
+print(d)  # [1 2 5 6 3 4 7 8]
+```
+
+
+## 随机模块
+
+```
+1. print(np.random.rand())  # 0.9300429551853078
+   print(np.random.random_sample()) # 0.6256746035165891
+
+2. rand_result = np.random.rand(3, 2)
+print(rand_result)
+""" 输出：
+[[0.100757   0.38940102]
+ [0.82948206 0.72059258]
+ [0.8995502  0.33566056]]
+"""
+
+3. rand_result = np.random.randint(10, size=(2, 3), dtype=int)
+print(rand_result)
+""" 输出：
+[[2 5 6]
+ [1 3 3]]
+"""
+
+rand_result = np.random.randint(0, 10, 3) # 从0到10取三个随机数
+print(rand_result) # [0 1 5]
+```
+
+### 高斯分布
+
+```
+np.set_printoptions(precision=2) # 设置打印数据保留两位有效数据
+mu, sigma = 0, 0.1  # 平均值和sigma
+gaosifenbu = np.random.normal(mu, sigma, 10)
+print(gaosifenbu)
+""" 输出：
+[ 0.11 -0.1   0.13  0.04 -0.04  0.07  0.1  -0.09 -0.13  0.02]
+"""
+```
+
+### 洗牌操作
+
+```
+tang_array = np.arange(10)
+print(tang_array) # [0 1 2 3 4 5 6 7 8 9]
+np.random.shuffle(tang_array) # 洗牌操作, 变为乱序
+print(tang_array) # [6 4 7 9 1 0 2 5 8 3]
+```
+
+### 随机种子
+
+使得每次随机得到的数据都相同
+
+```
+np.random.seed(100)
+np.set_printoptions(precision=2)
+mu, sigma = 0, 0.1
+rand_result = np.random.normal(mu, sigma, 10)
+print(rand_result) # [-0.17  0.03  0.12 -0.03  0.1   0.05  0.02 -0.11 -0.02  0.03]
+tang_array = np.arange(10)
+np.random.shuffle(tang_array)
+print(tang_array) # [9 7 1 8 5 4 3 2 6 0]
+```
+
+## 读写模块
+
+改变当前目录
+```
+import os
+os.chdir("/home/***/learn/python/numpy")
+print(os.getcwd()) # /home/***/learn/python/numpy
+```
+
+创建tang.txt
+```
+$ cat tang.txt
+1 2 3 4 5 6
+2 3 5 7 8 9
+```
+
+### python读取文件写法
+```
+data = []
+
+with open('tang.txt') as f:
+    for line in f.readlines():
+        fields = line.split()
+        cur_data = [float(x) for x in fields]
+        data.append(cur_data)
+data = np.array(data)
+print(data)
+""" 输出：
+[[1. 2. 3. 4. 5. 6.]
+ [2. 3. 5. 7. 8. 9.]]
+"""
+```
+
+### numpy读取文件
+
+#### txt文件中数据以空格方式隔开
+```
+data = []
+data = np.loadtxt("tang.txt")
+print(data)
+""" 输出:
+[[1. 2. 3. 4. 5. 6.]
+ [2. 3. 5. 7. 8. 9.]]
+"""
+```
+
+#### txt文件中数据以‘,’隔开
+tang2.txt文件中数据:
+```
+$ cat tang2.txt
+x,y,z,w,a,b
+1,2,3,4,5,6
+2,3,5,7,8,9
+```
+numpy读取文件
+ * skiprows = 3:去掉前三行
+ * delimiter = ",": 分隔符
+ * usecols = (0,1,5): 指定使用哪几列数据
+
+```
+data = np.loadtxt("tang2.txt",
+                  delimiter=",",
+                  skiprows=1,
+                  usecols=(0, 1, 3))
+print(data)
+"""输出:
+[[1. 2. 4.]
+ [2. 3. 7.]]
+"""
+```
+
+### numpy保存数据到文件
+```
+tang_array = np.array([[1, 2, 3], [4, 5, 6]])
+np.savetxt("tang3.txt", tang_array, fmt="%d")
+np.savetxt("tang4.txt", tang_array, fmt="%.2f")
+np.savetxt("tang5.txt", tang_array, fmt="%d", delimiter=",")
+```
+tang3.txt
+```
+1 2 3
+4 5 6
+```
+tang4.txt
+```
+1.00 2.00 3.00
+4.00 5.00 6.00
+```
+tang5.txt
+```
+1,2,3
+4,5,6
+```
+
+
+## 读写array结构
+从文件load数据直接是numpy.ndarray格式
+
+### npy格式文件
+
+```
+tang_array = np.array([[1, 2, 3], [4, 5, 6]])
+np.save("tang_array.npy", tang_array)
+tang = np.load("tang_array.npy")
+print(tang)
+```
+
+
+### npz格式文件
+相当于是把数据以某种方式压缩存储, 目前推荐使用上面 **`npy`** 方式存储
+
+```
+tang_array = np.array([[1, 2, 3], [4, 5, 6]])
+tang_array2 = np.arange(10)
+
+np.savez("tang_arrayz.npz", a=tang_array, b=tang_array2)
+data = np.load("tang_arrayz.npz")
+
+print(data.keys())  # KeysView(<numpy.lib.npyio.NpzFile object at 0x7fe509f96a58>)
+
+print(data["a"])
+""" 输出:
+[[1 2 3]
+ [4 5 6]]
+"""
+
+print(data["b"])  # [0 1 2 3 4 5 6 7 8 9]
+
+```
+
 
