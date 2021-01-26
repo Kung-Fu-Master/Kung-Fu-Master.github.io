@@ -121,8 +121,133 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 	$ systemctl enable docker
 ```
 
-### 配置docker的proxy
+### 改变docker运行时存储目录和存储驱动
 
+reference: https://docs.docker.com/config/daemon/systemd/#custom-docker-daemon-options
+
+You may want to control the disk space used for Docker images, containers, and volumes by moving it to a separate partition.
+
+To accomplish this, set the following flags in the **`/etc/docker/daemon.json`** file on Linux by default.
+```
+{
+    "data-root": "/mnt/docker-data", // 改变image,container,volumes在宿主机存储目录
+    "storage-driver": "overlay2"     // 改变存储驱动
+}
+```
+daemon.json所有配置信息参考: https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-configuration-file
+内容如下:
+```
+{
+  "allow-nondistributable-artifacts": [],
+  "api-cors-header": "",
+  "authorization-plugins": [],
+  "bip": "",
+  "bridge": "",
+  "cgroup-parent": "",
+  "cluster-advertise": "",
+  "cluster-store": "",
+  "cluster-store-opts": {},
+  "containerd": "/run/containerd/containerd.sock",
+  "containerd-namespace": "docker",
+  "containerd-plugin-namespace": "docker-plugins",
+  "data-root": "",
+  "debug": true,
+  "default-address-pools": [
+    {
+      "base": "172.80.0.0/16",
+      "size": 24
+    },
+    {
+      "base": "172.90.0.0/16",
+      "size": 24
+    }
+  ],
+  "default-cgroupns-mode": "private",
+  "default-gateway": "",
+  "default-gateway-v6": "",
+  "default-runtime": "runc",
+  "default-shm-size": "64M",
+  "default-ulimits": {
+    "nofile": {
+      "Hard": 64000,
+      "Name": "nofile",
+      "Soft": 64000
+    }
+  },
+  "dns": [],
+  "dns-opts": [],
+  "dns-search": [],
+  "exec-opts": [],
+  "exec-root": "",
+  "experimental": false,
+  "features": {},
+  "fixed-cidr": "",
+  "fixed-cidr-v6": "",
+  "group": "",
+  "hosts": [],
+  "icc": false,
+  "init": false,
+  "init-path": "/usr/libexec/docker-init",
+  "insecure-registries": [],
+  "ip": "0.0.0.0",
+  "ip-forward": false,
+  "ip-masq": false,
+  "iptables": false,
+  "ip6tables": false,
+  "ipv6": false,
+  "labels": [],
+  "live-restore": true,
+  "log-driver": "json-file",
+  "log-level": "",
+  "log-opts": {
+    "env": "os,customer",
+    "labels": "somelabel",
+    "max-file": "5",
+    "max-size": "10m"
+  },
+  "max-concurrent-downloads": 3,
+  "max-concurrent-uploads": 5,
+  "max-download-attempts": 5,
+  "mtu": 0,
+  "no-new-privileges": false,
+  "node-generic-resources": [
+    "NVIDIA-GPU=UUID1",
+    "NVIDIA-GPU=UUID2"
+  ],
+  "oom-score-adjust": -500,
+  "pidfile": "",
+  "raw-logs": false,
+  "registry-mirrors": [],
+  "runtimes": {
+    "cc-runtime": {
+      "path": "/usr/bin/cc-runtime"
+    },
+    "custom": {
+      "path": "/usr/local/bin/my-runc-replacement",
+      "runtimeArgs": [
+        "--debug"
+      ]
+    }
+  },
+  "seccomp-profile": "",
+  "selinux-enabled": false,
+  "shutdown-timeout": 15,
+  "storage-driver": "",
+  "storage-opts": [],
+  "swarm-default-advertise-addr": "",
+  "tls": true,
+  "tlscacert": "",
+  "tlscert": "",
+  "tlskey": "",
+  "tlsverify": true,
+  "userland-proxy": false,
+  "userland-proxy-path": "/usr/libexec/docker-proxy",
+  "userns-remap": ""
+}
+```
+
+### 配置docker的proxy
+reference: https://docs.docker.com/config/daemon/systemd/#httphttps-proxy
 ```shell
 	$ mkdir -p /etc/systemd/system/docker.service.d
 	$ touch /etc/systemd/system/docker.service.d/proxy.conf
@@ -131,6 +256,29 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 	Environment="HTTPS_PROXY=http://<proxy>:913"
 	Environment="NO_PROXY=10.67.108.211,10.67.109.142,10.67.109.147,10.67.109.144,10.67.108.220,127.0.0.1,hce-node01,hce-node02,hce-node03,hce-node04"
 ```
+Flush changes and restart Docker
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+Verify that the configuration has been loaded and matches the changes you made, for example:
+```
+sudo systemctl show --property=Environment docker
+    
+Environment=HTTP_PROXY=http://proxy.example.com:80 HTTPS_PROXY=https://proxy.example.com:443 NO_PROXY=localhost,127.0.0.1,
+```
+
+### Keep containers alive during daemon downtime
+reference: https://docs.docker.com/config/containers/live-restore/
+Use the **`/etc/docker/daemon.json`** to enable **`live-restore`**
+```
+{
+  "live-restore": true
+}
+```
+Restart the Docker daemon. On Linux, you can avoid a restart (and avoid any downtime for your containers) by reloading the Docker daemon. If you use **`systemd`**, then use the command **`systemctl reload docker`**. Otherwise, send a SIGHUP signal to the dockerd process.
+
 
 ### Additional
 可以在Docker服务启动配置中增加 --registry-mirror=proxy_URL来指定镜像代理服务地址（如https://registry.docker-en.com)
@@ -147,6 +295,7 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 	$ docker search redis
 ```
 
+
 ## **安装docker compose**
 // 关于此程序说明可以参考 https://www.runoob.com/docker/docker-compose.html
 
@@ -155,6 +304,7 @@ docker-ce project是docker公司维护，docker-ee是闭源的；
 	 curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 	 chmod +x /usr/local/bin/docker-compose
 ```
+
 
 ## 容器的使用
 
@@ -536,6 +686,7 @@ $ docker images -q=true
 
 ```shell
 	$ docker history mysql:5.7
+	$ docker history mysql:5.7 --no-trunc  // get the full output
 ```
 
 ### 删除镜像
