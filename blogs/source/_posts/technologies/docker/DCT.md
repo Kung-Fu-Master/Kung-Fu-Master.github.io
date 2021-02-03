@@ -21,7 +21,7 @@ unset DOCKER_CONTENT_TRUST
 | 机器 | IP | 作用 |
 | :----- | :----- | :------: |
 | master | 10.239.140.65 | 部署了docker registry仓库和notary服务器 |
-| laboratory | 10.239.131.157 | 作为其它机器用来测试上传下载master上的registry中的images |
+| laboratory | 10.239.131.157 | 用来测试上传下载master上的registry中的images |
 
  * master机器：
 ```

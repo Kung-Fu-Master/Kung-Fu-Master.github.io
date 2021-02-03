@@ -111,7 +111,74 @@ print(df.values)
  [890 1 1 ... 30.0 'C148' 'C']
  [891 0 3 ... 7.75 nan 'Q']]
 """
+```
 
+## 创建自己的dataframe结构
+### 创建dataframe结构
+```
+import numpy as np
+import pandas as pd
+
+// 数据为空的需要设置成 np.nan
+data = {
+    "country": ["aaa", "bbb", "ccc"],
+    "population": [10, 12, np.nan],
+    "name": ["Shanghai", "Beijing", "Guangzhou"],
+    "location": [np.nan, "North", "Sourth"]
+}
+df_data = pd.DataFrame(data)
+print(df_data)
+// 输出:
+  country  population       name location
+0     aaa        10.0   Shanghai      NaN
+1     bbb        12.0    Beijing    North
+2     ccc         NaN  Guangzhou   Sourth
+```
+
+### 取指定数据
+```
+df_data_age = df_data["population"]
+print(df_data_age[:2])
+// 输出
+0    10
+1    12
+
+print(df_data_age.values[:2])
+// 输出
+[10 12]
+```
+
+### 指定自己的索引
+```
+df_data = df_data.set_index("name")
+print(df_data.head())
+// 输出
+          country  population location
+name                                  
+Shanghai      aaa        10.0      NaN
+Beijing       bbb        12.0    North
+Guangzhou     ccc         NaN   Sourth
+
+df_data_population = df_data["population"]
+print(df_data_population["Beijing"])
+// 输出
+12.0
+```
+
+### 获取数据基本统计特性
+```
+// 只能获取数值类型的数据的基本统计结果, 而对于其它列数据不能获取基本统计特性.
+print(df_data.describe())
+// 输出
+       population
+count    2.000000		// 表示population这一列有2个有效数据
+mean    11.000000		// 均值
+std      1.414214		// 标准差
+min     10.000000		// 最小值
+25%     10.500000		// 四分之一位数值
+50%     11.000000		// 二分之一位数值
+75%     11.500000		// 四分之三位数值
+max     12.000000		// 最大值
 ```
 
 
