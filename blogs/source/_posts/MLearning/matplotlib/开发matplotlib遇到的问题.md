@@ -45,7 +45,10 @@ cp id_rsa.pub authorized_keys
 之后把 windows生成的id_rsa.pub内容追加到authorized_keys文件
 
 #### 回到windows机器
-重启VScode, 可以发现远程登陆到linux不需要再输入密码, 测试matplotlib
+
+1. 重启VScode, 可以发现远程登陆到linux不需要再输入密码
+2. 启动MobaXterm或Xshell(Xshell没测试过)软件, 实践中不需要打开终端窗口, 仅仅启动软件就行了.
+3. 测试matplotlib
 ```
 import numpy as np
 import matplotlib as mpl
