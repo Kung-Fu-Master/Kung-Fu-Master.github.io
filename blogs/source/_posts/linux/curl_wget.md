@@ -16,6 +16,7 @@ categories:
 	-D/--dump-header <file>              把header信息写入到该文件中
 	-e/--referer                                  来源网址
 	-f/--fail                                          连接失败时不显示http错误
+	-H/--header                           添加 HTTP 请求的标头.
 	-o/--output                                  把输出写到该文件中
 	-O/--remote-name                      把输出写到该文件中，保留远程文件的文件名
 	-r/--range <range>                      检索来自HTTP/1.1或FTP服务器字节范围
@@ -28,17 +29,32 @@ categories:
 ```
 wget更像一个迅雷，是个专门用来下载文件的下载利器.
 
+**`/dev/null`** 是类 unix 系统的 空设备, **`> /del/null`** 就是把标准输出重定向到空设备，不显示也不保存, **`2>&1`** 是把标准错误重定向到标准输出，也就是前面的空设备.
+
+
 ### 基本命令
 
 ```shell
-	curl -O http://man.linuxde.net/text.iso                    #O大写，不用O只是打印内容不会下载
-	wget http://www.linuxde.net/text.iso                       #不用参数，直接下载文件
-	root@alpha:/home/test# curl -O http://man.linuxde.net/text.iso
-	% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-									Dload  Upload   Total   Spent    Left  Speed
-	100  6332  100  6332    0     0   441k      0 --:--:-- --:--:-- --:--:--  441k
-	root@alpha:/home/test#
+$ curl -O http://man.linuxde.net/text.iso                    #O大写，不用O只是打印内容不会下载
+$ wget http://www.linuxde.net/text.iso                       #不用参数，直接下载文件
+root@alpha:/home/test# curl -O http://man.linuxde.net/text.iso
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+								Dload  Upload   Total   Spent    Left  Speed
+100  6332  100  6332    0     0   441k      0 --:--:-- --:--:-- --:--:--  441k
 ```
+
+**`-H`** 参数添加 HTTP 请求的标头。
+```
+// 添加 HTTP 标头Accept-Language: en-US.
+$ curl -H 'Accept-Language: en-US' https://google.com
+
+// 添加两个 HTTP 标头.
+$ curl -H 'Accept-Language: en-US' -H 'Secret-Message: xyzzy' https://google.com
+
+// 添加 HTTP 请求的标头是Content-Type: application/json，然后用 -d 参数发送 JSON 数据.
+$ curl -d '{"login": "emma", "pass": "123"}' -H 'Content-Type: application/json' https://google.com/login
+```
+
 
 ### 保存网页
 
