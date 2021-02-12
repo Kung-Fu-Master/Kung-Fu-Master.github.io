@@ -155,3 +155,74 @@ plt.savefig("matplotlib/line01.png")
 plt.show()
 ```
 ![](line01.png)
+
+
+## 子图
+
+![](subpic01.png)
+
+```
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pylab as plt
+
+tang_numpy = np.arange(0, 10, 0.5)
+plt.plot(tang_numpy, tang_numpy, "r--")
+plt.plot(tang_numpy, tang_numpy**2, "bs")
+# 上面两行等价于下面一行
+#plt.plot(tang_numpy, tang_numpy, "r--", tang_numpy, tang_numpy**2, "bs")
+plt.show()
+
+#====================================================================================
+
+x = np.linspace(-10, 10)
+y = np.sin(x)
+line = plt.plot(x, y)
+plt.setp(line,
+         color="r",
+         linestyle=":",
+         linewidth=3.0,
+         marker="o",
+         markerfacecolor="r",
+         markersize=10,
+         alpha=0.5)
+plt.savefig("matplotlib/line01.png")
+plt.show()
+
+#====================================================================================
+
+x = np.linspace(-10, 10)
+y = np.sin(x)
+# 211 表示一会要画的图是3行2列的，最后一个1表示子图当中第1个图
+plt.subplot(321)
+plt.plot(x, y, color="r")
+plt.xlabel("01XXX")
+plt.ylabel("01YYY")
+plt.title("Test 01")
+# 在图中坐标(5, 0)处添加信息
+plt.text(5, 0, "Info")
+# 添加注释箭头
+plt.annotate(
+    "zhushi001",
+    xy=(-5, 0),
+    xytext=(-1, 0.3),
+    arrowprops=dict(
+        facecolor="black",  # 箭头颜色
+        shrink=0.01,  # 箭头大小
+        headlength=20,  # 箭头长度
+        headwidth=10))  # 箭头宽度
+# 添加格子
+plt.grid(True)
+
+plt.subplot(324)
+plt.plot(x, x**2, color="b")
+plt.xlabel("01XXX")
+plt.ylabel("01YYY")
+plt.title("Test 03")
+
+plt.savefig("matplotlib\matplotlib.png")
+plt.show()
+
+```
+
+

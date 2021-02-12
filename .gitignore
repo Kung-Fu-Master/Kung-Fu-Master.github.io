@@ -4,3 +4,4 @@ blogs/public/
 db.json
 blogs/.deploy_git/*
 blogs/.deploy_git
+node_modules/

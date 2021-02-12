@@ -11,13 +11,15 @@ categories:
 
 ## **2. cmd管理员身份进入git clone下来的文件夹**
 ```shell
-	cd ...\blogs_backup\blogs
-	npm install hexo-deployer-git --save
+cd ...\blogs_backup\blogs
+npm install -g hexo-cli
+npm install hexo-deployer-git --save
 ```
 ## **3. 生成部署博客**
 ```shell
-	hexo g    //generate，md生成html
-	hexo s    //start，开启服务, 网页上输入http://localhost:4000 即可查看
+//一定要到blogs目录再操作hexo g等命令
+hexo g    //generate，md生成html
+hexo s    //start，开启服务, 网页上输入http://localhost:4000 即可查看
 ```
 添加***.md文件后
 ```shell
