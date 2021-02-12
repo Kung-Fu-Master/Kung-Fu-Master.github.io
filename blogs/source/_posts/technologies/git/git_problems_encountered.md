@@ -34,11 +34,10 @@ https://octoverse.github.com/#fastest-growing-oss-projects-by-contributors
 ## 解决git bash 终端显示中文乱码
 
 在git bash的界面中右击空白处，弹出菜单，选择选项->文本->本地Locale，设置为zh_CN，而旁边的字符集选框选为UTF-8
-
-上面方法在git add带中文文件时候会出现 "add不到匹配的文件" 或者 重启还是出现中文乱码,解决方法如下(亲测有效)：
-
-1. 选择选项->文本->本地Locale，设置为(Defalult)
-2. `git config --global core.quotepath false` 再重启gitbash终端可解决
+```
+1. git bash打开鼠标右击 -> 选项 -> 文本 -> 本地Locale，设置为zh_CN，而旁边的字符集选框选为UTF-8
+2. `git config --global core.quotepath false` 可以不用重启gitbash终端可解决
+```
 
 ## git push免密登陆方法
 

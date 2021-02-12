@@ -30,8 +30,11 @@ hexo s    //start，开启服务, 网页上输入http://localhost:4000 即可查
 ## **免密 $hexo d 方法**
 
 ### **第一种, 亲测**
-git bash终端 cd 到博客副本文件夹, 输入: $git config --global credential.helper store  
-接下来 $git push 需要输入密码，以后 $git push 就不用了, 然后 $hexo d 也就不需要了  
+git bash终端 cd 到博客副本文件夹, 输入：
+```
+$git config --global credential.helper store  
+```
+接下来 `$git push` 需要输入密码，以后 `$git push` 就不用了, 然后 `$hexo d` 也就不需要了  
 
 原因是执行 $git config --global credential.helper store 后会创建文件 C:\Users\hp\.git-credentials(Windows系统下)  
 里面内容: https://git账户名:登陆git密码@github.com  
