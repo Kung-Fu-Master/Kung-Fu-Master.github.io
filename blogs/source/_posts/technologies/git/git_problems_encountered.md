@@ -9,6 +9,7 @@ categories:
 ## 查看github 贡献最多和增长最快链接:
 https://octoverse.github.com/#fastest-growing-oss-projects-by-contributors
 
+<!-- more -->
 ## git branch只能看到master分支
 执行`git init`命令后再执行`git clone ...`, 之后执行`git branch -a`, 发现只有master分支, 远程还有其它分支但是看不到.  
 
