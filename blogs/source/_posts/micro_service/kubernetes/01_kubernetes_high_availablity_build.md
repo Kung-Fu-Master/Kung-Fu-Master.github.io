@@ -19,6 +19,7 @@ categories:
 
 总共四台机器，三台做master, 一台做work node, 部署好后可以把master上污点去掉, 照样可以部署k8s资源.
 Virtual IP是部署过程中在机器网卡上添加的虚拟IP, 操作下方有涉及到.
+**`Note: k8s-vip地址需要独一无二, 不能与能ping同的所有其它机器的IP地址冲突, 因此, 设置k8s-vip ip地址之前线ping一下改地址看是否能ping通, 如果能平通就换成其它不能ping通, 也就是其它机器还没有占用的IP地址.`**
 
 ![](finish_setup.PNG)
 
@@ -71,6 +72,12 @@ Virtual IP是部署过程中在机器网卡上添加的虚拟IP, 操作下方有
 	10.239.141.194 node-2
 	10.239.140.51 k8s-vip
 ```
+**`Note: `** 下面部署0.1.5版本的kube-vip时候 上面的/etc/hosts文件里的k8s-vip修改成如下内容
+
+```
+10.239.140.201 k8s-vip
+```
+
 ## **kube-vip方式部署高可用k8s集群**
 official website:  
 https://github.com/kubernetes/kubeadm/blob/master/docs/ha-considerations.md#kube-vip  

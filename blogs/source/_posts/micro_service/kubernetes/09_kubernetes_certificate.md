@@ -8,6 +8,11 @@ categories:
 top:
 ---
 
+Reference:
+最新版本:  https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/
+中文版本:  https://kubernetes.io/zh/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/
+1.19版本: https://v1-19.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/
+
 ## K8s Certificates
 
  !()[k8s_certificates.PNG]
@@ -36,8 +41,11 @@ https://kubernetes.io/zh/docs/concepts/cluster-administration/certificates/
 
 cfssl 在 k8s 中比较流行, 使用json文件传入来生成证书, 要比 openssl 更直观也简单点.
 
-
-
+## 查看证书
+kubernetes 1.19版本
+```
+kubeadm alpha certs check-expiration
+```
 
 
 
