@@ -24,6 +24,12 @@ Virtual IP是部署过程中在机器网卡上添加的虚拟IP, 操作下方有
 ![](finish_setup.PNG)
 
 ## **环境配置**
+
+修改机器名字, 重开终端就可以看到机器名变了
+```
+	sudo hostnamectl set-hostname master-node
+```
+
 每台机器(master和node)都要配置
 
 ```shell
@@ -56,10 +62,19 @@ Virtual IP是部署过程中在机器网卡上添加的虚拟IP, 操作下方有
 	// 有时候在公司开发机上部署不成功, 需要在~/.bashrc添加NO_PROXY
 	// 不要忘了添加 127.0.0.1 和 虚拟出来的 Virtual IP
 	cat << EOF >> ~/.bashrc
-	export NO_PROXY=127.0.0.1,master-node-IP,laboratory-IP,Node01-IP,Node02-IP,k8s-vip-IP, master-node,laboratory,Node01,Node02,k8s-vip
+	export NO_PROXY=127.0.0.1,<master-node-IP>,<laboratory-IP>,<Node01-IP>,<Node02-IP>,<k8s-vip-IP>, master-node,laboratory,Node01,Node02,k8s-vip
 	EOF
 	source ~/.bashrc
 ```
+
+如果在系统的**`/etc/environment`**中添加proxy, 则k8s安装过程api-server等组件会先读取/etc/environment文件中的proxy信息.
+```
+cat /etc/environment
+http_proxy="http://child-prc.intel.com:913"
+https_proxy="http://child-prc.intel.com:913"
+no_proxy="127.0.0.1,<master-node-IP>,<laboratory-IP>,<Node01-IP>,<Node02-IP>,<k8s-vip-IP>, master-node,laboratory,Node01,Node02,k8s-vip"
+```
+
 
 修改 /etc/hosts文件内容
 
@@ -89,6 +104,7 @@ https://github.com/plunder-app/kube-vip/blob/master/kubernetes-control-plane.md
 **master-node机器上**
 
 ```xml
+	$ mkdir /etc/kube-vip
 	$ touch /etc/kube-vip/config.yaml
 	localPeer:
 	  id: master-node			// 机器hostname, 通过$ hostnamectl set-hostname <HostName>修改

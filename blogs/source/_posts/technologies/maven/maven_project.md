@@ -85,6 +85,8 @@ Maven 安装 JAR 包的命令是
 	mvn compile
 	mvn compile -Dcheckstyle.skip=true： 不需要进行代码style检查进行编译
 ```
+Reference Link: https://checkstyle.org/cmdline.html
+
  ![](compile.JPG)
 
 3. 测试编译过的代码

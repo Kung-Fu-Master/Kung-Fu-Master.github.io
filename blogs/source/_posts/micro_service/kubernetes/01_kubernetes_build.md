@@ -218,12 +218,22 @@ yum list containerd.io --showduplicates | sort -r
 
 #### **设置docker的proxy**
 
+**NOTE:**
+如果在系统的**`/etc/environment`**中添加proxy, 则k8s安装过程api-server等组件会先读取/etc/environment文件中的proxy信息.
+```
+cat /etc/environment
+http_proxy="http://child-prc.intel.com:913"
+https_proxy="http://child-prc.intel.com:913"
+no_proxy="10.67.108.211,10.67.109.142,10.67.109.147,10.67.109.144,10.67.108.220,127.0.0.1,hce-node01,hce-node02,hce-node03,hce-node04"
+```
+
 **第一种:**
 
 ```shell
-	$ touch /etc/systemd/system/docker.service.d/proxy.conf
-	Add proxy in this newly created file
-	$ vim /etc/systemd/system/docker.service.d/proxy.conf
+	mkdir /etc/systemd/system/docker.service.d
+	touch /etc/systemd/system/docker.service.d
+	// Add proxy in this newly created file
+	vim /etc/systemd/system/docker.service.d/proxy.conf
 	[Service]
 	Environment="HTTP_PROXY=http://child-prc.intel.com:913"
 	Environment="HTTPS_PROXY=http://child-prc.intel.com:913"
@@ -260,12 +270,32 @@ yum list containerd.io --showduplicates | sort -r
 	$ vim /etc/docker/daemon.json
 	{
 	"insecure-registries" :["hce-node01:5000"],
-	"registry-mirrors": ["https://registry.docker-cn.com"] // 或者"registry-mirrors": ["https://uxk0ognt.mirror.aliyuncs.com"]
+	"registry-mirrors": ["http://hub-mirror.c.163.com", "https://registry.docker-cn.com"], // 或者"registry-mirrors": ["https://uxk0ognt.mirror.aliyuncs.com"]
+	"live-restore": true,
+	"data-root": "/home/zhan/docker/data"
 	}
-	
-	$ systemctl daemon-reload
-	$ systemctl restart docker
+
+// 重新加载docker daemon, 以后每次修改docker 的 daemon.json后可以只执行下面的reload操作就可以了
+	systemctl reload docker
+
+// 下面方法会重启doker运行时.
+	systemctl daemon-reload
+	systemctl restart docker
 ```
+
+#### 镜像源
+可以同事添加多个镜像源, 如上所示
+Docker 官方中国区：
+	https://registry.docker-cn.com
+
+网易：
+	http://hub-mirror.c.163.com
+
+中国科技大学：
+	https://docker.mirrors.ustc.edu.cn
+
+阿里云：
+	https://pee6w651.mirror.aliyuncs.com
 
 ### **kubeadm, kubelet, kubectl**
 > 每台机器都安装kubeadm(二进制文件工具), kubelet(服务), master上安装kubectl(二进制文件工具), 也可以在需要kubectl控制k8s资源的worknode上也安装(也就是下载或拷贝)kubectl二进制文件工具.
@@ -284,33 +314,33 @@ yum list containerd.io --showduplicates | sort -r
 Ubuntu:
 
 ```shell
-	$ sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
-	$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-	$ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-	$ sudo apt-get update
-	$ sudo apt-get install -y kubectl
-	$ sudo apt-get install -y kubeadm
-	$ sudo apt-get install -y kubelet
+	sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
+	curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+	echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+	sudo apt-get update
+	sudo apt-get install -y kubectl
+	sudo apt-get install -y kubeadm
+	sudo apt-get install -y kubelet
 ```
 Centos:
 
 ```shell
 	// 关闭交换区
-	$ swapoff -a
-	Edit /etc/fstab to comment out swap partition line so that it remains disabled after reboot
+	swapoff -a
+		Edit /etc/fstab to comment out swap partition line so that it remains disabled after reboot
 	
-	$ vim /etc/sysctl.d/k8s.conf
-	net.bridge.bridge-nf-call-ip6tables = 1
-	net.bridge.bridge-nf-call-iptables = 1
-	$ sysctl --system
+	vim /etc/sysctl.d/k8s.conf
+		net.bridge.bridge-nf-call-ip6tables = 1
+		net.bridge.bridge-nf-call-iptables = 1
+	sysctl --system
 	
 	// 关闭防火墙
-	$ systemctl stop firewalld.service
-	$ systemctl disable firewalld
+	systemctl stop firewalld.service
+	systemctl disable firewalld
 	
 	//Set SELinux in permissive mode (effectively disabling it)
-	$ setenforce 0
-	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+	setenforce 0
+	sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
 	// 配置kubernetes安装源
 	cat <<EOF > /etc/yum.repos.d/kubernetes.repo
@@ -369,13 +399,13 @@ master-node和worknode都需要设置.
 有的说明还可以关闭网络管理器,关闭核心防护,清空iptabels, 编辑主机名
 
 ```shell
-	$ // systemctl list-unit-files --type=service | grep NetworkManager // 查看NetworkManager是否enabled
-	$ // systemctl status NetworkManager	// 查看NetworkManager是否running
-	$ // systemctl stop NetworkManager		// 关闭网络, 没有IP地址无法远程连接终端, 慎用.
-	$ // systemctl disable NetworkManager
-	$ setenforce 0
-	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-	$ iptables -F	// 清空iptables
+	// systemctl list-unit-files --type=service | grep NetworkManager // 查看NetworkManager是否enabled
+	// systemctl status NetworkManager	// 查看NetworkManager是否running
+	// systemctl stop NetworkManager		// 关闭网络, 没有IP地址无法远程连接终端, 慎用.
+	// systemctl disable NetworkManager
+	setenforce 0
+	sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+	iptables -F	// 清空iptables
 ```
 > Iptables原理
 > linux的防火墙由netfilter和iptables组成
@@ -390,11 +420,11 @@ master-node和worknode都需要设置.
 
 ```shell
 	关闭selinux:		// 限制访问linux资源文件上下文
-	$ getenforce			// 查看是否disabled
-	$ setenforce 0			//临时关闭selinux(Security-Enhanced Linux), 终端会输出"setenforce: SELinux is disabled"
-	$ vim /etc/selinux/config --> 将 SELINUX=permissive 改为 SELINUX=disabled, 设置重启后自动关闭selinux
-	$ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config	//永久关闭
-	$ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config(另一种)
+	getenforce			// 查看是否disabled
+	setenforce 0			//临时关闭selinux(Security-Enhanced Linux), 终端会输出"setenforce: SELinux is disabled"
+	vim /etc/selinux/config --> 将 SELINUX=permissive 改为 SELINUX=disabled, 设置重启后自动关闭selinux
+	sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config	//永久关闭
+	sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config(另一种)
 ```
 ### **同步系统时间**
 > 涉及到验证签发的证书的有效性, 如果签发证书的服务器时间比使用证书的服务器时间早, 就会导致校验不成功或证书错误, 一直等到使用证书的服务器时间也运行到证书开始生效的时间后才会解决这个问题.
@@ -422,8 +452,8 @@ master-node和worknode都需要设置.
 
 ```shell
 	//master-node安装
-	$ yum install chrony -y
-	$ vim /etc/chrony.conf
+	yum install chrony -y
+	vim /etc/chrony.conf
 	......
 	# Please consider joining the pool (http://www.pool.ntp.org/join.html)
 	#server 0.centos.pool.ntp.org iburst	//注释掉或删掉
@@ -455,8 +485,8 @@ master-node和worknode都需要设置.
 
 ```shell
 	//work node安装
-	$ yum install chrony -y
-	$ vim /etc/chrony.config	//只添加一行，指定从master获取时间
+	yum install chrony -y
+	vim /etc/chrony.conf	//只添加一行，指定从master获取时间
 	# Please consider joining the pool (http://www.pool.ntp.org/join.html).
 	#server 0.centos.pool.ntp.org iburst	//注释
 	#server 1.centos.pool.ntp.org iburst	//注释
@@ -505,18 +535,18 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 ### **安装镜像(可跳过)**
 
 ```shell
-	$ kubeadm config images list // 查看kubeadm 下载过的images
-	$ docker images
-	$ docker pull gcr.io/google_containers/kube-apiserver-amd64:v1.9.3
-	$ docker pull gcr.io/google_containers/kube-controller-manager-amd64:v1.9.3
-	$ docker pull gcr.io/google_containers/kube-scheduler-amd64:v1.9.3
+	kubeadm config images list // 查看kubeadm 下载过的images
+	docker images
+	docker pull gcr.io/google_containers/kube-apiserver-amd64:v1.9.3
+	docker pull gcr.io/google_containers/kube-controller-manager-amd64:v1.9.3
+	docker pull gcr.io/google_containers/kube-scheduler-amd64:v1.9.3
 ```
 
 ### **添加机器到K8s集群**
 > 1. 在Master主机 server01 上运行
 
 ```shell
-	$ kubeadm init
+	kubeadm init
 ```
 返回部分数据如下
 
@@ -533,17 +563,17 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 第一种:
 
 ```shell
-	$ export KUBECONFIG=/etc/kubernetes/admin.conf
-	$ echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
-	$ source ~/.bashrc
+	export KUBECONFIG=/etc/kubernetes/admin.conf
+	echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
+	source ~/.bashrc
 ```
 
 第二种(其它user而非root登陆后需要做如下操作才能通过kubectl访问或生成k8s资源如pod等):
 
 ```shell
-	$ mkdir -p $HOME/.kube
-	$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-	$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+	mkdir -p $HOME/.kube
+	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 添加容器之间的通信网络, 第三方资源weave, 官网上也推荐部署其它几种通信网络方式
@@ -557,8 +587,8 @@ work node上不需要查看端口, 因为node的chrony不需要开启接受请�
 ### **在master server01 机器上查看集群节点信息**
 
 ```shell
-	$ kubectl get nodes
-	$ kubectl get namespaces
+	kubectl get nodes
+	kubectl get namespaces
 ```
 
 ### **查看node节点信息**
@@ -645,23 +675,23 @@ environment_initialization.sh
 用上面master主机上生成的token在worker节点执行如下命令:
 
 ```shell
-	$ kubeadm reset
-	$ swapoff -a
-	$ setenforce 0
-	$ systemctl stop firewalld.service
-	$ sysctl net.bridge.bridge-nf-call-iptables=1
-	$ sysctl net.bridge.bridge-nf-call-ip6tables=1
-	$ kubeadm join --token v6rgnu.ydqgkuujayykkanv --discovery-token-ca-cert-hash sha256:be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4  10.239.140.186:6443
+	kubeadm reset
+	swapoff -a
+	setenforce 0
+	systemctl stop firewalld.service
+	sysctl net.bridge.bridge-nf-call-iptables=1
+	sysctl net.bridge.bridge-nf-call-ip6tables=1
+	kubeadm join --token v6rgnu.ydqgkuujayykkanv --discovery-token-ca-cert-hash sha256:be6606e3e081afc6f9785fbe0e129e048e5a2a5557cb2e7747d727edd20c6ed4  10.239.140.186:6443
 ```
 
 ## **k8s命令自动补全**
 
 ```shell
-	$ yum install bash-completion
-	$ echo "source <(kubectl completion bash)" >> ~/.bashrc
-	$ source ~/.bashrc
-	$ bash /usr/share/bash-completion/bash_completion
-	$ bash
+	yum install bash-completion
+	echo "source <(kubectl completion bash)" >> ~/.bashrc
+	source ~/.bashrc
+	bash /usr/share/bash-completion/bash_completion
+	bash
 ```
 试试 输入 `kubectl get n` 按 `tab` 查看提示.
 
@@ -685,9 +715,9 @@ https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-clu
 解决方法:
 
 ```shell
-	$ systemctl restart docker
-	$ rm -rf /etc/systemd/system/kubelet.service.d/*
-	$ systemctl daemon-reload
+	systemctl restart docker
+	rm -rf /etc/systemd/system/kubelet.service.d/*
+	systemctl daemon-reload
 ```
 ### **问题2**
 Unable to connect to the server: x509: certificate signed by unknown authority
@@ -702,16 +732,16 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 第一种:
 
 ```shell
-	$ export KUBECONFIG=/etc/kubernetes/admin.conf
-	$ echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
-	$ source ~/.bashrc
+	export KUBECONFIG=/etc/kubernetes/admin.conf
+	echo "export KUBECONFIG=/etc/kubernetes/admin.conf" | tee -a ~/.bashrc
+	source ~/.bashrc
 ```
 第二种:
 
 ```shell
-	$ mkdir -p $HOME/.kube
-	$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-	$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+	mkdir -p $HOME/.kube
+	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 ### **问题n**
 https://istio.io/docs/examples/bookinfo/
