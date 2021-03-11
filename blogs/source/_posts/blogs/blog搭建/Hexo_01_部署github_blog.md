@@ -24,6 +24,9 @@ webpack: 它主要用途是通过CommonJS 的语法把所有浏览器端需要�
 vue-cli: 用户生成Vue工程模板。（帮你快速开始一个vue的项目，也就是给你一套vue的结构，包含基础的依赖库，只需要npm install 就可以安装。
 
 2. nodejs下载网址：https://nodejs.org/en/     【如果嫌下载的慢，可以下载其他网站上的，别人有现成的，下载的比较快】
+部署此博客用的nodeJS版本连接: https://nodejs.org/dist/latest-v12.x/
+  node-v12.21.0-x64.msi  
+
 3. 下载好后，双击安装
 4. 中途有个选择安装路径
 5. 接下去一路“next”，最后点击finish
