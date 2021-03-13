@@ -1,0 +1,454 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="在storage仓库里也存储了一份当时部署所使用的yaml等资源文件. Quick start:  https:&#x2F;&#x2F;docs.min.io&#x2F;docs&#x2F;minio-quickstart-guide.htmlDeployment on kubernetes:  https:&#x2F;&#x2F;docs.min.io&#x2F;docs&#x2F;deploy-minio-on-kubernetes.html  https:&#x2F;&#x2F;githu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MinIO 02 deployment on kubernetes">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_02_deployment_on_kubernetes/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在storage仓库里也存储了一份当时部署所使用的yaml等资源文件. Quick start:  https:&#x2F;&#x2F;docs.min.io&#x2F;docs&#x2F;minio-quickstart-guide.htmlDeployment on kubernetes:  https:&#x2F;&#x2F;docs.min.io&#x2F;docs&#x2F;deploy-minio-on-kubernetes.html  https:&#x2F;&#x2F;githu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="storage">
+<meta name="twitter:card" content="summary"><title>MinIO 02 deployment on kubernetes | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_02_deployment_on_kubernetes/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">MinIO 02 deployment on kubernetes</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.8k</span></span></div></header><div class="post-body"><p>在storage仓库里也存储了一份当时部署所使用的yaml等资源文件.</p>
+<p>Quick start:<br>  <span class="exturl"><a class="exturl__link"   href="https://docs.min.io/docs/minio-quickstart-guide.html"  target="_blank" rel="noopener">https://docs.min.io/docs/minio-quickstart-guide.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>Deployment on kubernetes:<br>  <span class="exturl"><a class="exturl__link"   href="https://docs.min.io/docs/deploy-minio-on-kubernetes.html"  target="_blank" rel="noopener">https://docs.min.io/docs/deploy-minio-on-kubernetes.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>  <span class="exturl"><a class="exturl__link"   href="https://github.com/minio/operator/blob/master/README.md"  target="_blank" rel="noopener">https://github.com/minio/operator/blob/master/README.md</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>Enable TLS:<br>  <span class="exturl"><a class="exturl__link"   href="https://github.com/minio/operator/blob/master/docs/tls.md"  target="_blank" rel="noopener">https://github.com/minio/operator/blob/master/docs/tls.md</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>(csdn)<span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/aloneysir/p/12874984.html"  target="_blank" rel="noopener">https://www.cnblogs.com/aloneysir/p/12874984.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>部署分布式MinIO至少需要部署4个实例.</p>
+
+        <h2 id="Prerequisites"   >
+          <a href="#Prerequisites" class="heading-link"><i class="fas fa-link"></i></a>Prerequisites</h2>
+      <ol>
+<li>Kubernetes version v1.17.0 and above for compatibility. MinIO Operator uses k8s/client-go v0.18.0.</li>
+<li>kubectl configured to refer to a Kubernetes cluster.</li>
+<li>Create the required PVs as <span class="exturl"><a class="exturl__link"   href="https://github.com/minio/minio-operator/blob/master/docs/using-direct-csi.md"  target="_blank" rel="noopener">direct CSI driver.</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> or use the following installation step.</li>
+</ol>
+
+        <h2 id="mount-disk"   >
+          <a href="#mount-disk" class="heading-link"><i class="fas fa-link"></i></a>mount disk</h2>
+      <p>Create MinIO storage folder and mount to the specified disk.</p>
+<figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> expect </span><br><span class="line"></span><br><span class="line">// Please refer <span class="keyword">to</span> the comments <span class="keyword">in</span> the mkdir_minio_node.sh script below <span class="keyword">to</span> run a command similar <span class="keyword">to</span> the <span class="keyword">following</span></span><br><span class="line">bash mkdir_minio_node.sh -u &lt;<span class="keyword">user</span>&gt; -p &lt;pwd&gt; <span class="comment">--node01 …</span></span><br><span class="line"></span><br><span class="line">// <span class="keyword">Log</span> <span class="keyword">in</span> <span class="keyword">to</span> <span class="keyword">each</span> machine <span class="keyword">and</span> <span class="keyword">mount</span> the created <span class="keyword">file</span> <span class="keyword">to</span> the specified disk</span><br><span class="line"><span class="keyword">mount</span> /dev/sd* /mnt/minio_data</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Using-Direct-CSI-Driver"   >
+          <a href="#Using-Direct-CSI-Driver" class="heading-link"><i class="fas fa-link"></i></a>Using Direct CSI Driver</h2>
+      <p>Download the direct-csi from github and checkout to the v0.2.1 tag.</p>
+<figure class="highlight properties"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">git</span> <span class="string">clone https://github.com/minio/direct-csi.git</span></span><br><span class="line"><span class="attr">cd</span> <span class="string">direct-csi/</span></span><br><span class="line"><span class="attr">git</span> <span class="string">checkout v0.2.1</span></span><br><span class="line"><span class="attr">cd</span> <span class="string">../</span></span><br><span class="line"><span class="attr">export</span> <span class="string">$(cat default.env)</span></span><br><span class="line"><span class="attr">kubectl</span> <span class="string">apply -k direct-csi</span></span><br></pre></td></tr></table></div></figure>
+
+<p>配置csi driver</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF &gt; default.env</span><br><span class="line">DIRECT_CSI_DRIVES=data&#123;1...4&#125;</span><br><span class="line">DIRECT_CSI_DRIVES_DIR=/mnt</span><br><span class="line">KUBELET_DIR_PATH=/var/lib/kubelet</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">export $(cat default.env)</span><br><span class="line">kubectl apply -k direct-csi</span><br></pre></td></tr></table></div></figure>
+
+<p>执行完上述操作后会在work node的/var/lib/kubelet/plugins_registry/生成下列sock文件</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls /var/lib/kubelet/plugins_registry/</span></span><br><span class="line">direct.csi.min.io-reg.sock</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Create-Operator-Deployment"   >
+          <a href="#Create-Operator-Deployment" class="heading-link"><i class="fas fa-link"></i></a>Create Operator Deployment</h2>
+      <ol>
+<li>Create namespace minio for minIO to deploy.</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns minio</span><br></pre></td></tr></table></div></figure>
+
+<ol start="2">
+<li>To start MinIO-Operator with default configuration, use the minio-operator.yaml file.</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f minio-operator.yaml -n minio</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Create-MinIO-instances-without-tls"   >
+          <a href="#Create-MinIO-instances-without-tls" class="heading-link"><i class="fas fa-link"></i></a>Create MinIO instances without tls</h2>
+      <p>Once MinIO-Operator deployment is running, you can create MinIO instances using the below command</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f minioinstance.yaml</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Create-NodePort-service-for-minIO"   >
+          <a href="#Create-NodePort-service-for-minIO" class="heading-link"><i class="fas fa-link"></i></a>Create NodePort service for minIO</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f NodePort-minio.yaml</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Access-minIO-from-the-browser"   >
+          <a href="#Access-minIO-from-the-browser" class="heading-link"><i class="fas fa-link"></i></a>Access minIO from the browser</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Minio Server没有配置TLS</span><br><span class="line">浏览器输入: http://127.0.0.1:30007</span><br><span class="line">default username: minio</span><br><span class="line">default password: minio123</span><br><span class="line">// Minio Server配置TLS</span><br><span class="line">浏览器输入: https://127.0.0.1:30007</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Secure-access-to-MinIO-server-with-TLS"   >
+          <a href="#Secure-access-to-MinIO-server-with-TLS" class="heading-link"><i class="fas fa-link"></i></a>Secure access to MinIO server with TLS</h2>
+      <p><strong>1.1. Generate a private key with ECDSA</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openssl ecparam -genkey -name prime256v1 | openssl ec -out private.key</span><br><span class="line">read EC key</span><br><span class="line">writing EC key</span><br></pre></td></tr></table></div></figure>
+
+<p>Alternatively, use the following command to generate a private ECDSA key protected by a password:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl ecparam -genkey -name prime256v1 | openssl ec -aes256 -out private.key -passout pass:&lt;PASSWORD&gt;</span><br></pre></td></tr></table></div></figure>
+<p><strong>1.2 Generate a private key with RSA.</strong><br>Use the following command to generate a private key with RSA:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out private.key 2048</span><br><span class="line">Generating RSA private key, 2048 bit long modulus</span><br><span class="line">............................................+++</span><br><span class="line">...........+++</span><br><span class="line">e is 65537 (0x10001)</span><br><span class="line"></span><br><span class="line">// openssl查看证书内容</span><br><span class="line"> openssl rsa -in private.key -text -noout</span><br></pre></td></tr></table></div></figure>
+
+<p>Alternatively, use the following command to generate a private RSA key protected by a password:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -aes256 -out private.key 2048 -passout pass:&lt;PASSWORD&gt;</span><br></pre></td></tr></table></div></figure>
+<p><strong>Note:</strong> When using a password-protected private key, the password must be provided through the environment variable MINIO_CERT_PASSWD using the following command:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> MINIO_CERT_PASSWD=&lt;PASSWORD&gt;</span></span><br><span class="line">// 也就是在minioinstance.yaml中添加如下信息</span><br><span class="line">env:</span><br><span class="line">  - MINIO_CERT_PASSWD</span><br><span class="line">    value: "&lt;YourPassword&gt;"		// 一定要加上双引号""</span><br></pre></td></tr></table></div></figure>
+<p><strong>2. Generate a self-signed certificate.</strong><br>Use the following command to generate a self-signed certificate and enter a passphrase when prompted:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -days 3650 -key private.key -out public.crt -subj "/C=US/ST=state/L=location/O=organization/CN=&lt;domain.com&gt;"</span><br><span class="line"></span><br><span class="line">// 查看证书签名,算法,public key等信息</span><br><span class="line">openssl x509 -in public.crt -text -noout</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>Note:</strong> Replace &lt;domain.com&gt; with the development domain name.<br>Alternatively, use the command below to generate a self-signed wildcard certificate that is valid for all subdomains under &lt;domain.com&gt;. Wildcard certificates are useful for <code>deploying distributed MinIO instances</code>, where each instance runs on a subdomain under a single parent domain.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -days 3650 -key private.key -out public.crt -subj "/C=US/ST=state/L=location/O=organization/CN=*.minio-hl-svc.minio.svc.cluster.local"</span><br></pre></td></tr></table></div></figure>
+<p><strong>Note: 若是不知道怎么确定<code>&lt;*.domain.com&gt;</code>信息, 添加TLS后部署minio发现pod启动异常或者访问minio服务不正常, 查看pod的日志,<code>$ kubectl logs po/minio-0 -n minio</code>, 即可看到pod出现error信息，显示需要的certificates的commanName(简称CN), 然后将不同pod证书不同的内容用<code>*</code>替代, 其它的照搬，如上的例子<code>*.minio-hl-svc.minio.svc.cluster.local</code>.</strong></p>
+<p><strong>3. Use a Kubernetes Secret resource to store this information, create a Kubernetes Secret using:</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl create secret generic tls-ssl-minio --from-file=***/pki/private.key --from-file=***/pki/public.crt -n minio</span></span><br></pre></td></tr></table></div></figure>
+<p>再将tenant.yaml或者改过名的minioinstance.yaml文件中的下列注释内容打开</p>
+<figure class="highlight dts"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">externalCertSecret:</span></span><br><span class="line"><span class="symbol">  name:</span> tls-ssl-minio</span><br></pre></td></tr></table></div></figure>
+<p>然后再重新部署minio</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f minioinstance.yaml</span><br></pre></td></tr></table></div></figure>
+<p>执行完上述操作后会在work node生成以下文件夹</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /var/lib/kubelet/plugins</span><br><span class="line">direct-csi-min-io/  kubernetes.io/</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="查看pvc和pv-查看WorkNode-pvc-volume存储"   >
+          <a href="#查看pvc和pv-查看WorkNode-pvc-volume存储" class="heading-link"><i class="fas fa-link"></i></a>查看pvc和pv,查看WorkNode pvc volume存储</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pvc -n minio</span></span><br><span class="line">[root@hci-node01 minIO]# k get pvc -n minio</span><br><span class="line">NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS        AGE</span><br><span class="line">data0-minio-0   Bound    pvc-fc3a42f2-78d7-4dfe-8ad5-a0e3c745f638   10Gi       RWO            direct.csi.min.io   19h</span><br><span class="line">data1-minio-0   Bound    pvc-b9f227cd-7d6c-4728-b27f-00d4d5c42a16   10Gi       RWO            direct.csi.min.io   19h</span><br></pre></td></tr></table></div></figure>
+<p>转到minio-0这个pod部署到的work node机器上查看</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /var/lib/kubelet/plugins/kubernetes.io/csi/pv</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls</span></span><br><span class="line">  pvc-fc3a42f2-78d7-4dfe-8ad5-a0e3c745f638/ pvc-b9f227cd-7d6c-4728-b27f-00d4d5c42a16/</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> pvc-b9f227cd-7d6c-4728-b27f-00d4d5c42a16/globalmount/mybucket-01/ // 自己创建了一个buckt: mybucket-01</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls</span></span><br><span class="line">  file-Name/				// file-Name是通过mc命令行工具加进mybucket-01</span><br><span class="line"><span class="meta">$</span><span class="bash"> touch test.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls</span></span><br><span class="line">  file-Name/  test.txt		// test.txt是登陆work node后手动复制或创建的文件.</span><br></pre></td></tr></table></div></figure>
+<p>但是在此work node机器上的 /mnt/data1/目录下也能查看到文件</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /mnt/data1/</span><br><span class="line"></span><br><span class="line">ls</span><br><span class="line">b1ac2515-e6ba-11ea-98f8-064de4d3a4ce/  b1ac2983-e6ba-11ea-98f8-064de4d3a4ce/</span><br><span class="line"></span><br><span class="line">ls b1ac2515-e6ba-11ea-98f8-064de4d3a4ce/</span><br><span class="line">file-Name/ test.txt		// 发现此目录也出现了test.txt文件</span><br></pre></td></tr></table></div></figure>
+<p>上面登陆work node向pv volume添加的文件在master机器上用mc客户端是查不到的.</p>
+
+        <h2 id="删除minio-Cluster"   >
+          <a href="#删除minio-Cluster" class="heading-link"><i class="fas fa-link"></i></a>删除minio Cluster</h2>
+      <p>chean.sh</p>
+<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># delete minio pod</span></span><br><span class="line">kubectl delete -f minioinstance.yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># delete pvc</span></span><br><span class="line"><span class="attribute">pvc_results</span>=$(kubectl <span class="builtin-name">get</span> pvc -n minio | grep minio | awk <span class="string">'&#123;print $1&#125;'</span>)</span><br><span class="line">pvc_arr=(<span class="variable">$&#123;pvc_results&#125;</span>)</span><br><span class="line"><span class="keyword">for</span> ((<span class="attribute">i</span>=0; i&lt;<span class="variable">$&#123;#pvc_arr[*]&#125;</span>; i++ ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">kubectl delete pvc <span class="variable">$&#123;pvc_arr[i]&#125;</span> -n minio</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="comment"># delete pv</span></span><br><span class="line"><span class="attribute">pv_results</span>=$(kubectl <span class="builtin-name">get</span> pv | grep minio | awk <span class="string">'&#123;print $1&#125;'</span>)</span><br><span class="line">pv_arr=(<span class="variable">$&#123;pv_results&#125;</span>)</span><br><span class="line"><span class="keyword">for</span> ((<span class="attribute">i</span>=0; i&lt;<span class="variable">$&#123;#pv_arr[*]&#125;</span>; i++ ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">kubectl delete pv <span class="variable">$&#123;pv_arr[i]&#125;</span></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="comment"># delete minio operator</span></span><br><span class="line">kubectl delete -f minio-operator.yaml -n minio</span><br><span class="line"></span><br><span class="line"><span class="comment"># delete minio sc</span></span><br><span class="line">kubectl delete -k direct-csi</span><br><span class="line"></span><br><span class="line"><span class="comment"># delete secret</span></span><br><span class="line">kubectl delete<span class="built_in"> secret </span>tls-ssl-minio -n minio</span><br><span class="line"></span><br><span class="line"><span class="comment"># delete ns</span></span><br><span class="line">kubectl delete ns minio</span><br></pre></td></tr></table></div></figure>
+<p>执行完上面删除操作后再到work node删除minio生成的指定文件如data,pvc等</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 到work node上删除data</span><br><span class="line">rm -rf /mnt/minio_data0/ /mnt/minio_data1/</span><br><span class="line"></span><br><span class="line">// 删除pv</span><br><span class="line">rm -rf /var/lib/kubelet/plugins/direct-csi-controller-min-io</span><br><span class="line">rm -rf /var/lib/kubelet/plugins/direct-csi-min-io</span><br><span class="line">rm -rf /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-***&lt;pv about minio&gt;</span><br><span class="line">rm -rf /var/lib/kubelet/plugins_registry/&lt;minio&gt;.sock</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="遇到的问题"   >
+          <a href="#遇到的问题" class="heading-link"><i class="fas fa-link"></i></a>遇到的问题</h2>
+      
+        <h3 id="问题1-删除其它机器pvc绑定的-var-lib-kubelet-plugins-出错"   >
+          <a href="#问题1-删除其它机器pvc绑定的-var-lib-kubelet-plugins-出错" class="heading-link"><i class="fas fa-link"></i></a>问题1: 删除其它机器pvc绑定的 /var/lib/kubelet/plugins/* 出错</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /var/lib/kubelet/plugins/*</span><br><span class="line">rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount’: Device or resource busy</span><br><span class="line">rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount’: Device or resource busy</span><br></pre></td></tr></table></div></figure>
+<p>解决方法:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount</span><br><span class="line">umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount</span><br></pre></td></tr></table></div></figure>
+<p>再进行删除即可</p>
+
+        <h3 id="问题2-minio-pod删除不掉一直处于Terminating状态"   >
+          <a href="#问题2-minio-pod删除不掉一直处于Terminating状态" class="heading-link"><i class="fas fa-link"></i></a>问题2: minio pod删除不掉一直处于Terminating状态</h3>
+      <p>强制删除pod命令:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pod &lt;PodName&gt; -n &lt;NAMESPACE&gt; --force --grace-period=0</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="问题3-有个node上pod部署不成功"   >
+          <a href="#问题3-有个node上pod部署不成功" class="heading-link"><i class="fas fa-link"></i></a>问题3: 有个node上pod部署不成功</h3>
+      <p>场景描述： 清理minio重新部署时应该有一步是要删除$ rm -rf /var/lib/kubelet/plugins/*, 但是不小心执行$ rm -rf /var/lib/kubelet/plugins/, 把plugins文件夹给删除了.<br>之后再部署minio pod发现如下错误</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe po/minio-2 -n minio</span><br><span class="line">......</span><br><span class="line">Warning  FailedMount  21s (x2 over 2m23s)  kubelet, hci-node03  MountVolume.MountDevice failed for volume "pvc-a7f404b2-d1a0-4d8a-a00a-ee40abb85760" : kubernetes.io/csi: attacher.MountDevice failed to create newCsiDriverClient: driver name direct.csi.min.io not found in the list of registered CSI drivers</span><br><span class="line">Warning  FailedMount  21s (x2 over 2m23s)  kubelet, hci-node03  MountVolume.MountDevice failed for volume "pvc-d8d4ba24-f6e9-4a86-ac8a-3ce1cd6c36b6" : kubernetes.io/csi: attacher.MountDevice failed to create newCsiDriverClient: driver name direct.csi.min.io not found in the list of registered CSI drivers</span><br></pre></td></tr></table></div></figure>
+
+<p>解决方法是登陆hci-node03机器, 重启kubelet服务, 因为kubelet服务默认挂载pod路径是上面的plugins/, 手动删除可能会有影响但没深究.  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart kubelet</span><br></pre></td></tr></table></div></figure>
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_02_deployment_on_kubernetes/">https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_02_deployment_on_kubernetes/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/storage/">storage</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/storage/greenplum/greenplum_client/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">greenplum client</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/storage/minio/minIO_03_client.md/"><span class="paginator-prev__text">MinIO 03 client</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-number">1.</span> <span class="toc-text">
+          Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mount-disk"><span class="toc-number">2.</span> <span class="toc-text">
+          mount disk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Direct-CSI-Driver"><span class="toc-number">3.</span> <span class="toc-text">
+          Using Direct CSI Driver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Create-Operator-Deployment"><span class="toc-number">4.</span> <span class="toc-text">
+          Create Operator Deployment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Create-MinIO-instances-without-tls"><span class="toc-number">5.</span> <span class="toc-text">
+          Create MinIO instances without tls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Create-NodePort-service-for-minIO"><span class="toc-number">6.</span> <span class="toc-text">
+          Create NodePort service for minIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-minIO-from-the-browser"><span class="toc-number">7.</span> <span class="toc-text">
+          Access minIO from the browser</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Secure-access-to-MinIO-server-with-TLS"><span class="toc-number">8.</span> <span class="toc-text">
+          Secure access to MinIO server with TLS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看pvc和pv-查看WorkNode-pvc-volume存储"><span class="toc-number">9.</span> <span class="toc-text">
+          查看pvc和pv,查看WorkNode pvc volume存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除minio-Cluster"><span class="toc-number">10.</span> <span class="toc-text">
+          删除minio Cluster</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">11.</span> <span class="toc-text">
+          遇到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题1-删除其它机器pvc绑定的-var-lib-kubelet-plugins-出错"><span class="toc-number">11.1.</span> <span class="toc-text">
+          问题1: 删除其它机器pvc绑定的 &#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;plugins&#x2F;* 出错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题2-minio-pod删除不掉一直处于Terminating状态"><span class="toc-number">11.2.</span> <span class="toc-text">
+          问题2: minio pod删除不掉一直处于Terminating状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题3-有个node上pod部署不成功"><span class="toc-number">11.3.</span> <span class="toc-text">
+          问题3: 有个node上pod部署不成功</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="概述为什么需要写这篇文章，当我阅读《深入浅出SSD》这篇书籍中PCIe章节时发现，本书籍的侧重点是放在PCIe控制器和PCIe协议上，从CPU角度理解PCIe知识偏少，本文对下面几个知识点做出一些补充。 CPU访问外设寄存器与内存编址方式；CPU如何访问PCIe配置空间；CPU能够通过寄存器访问配置空间，为什么还需要映射PCIe配置空间；如何扫描PCIe树并且为PCIe分配ID；如何将pcie域地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU角度理解PCIE">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="概述为什么需要写这篇文章，当我阅读《深入浅出SSD》这篇书籍中PCIe章节时发现，本书籍的侧重点是放在PCIe控制器和PCIe协议上，从CPU角度理解PCIe知识偏少，本文对下面几个知识点做出一些补充。 CPU访问外设寄存器与内存编址方式；CPU如何访问PCIe配置空间；CPU能够通过寄存器访问配置空间，为什么还需要映射PCIe配置空间；如何扫描PCIe树并且为PCIe分配ID；如何将pcie域地">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture1.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture2.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture3.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture4.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture5.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture6.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture7.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture8.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture9.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture10.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture11.jpg">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture12.jpg">
+<meta property="article:published_time" content="2021-03-13T04:35:14.827Z">
+<meta property="article:modified_time" content="2021-03-13T04:35:14.827Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/picture1.jpg"><title>CPU角度理解PCIE | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">CPU角度理解PCIE</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.5k</span></span></div></header><div class="post-body"><p>概述<br>为什么需要写这篇文章，当我阅读《深入浅出SSD》这篇书籍中PCIe章节时发现，本书籍的侧重点是放在PCIe控制器和PCIe协议上，从CPU角度理解PCIe知识偏少，本文对下面几个知识点做出一些补充。</p>
+<p>CPU访问外设寄存器与内存编址方式；<br>CPU如何访问PCIe配置空间；<br>CPU能够通过寄存器访问配置空间，为什么还需要映射PCIe配置空间；<br>如何扫描PCIe树并且为PCIe分配ID；<br>如何将pcie域地址映射到存储器域地址空间。<br>通过本篇文章将对问题1、2、3做出解答。</p>
+<p>统一编址于独立编址<br>CPU编址是程序指令与物理地址线建立链接的方式，在CPU内部有专门的地址集合，编址过程是由CPU体系架构所决定的，参考示意图如图 1所示（仅仅代表示意图，讲解一种逻辑结构，不代表实际电路）。CPU编址时就已经指定了0x8000_0000~0xFFFF_FFFF这个地址空间为连接到图中内存的地址线，内存如何连接到CPU需要当参考CPU的datasheet，当CPU程序指令对0x8000_0000这个物理地址地址发起访问时，等价于是在访问图中2G内存的首地址。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture1.jpg"  alt="">
+      <br>    图 1</p>
+<p>内存通过CPU地址总线来寻址定位，然后通过CPU数据总线读写数据。CPU的地址总线位数是CPU设计时确定，因此一款CPU所能寻址的地址范围是一定的，而内存是需要占用CPU的寻址空间的，内存与CPU采用总线直接连接。</p>
+<p>IO指的是与CPU连接的各种外设，CPU访问各种外设有两种方式：一种是类似于访问内存的方式，即把外设的寄存器当成内存地址读写，从文可以以访问内存方式操作外设寄存器。这时，IO与内存统一编址，IO地址与内存地址在同一个地址空间下，这种编址方式叫做IO与内存统一编址。另外一种编址方式是IO地址与内存地址分开独立编址，这种编址方式叫做独立编址，此时，CPU访问外设寄存器需要通过CPU特定的指令去访问外设寄存器，而不能通过地址直接访问外设寄存器。常见的ARM、PowerPc、MIPS架构都是采用统一编址，X86架构采用独立编址。</p>
+<p>访问PCIe配置空间256bytes<br>PCI总线规定访问配置空间总线事务，使用ID号进行寻址。PCI设备ID号由总线号（Bus Number）、设备号（Device Number）和功能号（Function Number）。其中总线号在HOST主桥遍历PCI总线树时确定，在一颗PCI总线树上，总线号由系统软件决定，通常与HOST主桥直接相连接的PCI总线编号为0，系统软件使用DFS（Depth-First Search）算法扫描PCI总线树上的所有PCI总线，并依次编号。一条PCI总线的设备号由PCI设备的IDSEL信号与PCI总线地址线的连接关系确定，功能号与PCI设备的具体设计有关。一个PCIe系统最多有256条Bus，每条Bus上最多可以挂在32个设备，每个PCIe设备最多有8个功能设备。</p>
+<p>在XX处理器中的HOST主桥中，与PCIE设备配置相关的寄存器由CFG_ADDR、CFG_DATA等组成。系统软件使用CFG_ADDR（CFG_ADDR寄存器结构如图 2所示）和CFG_DATA寄存器访问PCIe设备的配置空间，这些寄存器都是采取同一编址（所有内存寄存器都使用存储器映射方式进行寻址）。当处理器访问PCIe配置空间时，首先需要在CFG_ADD寄存器中设置这个PCIe设备对应的总线号、设备号、功能号和寄存器偏移，然后使能Enable位，之后当处理器对CFG_DATA读写访问时，HOST主桥将这个存储器读写访问转换成PCIe配置读写请求，并且发送到PCIe总线上。如果Enable位没有使能，那么CPU对寄存器的访问也就是一个普通IO的访问，而不能让HOST转换成总线请求访问，访问PCIe配置空间时按照PCIe总线标准配置TLP请求，CFG_DATA是读取的数据或者待写入的数据。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture2.jpg"  alt="">
+      <br>图 2</p>
+<p>31位：Enable位，为1时，对CFG_DATA读写才能转换成PCIe总线配置请求。<br>30<del>24位：保留。<br>23</del>16位：总线号，最多=256个。<br>15<del>11位：设备号，最多=32个。<br>10</del>8位：功能号，最多=8个。<br>7~2位：寄存器偏移，最多访问寄存器=64个地址，这里一个地址是DW，那么能干访问的PCIe配置空间大小为64*4=256Byte，所以访问PCIe配置空间都是以4字节对齐访问的。<br>走到这里很多读者可能就会有这样的疑问，既然CPU能够直接通过寄存器访问配置空间，为啥还会出现配置空间在存储域地址的映射这一说法呢？下面给出详细解答。</p>
+<p>访问PCIe配置空间寄存器的方法需要追溯到原始的PCI规范。为了发起PCI总线配置周期，Intel（Intel是PCIe龙头老大，最新的PCIe的规范总是它最先尝试的）实现的PCI规范使用IO空间的CF8h和CFCh来分别作为索引和数据寄存器，这种方法可以访问所有PCI设备的255 bytes配置寄存器。Intel Chipsets目前仍然支持这种访PCI配置空间的方法。PCIe规范在PCI规范的基础上，将配置空间扩展到4K bytes，至于为什么扩展到4K，具体可以参考PCIe规范，这些配置CFG_ADDR和CFG_DATA寄存器方法仍然可以访问所有PCIe设备配置空间的头255 bytes，但是该方法访问不了剩下的（255B~4K）配置空间。怎么办呢？Intel外一种PCIe配置空间访问方法。Intel Chipset通过将配置空间映射到内存地址空间，PCIe配置空间可以像对映射范围内的内存进行read/write来访问了。这种映射是由北桥芯片来完成的，但是不同芯片的映射方式也是不同的。目前我查看了ARM芯片的datasheet，确实是这样的方式。</p>
+<p>PCIe规范为每个PCIe设备添加了更多的配置寄存器，空间为4K，尽管CFG_ADDR和CFG_DATA寄存器方法仍然能够访问lower 255 bytes，但是必须提供另外一种方法来访问剩下的（255B~4K）range寄存器。Intel的解决方案是使用了预留256MB内存地址空间，对这段内存的任何访问都会发起PCIe 配置cycle。由于4K的配置空间是directly mapped to memory的，那么PCIe规范必须保证所有的PCIe设备的配置空间占用不同的内存地址，按照PCIe规范，支持最多256个bus，每个Bus支持最多32个PCIe devices，每个device支持最多8个function,也就是说：占用内存的最大值为：256 * 32 * 8 * 4K = 256MB。图 3是ARM Cortex-A9 datasheet内存地址分配局部图。被PCIe配置空间占用的256M内存空间会屏蔽掉DRAM使用该段内存区，这些地址都由CPU出厂时已经固化好了。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture3.jpg"  alt="">
+      <br>图 3</p>
+<p>PCIe配置空间的内存映射对32bit系统的影响<br>由于PCIe配置空间占用了256M内存空间，而且该被占用空间对DRAM来说是不可用的，这意味着256M空间消失于系统内存，这在32bit系统中更为明显。比如，在32 bit winxp中（作者目前电脑还是用的XP系统，电脑用了七八年了），理论上可以访问到的内存是4G，如果4G空间都被DRAM给占用，由于PCIe的存在，被PCIe占用的那部分内存空间对OS来说是不可用的，莫名的消失了最多256M内存，其实还有其他外设寄存器需要映射到内存，如果是独立编址就不存在寄存器占用内存。所以在XP系统中实际能够访问DRAM空间最大值为3.2G。64位CPU寻址不存在这个情况，个地址目前来说应该用不完，这里读者需要注意的是CPU有32和64位寻址方式，同样操作系统也有32和64位之分，在Linux系统中主要体现在库文件上。</p>
+<p>有些CPU没有直接指定PCIe配置空间的地址范围，需要读取某个寄存器的值BaseAddr，这个值就说PCIe配置寄存器在内存区域映射的基地址。访问PCIe设备配置空间时候需要手动计算访问PCIe配置空间的地址。计算发放如下:</p>
+<p>SIZE_PER_FUNC = 4K = 1000h</p>
+<p>SIZE_PER_DEVICE = 4K * 8 = 8000h</p>
+<p>SIZE_PER_BUS = 4K <em>8</em> 32 = 100000h</p>
+<p>访问总线号为busNo，设备号为DevNo，功能号为funcNo的offset寄存器的计算公式是：</p>
+<p>Memory Address = BaseAddr+ busNo * SIZE_PER_BUS+ devNo * SIZE_PER_DEVICE+ funcNo * SIZE_PER_FUNC+ offset</p>
+<p>访问PCIe配置空间就需要通过总线号、设备号、功能号、寄存器偏移进行转换成内存地址。转换函数如图 2所示。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture4.jpg"  alt="">
+      <br>图 4</p>
+<p>问题4和5在下面文章中讲解，介于作者实力有限。如有错误，望读者给出宝贵的意见。</p>
+<p>剩下两个问题，上电扫描PCIe树和存储地址到PCIe地址的映射，本篇文章将对这两个问题做出解答。本文可能会针对某一款芯片做出详细流程解答，读者可以只关注整个流程，具体映射机制和寄存器参考芯片datasheet。上篇文章已经了解到如何访问配置空间，前256Bytes可以通过寄存器方式访问，后面的256B~4k必须通过映射才能访问，映射无非就是把配置空间映射到存储地址空间，或者把PCIe设备空间映射到存储地址空间。下面开始讨论映射关系。</p>
+<p>地址映射关系<br>PCIe在存储域地址空间分为三部分，PCIe控制器本身的寄存器、PCIe设备的配置空间、PCIe设备空间。寄存器和配置空间由处理器本身决定存储地址范围，本款处理器地址范围如图 1所示，配置空间地址、寄存器地址、内存地址都已经确定。PCIe设备空间需要编程人员去配置Outbound和Inbound寄存器组，确定映射关系<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture5.jpg"  alt="">
+      <br>图 5</p>
+<p>Outbound在PCIe控制器中扮演的角色是将存储地址翻译到PCIe域的PCIe地址，Inbound是将PCIe地址翻译成存储地址，图 2是一个完整的RC和EP模型地址翻译模型，图中的地址数字仅仅代表一种形态，具体地址应该是什么在后文中讲解。当cpu需要访问EP的内存空间时，首先应该将存储地址转换成PCIe地址，在根据TLP到达指定的EP，进而将PCIe地址转换成EP端的存储地址。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture6.jpg"  alt="">
+      <br>图 6</p>
+<p>PCIe地址到存储地址之间的映射关系由三个寄存器决定（有两个寄存器组应该是32个寄存器）OB_SIZE、OB_OFFSET_INDEXn、OB_OFFSETn_HI，n的范围是0~31。在PCIe控制器中是把PCIe地址等分成32块regions (Regions 0 to 31)，每个regions的大小是可以通过编程设置OB_SIZE寄存器确定大小，大小有1, 2, 4, or 8 MB，那么通过Outbound能够翻译的地址最大为8M*32=256M。存储域地址中有5位作为识别32个regions的index，OB_SIZE的大小决定这5位在32位地址上的位置。当OB_SIZE等于0，1，2，3时，index在存储地址中对应的位置是Bits[24:20], bits[25:21], bits[26:22], and bits[27:23]，每个regions翻倍，是不是对应的地址应该按翻倍对齐呢，翻倍就是左移一位数据。OB_SIZE寄存器如图 3所示。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture7.jpg"  alt="">
+                                                                                            图 7</p>
+<p>OB_OFFSET_INDEXn寄存器结构如图 4所示，n是上一段落提到的index的值。该寄存器第0位是地址翻译使能位，第31<del>20位是第n个regions的基地址的31</del>20位，这里的取值取决regions的大小，当OB_SIZE 等于0，1，2，3时，bits[31:20], bits[31:21], bits[31:22], and bits[31:23]位相应被使用。OB_OFFSETn_HI寄存器的值是64位PCIe地址中第n个regions的基地址的63~32位，在32位PCIe地址中，该寄存器的值等于0。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture8.jpg"  alt="">
+      <br>图 8</p>
+<p>配置OutBound翻译的几个寄存器也做了详解，下面根据举例说明。图 5中配置空间存储地址由CPU本身架构所决定，这部分的地址映射才芯片内部完成，不需要由编程人员配置。PCIe设备空间被分成了32等分。假设region大小是2M，PCIe地址是64位，程序中需要对0x9D3A_1234存储地址做映射， 64位PCIe地址被使用在region 9上，初始化OBOFFSET9_HI值为0x3344 5566, OB_OFFSET9值56Ex xxxx（x的值这里不关心，看该寄存器结构就很清楚，第0位在地址翻译时候应该使能位1，这里仅仅用来讲解怎么做映射，不需要关心后面的Bits） ，下面分析怎么翻译到PCIe地址：</p>
+<p>由于是regions大小2M，那么index应该取地址的bits [25:21]，提取0x9D3A_1234存储地址的bits [25:21得到01001b，该值等于9，那么该地址应该启用regions 9 翻译。存储地址的bits[20:00]是用做翻译到PCIe地址的bits[20:00]位，该值也可以理解成reginos 9内的偏移值，值是0x001A 1234。<br>生成regions 块PCIe的基地址，该地址应pcie_base=OBOFFSET9_HI &lt;&lt;32 + OB_OFFSET9的bits[31:21] = 0x 3344 5566 56E0 0000。<br>计算PCIe地址，pcie_addr = pcie_base + 存储地址bits[20:0] =0x3344 5566 56FA 1234。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture9.jpg"  alt="">
+      <br>图 9</p>
+<p>从上面存储地址到PCIe地址映射可以看到，通过cpu寻址可以直接访问到PCIe设备空间，最多可以访问PCIe设备空间大小为256M，具体Outbound能够访问的大小根据芯片而定，当CPU与FPGA之间有大量数据交互时候也可以采用Inbound方式（Inbound地址翻译流程如图 6所示，这里就不在翻译），将CPU的内存映射到FPGA的寻址空间（这里是站在CPU角度看的，从图2可以理解具体映射大小还由EP决定），FPGA可以采用DMA方式访问cpu的内存，并且速度很快。有些芯片厂商干脆采用同核异构方式将CPU于FPGA集成在一起（有的将cpu与dsp集成在一起），两者之间采用AXI高速总线通讯。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture10.jpg"  alt="">
+                                                                                          \图 10</p>
+<p>扫描PCIe树<br>扫描树的流程如下：</p>
+<p>建立存储地址到PCIe地址映射 （映射方式上面段落已经讲解了，固定的PCIe配置空间映射）<br>分配PCIe总线号<br>分配设备号<br>访问配置空间 （这里有一个原则读者需要注意，对PCIe设备配置空间访问时，一定要确定总线号、设备号、功能号、寄存器，不然无法找到设备）<br>读写BAR0确定PCIe设备1空间大小<br>分配PCIe地址<br>分配总线号<br>扫描PCIe总线树时，需要对这些PCIe总线进行编号，即初始化PCIe桥（在本文一律指透明桥）的Primary、Secondary和Subordinate Bus寄存器。在Linux内核中采用DFS算法对PCIe总线树进行遍历，DFS算法是按照深度优先的原则遍历PCIe树，局部代码如图 7所示，这里可以跟踪pci_scan_bridge函数，函数采用DFS算法对总线进行编号（后期会讲解搜索树，比较常见hash表、红黑树）。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture11.jpg"  alt="">
+      <br>图 11</p>
+<p>分配设备号<br>PCIe设备的IDSEL信号与PCIe总线的AD[31:0]信号的连接关系决定了该设备在这条总线上的设备号。在配置读写总线事务的地址周期中，AD[10:0]已经被信号已经被功能号和寄存器号使用，因此PCIe设备的IDSEL只能与AD[31:11]信号连接。上一篇文章中谈到CONFIG_ADDR寄存器中的Device Number字段一共有5位，最大能够表示32个设备，这里只有21位，显然在两者之间不能建立一一映射关系。一个PCIe总线号下最多可以挂在21个PCIe设备，那么多个PCIe总线不就可以挂载32个设备了么。</p>
+<p>访问配置空间<br>在32位PCIe地址空间中，PCIe设备通常将PCIe配置存放在E2PROM中，PCIe设备进行上电初始化时，将E2PROM中的信息读到PCIe设备的配置空间作为初始值，由硬件自动完成。BAR0空间存储了PCIe设备空间的大小，某些位被设置成不可预读，当BAR0全部写入1时，然后在读取BAR0值，从数据低位看有多少连续位没有改变。没有改变的数据位数记录的该PCIe设备空间的大小，假如有n位没有改变，那么设备空间大小应该是2的n次方。第0位代表IO/Memory、第2，3位代表32/64位地址、第4位代表是否可预取，具体位定义格式可以直接参考内核PCIe总线代码，解析BAR函数如图 8所示。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="picture12.jpg"  alt="">
+      <br>图 12</p>
+<p>分配PCIe地址<br>系统软件根据根据设备空间大小建立存储地址PCIe设备地址空间的映射，给PCIe设备分配的PCIe基地址写入到BAR0，如果是64位PCIe地址，那么BAR1是高32位地址。</p>
+<p>结语<br> 写《从cpu角度理解PCIe》文章我参考了部分芯片的datasheet，并结合linux代码分析，本文仅仅起到分析流程的作用，具体映射机制和寄存器芯片参考相应芯片datasheet。如有错误，还望指正。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/">https://kung-fu-master.github.io/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/linux/ACPI%E6%98%AF%E4%BB%80%E4%B9%88&amp;BIOS%E4%B8%ADACPI%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">ACPI是什么,BIOS中ACPI要怎么设置</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/language/cpp/10_%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/"><span class="paginator-prev__text">10 输入输出流</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

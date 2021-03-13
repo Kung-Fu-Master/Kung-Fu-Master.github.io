@@ -1,0 +1,2391 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://kung-fu-master.github.io/page/22/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/page/22/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/37.%E6%89%BE%E5%88%B0%E5%AE%B9%E5%99%A8%E4%B8%8D%E5%AE%B9%E6%98%93%EF%BC%9AService%E3%80%81DNS%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/">37 | 找到容器不容易：Service、DNS与服务发现</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.2k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="找到容器不容易：Service、DNS与服务发现"   >
+          <a href="#找到容器不容易：Service、DNS与服务发现" class="heading-link"><i class="fas fa-link"></i></a>找到容器不容易：Service、DNS与服务发现</h2>
+      <p>在前面的文章中，我们已经多次使用到了 Service 这个 Kubernetes 里重要的服务对象。而 Kubernetes 之所以需要 Service，一方面是因为 Pod 的 IP 不是固定的，另一方面则是因为一组 Pod 实例之间总会有负载均衡的需求。</p>
+<p>一个最典型的 Service 定义，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: hostnames
+spec:
+  selector:
+    app: hostnames
+  ports:
+  - name: default
+    protocol: TCP
+    port: 80
+    targetPort: 9376</code></pre><p>这个 Service 的例子，相信你不会陌生。其中，我使用了 selector 字段来声明这个 Service 只代理携带了 app=hostnames 标签的 Pod。并且，这个 Service 的 80 端口，代理的是 Pod 的 9376 端口。</p>
+<p>然后，我们的应用的 Deployment，如下所示：</p>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostnames
+spec:
+  selector:
+    matchLabels:
+      app: hostnames
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hostnames
+    spec:
+      containers:
+      - name: hostnames
+        image: k8s.gcr.io/serve_hostname
+        ports:
+        - containerPort: 9376
+          protocol: TCP</code></pre><p>这个应用的作用，就是每次访问 9376 端口时，返回它自己的 hostname。</p>
+<p>而被 selector 选中的 Pod，就称为 Service 的 Endpoints，你可以使用 kubectl get ep 命令看到它们，如下所示：</p>
+<pre><code>$ kubectl get endpoints hostnames
+NAME        ENDPOINTS
+hostnames   10.244.0.5:9376,10.244.0.6:9376,10.244.0.7:9376</code></pre><p>需要注意的是，只有处于 Running 状态，且 readinessProbe 检查通过的 Pod，才会出现在 Service 的 Endpoints 列表里。并且，当某一个 Pod 出现问题时，Kubernetes 会自动把它从 Service 里摘除掉。</p>
+<p>而此时，通过该 Service 的 VIP 地址 10.0.1.175，你就可以访问到它所代理的 Pod 了：</p>
+<pre><code>$ kubectl get svc hostnames
+NAME        TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+hostnames   ClusterIP   10.0.1.175   &lt;none&gt;        80/TCP    5s
+$ curl 10.0.1.175:80
+hostnames-0uton
+$ curl 10.0.1.175:80
+hostnames-yp2kp
+$ curl 10.0.1.175:80
+hostnames-bvc05</code></pre><p>这个 VIP 地址是 Kubernetes 自动为 Service 分配的。而像上面这样，通过三次连续不断地访问 Service 的 VIP 地址和代理端口 80，它就为我们依次返回了三个 Pod 的 hostname。这也正印证了 Service 提供的是 Round Robin 方式的负载均衡。对于这种方式，我们称为：ClusterIP 模式的 Service。</p>
+<p>你可能一直比较好奇，Kubernetes 里的 Service 究竟是如何工作的呢？</p>
+<p>实际上，<strong>Service 是由 kube-proxy 组件，加上 iptables 来共同实现的</strong>。</p>
+<p>举个例子，对于我们前面创建的名叫 hostnames 的 Service 来说，一旦它被提交给 Kubernetes，那么 kube-proxy 就可以通过 Service 的 Informer 感知到这样一个 Service 对象的添加。而作为对这个事件的响应，它就会在宿主机上创建这样一条 iptables 规则（你可以通过 iptables-save 看到它），如下所示：</p>
+<pre><code>-A KUBE-SERVICES -d 10.0.1.175/32 -p tcp -m comment --comment &quot;default/hostnames: cluster IP&quot; -m tcp --dport 80 -j KUBE-SVC-NWV5X2332I4OT4T3</code></pre><p>可以看到，这条 iptables 规则的含义是：凡是目的地址是 10.0.1.175、目的端口是 80 的 IP 包，都应该跳转到另外一条名叫 KUBE-SVC-NWV5X2332I4OT4T3 的 iptables 链进行处理。</p>
+<p>而我们前面已经看到，<strong><code>10.0.1.175 正是这个 Service 的 VIP。所以这一条规则，就为这个 Service 设置了一个固定的入口地址。并且，由于 10.0.1.175 只是一条 iptables 规则上的配置，并没有真正的网络设备，所以你 ping 这个地址，是不会有任何响应的。</code></strong></p>
+<p>那么，我们即将跳转到的 KUBE-SVC-NWV5X2332I4OT4T3 规则，又有什么作用呢？</p>
+<p>实际上，它是一组规则的集合，如下所示：</p>
+<pre><code>-A KUBE-SVC-NWV5X2332I4OT4T3 -m comment --comment &quot;default/hostnames:&quot; -m statistic --mode random --probability 0.33332999982 -j KUBE-SEP-WNBA2IHDGP2BOBGZ
+-A KUBE-SVC-NWV5X2332I4OT4T3 -m comment --comment &quot;default/hostnames:&quot; -m statistic --mode random --probability 0.50000000000 -j KUBE-SEP-X3P2623AGDH6CDF3
+-A KUBE-SVC-NWV5X2332I4OT4T3 -m comment --comment &quot;default/hostnames:&quot; -j KUBE-SEP-57KPRZ3JQVENLNBR</code></pre><p>可以看到，这一组规则，实际上是一组随机模式（–mode random）的 iptables 链。</p>
+<p>而随机转发的目的地，分别是 KUBE-SEP-WNBA2IHDGP2BOBGZ、KUBE-SEP-X3P2623AGDH6CDF3 和 KUBE-SEP-57KPRZ3JQVENLNBR。</p>
+<p>而这三条链指向的最终目的地，其实就是这个 Service 代理的三个 Pod。所以这一组规则，就是 Service 实现负载均衡的位置。</p>
+<p>需要注意的是，iptables 规则的匹配是从上到下逐条进行的，所以为了保证上述三条规则每条被选中的概率都相同，我们应该将它们的 probability 字段的值分别设置为 1/3（0.333…）、1/2 和 1。</p>
+<p>这么设置的原理很简单：第一条规则被选中的概率就是 1/3；而如果第一条规则没有被选中，那么这时候就只剩下两条规则了，所以第二条规则的 probability 就必须设置为 1/2；类似地，最后一条就必须设置为 1。</p>
+<p>你可以想一下，如果把这三条规则的 probability 字段的值都设置成 1/3，最终每条规则被选中的概率会变成多少。</p>
+<p>通过查看上述三条链的明细，我们就很容易理解 Service 进行转发的具体原理了，如下所示：</p>
+<pre><code>-A KUBE-SEP-57KPRZ3JQVENLNBR -s 10.244.3.6/32 -m comment --comment &quot;default/hostnames:&quot; -j MARK --set-xmark 0x00004000/0x00004000
+-A KUBE-SEP-57KPRZ3JQVENLNBR -p tcp -m comment --comment &quot;default/hostnames:&quot; -m tcp -j DNAT --to-destination 10.244.3.6:9376
+-A KUBE-SEP-WNBA2IHDGP2BOBGZ -s 10.244.1.7/32 -m comment --comment &quot;default/hostnames:&quot; -j MARK --set-xmark 0x00004000/0x00004000
+-A KUBE-SEP-WNBA2IHDGP2BOBGZ -p tcp -m comment --comment &quot;default/hostnames:&quot; -m tcp -j DNAT --to-destination 10.244.1.7:9376
+-A KUBE-SEP-X3P2623AGDH6CDF3 -s 10.244.2.3/32 -m comment --comment &quot;default/hostnames:&quot; -j MARK --set-xmark 0x00004000/0x00004000
+-A KUBE-SEP-X3P2623AGDH6CDF3 -p tcp -m comment --comment &quot;default/hostnames:&quot; -m tcp -j DNAT --to-destination 10.244.2.3:9376</code></pre><p>可以看到，这三条链，其实是三条 DNAT 规则。但在 DNAT 规则之前，iptables 对流入的 IP 包还设置了一个“标志”（–set-xmark）。这个“标志”的作用，我会在下一篇文章再为你讲解。</p>
+<p>而 DNAT 规则的作用，就是在 PREROUTING 检查点之前，也就是在路由之前，将流入 IP 包的目的地址和端口，改成–to-destination 所指定的新的目的地址和端口。可以看到，这个目的地址和端口，正是被代理 Pod 的 IP 地址和端口。</p>
+<p>这样，访问 Service VIP 的 IP 包经过上述 iptables 处理之后，就已经变成了访问具体某一个后端 Pod 的 IP 包了。不难理解，这些 Endpoints 对应的 iptables 规则，正是 kube-proxy 通过监听 Pod 的变化事件，在宿主机上生成并维护的。</p>
+<p>以上，就是 Service 最基本的工作原理。</p>
+<p>此外，你可能已经听说过，Kubernetes 的 kube-proxy 还支持一种叫作 IPVS 的模式。这又是怎么一回事儿呢？</p>
+<p>其实，通过上面的讲解，你可以看到，kube-proxy 通过 iptables 处理 Service 的过程，其实需要在宿主机上设置相当多的 iptables 规则。而且，kube-proxy 还需要在控制循环里不断地刷新这些规则来确保它们始终是正确的。</p>
+<p>不难想到，当你的宿主机上有大量 Pod 的时候，成百上千条 iptables 规则不断地被刷新，会大量占用该宿主机的 CPU 资源，甚至会让宿主机“卡”在这个过程中。所以说，<strong>一直以来，基于 iptables 的 Service 实现，都是制约 Kubernetes 项目承载更多量级的 Pod 的主要障碍。</strong></p>
+<p>而 IPVS 模式的 Service，就是解决这个问题的一个行之有效的方法。</p>
+<p>IPVS 模式的工作原理，其实跟 iptables 模式类似。当我们创建了前面的 Service 之后，kube-proxy 首先会在宿主机上创建一个虚拟网卡（叫作：kube-ipvs0），并为它分配 Service VIP 作为 IP 地址，如下所示：</p>
+<pre><code># ip addr
+  ...
+  73：kube-ipvs0：&lt;BROADCAST,NOARP&gt;  mtu 1500 qdisc noop state DOWN qlen 1000
+  link/ether  1a:ce:f5:5f:c1:4d brd ff:ff:ff:ff:ff:ff
+  inet 10.0.1.175/32  scope global kube-ipvs0
+  valid_lft forever  preferred_lft forever</code></pre><p>而接下来，kube-proxy 就会通过 Linux 的 IPVS 模块，为这个 IP 地址设置三个 IPVS 虚拟主机，并设置这三个虚拟主机之间使用轮询模式 (rr) 来作为负载均衡策略。我们可以通过 ipvsadm 查看到这个设置，如下所示：</p>
+<pre><code># ipvsadm -ln
+ IP Virtual Server version 1.2.1 (size=4096)
+  Prot LocalAddress:Port Scheduler Flags
+    -&gt;  RemoteAddress:Port           Forward  Weight ActiveConn InActConn     
+  TCP  10.102.128.4:80 rr
+    -&gt;  10.244.3.6:9376    Masq    1       0          0         
+    -&gt;  10.244.1.7:9376    Masq    1       0          0
+    -&gt;  10.244.2.3:9376    Masq    1       0          0</code></pre><p>可以看到，这三个 IPVS 虚拟主机的 IP 地址和端口，对应的正是三个被代理的 Pod。</p>
+<p>这时候，任何发往 10.102.128.4:80 的请求，就都会被 IPVS 模块转发到某一个后端 Pod 上了。</p>
+<p>而相比于 iptables，IPVS 在内核中的实现其实也是基于 Netfilter 的 NAT 模式，所以在转发这一层上，理论上 IPVS 并没有显著的性能提升。但是，IPVS 并不需要在宿主机上为每个 Pod 设置 iptables 规则，而是把对这些“规则”的处理放到了内核态，从而极大地降低了维护这些规则的代价。这也正印证了我在前面提到过的，“将重要操作放入内核态”是提高性能的重要手段。</p>
+<blockquote>
+<p>备注：这里你可以再回顾下第 33 篇文章《深入解析容器跨主机网络》中的相关内容。</p>
+</blockquote>
+<p>不过需要注意的是，IPVS 模块只负责上述的负载均衡和代理功能。而一个完整的 Service 流程正常工作所需要的包过滤、SNAT 等操作，还是要靠 iptables 来实现。只不过，这些辅助性的 iptables 规则数量有限，也不会随着 Pod 数量的增加而增加。</p>
+<p>所以，在大规模集群里，我非常建议你为 kube-proxy 设置–proxy-mode=ipvs 来开启这个功能。它为 Kubernetes 集群规模带来的提升，还是非常巨大的。</p>
+<p><strong>此外，我在前面的文章中还介绍过 Service 与 DNS 的关系。</strong></p>
+<p>在 Kubernetes 中，Service 和 Pod 都会被分配对应的 DNS A 记录（从域名解析 IP 的记录）。</p>
+<p>对于 ClusterIP 模式的 Service 来说（比如我们上面的例子），它的 A 记录的格式是：..svc.cluster.local。当你访问这条 A 记录的时候，它解析到的就是该 Service 的 VIP 地址。</p>
+<p>而对于指定了 clusterIP=None 的 Headless Service 来说，它的 A 记录的格式也是：..svc.cluster.local。但是，当你访问这条 A 记录的时候，它返回的是所有被代理的 Pod 的 IP 地址的集合。当然，如果你的客户端没办法解析这个集合的话，它可能会只会拿到第一个 Pod 的 IP 地址。</p>
+<p>此外，对于 ClusterIP 模式的 Service 来说，它代理的 Pod 被自动分配的 A 记录的格式是：..pod.cluster.local。这条记录指向 Pod 的 IP 地址。</p>
+<p>而对 Headless Service 来说，它代理的 Pod 被自动分配的 A 记录的格式是：…svc.cluster.local。这条记录也指向 Pod 的 IP 地址。</p>
+<p>但如果你为 Pod 指定了 Headless Service，并且 Pod 本身声明了 hostname 和 subdomain 字段，那么这时候 Pod 的 A 记录就会变成：&lt;pod 的 hostname&gt;…svc.cluster.local，比如：</p>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: default-subdomain
+spec:
+  selector:
+    name: busybox
+  clusterIP: None
+  ports:
+  - name: foo
+    port: 1234
+    targetPort: 1234
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox1
+  labels:
+    name: busybox
+spec:
+  hostname: busybox-1
+  subdomain: default-subdomain
+  containers:
+  - image: busybox
+    command:
+      - sleep
+      - &quot;3600&quot;
+    name: busybox</code></pre><p>在上面这个 Service 和 Pod 被创建之后，你就可以通过 busybox-1.default-subdomain.default.svc.cluster.local 解析到这个 Pod 的 IP 地址了。</p>
+<p>需要注意的是，在 Kubernetes 里，/etc/hosts 文件是单独挂载的，这也是为什么 kubelet 能够对 hostname 进行修改并且 Pod 重建后依然有效的原因。这跟 Docker 的 Init 层是一个原理。</p>
+<p><strong>总结</strong></p>
+<p>在这篇文章里，我为你详细讲解了 Service 的工作原理。实际上，Service 机制，以及 Kubernetes 里的 DNS 插件，都是在帮助你解决同样一个问题，即：如何找到我的某一个容器？</p>
+<p>这个问题在平台级项目中，往往就被称作服务发现，即：当我的一个服务（Pod）的 IP 地址是不固定的且没办法提前获知时，我该如何通过一个固定的方式访问到这个 Pod 呢？</p>
+<p>而我在这里讲解的、ClusterIP 模式的 Service 为你提供的，就是一个 Pod 的稳定的 IP 地址，即 VIP。并且，这里 Pod 和 Service 的关系是可以通过 Label 确定的。</p>
+<p>而 Headless Service 为你提供的，则是一个 Pod 的稳定的 DNS 名字，并且，这个名字是可以通过 Pod 名字和 Service 名字拼接出来的。</p>
+<p>在实际的场景里，你应该根据自己的具体需求进行合理选择。</p>
+<p><strong>思考题</strong></p>
+<p>请问，Kubernetes 的 Service 的负载均衡策略，在 iptables 和 ipvs 模式下，都有哪几种？具体工作模式是怎样的？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/38.%E4%BB%8E%E5%A4%96%E7%95%8C%E8%BF%9E%E9%80%9AService%E4%B8%8EService%E8%B0%83%E8%AF%95%E2%80%9C%E4%B8%89%E6%9D%BF%E6%96%A7%E2%80%9D/">38 | 从外界连通Service与Service调试“三板斧”</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.2k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="从外界连通Service与Service调试“三板斧”"   >
+          <a href="#从外界连通Service与Service调试“三板斧”" class="heading-link"><i class="fas fa-link"></i></a>从外界连通Service与Service调试“三板斧”</h2>
+      <p>在上一篇文章中，我为你介绍了 Service 机制的工作原理。通过这些讲解，你应该能够明白这样一个事实：Service 的访问信息在 Kubernetes 集群之外，其实是无效的。</p>
+<p>这其实也容易理解：所谓 Service 的访问入口，其实就是每台宿主机上由 kube-proxy 生成的 iptables 规则，以及 kube-dns 生成的 DNS 记录。而一旦离开了这个集群，这些信息对用户来说，也就自然没有作用了。</p>
+<p>所以，在使用 Kubernetes 的 Service 时，一个必须要面对和解决的问题就是：<strong>如何从外部（Kubernetes 集群之外），访问到 Kubernetes 里创建的 Service？</strong></p>
+<p>这里<code>最常用的一种方式就是：NodePort</code>。我来为你举个例子。</p>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: my-nginx
+  labels:
+    run: my-nginx
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 8080
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - nodePort: 443
+    protocol: TCP
+    name: https
+  selector:
+    run: my-nginx</code></pre><p>在这个 Service 的定义里，我们声明它的类型是，type=NodePort。然后，我在 ports 字段里声明了 Service 的 8080 端口代理 Pod 的 80 端口，Service 的 443 端口代理 Pod 的 443 端口。</p>
+<p>当然，如果你不显式地声明 nodePort 字段，Kubernetes 就会为你分配随机的可用端口来设置代理。这个端口的范围默认是 30000-32767，你可以通过 kube-apiserver 的–service-node-port-range 参数来修改它。</p>
+<p>那么这时候，要访问这个 Service，你只需要访问：</p>
+<pre><code>&lt;任何一台宿主机的IP地址&gt;:8080</code></pre><p>就可以访问到某一个被代理的 Pod 的 80 端口了。</p>
+<p>而在理解了我在上一篇文章中讲解的 Service 的工作原理之后，NodePort 模式也就非常容易理解了。显然，kube-proxy 要做的，就是在每台宿主机上生成这样一条 iptables 规则：</p>
+<pre><code>-A KUBE-NODEPORTS -p tcp -m comment --comment &quot;default/my-nginx: nodePort&quot; -m tcp --dport 8080 -j KUBE-SVC-67RL4FN6JRUPOJYM</code></pre><p>而我在上一篇文章中已经讲到，KUBE-SVC-67RL4FN6JRUPOJYM 其实就是一组随机模式的 iptables 规则。所以接下来的流程，就跟 ClusterIP 模式完全一样了。</p>
+<p>需要注意的是，在 NodePort 方式下，Kubernetes 会在 IP 包离开宿主机发往目的 Pod 时，对这个 IP 包做一次 SNAT 操作，如下所示：</p>
+<pre><code>-A KUBE-POSTROUTING -m comment --comment &quot;kubernetes service traffic requiring SNAT&quot; -m mark --mark 0x4000/0x4000 -j MASQUERADE</code></pre><p>可以看到，这条规则设置在 POSTROUTING 检查点，也就是说，它给即将离开这台主机的 IP 包，进行了一次 SNAT 操作，将这个 IP 包的源地址替换成了这台宿主机上的 CNI 网桥地址，或者宿主机本身的 IP 地址（如果 CNI 网桥不存在的话）。</p>
+<p>当然，这个 SNAT 操作只需要对 Service 转发出来的 IP 包进行（否则普通的 IP 包就被影响了）。而 iptables 做这个判断的依据，就是查看该 IP 包是否有一个“0x4000”的“标志”。你应该还记得，这个标志正是在 IP 包被执行 DNAT 操作之前被打上去的。</p>
+<p>可是，<code>为什么一定要对流出的包做 SNAT操作呢？</code></p>
+<p>这里的原理其实很简单，如下所示：</p>
+<pre><code>          client
+            \ ^
+             \ \
+              v \
+  node 1 &lt;--- node 2
+   | ^   SNAT
+   | |   ---&gt;
+   v |
+endpoint</code></pre><p>当一个外部的 client 通过 node 2 的地址访问一个 Service 的时候，node 2 上的负载均衡规则，就可能把这个 IP 包转发给一个在 node 1 上的 Pod。这里没有任何问题。</p>
+<p>而当 node 1 上的这个 Pod 处理完请求之后，它就会按照这个 IP 包的源地址发出回复。</p>
+<p>可是，如果没有做 SNAT 操作的话，这时候，被转发来的 IP 包的源地址就是 client 的 IP 地址。<strong>所以此时，Pod 就会直接将回复发给client</strong>。对于 client 来说，它的请求明明发给了 node 2，收到的回复却来自 node 1，这个 client 很可能会报错。</p>
+<p>所以，在上图中，当 IP 包离开 node 2 之后，它的源 IP 地址就会被 SNAT 改成 node 2 的 CNI 网桥地址或者 node 2 自己的地址。这样，Pod 在处理完成之后就会先回复给 node 2（而不是 client），然后再由 node 2 发送给 client。</p>
+<p>当然，这也就意味着这个 Pod 只知道该 IP 包来自于 node 2，而不是外部的 client。对于 Pod 需要明确知道所有请求来源的场景来说，这是不可以的。</p>
+<p>所以这时候，你就可以将 Service 的 spec.externalTrafficPolicy 字段设置为 local，这就保证了所有 Pod 通过 Service 收到请求之后，一定可以看到真正的、外部 client 的源地址。</p>
+<p>而这个机制的实现原理也非常简单：<strong>这时候，一台宿主机上的 iptables 规则，会设置为只将 IP 包转发给运行在这台宿主机上的 Pod</strong>。所以这时候，Pod 就可以直接使用源地址将回复包发出，不需要事先进行 SNAT 了。这个流程，如下所示：</p>
+<pre><code>      client
+      ^ /   \
+     / /     \
+    / v       X
+  node 1     node 2
+   ^ |
+   | |
+   | v
+endpoint</code></pre><p>当然，这也就意味着如果在一台宿主机上，没有任何一个被代理的 Pod 存在，比如上图中的 node 2，那么你使用 node 2 的 IP 地址访问这个 Service，就是无效的。此时，你的请求会直接被 DROP 掉。</p>
+<p><code>从外部访问 Service 的第二种方式，适用于公有云上的 Kubernetes 服务。这时候，你可以指定一个 LoadBalancer 类型的 Service，</code>如下所示：</p>
+<pre><code>---
+kind: Service
+apiVersion: v1
+metadata:
+  name: example-service
+spec:
+  ports:
+  - port: 8765
+    targetPort: 9376
+  selector:
+    app: example
+  type: LoadBalancer</code></pre><p>在公有云提供的 Kubernetes 服务里，都使用了一个叫作 CloudProvider 的转接层，来跟公有云本身的 API 进行对接。所以，在上述 LoadBalancer 类型的 Service 被提交后，Kubernetes 就会调用 CloudProvider 在公有云上为你创建一个负载均衡服务，并且把被代理的 Pod 的 IP 地址配置给负载均衡服务做后端。</p>
+<p><code>而第三种方式，是 Kubernetes 在 1.7 之后支持的一个新特性，叫作 ExternalName。</code>举个例子：</p>
+<pre><code>kind: Service
+apiVersion: v1
+metadata:
+  name: my-service
+spec:
+  type: ExternalName
+  externalName: my.database.example.com</code></pre><p>在上述 Service 的 YAML 文件中，我指定了一个 externalName=my.database.example.com 的字段。而且你应该会注意到，这个 YAML 文件里不需要指定 selector。</p>
+<p>这时候，当你通过 Service 的 DNS 名字访问它的时候，比如访问：my-service.default.svc.cluster.local。那么，Kubernetes 为你返回的就是my.database.example.com。所以说，ExternalName 类型的 Service，其实是在 kube-dns 里为你添加了一条 CNAME 记录。这时，访问 my-service.default.svc.cluster.local 就和访问 my.database.example.com 这个域名是一个效果了。</p>
+<p>此外，Kubernetes 的 Service 还允许你为 Service 分配公有 IP 地址，比如下面这个例子：</p>
+<pre><code>kind: Service
+apiVersion: v1
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 9376
+  externalIPs:
+  - 80.11.12.10</code></pre><p>在上述 Service 中，我为它指定的 externalIPs=80.11.12.10，那么此时，你就可以通过访问 80.11.12.10:80 访问到被代理的 Pod 了。不过，在这里 Kubernetes 要求 externalIPs 必须是至少能够路由到一个 Kubernetes 的节点。你可以想一想这是为什么。</p>
+<p>实际上，<code>在理解了 Kubernetes Service 机制的工作原理之后，很多与 Service 相关的问题，其实都可以通过分析 Service 在宿主机上对应的 iptables 规则（或者 IPVS 配置）得到解决。</code></p>
+<p>比如，当你的 Service 没办法通过 DNS 访问到的时候。你就需要区分到底是 Service 本身的配置问题，还是集群的 DNS 出了问题。一个行之有效的方法，就是检查 Kubernetes 自己的 Master 节点的 Service DNS 是否正常：</p>
+<pre><code># 在一个Pod里执行
+$ nslookup kubernetes.default
+Server:    10.0.0.10
+Address 1: 10.0.0.10 kube-dns.kube-system.svc.cluster.local
+Name:      kubernetes.default
+Address 1: 10.0.0.1 kubernetes.default.svc.cluster.local</code></pre><p>如果上面访问 kubernetes.default 返回的值都有问题，那你就需要检查 kube-dns 的运行状态和日志了。否则的话，你应该去检查自己的 Service 定义是不是有问题。</p>
+<p>而如果你的 Service 没办法通过 ClusterIP 访问到的时候，你首先应该检查的是这个 Service 是否有 Endpoints：</p>
+<pre><code>$ kubectl get endpoints hostnames
+NAME        ENDPOINTS
+hostnames   10.244.0.5:9376,10.244.0.6:9376,10.244.0.7:9376</code></pre><p>需要注意的是，如果你的 Pod 的 readniessProbe 没通过，它也不会出现在 Endpoints 列表里。</p>
+<p>而如果 Endpoints 正常，那么你就需要确认 kube-proxy 是否在正确运行。在我们通过 kubeadm 部署的集群里，你应该看到 kube-proxy 输出的日志如下所示：</p>
+<pre><code>I1027 22:14:53.995134    5063 server.go:200] Running in resource-only container &quot;/kube-proxy&quot;
+I1027 22:14:53.998163    5063 server.go:247] Using iptables Proxier.
+I1027 22:14:53.999055    5063 server.go:255] Tearing down userspace rules. Errors here are acceptable.
+I1027 22:14:54.038140    5063 proxier.go:352] Setting endpoints for &quot;kube-system/kube-dns:dns-tcp&quot; to [10.244.1.3:53]
+I1027 22:14:54.038164    5063 proxier.go:352] Setting endpoints for &quot;kube-system/kube-dns:dns&quot; to [10.244.1.3:53]
+I1027 22:14:54.038209    5063 proxier.go:352] Setting endpoints for &quot;default/kubernetes:https&quot; to [10.240.0.2:443]
+I1027 22:14:54.038238    5063 proxier.go:429] Not syncing iptables until Services and Endpoints have been received from master
+I1027 22:14:54.040048    5063 proxier.go:294] Adding new service &quot;default/kubernetes:https&quot; at 10.0.0.1:443/TCP
+I1027 22:14:54.040154    5063 proxier.go:294] Adding new service &quot;kube-system/kube-dns:dns&quot; at 10.0.0.10:53/UDP
+I1027 22:14:54.040223    5063 proxier.go:294] Adding new service &quot;kube-system/kube-dns:dns-tcp&quot; at 10.0.0.10:53/TCP</code></pre><p>如果 kube-proxy 一切正常，你就应该仔细查看宿主机上的 iptables 了。而<strong>一个 iptables 模式的 Service 对应的规则，我在上一篇以及这一篇文章里已经全部介绍到了，它们包括：</strong></p>
+<p>KUBE-SERVICES 或者 KUBE-NODEPORTS 规则对应的 Service 的入口链，这个规则应该与 VIP 和 Service 端口一一对应；</p>
+<p>KUBE-SEP-(hash) 规则对应的 DNAT 链，这些规则应该与 Endpoints 一一对应；</p>
+<p>KUBE-SVC-(hash) 规则对应的负载均衡链，这些规则的数目应该与 Endpoints 数目一致；</p>
+<p>如果是 NodePort 模式的话，还有 POSTROUTING 处的 SNAT 链。</p>
+<p>通过查看这些链的数量、转发目的地址、端口、过滤条件等信息，你就能很容易发现一些异常的蛛丝马迹。</p>
+<p>当然，<strong>还有一种典型问题，就是 Pod 没办法通过 Service 访问到自己</strong>。这往往就是因为 kubelet 的 hairpin-mode 没有被正确设置。关于 Hairpin 的原理我在前面已经介绍过，这里就不再赘述了。你只需要确保将 kubelet 的 hairpin-mode 设置为 hairpin-veth 或者 promiscuous-bridge 即可。</p>
+<blockquote>
+<p>这里，你可以再回顾下第 34 篇文章《Kubernetes 网络模型与 CNI 网络插件》中的相关内容。</p>
+</blockquote>
+<p>其中，在 hairpin-veth 模式下，你应该能看到 CNI 网桥对应的各个 VETH 设备，都将 Hairpin 模式设置为了 1，如下所示：</p>
+<pre><code>$ for d in /sys/devices/virtual/net/cni0/brif/veth*/hairpin_mode; do echo &quot;$d = $(cat $d)&quot;; done
+/sys/devices/virtual/net/cni0/brif/veth4bfbfe74/hairpin_mode = 1
+/sys/devices/virtual/net/cni0/brif/vethfc2a18c5/hairpin_mode = 1</code></pre><p>而如果是 promiscuous-bridge 模式的话，你应该看到 CNI 网桥的混杂模式（PROMISC）被开启，如下所示：</p>
+<pre><code>$ ifconfig cni0 |grep PROMISC
+UP BROADCAST RUNNING PROMISC MULTICAST  MTU:1460  Metric:1</code></pre><p><strong>总结</strong></p>
+<p>在本篇文章中，我为你详细讲解了从外部访问 Service 的三种方式（NodePort、LoadBalancer 和 External Name）和具体的工作原理。然后，我还为你讲述了当 Service 出现故障的时候，如何根据它的工作原理，按照一定的思路去定位问题的可行之道。</p>
+<p>通过上述讲解不难看出，所谓 Service，其实就是 Kubernetes 为 Pod 分配的、固定的、基于 iptables（或者 IPVS）的访问入口。而这些访问入口代理的 Pod 信息，则来自于 Etcd，由 kube-proxy 通过控制循环来维护。</p>
+<p>并且，你可以看到，Kubernetes 里面的 Service 和 DNS 机制，也都不具备强多租户能力。比如，在多租户情况下，每个租户应该拥有一套独立的 Service 规则（Service 只应该看到和代理同一个租户下的 Pod）。再比如 DNS，在多租户情况下，每个租户应该拥有自己的 kube-dns（kube-dns 只应该为同一个租户下的 Service 和 Pod 创建 DNS Entry）。</p>
+<p>当然，在 Kubernetes 中，kube-proxy 和 kube-dns 其实也是普通的插件而已。你完全可以根据自己的需求，实现符合自己预期的 Service。</p>
+<p><strong>思考题</strong></p>
+<p>为什么 Kubernetes 要求 externalIPs 必须是至少能够路由到一个 Kubernetes 的节点？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/35.%E8%A7%A3%E8%AF%BBKubernetes%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E6%96%B9%E6%A1%88/">35 | 解读Kubernetes三层网络方案</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.6k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="解读Kubernetes三层网络方案"   >
+          <a href="#解读Kubernetes三层网络方案" class="heading-link"><i class="fas fa-link"></i></a>解读Kubernetes三层网络方案</h2>
+      <p>在上一篇文章中，我以网桥类型的 Flannel 插件为例，为你讲解了 Kubernetes 里容器网络和 CNI 插件的主要工作原理。不过，除了这种模式之外，还有一种纯三层（Pure Layer 3）网络方案非常值得你注意。其中的典型例子，莫过于 Flannel 的 host-gw 模式和 Calico 项目了。</p>
+<p><code>我们先来看一下 Flannel 的 host-gw 模式。</code></p>
+<p>它的工作原理非常简单，我用一张图就可以和你说清楚。为了方便叙述，接下来我会称这张图为“host-gw 示意图”。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      <br>图1 Flannel host-gw示意图</p>
+<p>假设现在，Node 1 上的 Infra-container-1，要访问 Node 2 上的 Infra-container-2。</p>
+<p>当你设置 Flannel 使用 host-gw 模式之后，flanneld 会在宿主机上创建这样一条规则，以 Node 1 为例：</p>
+<pre><code>$ ip route
+...
+10.244.1.0/24 via 10.168.0.3 dev eth0</code></pre><p>这条路由规则的含义是：目的 IP 地址属于 10.244.1.0/24 网段的 IP 包，应该经过本机的 eth0 设备发出去（即：dev eth0）；并且，它下一跳地址（next-hop）是 10.168.0.3（即：via 10.168.0.3）。</p>
+<p>所谓下一跳地址就是：如果 IP 包从主机 A 发到主机 B，需要经过路由设备 X 的中转。那么 X 的 IP 地址就应该配置为主机 A 的下一跳地址。</p>
+<p>而从 host-gw 示意图中我们可以看到，这个下一跳地址对应的，正是我们的目的宿主机 Node 2。</p>
+<p>一旦配置了下一跳地址，那么接下来，当 IP 包从网络层进入链路层封装成帧的时候，eth0 设备就会使用下一跳地址对应的 MAC 地址，作为该数据帧的目的 MAC 地址。显然，这个 MAC 地址，正是 Node 2 的 MAC 地址。</p>
+<p>这样，这个数据帧就会从 Node 1 通过宿主机的二层网络顺利到达 Node 2 上。</p>
+<p>而 Node 2 的内核网络栈从二层数据帧里拿到 IP 包后，会“看到”这个 IP 包的目的 IP 地址是 10.244.1.3，即 Infra-container-2 的 IP 地址。这时候，根据 Node 2 上的路由表，该目的地址会匹配到第二条路由规则（也就是 10.244.1.0 对应的路由规则），从而进入 cni0 网桥，进而进入到 Infra-container-2 当中。</p>
+<p>可以看到，<strong>host-gw 模式的工作原理，其实就是将每个 Flannel 子网（Flannel Subnet，比如：10.244.1.0/24）的“下一跳”，设置成了该子网对应的宿主机的 IP 地址。</strong></p>
+<p>也就是说，这台“主机”（Host）会充当这条容器通信路径里的“网关”（Gateway）。这也正是“host-gw”的含义。</p>
+<p>当然，Flannel 子网和主机的信息，都是保存在 Etcd 当中的。flanneld 只需要 WACTH 这些数据的变化，然后实时更新路由表即可。</p>
+<blockquote>
+<p>注意：在 Kubernetes v1.7 之后，类似 Flannel、Calico 的 CNI 网络插件都是可以直接连接 Kubernetes 的 APIServer 来访问 Etcd 的，无需额外部署 Etcd 给它们使用。</p>
+</blockquote>
+<p>而在这种模式下，容器通信的过程就免除了额外的封包和解包带来的性能损耗。根据实际的测试，host-gw 的性能损失大约在 10% 左右，而其他所有基于 VXLAN“隧道”机制的网络方案，性能损失都在 20%~30% 左右。</p>
+<p>当然，通过上面的叙述，你也应该看到，host-gw 模式能够正常工作的核心，就在于 IP 包在封装成帧发送出去的时候，会使用路由表里的“下一跳”来设置目的 MAC 地址。这样，它就会经过二层网络到达目的宿主机。</p>
+<p><strong>所以说，Flannel host-gw 模式必须要求集群宿主机之间是二层连通的。</strong></p>
+<p>需要注意的是，宿主机之间二层不连通的情况也是广泛存在的。比如，宿主机分布在了不同的子网（VLAN）里。但是，在一个 Kubernetes 集群里，宿主机之间必须可以通过 IP 地址进行通信，也就是说至少是三层可达的。否则的话，你的集群将不满足上一篇文章中提到的宿主机之间 IP 互通的假设（Kubernetes 网络模型）。当然，“三层可达”也可以通过为几个子网设置三层转发来实现。</p>
+<p><code>而在容器生态中，要说到像 Flannel host-gw 这样的三层网络方案，我们就不得不提到这个领域里的“龙头老大”Calico 项目了。</code></p>
+<p>实际上，Calico 项目提供的网络解决方案，与 Flannel 的 host-gw 模式，几乎是完全一样的。也就是说，Calico 也会在每台宿主机上，添加一个格式如下所示的路由规则：</p>
+<pre><code>&lt;目的容器IP地址段&gt; via &lt;网关的IP地址&gt; dev eth0</code></pre><p>其中，网关的 IP 地址，正是目的容器所在宿主机的 IP 地址。</p>
+<p>而正如前所述，这个三层网络方案得以正常工作的核心，是为每个容器的 IP 地址，找到它所对应的、“下一跳”的<strong>网关。</strong></p>
+<p>不过，<strong>不同于 Flannel 通过 Etcd 和宿主机上的 flanneld 来维护路由信息的做法，Calico 项目使用了一个“重型武器”来自动地在整个集群中分发路由信息。</strong></p>
+<p>这个“重型武器”，就是 BGP。</p>
+<p><strong>BGP 的全称是 Border Gateway Protocol，即：边界网关协议。</strong>它是一个 Linux 内核原生就支持的、专门用在大规模数据中心里维护不同的“自治系统”之间路由信息的、无中心的路由协议。</p>
+<p>这个概念可能听起来有点儿“吓人”，但实际上，我可以用一个非常简单的例子来为你讲清楚。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.jpg"  alt="">
+      <br>图2 自治系统</p>
+<p>在这个图中，我们有两个自治系统（Autonomous System，简称为 AS）：AS 1 和 AS 2。而所谓的一个自治系统，指的是一个组织管辖下的所有 IP 网络和路由器的全体。你可以把它想象成一个小公司里的所有主机和路由器。在正常情况下，自治系统之间不会有任何“来往”。</p>
+<p>但是，如果这样两个自治系统里的主机，要通过 IP 地址直接进行通信，我们就必须使用路由器把这两个自治系统连接起来。</p>
+<p>比如，AS 1 里面的主机 10.10.0.2，要访问 AS 2 里面的主机 172.17.0.3 的话。它发出的 IP 包，就会先到达自治系统 AS 1 上的路由器 Router 1。</p>
+<p>而在此时，Router 1 的路由表里，有这样一条规则，即：目的地址是 172.17.0.2 包，应该经过 Router 1 的 C 接口，发往网关 Router 2（即：自治系统 AS 2 上的路由器）。</p>
+<p>所以 IP 包就会到达 Router 2 上，然后经过 Router 2 的路由表，从 B 接口出来到达目的主机 172.17.0.3。</p>
+<p>但是反过来，如果主机 172.17.0.3 要访问 10.10.0.2，那么这个 IP 包，在到达 Router 2 之后，就不知道该去哪儿了。因为在 Router 2 的路由表里，并没有关于 AS 1 自治系统的任何路由规则。</p>
+<p>所以这时候，网络管理员就应该给 Router 2 也添加一条路由规则，比如：目标地址是 10.10.0.2 的 IP 包，应该经过 Router 2 的 C 接口，发往网关 Router 1。</p>
+<p>像上面这样负责把自治系统连接在一起的路由器，我们就把它形象地称为：<strong>边界网关</strong>。它跟普通路由器的不同之处在于，它的路由表里拥有其他自治系统里的主机路由信息。</p>
+<p>上面的这部分原理，相信你理解起来应该很容易。毕竟，路由器这个设备本身的主要作用，就是连通不同的网络。</p>
+<p>但是，你可以想象一下，假设我们现在的网络拓扑结构非常复杂，每个自治系统都有成千上万个主机、无数个路由器，甚至是由多个公司、多个网络提供商、多个自治系统组成的复合自治系统呢？</p>
+<p>这时候，如果还要依靠人工来对边界网关的路由表进行配置和维护，那是绝对不现实的。</p>
+<p>而这种情况下，BGP 大显身手的时刻就到了。</p>
+<p>在使用了 BGP 之后，你可以认为，在每个边界网关上都会运行着一个小程序，它们会将各自的路由表信息，通过 TCP 传输给其他的边界网关。而其他边界网关上的这个小程序，则会对收到的这些数据进行分析，然后将需要的信息添加到自己的路由表里。</p>
+<p>这样，图 2 中 Router 2 的路由表里，就会自动出现 10.10.0.2 和 10.10.0.3 对应的路由规则了。</p>
+<p>所以说，<strong>所谓 BGP，就是在大规模网络中实现节点路由信息共享的一种协议。</strong></p>
+<p>而 BGP 的这个能力，正好可以取代 Flannel 维护主机上路由表的功能。而且，BGP 这种原生就是为大规模网络环境而实现的协议，其可靠性和可扩展性，远非 Flannel 自己的方案可比。</p>
+<blockquote>
+<p>需要注意的是，BGP 协议实际上是最复杂的一种路由协议。我在这里的讲述和所举的例子，仅是为了能够帮助你建立对 BGP 的感性认识，并不代表 BGP 真正的实现方式。</p>
+</blockquote>
+<p>接下来，我们还是回到 Calico 项目上来。</p>
+<p>在了解了 BGP 之后，Calico 项目的架构就非常容易理解了。它由三个部分组成：</p>
+<p>Calico 的 CNI 插件。这是 Calico 与 Kubernetes 对接的部分。我已经在上一篇文章中，和你详细分享了 CNI 插件的工作原理，这里就不再赘述了。</p>
+<p>Felix。它是一个 DaemonSet，负责在宿主机上插入路由规则（即：写入 Linux 内核的 FIB 转发信息库），以及维护 Calico 所需的网络设备等工作。</p>
+<p>BIRD。它就是 BGP 的客户端，专门负责在集群里分发路由规则信息。</p>
+<p><strong>除了对路由信息的维护方式之外，Calico 项目与 Flannel 的 host-gw 模式的另一个不同之处，就是它不会在宿主机上创建任何网桥设备。</strong>这时候，Calico 的工作方式，可以用一幅示意图来描述，如下所示（在接下来的讲述中，我会统一用“BGP 示意图”来指代它）：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="4.jpg"  alt="">
+      <br>图3 Calico工作原理</p>
+<p>其中的绿色实线标出的路径，就是一个 IP 包从 Node 1 上的 Container 1，到达 Node 2 上的 Container 4 的完整路径。</p>
+<p>可以看到，Calico 的 CNI 插件会为每个容器设置一个 Veth Pair 设备，然后把其中的一端放置在宿主机上（它的名字以 cali 前缀开头）。</p>
+<p>此外，由于 Calico 没有使用 CNI 的网桥模式，Calico 的 CNI 插件还需要在宿主机上为每个容器的 Veth Pair 设备配置一条路由规则，用于接收传入的 IP 包。比如，宿主机 Node 2 上的 Container 4 对应的路由规则，如下所示：</p>
+<pre><code>10.233.2.3 dev cali5863f3 scope link</code></pre><p>即：发往 10.233.2.3 的 IP 包，应该进入 cali5863f3 设备。</p>
+<blockquote>
+<p>基于上述原因，Calico 项目在宿主机上设置的路由规则，肯定要比 Flannel 项目多得多。不过，Flannel host-gw 模式使用 CNI 网桥的主要原因，其实是为了跟 VXLAN 模式保持一致。否则的话，Flannel 就需要维护两套 CNI 插件了。</p>
+</blockquote>
+<p>有了这样的 Veth Pair 设备之后，容器发出的 IP 包就会经过 Veth Pair 设备出现在宿主机上。然后，宿主机网络栈就会根据路由规则的下一跳 IP 地址，把它们转发给正确的网关。接下来的流程就跟 Flannel host-gw 模式完全一致了。</p>
+<p>其中，这里最核心的“下一跳”路由规则，就是由 Calico 的 Felix 进程负责维护的。这些路由规则信息，则是通过 BGP Client 也就是 BIRD 组件，使用 BGP 协议传输而来的。</p>
+<p>而这些通过 BGP 协议传输的消息，你可以简单地理解为如下格式：</p>
+<pre><code>[BGP消息]
+我是宿主机192.168.1.3
+10.233.2.0/24网段的容器都在我这里
+这些容器的下一跳地址是我</code></pre><p>不难发现，Calico 项目实际上将集群里的所有节点，都当作是边界路由器来处理，它们一起组成了一个全连通的网络，互相之间通过 BGP 协议交换路由规则。这些节点，我们称为 BGP Peer。</p>
+<p>需要注意的是，<strong>Calico 维护的网络在默认配置下，是一个被称为“Node-to-Node Mesh”的模式。</strong>这时候，每台宿主机上的 BGP Client 都需要跟其他所有节点的 BGP Client 进行通信以便交换路由信息。但是，随着节点数量 N 的增加，这些连接的数量就会以 N²的规模快速增长，从而给集群本身的网络带来巨大的压力。</p>
+<p>所以，Node-to-Node Mesh 模式一般推荐用在少于 100 个节点的集群里。而在更大规模的集群中，你需要用到的是一个叫作 Route Reflector 的模式。</p>
+<p>在这种模式下，Calico 会指定一个或者几个专门的节点，来负责跟所有节点建立 BGP 连接从而学习到全局的路由规则。而其他节点，只需要跟这几个专门的节点交换路由信息，就可以获得整个集群的路由规则信息了。</p>
+<p>这些专门的节点，就是所谓的 Route Reflector 节点，它们实际上扮演了“中间代理”的角色，从而把 BGP 连接的规模控制在 N 的数量级上。</p>
+<p>此外，我在前面提到过，Flannel host-gw 模式最主要的限制，就是要求集群宿主机之间是二层连通的。而这个限制对于 Calico 来说，也同样存在。</p>
+<p>举个例子，假如我们有两台处于不同子网的宿主机 Node 1 和 Node 2，对应的 IP 地址分别是 192.168.1.2 和 192.168.2.2。需要注意的是，这两台机器通过路由器实现了三层转发，所以这两个 IP 地址之间是可以相互通信的。</p>
+<p>而我们现在的需求，还是 Container 1 要访问 Container 4。</p>
+<p>按照我们前面的讲述，Calico 会尝试在 Node 1 上添加如下所示的一条路由规则：</p>
+<pre><code>10.233.2.0/16 via 192.168.2.2 eth0</code></pre><p>但是，这时候问题就来了。</p>
+<p>上面这条规则里的下一跳地址是 192.168.2.2，可是它对应的 Node 2 跟 Node 1 却根本不在一个子网里，没办法通过二层网络把 IP 包发送到下一跳地址。</p>
+<p><strong>在这种情况下，你就需要为 Calico 打开 IPIP 模式。</strong></p>
+<p>我把这个模式下容器通信的原理，总结成了一张图片，如下所示（接下来我会称之为：IPIP 示意图）：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="5.jpg"  alt="">
+      <br>图4 Calico IPIP模式工作原理</p>
+<p>在 Calico 的 IPIP 模式下，Felix 进程在 Node 1 上添加的路由规则，会稍微不同，如下所示：</p>
+<pre><code>10.233.2.0/24 via 192.168.2.2 tunl0</code></pre><p>可以看到，尽管这条规则的下一跳地址仍然是 Node 2 的 IP 地址，但这一次，要负责将 IP 包发出去的设备，变成了 tunl0。注意，是 T-U-N-L-0，而不是 Flannel UDP 模式使用的 T-U-N-0（tun0），这两种设备的功能是完全不一样的。</p>
+<p>Calico 使用的这个 tunl0 设备，是一个 IP 隧道（IP tunnel）设备。</p>
+<p>在上面的例子中，IP 包进入 IP 隧道设备之后，就会被 Linux 内核的 IPIP 驱动接管。IPIP 驱动会将这个 IP 包直接封装在一个宿主机网络的 IP 包中，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="6.jpg"  alt="">
+      <br>图 5 IPIP 封包方式</p>
+<p>其中，经过封装后的新的 IP 包的目的地址（图 5 中的 Outer IP Header 部分），正是原 IP 包的下一跳地址，即 Node 2 的 IP 地址：192.168.2.2。</p>
+<p>而原 IP 包本身，则会被直接封装成新 IP 包的 Payload。</p>
+<p>这样，原先从容器到 Node 2 的 IP 包，就被伪装成了一个从 Node 1 到 Node 2 的 IP 包。</p>
+<p>由于宿主机之间已经使用路由器配置了三层转发，也就是设置了宿主机之间的“下一跳”。所以这个 IP 包在离开 Node 1 之后，就可以经过路由器，最终“跳”到 Node 2 上。</p>
+<p>这时，Node 2 的网络内核栈会使用 IPIP 驱动进行解包，从而拿到原始的 IP 包。然后，原始 IP 包就会经过路由规则和 Veth Pair 设备到达目的容器内部。</p>
+<p>以上，就是 Calico 项目主要的工作原理了。</p>
+<p>不难看到，当 Calico 使用 IPIP 模式的时候，集群的网络性能会因为额外的封包和解包工作而下降。在实际测试中，Calico IPIP 模式与 Flannel VXLAN 模式的性能大致相当。所以，在实际使用时，如非硬性需求，我建议你将所有宿主机节点放在一个子网里，避免使用 IPIP。</p>
+<p>不过，通过上面对 Calico 工作原理的讲述，你应该能发现这样一个事实：</p>
+<p>如果 Calico 项目能够让宿主机之间的路由设备（也就是网关），也通过 BGP 协议“学习”到 Calico 网络里的路由规则，那么从容器发出的 IP 包，不就可以通过这些设备路由到目的宿主机了么？</p>
+<p>比如，只要在上面“IPIP 示意图”中的 Node 1 上，添加如下所示的一条路由规则：</p>
+<pre><code>10.233.2.0/24 via 192.168.1.1 eth0</code></pre><p>然后，在 Router 1 上（192.168.1.1），添加如下所示的一条路由规则：</p>
+<pre><code>10.233.2.0/24 via 192.168.2.1 eth0</code></pre><p>那么 Container 1 发出的 IP 包，就可以通过两次“下一跳”，到达 Router 2（192.168.2.1）了。以此类推，我们可以继续在 Router 2 上添加“下一条”路由，最终把 IP 包转发到 Node 2 上。</p>
+<p>遗憾的是，上述流程虽然简单明了，但是在 Kubernetes 被广泛使用的公有云场景里，却完全不可行。</p>
+<p>这里的原因在于：公有云环境下，宿主机之间的网关，肯定不会允许用户进行干预和设置。</p>
+<blockquote>
+<p>当然，在大多数公有云环境下，宿主机（公有云提供的虚拟机）本身往往就是二层连通的，所以这个需求也不强烈。</p>
+</blockquote>
+<p>不过，在私有部署的环境下，宿主机属于不同子网（VLAN）反而是更加常见的部署状态。这时候，想办法将宿主机网关也加入到 BGP Mesh 里从而避免使用 IPIP，就成了一个非常迫切的需求。</p>
+<p><code>而在 Calico 项目中，它已经为你提供了两种将宿主机网关设置成 BGP Peer 的解决方案。</code></p>
+<p><strong>第一种方案</strong>，就是所有宿主机都跟宿主机网关建立 BGP Peer 关系。</p>
+<p>这种方案下，Node 1 和 Node 2 就需要主动跟宿主机网关 Router 1 和 Router 2 建立 BGP 连接。从而将类似于 10.233.2.0/24 这样的路由信息同步到网关上去。</p>
+<p>需要注意的是，这种方式下，Calico 要求宿主机网关必须支持一种叫作 Dynamic Neighbors 的 BGP 配置方式。这是因为，在常规的路由器 BGP 配置里，运维人员必须明确给出所有 BGP Peer 的 IP 地址。考虑到 Kubernetes 集群可能会有成百上千个宿主机，而且还会动态地添加和删除节点，这时候再手动管理路由器的 BGP 配置就非常麻烦了。而 Dynamic Neighbors 则允许你给路由器配置一个网段，然后路由器就会自动跟该网段里的主机建立起 BGP Peer 关系。</p>
+<p>不过，相比之下，我更愿意推荐<strong>第二种方案</strong>。</p>
+<p>这种方案，是使用一个或多个独立组件负责搜集整个集群里的所有路由信息，然后通过 BGP 协议同步给网关。而我们前面提到，在大规模集群中，Calico 本身就推荐使用 Route Reflector 节点的方式进行组网。所以，这里负责跟宿主机网关进行沟通的独立组件，直接由 Route Reflector 兼任即可。</p>
+<p>更重要的是，这种情况下网关的 BGP Peer 个数是有限并且固定的。所以我们就可以直接把这些独立组件配置成路由器的 BGP Peer，而无需 Dynamic Neighbors 的支持。</p>
+<p>当然，这些独立组件的工作原理也很简单：它们只需要 WATCH Etcd 里的宿主机和对应网段的变化信息，然后把这些信息通过 BGP 协议分发给网关即可。</p>
+<p><strong>总结</strong></p>
+<p>在本篇文章中，我为你详细讲述了 Fannel host-gw 模式和 Calico 这两种纯三层网络方案的工作原理。</p>
+<p>需要注意的是，在大规模集群里，三层网络方案在宿主机上的路由规则可能会非常多，这会导致错误排查变得困难。此外，在系统故障的时候，路由规则出现重叠冲突的概率也会变大。</p>
+<p>基于上述原因，如果是在公有云上，由于宿主机网络本身比较“直白”，我一般会推荐更加简单的 Flannel host-gw 模式。</p>
+<p>但不难看到，在私有部署环境里，Calico 项目才能够覆盖更多的场景，并为你提供更加可靠的组网方案和架构思路。</p>
+<p><strong>思考题</strong></p>
+<p>你能否能总结一下三层网络方案和“隧道模式”的异同，以及各自的优缺点？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/36.%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4Kubernetes%E5%8F%AA%E6%9C%89soft%20multi-tenancy/">36 | 为什么说Kubernetes只有soft multi-tenancy？</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.1k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="为什么说Kubernetes只有soft-multi-tenancy"   >
+          <a href="#为什么说Kubernetes只有soft-multi-tenancy" class="heading-link"><i class="fas fa-link"></i></a>为什么说Kubernetes只有soft multi-tenancy</h2>
+      <p>在前面的文章中，我为你详细讲解了 Kubernetes 生态里，主流容器网络方案的工作原理。</p>
+<p>不难发现，Kubernetes 的网络模型，以及前面这些网络方案的实现，都只关注容器之间网络的“连通”，却并不关心容器之间网络的“隔离”。这跟传统的 IaaS 层的网络方案，区别非常明显。</p>
+<p>你肯定会问了，Kubernetes 的网络方案对“隔离”到底是如何考虑的呢？难道 Kubernetes 就不管网络“多租户”的需求吗？</p>
+<p>接下来，在今天这篇文章中，我就来回答你的这些问题。</p>
+<p>在 Kubernetes 里，网络隔离能力的定义，是依靠一种专门的 API 对象来描述的，即：NetworkPolicy。</p>
+<p><code>一个完整的 NetworkPolicy 对象的示例</code>，如下所示：</p>
+<pre><code>apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 172.17.0.0/16
+        except:
+        - 172.17.1.0/24
+    - namespaceSelector:
+        matchLabels:
+          project: myproject
+    - podSelector:
+        matchLabels:
+          role: frontend
+    ports:
+    - protocol: TCP
+      port: 6379
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.0.0.0/24
+    ports:
+    - protocol: TCP
+      port: 5978</code></pre><p>我在和你分享前面的内容时已经说过（这里你可以再回顾下第 34 篇文章《Kubernetes 网络模型与 CNI 网络插件》中的相关内容），<strong>Kubernetes 里的 Pod 默认都是“允许所有”（Accept All）的</strong>，即：Pod 可以接收来自任何发送方的请求；或者，向任何接收方发送请求。而如果你要对这个情况作出限制，就必须通过 NetworkPolicy 对象来指定。</p>
+<p>而在上面这个例子里，你首先会看到 podSelector 字段。它的作用，就是定义这个 NetworkPolicy 的限制范围，比如：当前 Namespace 里携带了 role=db 标签的 Pod。</p>
+<p>而如果你把 podSelector 字段留空：</p>
+<pre><code>spec:
+ podSelector: {}</code></pre><p>那么这个 NetworkPolicy 就会作用于当前 Namespace 下的所有 Pod。</p>
+<p>而一旦 Pod 被 NetworkPolicy 选中，那么这个 Pod 就会进入“拒绝所有”（Deny All）的状态，即：这个 Pod 既不允许被外界访问，也不允许对外界发起访问。</p>
+<p><strong>而 NetworkPolicy 定义的规则，其实就是“白名单”。</strong></p>
+<p>例如，在我们上面这个例子里，我在 policyTypes 字段，定义了这个 NetworkPolicy 的类型是 ingress 和 egress，即：它既会影响流入（ingress）请求，也会影响流出（egress）请求。</p>
+<p>然后，在 ingress 字段里，我定义了 from 和 ports，即：允许流入的“白名单”和端口。其中，这个允许流入的“白名单”里，我指定了<strong>三种并列的情况，</strong>分别是：ipBlock、namespaceSelector 和 podSelector。</p>
+<p>而在 egress 字段里，我则定义了 to 和 ports，即：允许流出的“白名单”和端口。这里允许流出的“白名单”的定义方法与 ingress 类似。只不过，这一次 ipblock 字段指定的，是目的地址的网段。</p>
+<p>综上所述，这个 NetworkPolicy 对象，指定的隔离规则如下所示：</p>
+<ol>
+<li>该隔离规则只对 default Namespace 下的，携带了 role=db 标签的 Pod 有效。限制的请求类型包括 ingress（流入）和 egress（流出）。</li>
+<li>Kubernetes 会拒绝任何访问被隔离 Pod 的请求，除非这个请求来自于以下“白名单”里的对象，并且访问的是被隔离 Pod 的 6379 端口。这些“白名单”对象包括：<br>a. default Namespace 里的，携带了 role=fronted 标签的 Pod；<br>b. 携带了 project=myproject 标签的 Namespace 里的任何 Pod；<br>c. 任何源地址属于 172.17.0.0/16 网段，且不属于 172.17.1.0/24 网段的请求。</li>
+<li>Kubernetes 会拒绝被隔离 Pod 对外发起任何请求，除非请求的目的地址属于 10.0.0.0/24 网段，并且访问的是该网段地址的 5978 端口。</li>
+</ol>
+<p>需要注意的是，定义一个 NetworkPolicy 对象的过程，容易犯错的是“白名单”部分（from 和 to 字段）。</p>
+<p>举个例子：</p>
+<pre><code>...
+ingress:
+- from:
+  - namespaceSelector:
+      matchLabels:
+        user: alice
+  - podSelector:
+      matchLabels:
+        role: client
+...</code></pre><p>像上面这样定义的 namespaceSelector 和 podSelector，是“或”（OR）的关系。所以说，这个 from 字段定义了两种情况，无论是 Namespace 满足条件，还是 Pod 满足条件，这个 NetworkPolicy 都会生效。</p>
+<p>而下面这个例子，虽然看起来类似，但是它定义的规则却完全不同：</p>
+<pre><code>...
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          user: alice
+      podSelector:
+        matchLabels:
+          role: client
+  ...</code></pre><p>注意看，这样定义的 namespaceSelector 和 podSelector，其实是“与”（AND）的关系。所以说，这个 from 字段只定义了一种情况，只有 Namespace 和 Pod 同时满足条件，这个 NetworkPolicy 才会生效。</p>
+<p><strong>这两种定义方式的区别，请你一定要分清楚。</strong></p>
+<p>此外，如果要使上面定义的 NetworkPolicy 在 Kubernetes 集群里真正产生作用，你的 CNI 网络插件就必须是支持 Kubernetes 的 NetworkPolicy 的。</p>
+<p>在具体实现上，凡是支持 NetworkPolicy 的 CNI 网络插件，都维护着一个 NetworkPolicy Controller，通过控制循环的方式对 NetworkPolicy 对象的增删改查做出响应，然后在宿主机上完成 iptables 规则的配置工作。</p>
+<p>在 Kubernetes 生态里，目前已经实现了 NetworkPolicy 的网络插件包括 Calico、Weave 和 kube-router 等多个项目，但是并不包括 Flannel 项目。</p>
+<p>所以说，如果想要在使用 Flannel 的同时还使用 NetworkPolicy 的话，你就需要再额外安装一个网络插件，比如 Calico 项目，来负责执行 NetworkPolicy。</p>
+<blockquote>
+<p>安装 Flannel + Calico 的流程非常简单，你直接参考这个文档一键安装即可。</p>
+</blockquote>
+<p><code>那么，这些网络插件，又是如何根据 NetworkPolicy 对 Pod 进行隔离的呢？</code></p>
+<p>接下来，我就以三层网络插件为例（比如 Calico 和 kube-router），来为你分析一下这部分的原理。</p>
+<p>为了方便讲解，这一次我编写了一个比较简单的 NetworkPolicy 对象，如下所示：</p>
+<pre><code>apiVersion: extensions/v1beta1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  ingress:
+   - from:
+     - namespaceSelector:
+         matchLabels:
+           project: myproject
+     - podSelector:
+         matchLabels:
+           role: frontend
+     ports:
+       - protocol: tcp
+         port: 6379</code></pre><p>可以看到，我们指定的 ingress“白名单”，是任何 Namespace 里，携带 project=myproject 标签的 Pod；以及 default Namespace 里，携带了 role=frontend 标签的 Pod。允许被访问的端口是：6379。</p>
+<p>而被隔离的对象，是所有携带了 role=db 标签的 Pod。</p>
+<p>那么这个时候，Kubernetes 的网络插件就会使用这个 NetworkPolicy 的定义，在宿主机上生成 iptables 规则。这个过程，我可以通过如下所示的一段 Go 语言风格的伪代码来为你描述：</p>
+<pre><code>for dstIP := range 所有被networkpolicy.spec.podSelector选中的Pod的IP地址
+  for srcIP := range 所有被ingress.from.podSelector选中的Pod的IP地址
+    for port, protocol := range ingress.ports {
+      iptables -A KUBE-NWPLCY-CHAIN -s $srcIP -d $dstIP -p $protocol -m $protocol --dport $port -j ACCEPT 
+    }
+  }
+} </code></pre><p>可以看到，这是一条最基本的、通过匹配条件决定下一步动作的 iptables 规则。</p>
+<p>这条规则的名字是 KUBE-NWPLCY-CHAIN，含义是：当 IP 包的源地址是 srcIP、目的地址是 dstIP、协议是 protocol、目的端口是 port 的时候，就允许它通过（ACCEPT）。</p>
+<p>而正如这段伪代码所示，匹配这条规则所需的这四个参数，都是从 NetworkPolicy 对象里读取出来的。</p>
+<p><strong>可以看到，Kubernetes 网络插件对 Pod 进行隔离，其实是靠在宿主机上生成 NetworkPolicy 对应的 iptable 规则来实现的。</strong></p>
+<p>此外，在设置好上述“隔离”规则之后，网络插件还需要想办法，将所有对被隔离 Pod 的访问请求，都转发到上述 KUBE-NWPLCY-CHAIN 规则上去进行匹配。并且，如果匹配不通过，这个请求应该被“拒绝”。</p>
+<p><code>在 CNI 网络插件中，上述需求可以通过设置两组 iptables 规则来实现。</code></p>
+<p><strong>第一组规则，负责“拦截”对被隔离 Pod 的访问请求。</strong>生成这一组规则的伪代码，如下所示：</p>
+<pre><code>for pod := range 该Node上的所有Pod {
+    if pod是networkpolicy.spec.podSelector选中的 {
+        iptables -A FORWARD -d $podIP -m physdev --physdev-is-bridged -j KUBE-POD-SPECIFIC-FW-CHAIN
+        iptables -A FORWARD -d $podIP -j KUBE-POD-SPECIFIC-FW-CHAIN
+        ...
+    }
+}</code></pre><p>可以看到，这里的的 iptables 规则使用到了内置链：FORWARD。它是什么意思呢？</p>
+<p>说到这里，我就得为你稍微普及一下 iptables 的知识了。</p>
+<p>实际上，iptables 只是一个操作 Linux 内核 Netfilter 子系统的“界面”。顾名思义，Netfilter 子系统的作用，就是 Linux 内核里挡在“网卡”和“用户态进程”之间的一道“防火墙”。它们的关系，可以用如下的示意图来表示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      <br>可以看到，这幅示意图中，IP 包“一进一出”的两条路径上，有几个关键的“检查点”，它们正是 Netfilter 设置“防火墙”的地方。<strong>在 iptables 中，这些“检查点”被称为：链（Chain）。</strong>这是因为这些“检查点”对应的 iptables 规则，是按照定义顺序依次进行匹配的。这些“检查点”的具体工作原理，可以用如下所示的示意图进行描述：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.jpg"  alt="">
+      <br>可以看到，当一个 IP 包通过网卡进入主机之后，它就进入了 Netfilter 定义的流入路径（Input Path）里。</p>
+<p>在这个路径中，IP 包要经过路由表路由来决定下一步的去向。而在这次路由之前，Netfilter 设置了一个名叫 PREROUTING 的“检查点”。在 Linux 内核的实现里，所谓“检查点”实际上就是内核网络协议栈代码里的 Hook（比如，在执行路由判断的代码之前，内核会先调用 PREROUTING 的 Hook）。</p>
+<p>而在经过路由之后，IP 包的去向就分为了两种：</p>
+<ul>
+<li>第一种，继续在本机处理；</li>
+<li>第二种，被转发到其他目的地。</li>
+</ul>
+<p><strong>我们先说一下 IP 包的第一种去向。</strong>这时候，IP 包将继续向上层协议栈流动。在它进入传输层之前，Netfilter 会设置一个名叫 INPUT 的“检查点”。到这里，IP 包流入路径（Input Path）结束。</p>
+<p>接下来，这个 IP 包通过传输层进入用户空间，交给用户进程处理。而处理完成后，用户进程会通过本机发出返回的 IP 包。这时候，这个 IP 包就进入了流出路径（Output Path）。</p>
+<p>此时，IP 包首先还是会经过主机的路由表进行路由。路由结束后，Netfilter 就会设置一个名叫 OUTPUT 的“检查点”。然后，在 OUTPUT 之后，再设置一个名叫 POSTROUTING“检查点”。</p>
+<p>你可能会觉得奇怪，为什么在流出路径结束后，Netfilter 会连着设置两个“检查点”呢？</p>
+<p>这就要说到在流入路径里，<strong>路由判断后的第二种去向</strong>了。</p>
+<p>在这种情况下，这个 IP 包不会进入传输层，而是会继续在网络层流动，从而进入到转发路径（Forward Path）。在转发路径中，Netfilter 会设置一个名叫 FORWARD 的“检查点”。</p>
+<p>而在 FORWARD“检查点”完成后，IP 包就会来到流出路径。而转发的 IP 包由于目的地已经确定，它就不会再经过路由，也自然不会经过 OUTPUT，而是会直接来到 POSTROUTING“检查点”。</p>
+<p>所以说，POSTROUTING 的作用，其实就是上述两条路径，最终汇聚在一起的“最终检查点”。</p>
+<p>需要注意的是，在有网桥参与的情况下，上述 Netfilter 设置“检查点”的流程，实际上也会出现在链路层（二层），并且会跟我在上面讲述的网络层（三层）的流程有交互。</p>
+<p>这些链路层的“检查点”对应的操作界面叫作 ebtables。所以，准确地说，数据包在 Linux Netfilter 子系统里完整的流动过程，其实应该如下所示（这是一幅来自<span class="exturl"><a class="exturl__link"   href="https://en.wikipedia.org/wiki/Iptables#/media/File:Netfilter-packet-flow.svg"  target="_blank" rel="noopener">Netfilter 官方的原理图</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，建议你点击图片以查看大图）：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="4.jpg"  alt="">
+      <br>可以看到，我前面为你讲述的，正是上图中绿色部分，也就是网络层的 iptables 链的工作流程。</p>
+<p>另外，你应该还能看到，每一个白色的“检查点”上，还有一个绿色的“标签”，比如：raw、nat、filter 等等。</p>
+<p>在 iptables 里，这些标签叫作：表。比如，同样是 OUTPUT 这个“检查点”，filter Output 和 nat Output 在 iptables 里的语法和参数，就完全不一样，实现的功能也完全不同。</p>
+<p>所以说，iptables 表的作用，就是在某个具体的“检查点”（比如 Output）上，按顺序执行几个不同的检查动作（比如，先执行 nat，再执行 filter）。</p>
+<p>在理解了 iptables 的工作原理之后，我们再回到 NetworkPolicy 上来。这时候，前面由网络插件设置的、负责“拦截”进入 Pod 的请求的三条 iptables 规则，就很容易读懂了：</p>
+<pre><code>iptables -A FORWARD -d $podIP -m physdev --physdev-is-bridged -j KUBE-POD-SPECIFIC-FW-CHAIN
+iptables -A FORWARD -d $podIP -j KUBE-POD-SPECIFIC-FW-CHAIN
+...</code></pre><p>其中，<strong>第一条 FORWARD 链“拦截”的是一种特殊情况</strong>：它对应的是同一台宿主机上容器之间经过 CNI 网桥进行通信的流入数据包。其中，–physdev-is-bridged 的意思就是，这个 FORWARD 链匹配的是，通过本机上的网桥设备，发往目的地址是 podIP 的 IP 包。</p>
+<p>当然，如果是像 Calico 这样的非网桥模式的 CNI 插件，就不存在这个情况了。</p>
+<p>kube-router 其实是一个简化版的 Calico，它也使用 BGP 来维护路由信息，但是使用 CNI bridge 插件负责跟 Kubernetes 进行交互。</p>
+<p>而<strong>第二条 FORWARD 链“拦截”的则是最普遍的情况，即：容器跨主通信</strong>。这时候，流入容器的数据包都是经过路由转发（FORWARD 检查点）来的。</p>
+<p>不难看到，这些规则最后都跳转（即：-j）到了名叫 KUBE-POD-SPECIFIC-FW-CHAIN 的规则上。它正是网络插件为 NetworkPolicy 设置的第二组规则。</p>
+<p>而这个 KUBE-POD-SPECIFIC-FW-CHAIN 的作用，就是做出“允许”或者“拒绝”的判断。这部分功能的实现，可以简单描述为下面这样的 iptables 规则：</p>
+<pre><code>iptables -A KUBE-POD-SPECIFIC-FW-CHAIN -j KUBE-NWPLCY-CHAIN
+iptables -A KUBE-POD-SPECIFIC-FW-CHAIN -j REJECT --reject-with icmp-port-unreachable</code></pre><p>可以看到，首先在第一条规则里，我们会把 IP 包转交给前面定义的 KUBE-NWPLCY-CHAIN 规则去进行匹配。按照我们之前的讲述，如果匹配成功，那么 IP 包就会被“允许通过”。</p>
+<p>而如果匹配失败，IP 包就会来到第二条规则上。可以看到，它是一条 REJECT 规则。通过这条规则，不满足 NetworkPolicy 定义的请求就会被拒绝掉，从而实现了对该容器的“隔离”。</p>
+<p>以上，就是 CNI 网络插件实现 NetworkPolicy 的基本方法了。当然，对于不同的插件来说，上述实现过程可能有不同的手段，但根本原理是不变的。</p>
+<p><strong>总结</strong></p>
+<p>在本篇文章中，我主要和你分享了 Kubernetes 对 Pod 进行“隔离”的手段，即：NetworkPolicy。</p>
+<p>可以看到，NetworkPolicy 实际上只是宿主机上的一系列 iptables 规则。这跟传统 IaaS 里面的安全组（Security Group）其实是非常类似的。</p>
+<p>而基于上述讲述，你就会发现这样一个事实：</p>
+<p>Kubernetes 的网络模型以及大多数容器网络实现，其实既不会保证容器之间二层网络的互通，也不会实现容器之间的二层网络隔离。这跟 IaaS 项目管理虚拟机的方式，是完全不同的。</p>
+<p>所以说，Kubernetes 从底层的设计和实现上，更倾向于假设你已经有了一套完整的物理基础设施。然后，Kubernetes 负责在此基础上提供一种“弱多租户”（soft multi-tenancy）的能力。</p>
+<p>并且，基于上述思路，Kubernetes 将来也不大可能把 Namespace 变成一个具有实质意义的隔离机制，或者把它映射成为“子网”或者“租户”。毕竟你可以看到，NetworkPolicy 对象的描述能力，要比基于 Namespace 的划分丰富得多。</p>
+<p>这也是为什么，到目前为止，Kubernetes 项目在云计算生态里的定位，其实是基础设施与 PaaS 之间的中间层。这是非常符合“容器”这个本质上就是进程的抽象粒度的。</p>
+<p>当然，随着 Kubernetes 社区以及 CNCF 生态的不断发展，Kubernetes 项目也已经开始逐步下探，“吃”掉了基础设施领域的很多“蛋糕”。这也正是容器生态继续发展的一个必然方向。</p>
+<p><strong>思考题</strong></p>
+<p>请你编写这样一个 NetworkPolicy：它使得指定的 Namespace（比如 my-namespace）里的所有 Pod，都不能接收任何 Ingress 请求。然后，请你说说，这样的 NetworkPolicy 有什么实际的作用？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/31.%E5%AE%B9%E5%99%A8%E5%AD%98%E5%82%A8%E5%AE%9E%E8%B7%B5%EF%BC%9ACSI%E6%8F%92%E4%BB%B6%E7%BC%96%E5%86%99%E6%8C%87%E5%8D%97/">31 | 容器存储实践：CSI插件编写指南</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.6k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="容器存储实践：CSI插件编写指南"   >
+          <a href="#容器存储实践：CSI插件编写指南" class="heading-link"><i class="fas fa-link"></i></a>容器存储实践：CSI插件编写指南</h2>
+      <p>在上一篇文章中，我已经为你详细讲解了 CSI 插件机制的设计原理。今天我将继续和你一起实践一个 CSI 插件的编写过程。</p>
+<p>为了能够覆盖到 CSI 插件的所有功能，我这一次选择了 DigitalOcean 的块存储（Block Storage）服务，来作为实践对象。</p>
+<p>DigitalOcean 是业界知名的“最简”公有云服务，即：它只提供虚拟机、存储、网络等为数不多的几个基础功能，其他功能一概不管。而这，恰恰就使得 DigitalOcean 成了我们在公有云上实践 Kubernetes 的最佳选择。</p>
+<p><strong><code>我们这次编写的 CSI 插件的功能，就是：让我们运行在 DigitalOcean 上的 Kubernetes 集群能够使用它的块存储服务，作为容器的持久化存储。</code></strong></p>
+<blockquote>
+<p>备注：在 DigitalOcean 上部署一个 Kubernetes 集群的过程，也很简单。你只需要先在 DigitalOcean 上创建几个虚拟机，然后按照我们在第 11 篇文章《从 0 到 1：搭建一个完整的 Kubernetes 集群》中从 0 到 1 的步骤直接部署即可。</p>
+</blockquote>
+<p>而有了 CSI 插件之后，持久化存储的用法就非常简单了，你只需要创建一个如下所示的 StorageClass 对象即可：</p>
+<pre><code>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: do-block-storage
+  namespace: kube-system
+  annotations:
+    storageclass.kubernetes.io/is-default-class: &quot;true&quot;
+provisioner: com.digitalocean.csi.dobs</code></pre><p>有了这个 StorageClass，External Provisoner 就会为集群中新出现的 PVC 自动创建出 PV，然后调用 CSI 插件创建出这个 PV 对应的 Volume，这正是 CSI 体系中 Dynamic Provisioning 的实现方式。</p>
+<blockquote>
+<p>备注：storageclass.kubernetes.io/is-default-class: “true”的意思，是使用这个 StorageClass 作为默认的持久化存储提供者。</p>
+</blockquote>
+<p>不难看到，这个 StorageClass 里唯一引人注意的，是 provisioner=com.digitalocean.csi.dobs 这个字段。显然，这个字段告诉了 Kubernetes，请使用名叫 com.digitalocean.csi.dobs 的 CSI 插件来为我处理这个 StorageClass 相关的所有操作。</p>
+<p>那么，<code>Kubernetes 又是如何知道一个 CSI 插件的名字的呢？</code></p>
+<p><strong>这就需要从 CSI 插件的第一个服务 CSI Identity 说起了。</strong></p>
+<p>其实，一个 CSI 插件的代码结构非常简单，如下所示：</p>
+<pre><code>tree $GOPATH/src/github.com/digitalocean/csi-digitalocean/driver  
+$GOPATH/src/github.com/digitalocean/csi-digitalocean/driver 
+├── controller.go
+├── driver.go
+├── identity.go
+├── mounter.go
+└── node.go</code></pre><p>其中，CSI Identity 服务的实现，就定义在了 driver 目录下的 identity.go 文件里。</p>
+<p>当然，为了能够让 Kubernetes 访问到 CSI Identity 服务，我们需要先在 driver.go 文件里，定义一个标准的 gRPC Server，如下所示：</p>
+<pre><code>// Run starts the CSI plugin by communication over the given endpoint
+func (d *Driver) Run() error {
+ ...
+
+ listener, err := net.Listen(u.Scheme, addr)
+ ...
+
+ d.srv = grpc.NewServer(grpc.UnaryInterceptor(errHandler))
+ csi.RegisterIdentityServer(d.srv, d)
+ csi.RegisterControllerServer(d.srv, d)
+ csi.RegisterNodeServer(d.srv, d)
+
+ d.ready = true // we&apos;re now ready to go!
+ ...
+ return d.srv.Serve(listener)
+}</code></pre><p>可以看到，只要把编写好的 gRPC Server 注册给 CSI，它就可以响应来自 External Components 的 CSI 请求了。</p>
+<p><strong>CSI Identity 服务中，最重要的接口是 GetPluginInfo，</strong>它返回的就是这个插件的名字和版本号，如下所示：</p>
+<blockquote>
+<p>备注：CSI 各个服务的接口我在上一篇文章中已经介绍过，你也可以在这里找到<span class="exturl"><a class="exturl__link"   href="https://github.com/container-storage-interface/spec/blob/master/csi.proto"  target="_blank" rel="noopener">它的 protoc 文件</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>。</p>
+</blockquote>
+<pre><code>func (d *Driver) GetPluginInfo(ctx context.Context, req *csi.GetPluginInfoRequest) (*csi.GetPluginInfoResponse, error) {
+ resp := &amp;csi.GetPluginInfoResponse{
+  Name:          driverName,
+  VendorVersion: version,
+ }
+ ...
+}</code></pre><p>其中，driverName 的值，正是”com.digitalocean.csi.dobs”。所以说，Kubernetes 正是通过 GetPluginInfo 的返回值，来找到你在 StorageClass 里声明要使用的 CSI 插件的。</p>
+<blockquote>
+<p>备注：CSI 要求插件的名字遵守<span class="exturl"><a class="exturl__link"   href="https://en.wikipedia.org/wiki/Reverse_domain_name_notation"  target="_blank" rel="noopener">“反向 DNS”格式</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>。</p>
+</blockquote>
+<p>另外一个 <strong>GetPluginCapabilities 接口也很重要</strong>。这个接口返回的是这个 CSI 插件的“能力”。</p>
+<p>比如，当你编写的 CSI 插件不准备实现“Provision 阶段”和“Attach 阶段”（比如，一个最简单的 NFS 存储插件就不需要这两个阶段）时，你就可以通过这个接口返回：本插件不提供 CSI Controller 服务，即：没有 csi.PluginCapability_Service_CONTROLLER_SERVICE 这个“能力”。这样，Kubernetes 就知道这个信息了。</p>
+<p>最后，<strong>CSI Identity 服务还提供了一个 Probe 接口</strong>。Kubernetes 会调用它来检查这个 CSI 插件是否正常工作。</p>
+<p>一般情况下，我建议你在编写插件时给它设置一个 Ready 标志，当插件的 gRPC Server 停止的时候，把这个 Ready 标志设置为 false。或者，你可以在这里访问一下插件的端口，类似于健康检查的做法。</p>
+<blockquote>
+<p>备注：关于健康检查的问题，你可以再回顾一下第 15 篇文章《深入解析 Pod 对象（二）：使用进阶》中的相关内容。</p>
+</blockquote>
+<p>然后，<strong><code>我们要开始编写 CSI 插件的第二个服务，即 CSI Controller 服务了</code></strong>。它的代码实现，在 controller.go 文件里。</p>
+<p>在上一篇文章中我已经为你讲解过，这个服务主要实现的就是 Volume 管理流程中的“Provision 阶段”和“Attach 阶段”。</p>
+<p><strong>“Provision 阶段”对应的接口，是 CreateVolume 和 DeleteVolume，</strong>它们的调用者是 External Provisoner。以 CreateVolume 为例，它的主要逻辑如下所示：</p>
+<pre><code>func (d *Driver) CreateVolume(ctx context.Context, req *csi.CreateVolumeRequest) (*csi.CreateVolumeResponse, error) {
+ ...
+
+ volumeReq := &amp;godo.VolumeCreateRequest{
+  Region:        d.region,
+  Name:          volumeName,
+  Description:   createdByDO,
+  SizeGigaBytes: size / GB,
+ }
+
+ ...
+
+ vol, _, err := d.doClient.Storage.CreateVolume(ctx, volumeReq)
+
+ ...
+
+ resp := &amp;csi.CreateVolumeResponse{
+  Volume: &amp;csi.Volume{
+   Id:            vol.ID,
+   CapacityBytes: size,
+   AccessibleTopology: []*csi.Topology{
+    {
+     Segments: map[string]string{
+      &quot;region&quot;: d.region,
+     },
+    },
+   },
+  },
+ }
+
+ return resp, nil
+}</code></pre><p>可以看到，对于 DigitalOcean 这样的公有云来说，CreateVolume 需要做的操作，就是调用 DigitalOcean 块存储服务的 API，创建出一个存储卷（d.doClient.Storage.CreateVolume）。如果你使用的是其他类型的块存储（比如 Cinder、Ceph RBD 等），对应的操作也是类似地调用创建存储卷的 API。</p>
+<p>而<strong>“Attach 阶段”对应的接口是 ControllerPublishVolume 和 ControllerUnpublishVolume，</strong>它们的调用者是 External Attacher。以 ControllerPublishVolume 为例，它的逻辑如下所示：</p>
+<pre><code>func (d *Driver) ControllerPublishVolume(ctx context.Context, req *csi.ControllerPublishVolumeRequest) (*csi.ControllerPublishVolumeResponse, error) {
+ ...
+
+  dropletID, err := strconv.Atoi(req.NodeId)
+
+  // check if volume exist before trying to attach it
+  _, resp, err := d.doClient.Storage.GetVolume(ctx, req.VolumeId)
+
+ ...
+
+  // check if droplet exist before trying to attach the volume to the droplet
+  _, resp, err = d.doClient.Droplets.Get(ctx, dropletID)
+
+ ...
+
+  action, resp, err := d.doClient.StorageActions.Attach(ctx, req.VolumeId, dropletID)
+ ...
+
+ if action != nil {
+  ll.Info(&quot;waiting until volume is attached&quot;)
+ if err := d.waitAction(ctx, req.VolumeId, action.ID); err != nil {
+  return nil, err
+  }
+  }
+
+  ll.Info(&quot;volume is attached&quot;)
+ return &amp;csi.ControllerPublishVolumeResponse{}, nil
+}</code></pre><p>可以看到，对于 DigitalOcean 来说，ControllerPublishVolume 在“Attach 阶段”需要做的工作，是调用 DigitalOcean 的 API，将我们前面创建的存储卷，挂载到指定的虚拟机上（d.doClient.StorageActions.Attach）。</p>
+<p>其中，存储卷由请求中的 VolumeId 来指定。而虚拟机，也就是将要运行 Pod 的宿主机，则由请求中的 NodeId 来指定。这些参数，都是 External Attacher 在发起请求时需要设置的。</p>
+<p>我在上一篇文章中已经为你介绍过，External Attacher 的工作原理，是监听（Watch）了一种名叫 VolumeAttachment 的 API 对象。这种 API 对象的主要字段如下所示：</p>
+<pre><code>// VolumeAttachmentSpec is the specification of a VolumeAttachment request.
+type VolumeAttachmentSpec struct {
+ // Attacher indicates the name of the volume driver that MUST handle this
+ // request. This is the name returned by GetPluginName().
+ Attacher string
+
+ // Source represents the volume that should be attached.
+ Source VolumeAttachmentSource
+
+ // The node that the volume should be attached to.
+ NodeName string
+}</code></pre><p>而这个对象的生命周期，正是由 AttachDetachController 负责管理的（这里，你可以再回顾一下第 28 篇文章《PV、PVC、StorageClass，这些到底在说啥？》中的相关内容）。</p>
+<p>这个控制循环的职责，是不断检查 Pod 所对应的 PV，在它所绑定的宿主机上的挂载情况，从而决定是否需要对这个 PV 进行 Attach（或者 Dettach）操作。</p>
+<p>而这个 Attach 操作，在 CSI 体系里，就是创建出上面这样一个 VolumeAttachment 对象。可以看到，Attach 操作所需的 PV 的名字（Source）、宿主机的名字（NodeName）、存储插件的名字（Attacher），都是这个 VolumeAttachment 对象的一部分。</p>
+<p>而当 External Attacher 监听到这样的一个对象出现之后，就可以立即使用 VolumeAttachment 里的这些字段，封装成一个 gRPC 请求调用 CSI Controller 的 ControllerPublishVolume 方法。</p>
+<p>最后，<strong><code>我们就可以编写 CSI Node 服务了。</code></strong></p>
+<p>CSI Node 服务对应的，是 Volume 管理流程里的“Mount 阶段”。它的代码实现，在 node.go 文件里。</p>
+<p>我在上一篇文章里曾经提到过，kubelet 的 VolumeManagerReconciler 控制循环会直接调用 CSI Node 服务来完成 Volume 的“Mount 阶段”。</p>
+<p>不过，在具体的实现中，这个“Mount 阶段”的处理其实被细分成了 NodeStageVolume 和 NodePublishVolume 这两个接口。</p>
+<p>这里的原因其实也很容易理解：我在第 28 篇文章《PV、PVC、StorageClass，这些到底在说啥？》中曾经介绍过，对于磁盘以及块设备来说，它们被 Attach 到宿主机上之后，就成为了宿主机上的一个待用存储设备。而到了“Mount 阶段”，我们首先需要格式化这个设备，然后才能把它挂载到 Volume 对应的宿主机目录上。</p>
+<p>在 kubelet 的 VolumeManagerReconciler 控制循环中，这两步操作分别叫作** MountDevice 和 SetUp。**</p>
+<p>其中，MountDevice 操作，就是直接调用了 CSI Node 服务里的 NodeStageVolume 接口。顾名思义，这个接口的作用，就是格式化 Volume 在宿主机上对应的存储设备，然后挂载到一个临时目录（Staging 目录）上。</p>
+<p>对于 DigitalOcean 来说，它对 NodeStageVolume 接口的实现如下所示：</p>
+<pre><code>func (d *Driver) NodeStageVolume(ctx context.Context, req *csi.NodeStageVolumeRequest) (*csi.NodeStageVolumeResponse, error) {
+ ...
+
+ vol, resp, err := d.doClient.Storage.GetVolume(ctx, req.VolumeId)
+
+ ...
+
+ source := getDiskSource(vol.Name)
+ target := req.StagingTargetPath
+
+ ...
+
+ if !formatted {
+  ll.Info(&quot;formatting the volume for staging&quot;)
+  if err := d.mounter.Format(source, fsType); err != nil {
+   return nil, status.Error(codes.Internal, err.Error())
+  }
+ } else {
+  ll.Info(&quot;source device is already formatted&quot;)
+ }
+
+...
+ if !mounted {
+  if err := d.mounter.Mount(source, target, fsType, options...); err != nil {
+   return nil, status.Error(codes.Internal, err.Error())
+  }
+ } else {
+  ll.Info(&quot;source device is already mounted to the target path&quot;)
+ }
+
+ ...
+ return &amp;csi.NodeStageVolumeResponse{}, nil
+}</code></pre><p>可以看到，在 NodeStageVolume 的实现里，我们首先通过 DigitalOcean 的 API 获取到了这个 Volume 对应的设备路径（getDiskSource）；然后，我们把这个设备格式化成指定的格式（ d.mounter.Format）；最后，我们把格式化后的设备挂载到了一个临时的 Staging 目录（StagingTargetPath）下。</p>
+<p>而 SetUp 操作则会调用 CSI Node 服务的 NodePublishVolume 接口。有了上述对设备的预处理工作后，它的实现就非常简单了，如下所示：</p>
+<pre><code>func (d *Driver) NodePublishVolume(ctx context.Context, req *csi.NodePublishVolumeRequest) (*csi.NodePublishVolumeResponse, error) {
+ ...
+ source := req.StagingTargetPath
+ target := req.TargetPath
+
+ mnt := req.VolumeCapability.GetMount()
+ options := mnt.MountFlag
+    ...
+
+ if !mounted {
+  ll.Info(&quot;mounting the volume&quot;)
+  if err := d.mounter.Mount(source, target, fsType, options...); err != nil {
+   return nil, status.Error(codes.Internal, err.Error())
+  }
+ } else {
+  ll.Info(&quot;volume is already mounted&quot;)
+ }
+
+ return &amp;csi.NodePublishVolumeResponse{}, nil
+}</code></pre><p>可以看到，在这一步实现中，我们只需要做一步操作，即：将 Staging 目录，绑定挂载到 Volume 对应的宿主机目录上。</p>
+<p>由于 Staging 目录，正是 Volume 对应的设备被格式化后挂载在宿主机上的位置，所以当它和 Volume 的宿主机目录绑定挂载之后，这个 Volume 宿主机目录的“持久化”处理也就完成了。</p>
+<p>当然，我在前面也曾经提到过，对于文件系统类型的存储服务来说，比如 NFS 和 GlusterFS 等，它们并没有一个对应的磁盘“设备”存在于宿主机上，所以 kubelet 在 VolumeManagerReconciler 控制循环中，会跳过 MountDevice 操作而直接执行 SetUp 操作。所以对于它们来说，也就不需要实现 NodeStageVolume 接口了。</p>
+<p><strong><code>在编写完了 CSI 插件之后，我们就可以把这个插件和 External Components 一起部署起来。</code></strong></p>
+<p>首先，我们需要创建一个 DigitalOcean client 授权需要使用的 Secret 对象，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: Secret
+metadata:
+  name: digitalocean
+  namespace: kube-system
+stringData:
+  access-token: &quot;a05dd2f26b9b9ac2asdas__REPLACE_ME____123cb5d1ec17513e06da&quot;</code></pre><p>接下来，我们通过一句指令就可以将 CSI 插件部署起来：</p>
+<pre><code>$ kubectl apply -f https://raw.githubusercontent.com/digitalocean/csi-digitalocean/master/deploy/kubernetes/releases/csi-digitalocean-v0.2.0.yaml
+这个 CSI 插件的 YAML 文件的主要内容如下所示（其中，非重要的内容已经被略去）：
+kind: DaemonSet
+apiVersion: apps/v1beta2
+metadata:
+  name: csi-do-node
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: csi-do-node
+  template:
+    metadata:
+      labels:
+        app: csi-do-node
+        role: csi-do
+    spec:
+      serviceAccount: csi-do-node-sa
+      hostNetwork: true
+      containers:
+        - name: driver-registrar
+          image: quay.io/k8scsi/driver-registrar:v0.3.0
+          ...
+        - name: csi-do-plugin
+          image: digitalocean/do-csi-plugin:v0.2.0
+          args :
+            - &quot;--endpoint=$(CSI_ENDPOINT)&quot;
+            - &quot;--token=$(DIGITALOCEAN_ACCESS_TOKEN)&quot;
+            - &quot;--url=$(DIGITALOCEAN_API_URL)&quot;
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
+            - name: DIGITALOCEAN_API_URL
+              value: https://api.digitalocean.com/
+            - name: DIGITALOCEAN_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: digitalocean
+                  key: access-token
+          imagePullPolicy: &quot;Always&quot;
+          securityContext:
+            privileged: true
+            capabilities:
+              add: [&quot;SYS_ADMIN&quot;]
+            allowPrivilegeEscalation: true
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              mountPath: /var/lib/kubelet
+              mountPropagation: &quot;Bidirectional&quot;
+            - name: device-dir
+              mountPath: /dev
+      volumes:
+        - name: plugin-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/com.digitalocean.csi.dobs
+            type: DirectoryOrCreate
+        - name: pods-mount-dir
+          hostPath:
+            path: /var/lib/kubelet
+            type: Directory
+        - name: device-dir
+          hostPath:
+            path: /dev
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+  name: csi-do-controller
+  namespace: kube-system
+spec:
+  serviceName: &quot;csi-do&quot;
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: csi-do-controller
+        role: csi-do
+    spec:
+      serviceAccount: csi-do-controller-sa
+      containers:
+        - name: csi-provisioner
+          image: quay.io/k8scsi/csi-provisioner:v0.3.0
+          ...
+        - name: csi-attacher
+          image: quay.io/k8scsi/csi-attacher:v0.3.0
+          ...
+        - name: csi-do-plugin
+          image: digitalocean/do-csi-plugin:v0.2.0
+          args :
+            - &quot;--endpoint=$(CSI_ENDPOINT)&quot;
+            - &quot;--token=$(DIGITALOCEAN_ACCESS_TOKEN)&quot;
+            - &quot;--url=$(DIGITALOCEAN_API_URL)&quot;
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: DIGITALOCEAN_API_URL
+              value: https://api.digitalocean.com/
+            - name: DIGITALOCEAN_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: digitalocean
+                  key: access-token
+          imagePullPolicy: &quot;Always&quot;
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+      volumes:
+        - name: socket-dir
+          emptyDir: {}</code></pre><p>可以看到，我们编写的 CSI 插件只有一个二进制文件，它的镜像是 digitalocean/do-csi-plugin:v0.2.0。</p>
+<p>而我们<strong>部署 CSI 插件的常用原则是：</strong></p>
+<p><strong>第一，通过 DaemonSet 在每个节点上都启动一个 CSI 插件，来为 kubelet 提供 CSI Node 服务。</strong>这是因为，CSI Node 服务需要被 kubelet 直接调用，所以它要和 kubelet“一对一”地部署起来。</p>
+<p>此外，在上述 DaemonSet 的定义里面，除了 CSI 插件，我们还以 sidecar 的方式运行着 driver-registrar 这个外部组件。它的作用，是向 kubelet 注册这个 CSI 插件。这个注册过程使用的插件信息，则通过访问同一个 Pod 里的 CSI 插件容器的 Identity 服务获取到。</p>
+<p>需要注意的是，由于 CSI 插件运行在一个容器里，那么 CSI Node 服务在“Mount 阶段”执行的挂载操作，实际上是发生在这个容器的 Mount Namespace 里的。可是，我们真正希望执行挂载操作的对象，都是宿主机 /var/lib/kubelet 目录下的文件和目录。</p>
+<p>所以，在定义 DaemonSet Pod 的时候，我们需要把宿主机的 /var/lib/kubelet 以 Volume 的方式挂载进 CSI 插件容器的同名目录下，然后设置这个 Volume 的 mountPropagation=Bidirectional，即开启双向挂载传播，从而将容器在这个目录下进行的挂载操作“传播”给宿主机，反之亦然。</p>
+<p><strong>第二，通过 StatefulSet 在任意一个节点上再启动一个 CSI 插件，为 External Components 提供 CSI Controller 服务。</strong>所以，作为 CSI Controller 服务的调用者，External Provisioner 和 External Attacher 这两个外部组件，就需要以 sidecar 的方式和这次部署的 CSI 插件定义在同一个 Pod 里。</p>
+<p>你可能会好奇，为什么我们会用 StatefulSet 而不是 Deployment 来运行这个 CSI 插件呢。</p>
+<p>这是因为，由于 StatefulSet 需要确保应用拓扑状态的稳定性，所以它对 Pod 的更新，是严格保证顺序的，即：只有在前一个 Pod 停止并删除之后，它才会创建并启动下一个 Pod。</p>
+<p>而像我们上面这样将 StatefulSet 的 replicas 设置为 1 的话，StatefulSet 就会确保 Pod 被删除重建的时候，永远有且只有一个 CSI 插件的 Pod 运行在集群中。这对 CSI 插件的正确性来说，至关重要。</p>
+<p>而在今天这篇文章一开始，我们就已经定义了这个 CSI 插件对应的 StorageClass（即：do-block-storage），所以你接下来只需要定义一个声明使用这个 StorageClass 的 PVC 即可，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: csi-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: do-block-storage</code></pre><p>当你把上述 PVC 提交给 Kubernetes 之后，你就可以在 Pod 里声明使用这个 csi-pvc 来作为持久化存储了。这一部分使用 PV 和 PVC 的内容，我就不再赘述了。</p>
+<p><strong>总结</strong></p>
+<p>在今天这篇文章中，我以一个 DigitalOcean 的 CSI 插件为例，和你分享了编写 CSI 插件的具体流程。</p>
+<p>基于这些讲述，你现在应该已经对 Kubernetes 持久化存储体系有了一个更加全面和深入的认识。</p>
+<p>举个例子，对于一个部署了 CSI 存储插件的 Kubernetes 集群来说：</p>
+<p>当用户创建了一个 PVC 之后，你前面部署的 StatefulSet 里的 External Provisioner 容器，就会监听到这个 PVC 的诞生，然后调用同一个 Pod 里的 CSI 插件的 CSI Controller 服务的 CreateVolume 方法，为你创建出对应的 PV。</p>
+<p>这时候，运行在 Kubernetes Master 节点上的 Volume Controller，就会通过 PersistentVolumeController 控制循环，发现这对新创建出来的 PV 和 PVC，并且看到它们声明的是同一个 StorageClass。所以，它会把这一对 PV 和 PVC 绑定起来，使 PVC 进入 Bound 状态。</p>
+<p>然后，用户创建了一个声明使用上述 PVC 的 Pod，并且这个 Pod 被调度器调度到了宿主机 A 上。这时候，Volume Controller 的 AttachDetachController 控制循环就会发现，上述 PVC 对应的 Volume，需要被 Attach 到宿主机 A 上。所以，AttachDetachController 会创建一个 VolumeAttachment 对象，这个对象携带了宿主机 A 和待处理的 Volume 的名字。</p>
+<p>这样，StatefulSet 里的 External Attacher 容器，就会监听到这个 VolumeAttachment 对象的诞生。于是，它就会使用这个对象里的宿主机和 Volume 名字，调用同一个 Pod 里的 CSI 插件的 CSI Controller 服务的 ControllerPublishVolume 方法，完成“Attach 阶段”。</p>
+<p>上述过程完成后，运行在宿主机 A 上的 kubelet，就会通过 VolumeManagerReconciler 控制循环，发现当前宿主机上有一个 Volume 对应的存储设备（比如磁盘）已经被 Attach 到了某个设备目录下。于是 kubelet 就会调用同一台宿主机上的 CSI 插件的 CSI Node 服务的 NodeStageVolume 和 NodePublishVolume 方法，完成这个 Volume 的“Mount 阶段”。</p>
+<p>至此，一个完整的持久化 Volume 的创建和挂载流程就结束了。</p>
+<p><strong>思考题</strong></p>
+<p>请你根据编写 FlexVolume 和 CSI 插件的流程，分析一下什么时候该使用 FlexVolume，什么时候应该使用 CSI？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/33.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%AE%B9%E5%99%A8%E8%B7%A8%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C/">33 | 深入解析容器跨主机网络</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="深入解析容器跨主机网络"   >
+          <a href="#深入解析容器跨主机网络" class="heading-link"><i class="fas fa-link"></i></a>深入解析容器跨主机网络</h2>
+      <p>在上一篇文章中，我为你详细讲解了在单机环境下，Linux 容器网络的实现原理（网桥模式）。并且提到了，在 Docker 的默认配置下，不同宿主机上的容器通过 IP 地址进行互相访问是根本做不到的。</p>
+<p>而正是为了解决这个容器“跨主通信”的问题，社区里才出现了那么多的容器网络方案。而且，相信你一直以来都有这样的疑问：这些网络方案的工作原理到底是什么？</p>
+<p>要理解容器“跨主通信”的原理，就一定要先从 Flannel 这个项目说起。</p>
+<p>Flannel 项目是 CoreOS 公司主推的容器网络方案。事实上，Flannel 项目本身只是一个框架，真正为我们提供容器网络功能的，是 Flannel 的后端实现。目前，Flannel 支持三种后端实现，分别是：</p>
+<ol>
+<li>VXLAN；</li>
+<li>host-gw；</li>
+<li>UDP。</li>
+</ol>
+<p>这三种不同的后端实现，正代表了三种容器跨主网络的主流实现方法。其中，host-gw 模式，我会在下一篇文章中再做详细介绍。</p>
+<p>而 UDP 模式，是 Flannel 项目最早支持的一种方式，却也是性能最差的一种方式。所以，这个模式目前已经被弃用。不过，Flannel 之所以最先选择 UDP 模式，就是因为这种模式是最直接、也是最容易理解的容器跨主网络实现。</p>
+<p>所以，在今天这篇文章中，<strong><code>我会先从 UDP 模式开始，来为你讲解容器“跨主网络”的实现原理。</code></strong></p>
+<p>在这个例子中，我有两台宿主机。</p>
+<ul>
+<li><p>宿主机 Node 1 上有一个容器 container-1，它的 IP 地址是 100.96.1.2，对应的 docker0 网桥的地址是：100.96.1.1/24。</p>
+</li>
+<li><p>宿主机 Node 2 上有一个容器 container-2，它的 IP 地址是 100.96.2.3，对应的 docker0 网桥的地址是：100.96.2.1/24。</p>
+</li>
+</ul>
+<p>我们现在的任务，就是让 container-1 访问 container-2。</p>
+<p>这种情况下，container-1 容器里的进程发起的 IP 包，其源地址就是 100.96.1.2，目的地址就是 100.96.2.3。由于目的地址 100.96.2.3 并不在 Node 1 的 docker0 网桥的网段里，所以这个 IP 包会被交给默认路由规则，通过容器的网关进入 docker0 网桥（如果是同一台宿主机上的容器间通信，走的是直连规则），从而出现在宿主机上。</p>
+<p>这时候，这个 IP 包的下一个目的地，就取决于宿主机上的路由规则了。此时，Flannel 已经在宿主机上创建出了一系列的路由规则，以 Node 1 为例，如下所示：</p>
+<pre><code># 在Node 1上
+$ ip route
+default via 10.168.0.1 dev eth0
+100.96.0.0/16 dev flannel0  proto kernel  scope link  src 100.96.1.0
+100.96.1.0/24 dev docker0  proto kernel  scope link  src 100.96.1.1
+10.168.0.0/24 dev eth0  proto kernel  scope link  src 10.168.0.2</code></pre><p>可以看到，由于我们的 IP 包的目的地址是 100.96.2.3，它匹配不到本机 docker0 网桥对应的 100.96.1.0/24 网段，只能匹配到第二条、也就是 100.96.0.0/16 对应的这条路由规则，从而进入到一个叫作 flannel0 的设备中。</p>
+<p>而这个 flannel0 设备的类型就比较有意思了：它是一个 TUN 设备（Tunnel 设备）。</p>
+<p>在 Linux 中，TUN 设备是一种工作在三层（Network Layer）的虚拟网络设备。TUN 设备的功能非常简单，即：<strong>在操作系统内核和用户应用程序之间传递 IP 包。</strong></p>
+<p>以 flannel0 设备为例：像上面提到的情况，当操作系统将一个 IP 包发送给 flannel0 设备之后，flannel0 就会把这个 IP 包，交给创建这个设备的应用程序，也就是 Flannel 进程。这是一个从内核态（Linux 操作系统）向用户态（Flannel 进程）的流动方向。</p>
+<p>反之，如果 Flannel 进程向 flannel0 设备发送了一个 IP 包，那么这个 IP 包就会出现在宿主机网络栈中，然后根据宿主机的路由表进行下一步处理。这是一个从用户态向内核态的流动方向。</p>
+<p>所以，当 IP 包从容器经过 docker0 出现在宿主机，然后又根据路由表进入 flannel0 设备后，宿主机上的 flanneld 进程（Flannel 项目在每个宿主机上的主进程），就会收到这个 IP 包。然后，flanneld 看到了这个 IP 包的目的地址，是 100.96.2.3，就把它发送给了 Node 2 宿主机。</p>
+<p>等一下，<strong>flanneld 又是如何知道这个 IP 地址对应的容器，是运行在 Node 2 上的呢？</strong></p>
+<p>这里，就用到了 Flannel 项目里一个非常重要的概念：子网（Subnet）。</p>
+<p>事实上，在由 Flannel 管理的容器网络里，一台宿主机上的所有容器，都属于该宿主机被分配的一个“子网”。在我们的例子中，Node 1 的子网是 100.96.1.0/24，container-1 的 IP 地址是 100.96.1.2。Node 2 的子网是 100.96.2.0/24，container-2 的 IP 地址是 100.96.2.3。</p>
+<p>而这些子网与宿主机的对应关系，正是保存在 Etcd 当中，如下所示：</p>
+<pre><code>$ etcdctl ls /coreos.com/network/subnets
+/coreos.com/network/subnets/100.96.1.0-24
+/coreos.com/network/subnets/100.96.2.0-24
+/coreos.com/network/subnets/100.96.3.0-24</code></pre><p>所以，flanneld 进程在处理由 flannel0 传入的 IP 包时，就可以根据目的 IP 的地址（比如 100.96.2.3），匹配到对应的子网（比如 100.96.2.0/24），从 Etcd 中找到这个子网对应的宿主机的 IP 地址是 10.168.0.3，如下所示：</p>
+<pre><code>$ etcdctl get /coreos.com/network/subnets/100.96.2.0-24
+{&quot;PublicIP&quot;:&quot;10.168.0.3&quot;}</code></pre><p>而对于 flanneld 来说，只要 Node 1 和 Node 2 是互通的，那么 flanneld 作为 Node 1 上的一个普通进程，就一定可以通过上述 IP 地址（10.168.0.3）访问到 Node 2，这没有任何问题。</p>
+<p>所以说，flanneld 在收到 container-1 发给 container-2 的 IP 包之后，就会把这个 IP 包直接封装在一个 UDP 包里，然后发送给 Node 2。不难理解，这个 UDP 包的源地址，就是 flanneld 所在的 Node 1 的地址，而目的地址，则是 container-2 所在的宿主机 Node 2 的地址。</p>
+<p>当然，这个请求得以完成的原因是，每台宿主机上的 flanneld，都监听着一个 8285 端口，所以 flanneld 只要把 UDP 包发往 Node 2 的 8285 端口即可。</p>
+<p>通过这样一个普通的、宿主机之间的 UDP 通信，一个 UDP 包就从 Node 1 到达了 Node 2。而 Node 2 上监听 8285 端口的进程也是 flanneld，所以这时候，flanneld 就可以从这个 UDP 包里解析出封装在里面的、container-1 发来的原 IP 包。</p>
+<p>而接下来 flanneld 的工作就非常简单了：flanneld 会直接把这个 IP 包发送给它所管理的 TUN 设备，即 flannel0 设备。</p>
+<p>根据我前面讲解的 TUN 设备的原理，这正是一个从用户态向内核态的流动方向（Flannel 进程向 TUN 设备发送数据包），所以 Linux 内核网络栈就会负责处理这个 IP 包，具体的处理方法，就是通过本机的路由表来寻找这个 IP 包的下一步流向。</p>
+<p>而 Node 2 上的路由表，跟 Node 1 非常类似，如下所示：</p>
+<pre><code># 在Node 2上
+$ ip route
+default via 10.168.0.1 dev eth0
+100.96.0.0/16 dev flannel0  proto kernel  scope link  src 100.96.2.0
+100.96.2.0/24 dev docker0  proto kernel  scope link  src 100.96.2.1
+10.168.0.0/24 dev eth0  proto kernel  scope link  src 10.168.0.3</code></pre><p>由于这个 IP 包的目的地址是 100.96.2.3，它跟第三条、也就是 100.96.2.0/24 网段对应的路由规则匹配更加精确。所以，Linux 内核就会按照这条路由规则，把这个 IP 包转发给 docker0 网桥。</p>
+<p>接下来的流程，就如同我在上一篇文章《浅谈容器网络》中和你分享的那样，docker0 网桥会扮演二层交换机的角色，将数据包发送给正确的端口，进而通过 Veth Pair 设备进入到 container-2 的 Network Namespace 里。</p>
+<p>而 container-2 返回给 container-1 的数据包，则会经过与上述过程完全相反的路径回到 container-1 中。</p>
+<p>需要注意的是，上述流程要正确工作还有一个重要的前提，那就是 docker0 网桥的地址范围必须是 Flannel 为宿主机分配的子网。这个很容易实现，以 Node 1 为例，你只需要给它上面的 Docker Daemon 启动时配置如下所示的 bip 参数即可：</p>
+<pre><code>$ FLANNEL_SUBNET=100.96.1.1/24
+$ dockerd --bip=$FLANNEL_SUBNET ...</code></pre><p>以上，就是基于 Flannel UDP 模式的跨主通信的基本原理了。我把它总结成了一幅原理图，如下所示。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.jpg"  alt="">
+      <br>图1 基于Flannel UDP模式的跨主通信的基本原理</p>
+<p>可以看到，Flannel UDP 模式提供的其实是一个三层的 Overlay 网络，即：它首先对发出端的 IP 包进行 UDP 封装，然后在接收端进行解封装拿到原始的 IP 包，进而把这个 IP 包转发给目标容器。这就好比，Flannel 在不同宿主机上的两个容器之间打通了一条“隧道”，使得这两个容器可以直接使用 IP 地址进行通信，而无需关心容器和宿主机的分布情况。</p>
+<p>我前面曾经提到，上述 UDP 模式有严重的性能问题，所以已经被废弃了。通过我上面的讲述，你有没有发现性能问题出现在了哪里呢？</p>
+<p>实际上，相比于两台宿主机之间的直接通信，基于 Flannel UDP 模式的容器通信多了一个额外的步骤，即 flanneld 的处理过程。而这个过程，由于使用到了 flannel0 这个 TUN 设备，仅在发出 IP 包的过程中，就需要经过三次用户态与内核态之间的数据拷贝，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.png"  alt="">
+      <br>图2 TUN设备示意图</p>
+<p>我们可以看到：</p>
+<p>第一次，用户态的容器进程发出的 IP 包经过 docker0 网桥进入内核态；</p>
+<p>第二次，IP 包根据路由表进入 TUN（flannel0）设备，从而回到用户态的 flanneld 进程；</p>
+<p>第三次，flanneld 进行 UDP 封包之后重新进入内核态，将 UDP 包通过宿主机的 eth0 发出去。</p>
+<p>此外，我们还可以看到，Flannel 进行 UDP 封装（Encapsulation）和解封装（Decapsulation）的过程，也都是在用户态完成的。在 Linux 操作系统中，上述这些上下文切换和用户态操作的代价其实是比较高的，这也正是造成 Flannel UDP 模式性能不好的主要原因。</p>
+<p>所以说，<strong>我们在进行系统级编程的时候，有一个非常重要的优化原则，就是要减少用户态到内核态的切换次数，并且把核心的处理逻辑都放在内核态进行。</strong>这也是为什么，Flannel 后来支持的<strong><code>VXLAN 模式，逐渐成为了主流的容器网络方案的原因。</code></strong></p>
+<p>VXLAN，即 Virtual Extensible LAN（虚拟可扩展局域网），是 Linux 内核本身就支持的一种网络虚似化技术。所以说，VXLAN 可以完全在内核态实现上述封装和解封装的工作，从而通过与前面相似的“隧道”机制，构建出覆盖网络（Overlay Network）。</p>
+<p>VXLAN 的覆盖网络的设计思想是：在现有的三层网络之上，“覆盖”一层虚拟的、由内核 VXLAN 模块负责维护的二层网络，使得连接在这个 VXLAN 二层网络上的“主机”（虚拟机或者容器都可以）之间，可以像在同一个局域网（LAN）里那样自由通信。当然，实际上，这些“主机”可能分布在不同的宿主机上，甚至是分布在不同的物理机房里。</p>
+<p>而为了能够在二层网络上打通“隧道”，VXLAN 会在宿主机上设置一个特殊的网络设备作为“隧道”的两端。这个设备就叫作 VTEP，即：VXLAN Tunnel End Point（虚拟隧道端点）。</p>
+<p>而 VTEP 设备的作用，其实跟前面的 flanneld 进程非常相似。只不过，它进行封装和解封装的对象，是二层数据帧（Ethernet frame）；而且这个工作的执行流程，全部是在内核里完成的（因为 VXLAN 本身就是 Linux 内核中的一个模块）。</p>
+<p>上述基于 VTEP 设备进行“隧道”通信的流程，我也为你总结成了一幅图，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="4.jpg"  alt="">
+      <br>图3 基于Flannel VXLAN模式的跨主通信的基本原理</p>
+<p>可以看到，图中每台宿主机上名叫 flannel.1 的设备，就是 VXLAN 所需的 VTEP 设备，它既有 IP 地址，也有 MAC 地址。</p>
+<p>现在，我们的 container-1 的 IP 地址是 10.1.15.2，要访问的 container-2 的 IP 地址是 10.1.16.3。</p>
+<p>那么，与前面 UDP 模式的流程类似，当 container-1 发出请求之后，这个目的地址是 10.1.16.3 的 IP 包，会先出现在 docker0 网桥，然后被路由到本机 flannel.1 设备进行处理。也就是说，来到了“隧道”的入口。为了方便叙述，我接下来会把这个 IP 包称为“原始 IP 包”。</p>
+<p>为了能够将“原始 IP 包”封装并且发送到正确的宿主机，VXLAN 就需要找到这条“隧道”的出口，即：目的宿主机的 VTEP 设备。</p>
+<p>而这个设备的信息，正是每台宿主机上的 flanneld 进程负责维护的。</p>
+<p>比如，当 Node 2 启动并加入 Flannel 网络之后，在 Node 1（以及所有其他节点）上，flanneld 就会添加一条如下所示的路由规则：</p>
+<pre><code>$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+...
+10.1.16.0       10.1.16.0       255.255.255.0   UG    0      0        0 flannel.1</code></pre><p>这条规则的意思是：凡是发往 10.1.16.0/24 网段的 IP 包，都需要经过 flannel.1 设备发出，并且，它最后被发往的网关地址是：10.1.16.0。</p>
+<p>从图 3 的 Flannel VXLAN 模式的流程图中我们可以看到，10.1.16.0 正是 Node 2 上的 VTEP 设备（也就是 flannel.1 设备）的 IP 地址。</p>
+<p>为了方便叙述，接下来我会把 Node 1 和 Node 2 上的 flannel.1 设备分别称为“源 VTEP 设备”和“目的 VTEP 设备”。</p>
+<p>而这些 VTEP 设备之间，就需要想办法组成一个虚拟的二层网络，即：通过二层数据帧进行通信。</p>
+<p>所以在我们的例子中，“源 VTEP 设备”收到“原始 IP 包”后，就要想办法把“原始 IP 包”加上一个目的 MAC 地址，封装成一个二层数据帧，然后发送给“目的 VTEP 设备”（当然，这么做还是因为这个 IP 包的目的地址不是本机）。</p>
+<p>这里需要解决的问题就是：<strong>“目的 VTEP 设备”的 MAC 地址是什么？</strong></p>
+<p>此时，根据前面的路由记录，我们已经知道了“目的 VTEP 设备”的 IP 地址。而要根据三层 IP 地址查询对应的二层 MAC 地址，这正是 ARP（Address Resolution Protocol ）表的功能。</p>
+<p>而这里要用到的 ARP 记录，也是 flanneld 进程在 Node 2 节点启动时，自动添加在 Node 1 上的。我们可以通过 ip 命令看到它，如下所示：</p>
+<pre><code># 在Node 1上
+$ ip neigh show dev flannel.1
+10.1.16.0 lladdr 5e:f8:4f:00:e3:37 PERMANENT</code></pre><p>这条记录的意思非常明确，即：IP 地址 10.1.16.0，对应的 MAC 地址是 5e:f8:4f:00:e3:37。</p>
+<p>可以看到，最新版本的 Flannel 并不依赖 L3 MISS 事件和 ARP 学习，而会在每台节点启动时把它的 VTEP 设备对应的 ARP 记录，直接下放到其他每台宿主机上。</p>
+<p>有了这个“目的 VTEP 设备”的 MAC 地址，<strong>Linux 内核就可以开始二层封包工作了。</strong>这个二层帧的格式，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="5.jpg"  alt="">
+      <br>图4 Flannel VXLAN模式的内部帧</p>
+<p>可以看到，Linux 内核会把“目的 VTEP 设备”的 MAC 地址，填写在图中的 Inner Ethernet Header 字段，得到一个二层数据帧。</p>
+<p>需要注意的是，上述封包过程只是加一个二层头，不会改变“原始 IP 包”的内容。所以图中的 Inner IP Header 字段，依然是 container-2 的 IP 地址，即 10.1.16.3。</p>
+<p>但是，上面提到的这些 VTEP 设备的 MAC 地址，对于宿主机网络来说并没有什么实际意义。所以上面封装出来的这个数据帧，并不能在我们的宿主机二层网络里传输。为了方便叙述，我们把它称为“内部数据帧”（Inner Ethernet Frame）。</p>
+<p>所以接下来，Linux 内核还需要再把“内部数据帧”进一步封装成为宿主机网络里的一个普通的数据帧，好让它“载着”“内部数据帧”，通过宿主机的 eth0 网卡进行传输。</p>
+<p>我们把这次要封装出来的、宿主机对应的数据帧称为“外部数据帧”（Outer Ethernet Frame）。</p>
+<p>为了实现这个“搭便车”的机制，Linux 内核会在“内部数据帧”前面，加上一个特殊的 VXLAN 头，用来表示这个“乘客”实际上是一个 VXLAN 要使用的数据帧。</p>
+<p>而这个 VXLAN 头里有一个重要的标志叫作 VNI，它是 VTEP 设备识别某个数据帧是不是应该归自己处理的重要标识。而在 Flannel 中，VNI 的默认值是 1，这也是为何，宿主机上的 VTEP 设备都叫作 flannel.1 的原因，这里的“1”，其实就是 VNI 的值。</p>
+<p><strong>然后，Linux 内核会把这个数据帧封装进一个 UDP 包里发出去。</strong></p>
+<p>所以，跟 UDP 模式类似，在宿主机看来，它会以为自己的 flannel.1 设备只是在向另外一台宿主机的 flannel.1 设备，发起了一次普通的 UDP 链接。它哪里会知道，这个 UDP 包里面，其实是一个完整的二层数据帧。这是不是跟特洛伊木马的故事非常像呢？</p>
+<p>不过，不要忘了，一个 flannel.1 设备只知道另一端的 flannel.1 设备的 MAC 地址，却不知道对应的宿主机地址是什么。</p>
+<p>也就是说，这个 UDP 包该发给哪台宿主机呢？</p>
+<p>在这种场景下，flannel.1 设备实际上要扮演一个“网桥”的角色，在二层网络进行 UDP 包的转发。而在 Linux 内核里面，“网桥”设备进行转发的依据，来自于一个叫作 FDB（Forwarding Database）的转发数据库。</p>
+<p>不难想到，这个 flannel.1“网桥”对应的 FDB 信息，也是 flanneld 进程负责维护的。它的内容可以通过 bridge fdb 命令查看到，如下所示：</p>
+<pre><code># 在Node 1上，使用“目的VTEP设备”的MAC地址进行查询
+$ bridge fdb show flannel.1 | grep 5e:f8:4f:00:e3:37
+5e:f8:4f:00:e3:37 dev flannel.1 dst 10.168.0.3 self permanent</code></pre><p>可以看到，在上面这条 FDB 记录里，指定了这样一条规则，即：</p>
+<p>发往我们前面提到的“目的 VTEP 设备”（MAC 地址是 5e:f8:4f:00:e3:37）的二层数据帧，应该通过 flannel.1 设备，发往 IP 地址为 10.168.0.3 的主机。显然，这台主机正是 Node 2，UDP 包要发往的目的地就找到了。</p>
+<p>所以<strong>接下来的流程，就是一个正常的、宿主机网络上的封包工作。</strong></p>
+<p>我们知道，UDP 包是一个四层数据包，所以 Linux 内核会在它前面加上一个 IP 头，即原理图中的 Outer IP Header，组成一个 IP 包。并且，在这个 IP 头里，会填上前面通过 FDB 查询出来的目的主机的 IP 地址，即 Node 2 的 IP 地址 10.168.0.3。</p>
+<p>然后，Linux 内核再在这个 IP 包前面加上二层数据帧头，即原理图中的 Outer Ethernet Header，并把 Node 2 的 MAC 地址填进去。这个 MAC 地址本身，是 Node 1 的 ARP 表要学习的内容，无需 Flannel 维护。这时候，我们封装出来的“外部数据帧”的格式，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="6.jpg"  alt="">
+      <br>图5 Flannel VXLAN模式的外部帧</p>
+<p>这样，封包工作就宣告完成了。</p>
+<p>接下来，Node 1 上的 flannel.1 设备就可以把这个数据帧从 Node 1 的 eth0 网卡发出去。显然，这个帧会经过宿主机网络来到 Node 2 的 eth0 网卡。</p>
+<p>这时候，Node 2 的内核网络栈会发现这个数据帧里有 VXLAN Header，并且 VNI=1。所以 Linux 内核会对它进行拆包，拿到里面的内部数据帧，然后根据 VNI 的值，把它交给 Node 2 上的 flannel.1 设备。</p>
+<p>而 flannel.1 设备则会进一步拆包，取出“原始 IP 包”。接下来就回到了我在上一篇文章中分享的单机容器网络的处理流程。最终，IP 包就进入到了 container-2 容器的 Network Namespace 里。</p>
+<p>以上，就是 Flannel VXLAN 模式的具体工作原理了。</p>
+<p><strong>总结</strong></p>
+<p>在本篇文章中，我为你详细讲解了 Flannel UDP 和 VXLAN 模式的工作原理。这两种模式其实都可以称作“隧道”机制，也是很多其他容器网络插件的基础。比如 Weave 的两种模式，以及 Docker 的 Overlay 模式。</p>
+<p>此外，从上面的讲解中我们可以看到，VXLAN 模式组建的覆盖网络，其实就是一个由不同宿主机上的 VTEP 设备，也就是 flannel.1 设备组成的虚拟二层网络。对于 VTEP 设备来说，它发出的“内部数据帧”就仿佛是一直在这个虚拟的二层网络上流动。这，也正是覆盖网络的含义。</p>
+<blockquote>
+<p>备注：如果你想要在我们前面部署的集群中实践 Flannel 的话，可以在 Master 节点上执行如下命令来替换网络插件。<br>第一步，执行$ rm -rf /etc/cni/net.d/*；<br>第二步，执行$ kubectl delete -f “<span class="exturl"><a class="exturl__link"   href="https://cloud.weave.works/k8s/net?k8s-version=1.11&quot;；"  target="_blank" rel="noopener">https://cloud.weave.works/k8s/net?k8s-version=1.11&quot;；</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>第三步，在/etc/kubernetes/manifests/kube-controller-manager.yaml里，为容器启动命令添加如下两个参数：<br>–allocate-node-cidrs=true<br>–cluster-cidr=10.244.0.0/16<br>第四步， 重启所有 kubelet；<br>第五步， 执行$ kubectl create -f <span class="exturl"><a class="exturl__link"   href="https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml。"  target="_blank" rel="noopener">https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml。</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</blockquote>
+<p><strong>思考题</strong></p>
+<p>可以看到，Flannel 通过上述的“隧道”机制，实现了容器之间三层网络（IP 地址）的连通性。但是，根据这个机制的工作原理，你认为 Flannel 能负责保证二层网络（MAC 地址）的连通性吗？为什么呢？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/32.%E6%B5%85%E8%B0%88%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/">32 | 浅谈容器网络</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="浅谈容器网络"   >
+          <a href="#浅谈容器网络" class="heading-link"><i class="fas fa-link"></i></a>浅谈容器网络</h2>
+      <p>在前面讲解容器基础时，我曾经提到过一个 Linux 容器能看见的“网络栈”，实际上是被隔离在它自己的 Network Namespace 当中的。</p>
+<p>而所谓“网络栈”，就包括了：网卡（Network Interface）、回环设备（Loopback Device）、路由表（Routing Table）和 iptables 规则。对于一个进程来说，这些要素，其实就构成了它发起和响应网络请求的基本环境。</p>
+<p>需要指出的是，作为一个容器，它可以声明直接使用宿主机的网络栈（–net=host），即：不开启 Network Namespace，比如：</p>
+<pre><code>$ docker run –d –net=host --name nginx-host nginx</code></pre><p>在这种情况下，这个容器启动后，直接监听的就是宿主机的 80 端口。</p>
+<p>像这样直接使用宿主机网络栈的方式，虽然可以为容器提供良好的网络性能，但也会不可避免地引入共享网络资源的问题，比如端口冲突。所以，<strong>在大多数情况下，我们都希望容器进程能使用自己 Network Namespace 里的网络栈，即：拥有属于自己的 IP 地址和端口。</strong></p>
+<p>这时候，一个显而易见的问题就是：<strong><code>这个被隔离的容器进程，该如何跟其他 Network Namespace 里的容器进程进行交互呢？</code></strong></p>
+<p>为了理解这个问题，你其实可以把每一个容器看做一台主机，它们都有一套独立的“网络栈”。</p>
+<p>如果你想要实现两台主机之间的通信，最直接的办法，就是把它们用一根网线连接起来；而如果你想要实现多台主机之间的通信，那就需要用网线，把它们连接在一台交换机上。</p>
+<p>在 Linux 中，能够起到虚拟交换机作用的网络设备，是网桥（Bridge）。它是一个工作在数据链路层（Data Link）的设备，主要功能是根据 MAC 地址学习来将数据包转发到网桥的不同端口（Port）上。</p>
+<p>当然，至于为什么这些主机之间需要 MAC 地址才能进行通信，这就是网络分层模型的基础知识了。不熟悉这块内容的读者，可以通过<span class="exturl"><a class="exturl__link"   href="https://www.lifewire.com/layers-of-the-osi-model-illustrated-818017"  target="_blank" rel="noopener">这篇文章</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>来学习一下。</p>
+<p>而为了实现上述目的，Docker 项目会默认在宿主机上创建一个名叫 docker0 的网桥，凡是连接在 docker0 网桥上的容器，就可以通过它来进行通信。</p>
+<p>可是，我们又该如何把这些容器“连接”到 docker0 网桥上呢？</p>
+<p>这时候，我们就需要使用一种名叫 <strong>Veth Pair</strong> 的虚拟设备了。</p>
+<p>Veth Pair 设备的特点是：它被创建出来后，总是以两张虚拟网卡（Veth Peer）的形式成对出现的。并且，从其中一个“网卡”发出的数据包，可以直接出现在与它对应的另一张“网卡”上，哪怕这两个“网卡”在不同的 Network Namespace 里。</p>
+<p>这就使得 Veth Pair 常常被用作连接不同 Network Namespace 的“网线”。</p>
+<p>比如，现在我们启动了一个叫作 nginx-1 的容器：</p>
+<pre><code>$ docker run –d --name nginx-1 nginx</code></pre><p>然后进入到这个容器中查看一下它的网络设备：</p>
+<pre><code># 在宿主机上
+$ docker exec -it nginx-1 /bin/bash
+# 在容器里
+root@2b3c181aecf1:/# ifconfig
+eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:acff:fe11:2  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 364  bytes 8137175 (7.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 281  bytes 21161 (20.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+$ route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         172.17.0.1      0.0.0.0         UG    0      0        0 eth0
+172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 eth0</code></pre><p>可以看到，这个容器里有一张叫作 eth0 的网卡，它正是一个 Veth Pair 设备在容器里的这一端。</p>
+<p>通过 route 命令查看 nginx-1 容器的路由表，我们可以看到，这个 eth0 网卡是这个容器里的默认路由设备；所有对 172.17.0.0/16 网段的请求，也会被交给 eth0 来处理（第二条 172.17.0.0 路由规则）。</p>
+<p>而这个 Veth Pair 设备的另一端，则在宿主机上。你可以通过查看宿主机的网络设备看到它，如下所示：</p>
+<pre><code># 在宿主机上
+$ ifconfig
+...
+docker0   Link encap:Ethernet  HWaddr 02:42:d8:e4:df:c1  
+          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          inet6 addr: fe80::42:d8ff:fee4:dfc1/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:309 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:372 errors:0 dropped:0 overruns:0 carrier:0
+ collisions:0 txqueuelen:0 
+          RX bytes:18944 (18.9 KB)  TX bytes:8137789 (8.1 MB)
+veth9c02e56 Link encap:Ethernet  HWaddr 52:81:0b:24:3d:da  
+          inet6 addr: fe80::5081:bff:fe24:3dda/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:288 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:371 errors:0 dropped:0 overruns:0 carrier:0
+ collisions:0 txqueuelen:0 
+          RX bytes:21608 (21.6 KB)  TX bytes:8137719 (8.1 MB)
+
+$ brctl show
+bridge name bridge id  STP enabled interfaces
+docker0  8000.0242d8e4dfc1 no  veth9c02e56</code></pre><p>通过 ifconfig 命令的输出，你可以看到，nginx-1 容器对应的 Veth Pair 设备，在宿主机上是一张虚拟网卡。它的名字叫作 veth9c02e56。并且，通过 brctl show 的输出，你可以看到这张网卡被“插”在了 docker0 上。</p>
+<p>这时候，如果我们再在这台宿主机上启动另一个 Docker 容器，比如 nginx-2：</p>
+<pre><code>$ docker run –d --name nginx-2 nginx
+$ brctl show
+bridge name bridge id  STP enabled interfaces
+docker0  8000.0242d8e4dfc1 no  veth9c02e56
+       vethb4963f3</code></pre><p>你就会发现一个新的、名叫 vethb4963f3 的虚拟网卡，也被“插”在了 docker0 网桥上。</p>
+<p>这时候，如果你在 nginx-1 容器里 ping 一下 nginx-2 容器的 IP 地址（172.17.0.3），就会发现同一宿主机上的两个容器默认就是相互连通的。</p>
+<p>这其中的原理其实非常简单，我来解释一下。</p>
+<p>当你在 nginx-1 容器里访问 nginx-2 容器的 IP 地址（比如 ping 172.17.0.3）的时候，这个目的 IP 地址会匹配到 nginx-1 容器里的第二条路由规则。可以看到，这条路由规则的网关（Gateway）是 0.0.0.0，这就意味着这是一条直连规则，即：凡是匹配到这条规则的 IP 包，应该经过本机的 eth0 网卡，通过二层网络直接发往目的主机。</p>
+<p>而要通过二层网络到达 nginx-2 容器，就需要有 172.17.0.3 这个 IP 地址对应的 MAC 地址。所以 nginx-1 容器的网络协议栈，就需要通过 eth0 网卡发送一个 ARP 广播，来通过 IP 地址查找对应的 MAC 地址。</p>
+<blockquote>
+<p>备注：ARP（Address Resolution Protocol），是通过三层的 IP 地址找到对应的二层 MAC 地址的协议。</p>
+</blockquote>
+<p>我们前面提到过，这个 eth0 网卡，是一个 Veth Pair，它的一端在这个 nginx-1 容器的 Network Namespace 里，而另一端则位于宿主机上（Host Namespace），并且被“插”在了宿主机的 docker0 网桥上。</p>
+<p>一旦一张虚拟网卡被“插”在网桥上，它就会变成该网桥的“从设备”。从设备会被“剥夺”调用网络协议栈处理数据包的资格，从而“降级”成为网桥上的一个端口。而这个端口唯一的作用，就是接收流入的数据包，然后把这些数据包的“生杀大权”（比如转发或者丢弃），全部交给对应的网桥。</p>
+<p>所以，在收到这些 ARP 请求之后，docker0 网桥就会扮演二层交换机的角色，把 ARP 广播转发到其他被“插”在 docker0 上的虚拟网卡上。这样，同样连接在 docker0 上的 nginx-2 容器的网络协议栈就会收到这个 ARP 请求，从而将 172.17.0.3 所对应的 MAC 地址回复给 nginx-1 容器。</p>
+<p>有了这个目的 MAC 地址，nginx-1 容器的 eth0 网卡就可以将数据包发出去。</p>
+<p>而根据 Veth Pair 设备的原理，这个数据包会立刻出现在宿主机上的 veth9c02e56 虚拟网卡上。不过，此时这个 veth9c02e56 网卡的网络协议栈的资格已经被“剥夺”，所以这个数据包就直接流入到了 docker0 网桥里。</p>
+<p>docker0 处理转发的过程，则继续扮演二层交换机的角色。此时，docker0 网桥根据数据包的目的 MAC 地址（也就是 nginx-2 容器的 MAC 地址），在它的 CAM 表（即交换机通过 MAC 地址学习维护的端口和 MAC 地址的对应表）里查到对应的端口（Port）为：vethb4963f3，然后把数据包发往这个端口。</p>
+<p>而这个端口，正是 nginx-2 容器“插”在 docker0 网桥上的另一块虚拟网卡，当然，它也是一个 Veth Pair 设备。这样，数据包就进入到了 nginx-2 容器的 Network Namespace 里。</p>
+<p>所以，nginx-2 容器看到的情况是，它自己的 eth0 网卡上出现了流入的数据包。这样，nginx-2 的网络协议栈就会对请求进行处理，最后将响应（Pong）返回到 nginx-1。</p>
+<p>以上，就是同一个宿主机上的不同容器通过 docker0 网桥进行通信的流程了。我把这个流程总结成了一幅示意图，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      </p>
+<p>需要注意的是，在实际的数据传递时，上述数据的传递过程在网络协议栈的不同层次，都有 Linux 内核 Netfilter 参与其中。所以，如果感兴趣的话，你可以通过打开 iptables 的 TRACE 功能查看到数据包的传输过程，具体方法如下所示：</p>
+<pre><code># 在宿主机上执行
+$ iptables -t raw -A OUTPUT -p icmp -j TRACE
+$ iptables -t raw -A PREROUTING -p icmp -j TRACE</code></pre><p>通过上述设置，你就可以在 /var/log/syslog 里看到数据包传输的日志了。这一部分内容，你可以在课后结合<span class="exturl"><a class="exturl__link"   href="https://en.wikipedia.org/wiki/Iptables"  target="_blank" rel="noopener">iptables 的相关知识</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>进行实践，从而验证我和你分享的数据包传递流程。</p>
+<p>熟悉了 docker0 网桥的工作方式，你就可以理解，在默认情况下，<strong>被限制在 Network Namespace 里的容器进程，实际上是通过 Veth Pair 设备 + 宿主机网桥的方式，实现了跟同其他容器的数据交换。</strong></p>
+<p>与之类似地，当你在一台宿主机上，访问该宿主机上的容器的 IP 地址时，这个请求的数据包，也是先根据路由规则到达 docker0 网桥，然后被转发到对应的 Veth Pair 设备，最后出现在容器里。这个过程的示意图，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.png"  alt="">
+      </p>
+<p>同样地，当一个容器试图连接到另外一个宿主机时，比如：ping 10.168.0.3，它发出的请求数据包，首先经过 docker0 网桥出现在宿主机上。然后根据宿主机的路由表里的直连路由规则（10.168.0.0/24 via eth0)），对 10.168.0.3 的访问请求就会交给宿主机的 eth0 处理。</p>
+<p>所以接下来，这个数据包就会经宿主机的 eth0 网卡转发到宿主机网络上，最终到达 10.168.0.3 对应的宿主机上。当然，这个过程的实现要求这两台宿主机本身是连通的。这个过程的示意图，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="4.png"  alt="">
+      </p>
+<p>所以说，<strong>当你遇到容器连不通“外网”的时候，你都应该先试试 docker0 网桥能不能 ping 通，然后查看一下跟 docker0 和 Veth Pair 设备相关的 iptables 规则是不是有异常，往往就能够找到问题的答案了。</strong></p>
+<p>不过，在最后一个“Docker 容器连接其他宿主机”的例子里，你可能已经联想到了这样一个问题：如果在另外一台宿主机（比如：10.168.0.3）上，也有一个 Docker 容器。那么，我们的 nginx-1 容器又该如何访问它呢？</p>
+<p>这个问题，其实就是容器的“跨主通信”问题。</p>
+<p>在 Docker 的默认配置下，一台宿主机上的 docker0 网桥，和其他宿主机上的 docker0 网桥，没有任何关联，它们互相之间也没办法连通。所以，连接在这些网桥上的容器，自然也没办法进行通信了。</p>
+<p>不过，万变不离其宗。</p>
+<p>如果我们通过软件的方式，创建一个整个集群“公用”的网桥，然后把集群里的所有容器都连接到这个网桥上，不就可以相互通信了吗？</p>
+<p>说得没错。</p>
+<p>这样一来，我们整个集群里的容器网络就会类似于下图所示的样子：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="5.png"  alt="">
+      </p>
+<p>可以看到，构建这种容器网络的核心在于：我们需要在已有的宿主机网络上，再通过软件构建一个覆盖在已有宿主机网络之上的、可以把所有容器连通在一起的虚拟网络。所以，这种技术就被称为：Overlay Network（覆盖网络）。</p>
+<p>而这个 Overlay Network 本身，可以由每台宿主机上的一个“特殊网桥”共同组成。比如，当 Node 1 上的 Container 1 要访问 Node 2 上的 Container 3 的时候，Node 1 上的“特殊网桥”在收到数据包之后，能够通过某种方式，把数据包发送到正确的宿主机，比如 Node 2 上。而 Node 2 上的“特殊网桥”在收到数据包后，也能够通过某种方式，把数据包转发给正确的容器，比如 Container 3。</p>
+<p>甚至，每台宿主机上，都不需要有一个这种特殊的网桥，而仅仅通过某种方式配置宿主机的路由表，就能够把数据包转发到正确的宿主机上。这些内容，我在后面的文章中会为你一一讲述。</p>
+<p><strong>总结</strong></p>
+<p>在今天这篇文章中，我主要为你介绍了在本地环境下，单机容器网络的实现原理和 docker0 网桥的作用。</p>
+<p>这里的关键在于，容器要想跟外界进行通信，它发出的 IP 包就必须从它的 Network Namespace 里出来，来到宿主机上。</p>
+<p>而解决这个问题的方法就是：为容器创建一个一端在容器里充当默认网卡、另一端在宿主机上的 Veth Pair 设备。</p>
+<p>上述单机容器网络的知识，是后面我们讲解多机容器网络的重要基础，请务必认真消化理解。</p>
+<p><strong>思考题</strong></p>
+<p>尽管容器的 Host Network 模式有一些缺点，但是它性能好、配置简单，并且易于调试，所以很多团队会直接使用 Host Network。那么，如果要在生产环境中使用容器的 Host Network 模式，你觉得需要做哪些额外的准备工作呢？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/34.Kubernetes%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8ECNI%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/">34 | Kubernetes网络模型与CNI网络插件</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.1k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="Kubernetes网络模型与CNI网络插件"   >
+          <a href="#Kubernetes网络模型与CNI网络插件" class="heading-link"><i class="fas fa-link"></i></a>Kubernetes网络模型与CNI网络插件</h2>
+      <p>在上一篇文章中，我以 Flannel 项目为例，为你详细讲解了容器跨主机网络的两种实现方法：UDP 和 VXLAN。</p>
+<p>不难看到，这些例子有一个共性，那就是用户的容器都连接在 docker0 网桥上。而网络插件则在宿主机上创建了一个特殊的设备（UDP 模式创建的是 TUN 设备，VXLAN 模式创建的则是 VTEP 设备），docker0 与这个设备之间，通过 IP 转发（路由表）进行协作。</p>
+<p>然后，网络插件真正要做的事情，则是通过某种方法，把不同宿主机上的特殊设备连通，从而达到容器跨主机通信的目的。</p>
+<p>实际上，上面这个流程，也正是 Kubernetes 对容器网络的主要处理方法。只不过，Kubernetes 是通过一个叫作 CNI 的接口，维护了一个单独的网桥来代替 docker0。这个网桥的名字就叫作：CNI 网桥，它在宿主机上的设备名称默认是：cni0。</p>
+<p>以 Flannel 的 VXLAN 模式为例，在 Kubernetes 环境里，它的工作方式跟我们在上一篇文章中讲解的没有任何不同。只不过，docker0 网桥被替换成了 CNI 网桥而已，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.jpg"  alt="">
+      </p>
+<p>在这里，Kubernetes 为 Flannel 分配的子网范围是 10.244.0.0/16。这个参数可以在部署的时候指定，比如：</p>
+<pre><code>$ kubeadm init --pod-network-cidr=10.244.0.0/16</code></pre><p>也可以在部署完成后，通过修改 kube-controller-manager 的配置文件来指定。</p>
+<p>这时候，假设 Infra-container-1 要访问 Infra-container-2（也就是 Pod-1 要访问 Pod-2），这个 IP 包的源地址就是 10.244.0.2，目的 IP 地址是 10.244.1.3。而此时，Infra-container-1 里的 eth0 设备，同样是以 Veth Pair 的方式连接在 Node 1 的 cni0 网桥上。所以这个 IP 包就会经过 cni0 网桥出现在宿主机上。</p>
+<p>此时，Node 1 上的路由表，如下所示：</p>
+<pre><code># 在Node 1上
+$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+...
+10.244.0.0      0.0.0.0         255.255.255.0   U     0      0        0 cni0
+10.244.1.0      10.244.1.0      255.255.255.0   UG    0      0        0 flannel.1
+172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0</code></pre><p>因为我们的 IP 包的目的 IP 地址是 10.244.1.3，所以它只能匹配到第二条规则，也就是 10.244.1.0 对应的这条路由规则。</p>
+<p>可以看到，这条规则指定了本机的 flannel.1 设备进行处理。并且，flannel.1 在处理完后，要将 IP 包转发到的网关（Gateway），正是“隧道”另一端的 VTEP 设备，也就是 Node 2 的 flannel.1 设备。所以，接下来的流程，就跟上一篇文章中介绍过的 Flannel VXLAN 模式完全一样了。</p>
+<p>需要注意的是，CNI 网桥只是接管所有 CNI 插件负责的、即 Kubernetes 创建的容器（Pod）。而此时，如果你用 docker run 单独启动一个容器，那么 Docker 项目还是会把这个容器连接到 docker0 网桥上。所以这个容器的 IP 地址，一定是属于 docker0 网桥的 172.17.0.0/16 网段。</p>
+<p>Kubernetes 之所以要设置这样一个与 docker0 网桥功能几乎一样的 CNI 网桥，主要原因包括两个方面：</p>
+<p>一方面，Kubernetes 项目并没有使用 Docker 的网络模型（CNM），所以它并不希望、也不具备配置 docker0 网桥的能力；</p>
+<p>另一方面，这还与 Kubernetes 如何配置 Pod，也就是 Infra 容器的 Network Namespace 密切相关。</p>
+<p>我们知道，Kubernetes 创建一个 Pod 的第一步，就是创建并启动一个 Infra 容器，用来“hold”住这个 Pod 的 Network Namespace（这里，你可以再回顾一下专栏第 13 篇文章《为什么我们需要 Pod？》中的相关内容）。</p>
+<p>所以，CNI 的设计思想，就是：<strong>Kubernetes 在启动 Infra 容器之后，就可以直接调用 CNI 网络插件，为这个 Infra 容器的 Network Namespace，配置符合预期的网络栈。</strong></p>
+<blockquote>
+<p>备注：在前面第 32 篇文章《浅谈容器网络》中，我讲解单机容器网络时，已经和你分享过，一个 Network Namespace 的网络栈包括：网卡（Network Interface）、回环设备（Loopback Device）、路由表（Routing Table）和 iptables 规则。</p>
+</blockquote>
+<p>那么，这个网络栈的配置工作又是如何完成的呢？</p>
+<p>为了回答这个问题，我们就需要从 <strong>CNI 插件的部署和实现方式谈起了。</strong></p>
+<p>我们在部署 Kubernetes 的时候，有一个步骤是安装 kubernetes-cni 包，它的目的就是在宿主机上安装 CNI 插件所需的基础可执行文件。</p>
+<p>在安装完成后，你可以在宿主机的 /opt/cni/bin 目录下看到它们，如下所示：</p>
+<pre><code>$ ls -al /opt/cni/bin/
+total 73088
+-rwxr-xr-x 1 root root  3890407 Aug 17  2017 bridge
+-rwxr-xr-x 1 root root  9921982 Aug 17  2017 dhcp
+-rwxr-xr-x 1 root root  2814104 Aug 17  2017 flannel
+-rwxr-xr-x 1 root root  2991965 Aug 17  2017 host-local
+-rwxr-xr-x 1 root root  3475802 Aug 17  2017 ipvlan
+-rwxr-xr-x 1 root root  3026388 Aug 17  2017 loopback
+-rwxr-xr-x 1 root root  3520724 Aug 17  2017 macvlan
+-rwxr-xr-x 1 root root  3470464 Aug 17  2017 portmap
+-rwxr-xr-x 1 root root  3877986 Aug 17  2017 ptp
+-rwxr-xr-x 1 root root  2605279 Aug 17  2017 sample
+-rwxr-xr-x 1 root root  2808402 Aug 17  2017 tuning
+-rwxr-xr-x 1 root root  3475750 Aug 17  2017 vlan</code></pre><p>这些 CNI 的基础可执行文件，按照功能可以分为三类：</p>
+<p><strong>第一类，叫作 Main 插件，它是用来创建具体网络设备的二进制文件。</strong>比如，bridge（网桥设备）、ipvlan、loopback（lo 设备）、macvlan、ptp（Veth Pair 设备），以及 vlan。</p>
+<p>我在前面提到过的 Flannel、Weave 等项目，都属于“网桥”类型的 CNI 插件。所以在具体的实现中，它们往往会调用 bridge 这个二进制文件。这个流程，我马上就会详细介绍到。</p>
+<p><strong>第二类，叫作 IPAM（IP Address Management）插件，它是负责分配 IP 地址的二进制文件</strong>。比如，dhcp，这个文件会向 DHCP 服务器发起请求；host-local，则会使用预先配置的 IP 地址段来进行分配。</p>
+<p><strong>第三类，是由 CNI 社区维护的内置 CNI 插件</strong>。比如：flannel，就是专门为 Flannel 项目提供的 CNI 插件；tuning，是一个通过 sysctl 调整网络设备参数的二进制文件；portmap，是一个通过 iptables 配置端口映射的二进制文件；bandwidth，是一个使用 Token Bucket Filter (TBF) 来进行限流的二进制文件。</p>
+<p>从这些二进制文件中，我们可以看到，如果要实现一个给 Kubernetes 用的容器网络方案，其实需要做两部分工作，以 Flannel 项目为例：</p>
+<p><strong>首先，实现这个网络方案本身</strong>。这一部分需要编写的，其实就是 flanneld 进程里的主要逻辑。比如，创建和配置 flannel.1 设备、配置宿主机路由、配置 ARP 和 FDB 表里的信息等等。</p>
+<p><strong>然后，实现该网络方案对应的 CNI 插件</strong>。这一部分主要需要做的，就是配置 Infra 容器里面的网络栈，并把它连接在 CNI 网桥上。</p>
+<p>由于 Flannel 项目对应的 CNI 插件已经被内置了，所以它无需再单独安装。而对于 Weave、Calico 等其他项目来说，我们就必须在安装插件的时候，把对应的 CNI 插件的可执行文件放在 /opt/cni/bin/ 目录下。</p>
+<blockquote>
+<p>实际上，对于 Weave、Calico 这样的网络方案来说，它们的 DaemonSet 只需要挂载宿主机的 /opt/cni/bin/，就可以实现插件可执行文件的安装了。你可以想一下具体应该怎么做，就当作一个课后小问题留给你去实践了。</p>
+</blockquote>
+<p>接下来，你就需要在宿主机上安装 flanneld（网络方案本身）。而在这个过程中，flanneld 启动后会在每台宿主机上生成它对应的 <strong>CNI 配置文件</strong>（它其实是一个 ConfigMap），从而告诉 Kubernetes，这个集群要使用 Flannel 作为容器网络方案。</p>
+<p>这个 CNI 配置文件的内容如下所示：</p>
+<pre><code>$ cat /etc/cni/net.d/10-flannel.conflist 
+{
+  &quot;name&quot;: &quot;cbr0&quot;,
+  &quot;plugins&quot;: [
+    {
+      &quot;type&quot;: &quot;flannel&quot;,
+      &quot;delegate&quot;: {
+        &quot;hairpinMode&quot;: true,
+        &quot;isDefaultGateway&quot;: true
+      }
+    },
+    {
+      &quot;type&quot;: &quot;portmap&quot;,
+      &quot;capabilities&quot;: {
+        &quot;portMappings&quot;: true
+      }
+    }
+  ]
+}</code></pre><p>需要注意的是，在 Kubernetes 中，处理容器网络相关的逻辑并不会在 kubelet 主干代码里执行，而是会在具体的 CRI（Container Runtime Interface，容器运行时接口）实现里完成。对于 Docker 项目来说，它的 CRI 实现叫作 dockershim，你可以在 kubelet 的代码里找到它。</p>
+<p>所以，接下来 dockershim 会加载上述的 CNI 配置文件。</p>
+<p>需要注意，Kubernetes 目前不支持多个 CNI 插件混用。如果你在 CNI 配置目录（/etc/cni/net.d）里放置了多个 CNI 配置文件的话，dockershim 只会加载按字母顺序排序的第一个插件。</p>
+<p>但另一方面，CNI 允许你在一个 CNI 配置文件里，通过 plugins 字段，定义多个插件进行协作。</p>
+<p>比如，在我们上面这个例子里，Flannel 项目就指定了 flannel 和 portmap 这两个插件。</p>
+<p><strong>这时候，dockershim 会把这个 CNI 配置文件加载起来，并且把列表里的第一个插件、也就是 flannel 插件，设置为默认插件</strong>。而在后面的执行过程中，flannel 和 portmap 插件会按照定义顺序被调用，从而依次完成“配置容器网络”和“配置端口映射”这两步操作。</p>
+<p>接下来，我就来为你讲解一下这样一个 CNI 插件的工作原理。</p>
+<p>当 kubelet 组件需要创建 Pod 的时候，它第一个创建的一定是 Infra 容器。所以在这一步，dockershim 就会先调用 Docker API 创建并启动 Infra 容器，紧接着执行一个叫作 SetUpPod 的方法。这个方法的作用就是：为 CNI 插件准备参数，然后调用 CNI 插件为 Infra 容器配置网络。</p>
+<p>这里要调用的 CNI 插件，就是 /opt/cni/bin/flannel；而调用它所需要的参数，分为两部分。</p>
+<p><strong>第一部分，是由 dockershim 设置的一组 CNI 环境变量。</strong></p>
+<p>其中，最重要的环境变量参数叫作：CNI_COMMAND。它的取值只有两种：ADD 和 DEL。</p>
+<p><strong>这个 ADD 和 DEL 操作，就是 CNI 插件唯一需要实现的两个方法。</strong></p>
+<p>其中 ADD 操作的含义是：把容器添加到 CNI 网络里；DEL 操作的含义则是：把容器从 CNI 网络里移除掉。</p>
+<p>而对于网桥类型的 CNI 插件来说，这两个操作意味着把容器以 Veth Pair 的方式“插”到 CNI 网桥上，或者从网桥上“拔”掉。</p>
+<p>接下来，我以 ADD 操作为重点进行讲解。</p>
+<p>CNI 的 ADD 操作需要的参数包括：容器里网卡的名字 eth0（CNI_IFNAME）、Pod 的 Network Namespace 文件的路径（CNI_NETNS）、容器的 ID（CNI_CONTAINERID）等。这些参数都属于上述环境变量里的内容。其中，Pod（Infra 容器）的 Network Namespace 文件的路径，我在前面讲解容器基础的时候提到过，即：/proc/&lt; 容器进程的 PID&gt;/ns/net。</p>
+<blockquote>
+<p>备注：这里你也可以再回顾下专栏第 8 篇文章《白话容器基础（四）：重新认识 Docker 容器》中的相关内容。</p>
+</blockquote>
+<p>除此之外，在 CNI 环境变量里，还有一个叫作 CNI_ARGS 的参数。通过这个参数，CRI 实现（比如 dockershim）就可以以 Key-Value 的格式，传递自定义信息给网络插件。这是用户将来自定义 CNI 协议的一个重要方法。</p>
+<p><strong>第二部分，则是 dockershim 从 CNI 配置文件里加载到的、默认插件的配置信息。</strong></p>
+<p>这个配置信息在 CNI 中被叫作 Network Configuration，它的完整定义你可以参考<span class="exturl"><a class="exturl__link"   href="https://github.com/containernetworking/cni/blob/master/SPEC.md#network-configuration"  target="_blank" rel="noopener">这个文档</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>。dockershim 会把 Network Configuration 以 JSON 数据的格式，通过标准输入（stdin）的方式传递给 Flannel CNI 插件。</p>
+<p>而有了这两部分参数，Flannel CNI 插件实现 ADD 操作的过程就非常简单了。</p>
+<p>不过，需要注意的是，Flannel 的 CNI 配置文件（ /etc/cni/net.d/10-flannel.conflist）里有这么一个字段，叫作 delegate：</p>
+<pre><code>...
+     &quot;delegate&quot;: {
+        &quot;hairpinMode&quot;: true,
+        &quot;isDefaultGateway&quot;: true
+      }
+Delegate 字段的意思是，这个 CNI 插件并不会自己做事儿，而是会调用 Delegate 指定的某种 CNI 内置插件来完成。对于 Flannel 来说，它调用的 Delegate 插件，就是前面介绍到的 CNI bridge 插件。</code></pre><p>所以说，dockershim 对 Flannel CNI 插件的调用，其实就是走了个过场。Flannel CNI 插件唯一需要做的，就是对 dockershim 传来的 Network Configuration 进行补充。比如，将 Delegate 的 Type 字段设置为 bridge，将 Delegate 的 IPAM 字段设置为 host-local 等。</p>
+<p>经过 Flannel CNI 插件补充后的、完整的 Delegate 字段如下所示：</p>
+<pre><code>{
+    &quot;hairpinMode&quot;:true,
+    &quot;ipMasq&quot;:false,
+    &quot;ipam&quot;:{
+        &quot;routes&quot;:[
+            {
+                &quot;dst&quot;:&quot;10.244.0.0/16&quot;
+            }
+        ],
+        &quot;subnet&quot;:&quot;10.244.1.0/24&quot;,
+        &quot;type&quot;:&quot;host-local&quot;
+    },
+    &quot;isDefaultGateway&quot;:true,
+    &quot;isGateway&quot;:true,
+    &quot;mtu&quot;:1410,
+    &quot;name&quot;:&quot;cbr0&quot;,
+    &quot;type&quot;:&quot;bridge&quot;
+}</code></pre><p>其中，ipam 字段里的信息，比如 10.244.1.0/24，读取自 Flannel 在宿主机上生成的 Flannel 配置文件，即：宿主机上的 /run/flannel/subnet.env 文件。</p>
+<p>接下来，Flannel CNI 插件就会调用 CNI bridge 插件，也就是执行：/opt/cni/bin/bridge 二进制文件。</p>
+<p>这一次，调用 CNI bridge 插件需要的两部分参数的第一部分、也就是 CNI 环境变量，并没有变化。所以，它里面的 CNI_COMMAND 参数的值还是“ADD”。</p>
+<p>而第二部分 Network Configration，正是上面补充好的 Delegate 字段。Flannel CNI 插件会把 Delegate 字段的内容以标准输入（stdin）的方式传递给 CNI bridge 插件。</p>
+<blockquote>
+<p>此外，Flannel CNI 插件还会把 Delegate 字段以 JSON 文件的方式，保存在 /var/lib/cni/flannel 目录下。这是为了给后面删除容器调用 DEL 操作时使用的。</p>
+</blockquote>
+<p>有了这两部分参数，接下来 CNI bridge 插件就可以“代表”Flannel，进行“将容器加入到 CNI 网络里”这一步操作了。而这一部分内容，与容器 Network Namespace 密切相关，所以我要为你详细讲解一下。</p>
+<p>首先，CNI bridge 插件会在宿主机上检查 CNI 网桥是否存在。如果没有的话，那就创建它。这相当于在宿主机上执行：</p>
+<pre><code># 在宿主机上
+$ ip link add cni0 type bridge
+$ ip link set cni0 up</code></pre><p>接下来，CNI bridge 插件会通过 Infra 容器的 Network Namespace 文件，进入到这个 Network Namespace 里面，然后创建一对 Veth Pair 设备。</p>
+<p>紧接着，它会把这个 Veth Pair 的其中一端，“移动”到宿主机上。这相当于在容器里执行如下所示的命令：</p>
+<pre><code>#在容器里
+# 创建一对Veth Pair设备。其中一个叫作eth0，另一个叫作vethb4963f3
+$ ip link add eth0 type veth peer name vethb4963f3
+# 启动eth0设备
+$ ip link set eth0 up 
+# 将Veth Pair设备的另一端（也就是vethb4963f3设备）放到宿主机（也就是Host Namespace）里
+$ ip link set vethb4963f3 netns $HOST_NS
+# 通过Host Namespace，启动宿主机上的vethb4963f3设备
+$ ip netns exec $HOST_NS ip link set vethb4963f3 up </code></pre><p>这样，vethb4963f3 就出现在了宿主机上，而且这个 Veth Pair 设备的另一端，就是容器里面的 eth0。</p>
+<p>当然，你可能已经想到，上述创建 Veth Pair 设备的操作，其实也可以先在宿主机上执行，然后再把该设备的一端放到容器的 Network Namespace 里，这个原理是一样的。</p>
+<p>不过，CNI 插件之所以要“反着”来，是因为 CNI 里对 Namespace 操作函数的设计就是如此，如下所示：</p>
+<pre><code>err := containerNS.Do(func(hostNS ns.NetNS) error {
+  ...
+  return nil
+})</code></pre><p>这个设计其实很容易理解。在编程时，容器的 Namespace 是可以直接通过 Namespace 文件拿到的；而 Host Namespace，则是一个隐含在上下文的参数。所以，像上面这样，先通过容器 Namespace 进入容器里面，然后再反向操作 Host Namespace，对于编程来说要更加方便。</p>
+<p>接下来，CNI bridge 插件就可以把 vethb4963f3 设备连接在 CNI 网桥上。这相当于在宿主机上执行：</p>
+<pre><code># 在宿主机上
+$ ip link set vethb4963f3 master cni0</code></pre><p>在将 vethb4963f3 设备连接在 CNI 网桥之后，CNI bridge 插件还会为它设置 <strong>Hairpin Mode（发夹模式）</strong>。这是因为，在默认情况下，网桥设备是不允许一个数据包从一个端口进来后，再从这个端口发出去的。但是，它允许你为这个端口开启 Hairpin Mode，从而取消这个限制。</p>
+<p>这个特性，主要用在容器需要通过<span class="exturl"><a class="exturl__link"   href="https://en.wikipedia.org/wiki/Network_address_translation"  target="_blank" rel="noopener">NAT（即：端口映射）</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>的方式，“自己访问自己”的场景下。</p>
+<p>举个例子，比如我们执行 docker run -p 8080:80，就是在宿主机上通过 iptables 设置了一条<span class="exturl"><a class="exturl__link"   href="http://linux-ip.net/html/nat-dnat.html"  target="_blank" rel="noopener">DNAT（目的地址转换）</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>转发规则。这条规则的作用是，当宿主机上的进程访问“&lt; 宿主机的 IP 地址 &gt;:8080”时，iptables 会把该请求直接转发到“&lt; 容器的 IP 地址 &gt;:80”上。也就是说，这个请求最终会经过 docker0 网桥进入容器里面。</p>
+<p>但如果你是在容器里面访问宿主机的 8080 端口，那么这个容器里发出的 IP 包会经过 vethb4963f3 设备（端口）和 docker0 网桥，来到宿主机上。此时，根据上述 DNAT 规则，这个 IP 包又需要回到 docker0 网桥，并且还是通过 vethb4963f3 端口进入到容器里。所以，这种情况下，我们就需要开启 vethb4963f3 端口的 Hairpin Mode 了。</p>
+<p>所以说，Flannel 插件要在 CNI 配置文件里声明 hairpinMode=true。这样，将来这个集群里的 Pod 才可以通过它自己的 Service 访问到自己。</p>
+<p>接下来，CNI bridge 插件会调用 CNI ipam 插件，从 ipam.subnet 字段规定的网段里为容器分配一个可用的 IP 地址。然后，CNI bridge 插件就会把这个 IP 地址添加在容器的 eth0 网卡上，同时为容器设置默认路由。这相当于在容器里执行：</p>
+<pre><code># 在容器里
+$ ip addr add 10.244.0.2/24 dev eth0
+$ ip route add default via 10.244.0.1 dev eth0</code></pre><p>最后，CNI bridge 插件会为 CNI 网桥添加 IP 地址。这相当于在宿主机上执行：</p>
+<pre><code># 在宿主机上
+$ ip addr add 10.244.0.1/24 dev cni0</code></pre><p>在执行完上述操作之后，CNI 插件会把容器的 IP 地址等信息返回给 dockershim，然后被 kubelet 添加到 Pod 的 Status 字段。</p>
+<p>至此，CNI 插件的 ADD 方法就宣告结束了。接下来的流程，就跟我们上一篇文章中容器跨主机通信的过程完全一致了。</p>
+<p>需要注意的是，对于非网桥类型的 CNI 插件，上述“将容器添加到 CNI 网络”的操作流程，以及网络方案本身的工作原理，就都不太一样了。我将会在后续文章中，继续为你分析这部分内容。</p>
+<p><strong>总结</strong></p>
+<p>在本篇文章中，我为你详细讲解了 Kubernetes 中 CNI 网络的实现原理。根据这个原理，你其实就很容易理解所谓的“Kubernetes 网络模型”了：</p>
+<p>所有容器都可以直接使用 IP 地址与其他容器通信，而无需使用 NAT。</p>
+<p>所有宿主机都可以直接使用 IP 地址与所有容器通信，而无需使用 NAT。反之亦然。</p>
+<p>容器自己“看到”的自己的 IP 地址，和别人（宿主机或者容器）看到的地址是完全一样的。</p>
+<p>可以看到，这个网络模型，其实可以用一个字总结，那就是“通”。</p>
+<p>容器与容器之间要“通”，容器与宿主机之间也要“通”。并且，Kubernetes 要求这个“通”，还必须是直接基于容器和宿主机的 IP 地址来进行的。</p>
+<p>当然，考虑到不同用户之间的隔离性，在很多场合下，我们还要求容器之间的网络“不通”。这个问题，我会在后面的文章中会为你解决。</p>
+<p><strong>思考题</strong></p>
+<p>请你思考一下，为什么 Kubernetes 项目不自己实现容器网络，而是要通过 CNI 做一个如此简单的假设呢？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/26.%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%EF%BC%9ARBAC/">26 | 基于角色的权限控制：RBAC</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="01.jpg"  alt="">
+      </p>
+
+        <h2 id="基于角色的权限控制之-RBAC。"   >
+          <a href="#基于角色的权限控制之-RBAC。" class="heading-link"><i class="fas fa-link"></i></a>基于角色的权限控制之 RBAC。</h2>
+      <p>在前面的文章中，我已经为你讲解了很多种 Kubernetes 内置的编排对象，以及对应的控制器模式的实现原理。此外，我还剖析了自定义 API 资源类型和控制器的编写方式。</p>
+<p>这时候，你可能已经冒出了这样一个想法：控制器模式看起来好像也不难嘛，我能不能自己写一个编排对象呢？</p>
+<p>答案当然是可以的。而且，这才是 Kubernetes 项目最具吸引力的地方。</p>
+<p>毕竟，在互联网级别的大规模集群里，Kubernetes 内置的编排对象，很难做到完全满足所有需求。所以，很多实际的容器化工作，都会要求你设计一个自己的编排对象，实现自己的控制器模式。</p>
+<p>而在 Kubernetes 项目里，我们可以基于插件机制来完成这些工作，而完全不需要修改任何一行代码。</p>
+<p>不过，你要通过一个外部插件，在 Kubernetes 里新增和操作 API 对象，那么就必须先了解一个非常重要的知识：RBAC。</p>
+<p>我们知道，Kubernetes 中所有的 API 对象，都保存在 Etcd 里。可是，对这些 API 对象的操作，却一定都是通过访问 kube-apiserver 实现的。其中一个非常重要的原因，就是你需要 APIServer 来帮助你做授权工作。</p>
+<p>而在 <strong>Kubernetes 项目中，负责完成授权（Authorization）工作的机制，就是 RBAC：基于角色的访问控制（Role-Based Access Control）。</strong></p>
+<p>如果你直接查看 Kubernetes 项目中关于 RBAC 的文档的话，可能会感觉非常复杂。但实际上，等到你用到这些 RBAC 的细节时，再去查阅也不迟。</p>
+<p>而在这里，我只希望你能明确三个最基本的概念。</p>
+<ol>
+<li>Role：角色，它其实是一组规则，定义了一组对 Kubernetes API 对象的操作权限。</li>
+<li>Subject：被作用者，既可以是“人”，也可以是“机器”，也可以是你在 Kubernetes 里定义的“用户”。</li>
+<li>RoleBinding：定义了“被作用者”和“角色”的绑定关系。</li>
+</ol>
+<p>而这三个概念，其实就是整个 RBAC 体系的核心所在。</p>
+<p><strong><code>我先来讲解一下 Role。</code></strong></p>
+<p>实际上，Role 本身就是一个 Kubernetes 的 API 对象，定义如下所示：</p>
+<pre><code>kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: mynamespace
+  name: example-role
+rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;pods&quot;]
+  verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;]</code></pre><p>首先，这个 Role 对象指定了它能产生作用的 Namepace 是：mynamespace。</p>
+<p>Namespace 是 Kubernetes 项目里的一个逻辑管理单位。不同 Namespace 的 API 对象，在通过 kubectl 命令进行操作的时候，是互相隔离开的。</p>
+<p>比如，kubectl get pods -n mynamespace。</p>
+<p>当然，这仅限于逻辑上的“隔离”，Namespace 并不会提供任何实际的隔离或者多租户能力。而在前面文章中用到的大多数例子里，我都没有指定 Namespace，那就是使用的是默认 Namespace：default。</p>
+<p>然后，这个 Role 对象的 rules 字段，就是它所定义的权限规则。在上面的例子里，这条规则的含义就是：允许“被作用者”，对 mynamespace 下面的 Pod 对象，进行 GET、WATCH 和 LIST 操作。</p>
+<p>那么，<strong><code>这个具体的“被作用者”又是如何指定的呢？这就需要通过 RoleBinding 来实现了。</code></strong></p>
+<p>当然，RoleBinding 本身也是一个 Kubernetes 的 API 对象。它的定义如下所示：</p>
+<pre><code>kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-rolebinding
+  namespace: mynamespace
+subjects:
+- kind: User
+  name: example-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: example-role
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>可以看到，这个 RoleBinding 对象里定义了一个 subjects 字段，即“被作用者”。它的类型是 User，即 Kubernetes 里的用户。这个用户的名字是 example-user。</p>
+<p>可是，在 Kubernetes 中，其实并没有一个叫作“User”的 API 对象。而且，我们在前面和部署使用 Kubernetes 的流程里，既不需要 User，也没有创建过 User。</p>
+<p><strong>这个 User 到底是从哪里来的呢？</strong></p>
+<p>实际上，Kubernetes 里的“User”，也就是“用户”，只是一个授权系统里的逻辑概念。它需要通过外部认证服务，比如 Keystone，来提供。或者，你也可以直接给 APIServer 指定一个用户名、密码文件。那么 Kubernetes 的授权系统，就能够从这个文件里找到对应的“用户”了。当然，在大多数私有的使用环境中，我们只要使用 Kubernetes 提供的内置“用户”，就足够了。这部分知识，我后面马上会讲到。</p>
+<p>接下来，我们会看到一个 roleRef 字段。正是通过这个字段，<strong><code>RoleBinding 对象就可以直接通过名字，来引用我们前面定义的 Role 对象（example-role），从而定义了“被作用者（Subject）”和“角色（Role）”之间的绑定关系。</code></strong></p>
+<p>需要再次提醒的是，Role 和 RoleBinding 对象都是 Namespaced 对象（Namespaced Object），它们对权限的限制规则仅在它们自己的 Namespace 内有效，roleRef 也只能引用当前 Namespace 里的 Role 对象。</p>
+<p>那么，对于非 Namespaced（Non-namespaced）对象（比如：Node），或者，某一个 Role 想要作用于所有的 Namespace 的时候，我们又该如何去做授权呢？</p>
+<p>这时候，我们就必须要使用 ClusterRole 和 ClusterRoleBinding 这两个组合了。这两个 API 对象的用法跟 Role 和 RoleBinding 完全一样。只不过，它们的定义里，没有了 Namespace 字段，如下所示：</p>
+<pre><code>kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-clusterrole
+rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;pods&quot;]
+  verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;]
+
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-clusterrolebinding
+subjects:
+- kind: User
+  name: example-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: example-clusterrole
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>上面的例子里的 ClusterRole 和 ClusterRoleBinding 的组合，意味着名叫 example-user 的用户，拥有对所有 Namespace 里的 Pod 进行 GET、WATCH 和 LIST 操作的权限。</p>
+<p>更进一步地，在 Role 或者 ClusterRole 里面，如果要赋予用户 example-user 所有权限，那你就可以给它指定一个 verbs 字段的全集，如下所示：</p>
+<pre><code>verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;update&quot;, &quot;patch&quot;, &quot;delete&quot;]</code></pre><p>这些就是当前 Kubernetes（v1.11）里能够对 API 对象进行的所有操作了。</p>
+<p>类似地，Role 对象的 rules 字段也可以进一步细化。比如，你可以只针对某一个具体的对象进行权限设置，如下所示：</p>
+<pre><code>rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;configmaps&quot;]
+  resourceNames: [&quot;my-config&quot;]
+  verbs: [&quot;get&quot;]</code></pre><p>这个例子就表示，这条规则的“被作用者”，只对名叫“my-config”的 ConfigMap 对象，有进行 GET 操作的权限。</p>
+<p>而正如我前面介绍过的，在大多数时候，我们其实都不太使用“用户”这个功能，而是直接使用 Kubernetes 里的“内置用户”。</p>
+<p><strong><code>这个由 Kubernetes 负责管理的“内置用户”，正是我们前面曾经提到过的：ServiceAccount。</code></strong></p>
+<p>接下来，我通过一个具体的实例来为你讲解一下为 ServiceAccount 分配权限的过程。</p>
+<p><strong>首先，我们要定义一个 ServiceAccount。</strong>它的 API 对象非常简单，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: mynamespace
+  name: example-sa</code></pre><p>可以看到，一个最简单的 ServiceAccount 对象只需要 Name 和 Namespace 这两个最基本的字段。</p>
+<p><strong>然后，我们通过编写 RoleBinding 的 YAML 文件，来为这个 ServiceAccount 分配权限：</strong></p>
+<pre><code>kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-rolebinding
+  namespace: mynamespace
+subjects:
+- kind: ServiceAccount
+  name: example-sa
+  namespace: mynamespace
+roleRef:
+  kind: Role
+  name: example-role
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>可以看到，在这个 RoleBinding 对象里，subjects 字段的类型（kind），不再是一个 User，而是一个名叫 example-sa 的 ServiceAccount。而 roleRef 引用的 Role 对象，依然名叫 example-role，也就是我在这篇文章一开始定义的 Role 对象。</p>
+<p><strong>接着，我们用 kubectl 命令创建这三个对象：</strong></p>
+<pre><code>$ kubectl create -f svc-account.yaml
+$ kubectl create -f role-binding.yaml
+$ kubectl create -f role.yaml</code></pre><p>然后，我们来查看一下这个 ServiceAccount 的详细信息：</p>
+<pre><code>$ kubectl get sa -n mynamespace -o yaml
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: 2018-09-08T12:59:17Z
+    name: example-sa
+    namespace: mynamespace
+    resourceVersion: &quot;409327&quot;
+    ...
+  secrets:
+  - name: example-sa-token-vmfg6</code></pre><p>可以看到，<strong><code>Kubernetes 会为一个 ServiceAccount 自动创建并分配一个 Secret 对象，即：上述 ServiceAcount 定义里最下面的 secrets 字段。</code></strong></p>
+<p><strong><code>这个 Secret，就是这个 ServiceAccount 对应的、用来跟 APIServer 进行交互的授权文件，我们一般称它为：Token。Token 文件的内容一般是证书或者密码，它以一个 Secret 对象的方式保存在 Etcd 当中。</code></strong></p>
+<p>这时候，用户的 Pod，就可以声明使用这个 ServiceAccount 了，比如下面这个例子：</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  namespace: mynamespace
+  name: sa-token-test
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.7.9
+  serviceAccountName: example-sa</code></pre><p>在这个例子里，我定义了 Pod 要使用的要使用的 ServiceAccount 的名字是：example-sa。</p>
+<p><strong><code>等这个 Pod 运行起来之后，我们就可以看到，该 ServiceAccount 的 token，也就是一个 Secret 对象，被 Kubernetes 自动挂载到了容器的 /var/run/secrets/kubernetes.io/serviceaccount 目录下，</code></strong>如下所示：</p>
+<pre><code>$ kubectl describe pod sa-token-test -n mynamespace
+Name:               sa-token-test
+Namespace:          mynamespace
+...
+Containers:
+  nginx:
+    ...
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from example-sa-token-vmfg6 (ro)</code></pre><p>这时候，我们可以通过 kubectl exec 查看到这个目录里的文件：</p>
+<pre><code>$ kubectl exec -it sa-token-test -n mynamespace -- /bin/bash
+root@sa-token-test:/# ls /var/run/secrets/kubernetes.io/serviceaccount
+ca.crt namespace  token</code></pre><p>如上所示，容器里的应用，就可以使用这个 ca.crt 来访问 APIServer 了。更重要的是，此时它只能够做 GET、WATCH 和 LIST 操作。因为 example-sa 这个 ServiceAccount 的权限，已经被我们绑定了 Role 做了限制。<br>此外，我在第 15 篇文章《深入解析 Pod 对象（二）：使用进阶》中曾经提到过，如果一个 Pod 没有声明 serviceAccountName，Kubernetes 会自动在它的 Namespace 下创建一个名叫 default 的默认 ServiceAccount，然后分配给这个 Pod。<br>但在这种情况下，这个默认 ServiceAccount 并没有关联任何 Role。也就是说，此时它有访问 APIServer 的绝大多数权限。当然，这个访问所需要的 Token，还是默认 ServiceAccount 对应的 Secret 对象为它提供的，如下所示。</p>
+<pre><code>$kubectl describe sa default
+Name:                default
+Namespace:           default
+Labels:              &lt;none&gt;
+Annotations:         &lt;none&gt;
+Image pull secrets:  &lt;none&gt;
+Mountable secrets:   default-token-s8rbq
+Tokens:              default-token-s8rbq
+Events:              &lt;none&gt;
+
+
+$ kubectl get secret
+NAME                  TYPE                                  DATA      AGE
+kubernetes.io/service-account-token   3         82d
+
+
+$ kubectl describe secret default-token-s8rbq
+Name:         default-token-s8rbq
+Namespace:    default
+Labels:       &lt;none&gt;
+Annotations:  kubernetes.io/service-account.name=default
+            kubernetes.io/service-account.uid=ffcb12b2-917f-11e8-abde-42010aa80002
+Type:  kubernetes.io/service-account-token
+Data
+====
+ca.crt:     1025 bytes
+namespace:  7 bytes
+token:      &lt;TOKEN数据&gt;</code></pre><p>可以看到，Kubernetes 会自动为默认 ServiceAccount 创建并绑定一个特殊的 <strong><code>Secret：</code></strong> 它的类型是kubernetes.io/service-account-token；<strong><code>它的 Annotation 字段，声明了kubernetes.io/service-account.name=default，即这个 Secret 会跟同一 Namespace 下名叫 default 的 ServiceAccount 进行绑定。</code></strong></p>
+<p><strong><code>所以，在生产环境中，我强烈建议你为所有 Namespace 下的默认 ServiceAccount，绑定一个只读权限的 Role。</code></strong>这个具体怎么做，就当作思考题留给你了。</p>
+<p>除了前面使用的“用户”（User），<strong><code>Kubernetes 还拥有“用户组”（Group）的概念，也就是一组“用户”的意思。</code></strong>如果你为 Kubernetes 配置了外部认证服务的话，这个“用户组”的概念就会由外部认证服务提供。</p>
+<p>而对于 Kubernetes 的内置“用户”ServiceAccount 来说，上述“用户组”的概念也同样适用。</p>
+<p>实际上，一个 ServiceAccount，在 Kubernetes 里对应的“用户”的名字是：</p>
+<pre><code>system:serviceaccount:&lt;Namespace名字&gt;:&lt;ServiceAccount名字&gt;</code></pre><p>而它对应的内置“用户组”的名字，就是：</p>
+<pre><code>system:serviceaccounts:&lt;Namespace名字&gt;</code></pre><p>这两个对应关系，请你一定要牢记。</p>
+<p>比如，现在我们可以在 RoleBinding 里定义如下的 subjects：</p>
+<pre><code>subjects:
+- kind: Group
+  name: system:serviceaccounts:mynamespace
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>这就意味着这个 Role 的权限规则，作用于 mynamespace 里的所有 ServiceAccount。这就用到了“用户组”的概念。</p>
+<p>而下面这个例子：</p>
+<pre><code>subjects:
+- kind: Group
+  name: system:serviceaccounts
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>就意味着这个 Role 的权限规则，作用于整个系统里的所有 ServiceAccount。</p>
+<p>最后，值得一提的是，在 <strong><code>Kubernetes 中已经内置了很多个为系统保留的 ClusterRole，它们的名字都以 system: 开头。你可以通过 kubectl get clusterroles 查看到它们。</code></strong></p>
+<p>一般来说，这些系统 ClusterRole，是绑定给 Kubernetes 系统组件对应的 ServiceAccount 使用的。</p>
+<p>比如，其中一个名叫 system:kube-scheduler 的 ClusterRole，定义的权限规则是 kube-scheduler（Kubernetes 的调度器组件）运行所需要的必要权限。你可以通过如下指令查看这些权限的列表：</p>
+<pre><code>$ kubectl describe clusterrole system:kube-scheduler
+Name:         system:kube-scheduler
+...
+PolicyRule:
+  Resources                    Non-Resource URLs Resource Names    Verbs
+  ---------                    -----------------  --------------    -----
+...
+  services                     []                 []                [get list watch]
+  replicasets.apps             []                 []                [get list watch]
+  statefulsets.apps            []                 []                [get list watch]
+  replicasets.extensions       []                 []                [get list watch]
+  poddisruptionbudgets.policy  []                 []                [get list watch]
+  pods/status                  []                 []                [patch update]</code></pre><p>这个 system:kube-scheduler 的 ClusterRole，就会被绑定给 kube-system Namesapce 下名叫 kube-scheduler 的 ServiceAccount，它正是 Kubernetes 调度器的 Pod 声明使用的 ServiceAccount。</p>
+<p>除此之外，Kubernetes 还提供了四个预先定义好的 ClusterRole 来供用户直接使用：</p>
+<ol>
+<li>cluster-admin；</li>
+<li>admin；</li>
+<li>edit；</li>
+<li>view。</li>
+</ol>
+<p>通过它们的名字，你应该能大致猜出它们都定义了哪些权限。比如，这个名叫 view 的 ClusterRole，就规定了被作用者只有 Kubernetes API 的只读权限。</p>
+<p>而我还要提醒你的是，上面这个 cluster-admin 角色，对应的是整个 Kubernetes 项目中的最高权限（verbs=*），如下所示：</p>
+<pre><code>$ kubectl describe clusterrole cluster-admin -n kube-system
+Name:         cluster-admin
+Labels:       kubernetes.io/bootstrapping=rbac-defaults
+Annotations:  rbac.authorization.kubernetes.io/autoupdate=true
+PolicyRule:
+  Resources  Non-Resource URLs Resource Names  Verbs
+  ---------  -----------------  --------------  -----
+  *.*        []                 []              [*]
+             [*]                []              [*]</code></pre><p>所以，请你务必要谨慎而小心地使用 cluster-admin。</p>
+<p><strong>总结</strong></p>
+<p>在今天这篇文章中，我主要为你讲解了基于角色的访问控制（RBAC）。</p>
+<p>其实，你现在已经能够理解，所谓角色（Role），其实就是一组权限规则列表。而我们分配这些权限的方式，就是通过创建 RoleBinding 对象，将被作用者（subject）和权限列表进行绑定。</p>
+<p>另外，与之对应的 ClusterRole 和 ClusterRoleBinding，则是 Kubernetes 集群级别的 Role 和 RoleBinding，它们的作用范围不受 Namespace 限制。</p>
+<p>而尽管权限的被作用者可以有很多种（比如，User、Group 等），但在我们平常的使用中，最普遍的用法还是 ServiceAccount。所以，Role + RoleBinding + ServiceAccount 的权限分配方式是你要重点掌握的内容。我们在后面编写和安装各种插件的时候，会经常用到这个组合。</p>
+<p><strong>思考题</strong></p>
+<p>请问，如何为所有 Namespace 下的默认 ServiceAccount（default ServiceAccount），绑定一个只读权限的 Role 呢？请你提供 ClusterRoleBinding（或者 RoleBinding）的 YAML 文件</p>
+<pre><code>kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: readonly-all-default
+subjects:
+- kind: ServiceAccount
+  name: system.serviceaccount.default  // 或者name直接写default，不指定namespace
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io</code></pre></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/">27 | 聪明的微创新：Operator工作原理解读</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">6.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="聪明的微创新之-Operator-工作原理解读。"   >
+          <a href="#聪明的微创新之-Operator-工作原理解读。" class="heading-link"><i class="fas fa-link"></i></a>聪明的微创新之 Operator 工作原理解读。</h2>
+      <p>在前面的几篇文章中，我已经和你分享了 Kubernetes 项目中的大部分编排对象（比如 Deployment、StatefulSet、DaemonSet，以及 Job），也介绍了“有状态应用”的管理方法，还阐述了为 Kubernetes 添加自定义 API 对象和编写自定义控制器的原理和流程。</p>
+<p>可能你已经感觉到，在 Kubernetes 中，管理“有状态应用”是一个比较复杂的过程，尤其是编写 Pod 模板的时候，总有一种“在 YAML 文件里编程序”的感觉，让人很不舒服。</p>
+<p>而在 Kubernetes 生态中，还有一个相对更加灵活和编程友好的管理“有状态应用”的解决方案，它就是：Operator。</p>
+<p>接下来，我就以 Etcd Operator 为例，来为你讲解一下 Operator 的工作原理和编写方法。</p>
+<p>Etcd Operator 的使用方法非常简单，只需要两步即可完成：</p>
+<p><strong>第一步，将这个 Operator 的代码 Clone 到本地：</strong></p>
+<pre><code>$ git clone https://github.com/coreos/etcd-operator</code></pre><p><strong>第二步，将这个 Etcd Operator 部署在 Kubernetes 集群里。</strong></p>
+<p>不过，在部署 Etcd Operator 的 Pod 之前，你需要先执行这样一个脚本：</p>
+<pre><code>$ example/rbac/create_role.sh</code></pre><p>不用我多说你也能够明白：这个脚本的作用，就是为 Etcd Operator 创建 RBAC 规则。这是因为，Etcd Operator 需要访问 Kubernetes 的 APIServer 来创建对象。</p>
+<p>更具体地说，上述脚本为 Etcd Operator 定义了如下所示的权限：</p>
+<ol>
+<li>对 Pod、Service、PVC、Deployment、Secret 等 API 对象，有所有权限；</li>
+<li>对 CRD 对象，有所有权限；</li>
+<li>对属于 etcd.database.coreos.com 这个 API Group 的 CR（Custom Resource）对象，有所有权限。</li>
+</ol>
+<p>而 Etcd Operator 本身，其实就是一个 Deployment，它的 YAML 文件如下所示：</p>
+<pre><code>apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: etcd-operator
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: etcd-operator
+    spec:
+      containers:
+      - name: etcd-operator
+        image: quay.io/coreos/etcd-operator:v0.9.2
+        command:
+        - etcd-operator
+        env:
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+...</code></pre><p>所以，我们就可以使用上述的 YAML 文件来创建 Etcd Operator，如下所示：</p>
+<pre><code>$ kubectl create -f example/deployment.yaml</code></pre><p>而一旦 Etcd Operator 的 Pod 进入了 Running 状态，你就会发现，有一个 CRD 被自动创建了出来，如下所示：</p>
+<pre><code>$ kubectl get pods
+NAME                              READY     STATUS      RESTARTS   AGE
+etcd-operator-649dbdb5cb-bzfzp    1/1       Running     0          20s
+
+$ kubectl get crd
+NAME                                    CREATED AT
+etcdclusters.etcd.database.coreos.com   2018-09-18T11:42:55Z</code></pre><p>这个 CRD 名叫etcdclusters.etcd.database.coreos.com 。你可以通过 kubectl describe 命令看到它的细节，如下所示：</p>
+<pre><code>$ kubectl describe crd  etcdclusters.etcd.database.coreos.com
+...
+Group:   etcd.database.coreos.com
+  Names:
+    Kind:       EtcdCluster
+    List Kind:  EtcdClusterList
+    Plural:     etcdclusters
+    Short Names:
+      etcd
+    Singular:  etcdcluster
+  Scope:       Namespaced
+  Version:     v1beta2
+
+...</code></pre><p>可以看到，这个 CRD 相当于告诉了 Kubernetes：接下来，如果有 API 组（Group）是etcd.database.coreos.com、API 资源类型（Kind）是“EtcdCluster”的 YAML 文件被提交上来，你可一定要认识啊。</p>
+<p>所以说，通过上述两步操作，你实际上是在 Kubernetes 里添加了一个名叫 EtcdCluster 的自定义资源类型。而 Etcd Operator 本身，就是这个自定义资源类型对应的自定义控制器。</p>
+<p>而当 Etcd Operator 部署好之后，接下来在这个 Kubernetes 里创建一个 Etcd 集群的工作就非常简单了。你只需要编写一个 EtcdCluster 的 YAML 文件，然后把它提交给 Kubernetes 即可，如下所示：</p>
+<pre><code>$ kubectl apply -f example/example-etcd-cluster.yaml</code></pre><p>这个 example-etcd-cluster.yaml 文件里描述的，是一个 3 个节点的 Etcd 集群。我们可以看到它被提交给 Kubernetes 之后，就会有三个 Etcd 的 Pod 运行起来，如下所示：</p>
+<pre><code>$ kubectl get pods
+NAME                            READY     STATUS    RESTARTS   AGE
+example-etcd-cluster-dp8nqtjznc   1/1       Running     0          1m
+example-etcd-cluster-mbzlg6sd56   1/1       Running     0          2m
+example-etcd-cluster-v6v6s6stxd   1/1       Running     0          2m</code></pre><p>那么，<code>究竟发生了什么，让创建一个 Etcd 集群的工作如此简单呢？</code></p>
+<p>我们当然还是得从这个 example-etcd-cluster.yaml 文件开始说起。</p>
+<p>不难想到，这个文件里定义的，正是 EtcdCluster 这个 CRD 的一个具体实例，也就是一个 Custom Resource（CR）。而它的内容非常简单，如下所示：</p>
+<pre><code>apiVersion: &quot;etcd.database.coreos.com/v1beta2&quot;
+kind: &quot;EtcdCluster&quot;
+metadata:
+  name: &quot;example-etcd-cluster&quot;
+spec:
+  size: 3
+  version: &quot;3.2.13&quot;</code></pre><p>可以看到，EtcdCluster 的 spec 字段非常简单。其中，size=3 指定了它所描述的 Etcd 集群的节点个数。而 version=“3.2.13”，则指定了 Etcd 的版本，仅此而已。</p>
+<p>而真正把这样一个 Etcd 集群创建出来的逻辑，就是 Etcd Operator 要实现的主要工作了。</p>
+<p>看到这里，相信你应该已经对 Operator 有了一个初步的认知：</p>
+<p><strong>Operator 的工作原理，实际上是利用了 Kubernetes 的自定义 API 资源（CRD），来描述我们想要部署的“有状态应用”；然后在自定义控制器里，根据自定义 API 对象的变化，来完成具体的部署和运维工作。</strong></p>
+<p>所以，编写一个 Etcd Operator，与我们前面编写一个自定义控制器的过程，没什么不同。</p>
+<p>不过，考虑到你可能还不太清楚<code>Etcd 集群的组建方式</code>，我在这里先简单介绍一下这部分知识。</p>
+<p><strong>Etcd Operator 部署 Etcd 集群，采用的是静态集群（Static）的方式。</strong></p>
+<p>静态集群的好处是，它不必依赖于一个额外的服务发现机制来组建集群，非常适合本地容器化部署。而它的难点，则在于你必须在部署的时候，就规划好这个集群的拓扑结构，并且能够知道这些节点固定的 IP 地址。比如下面这个例子：</p>
+<pre><code>$ etcd --name infra0 --initial-advertise-peer-urls http://10.0.1.10:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+...
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new
+
+$ etcd --name infra1 --initial-advertise-peer-urls http://10.0.1.11:2380 \
+  --listen-peer-urls http://10.0.1.11:2380 \
+...
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new
+
+$ etcd --name infra2 --initial-advertise-peer-urls http://10.0.1.12:2380 \
+  --listen-peer-urls http://10.0.1.12:2380 \
+...
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new</code></pre><p>在这个例子中，我启动了三个 Etcd 进程，组成了一个三节点的 Etcd 集群。</p>
+<p>其中，这些节点启动参数里的–initial-cluster 参数，非常值得你关注。它的含义，正是<strong>当前节点启动时集群的拓扑结构。说得更详细一点，就是当前这个节点启动时，需要跟哪些节点通信来组成集群。</strong></p>
+<p>举个例子，我们可以看一下上述 infra2 节点的–initial-cluster 的值，如下所示：</p>
+<pre><code>...
+--initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \</code></pre><p>可以看到，–initial-cluster 参数是由“&lt; 节点名字 &gt;=&lt; 节点地址 &gt;”格式组成的一个数组。而上面这个配置的意思就是，当 infra2 节点启动之后，这个 Etcd 集群里就会有 infra0、infra1 和 infra2 三个节点。</p>
+<p>同时，这些 Etcd 节点，需要通过 2380 端口进行通信以便组成集群，这也正是上述配置中–listen-peer-urls 字段的含义。</p>
+<p>此外，一个 Etcd 集群还需要用–initial-cluster-token 字段，来声明一个该集群独一无二的 Token 名字。</p>
+<p>像上述这样为每一个 Ectd 节点配置好它对应的启动参数之后把它们启动起来，一个 Etcd 集群就可以自动组建起来了。</p>
+<p>而我们要编写的 Etcd Operator，就是要把上述过程自动化。这其实等同于：用代码来生成每个 Etcd 节点 Pod 的启动命令，然后把它们启动起来。</p>
+<p>接下来，我们一起来实践一下这个流程。</p>
+<p>当然，在编写自定义控制器之前，我们首先需要完成 EtcdCluster 这个 CRD 的定义，它对应的 types.go 文件的主要内容，如下所示：</p>
+<pre><code>// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type EtcdCluster struct {
+  metav1.TypeMeta   `json:&quot;,inline&quot;`
+  metav1.ObjectMeta `json:&quot;metadata,omitempty&quot;`
+  Spec              ClusterSpec   `json:&quot;spec&quot;`
+  Status            ClusterStatus `json:&quot;status&quot;`
+}
+type ClusterSpec struct {
+ // Size is the expected size of the etcd cluster.
+ // The etcd-operator will eventually make the size of the running
+ // cluster equal to the expected size.
+ // The vaild range of the size is from 1 to 7.
+ Size int `json:&quot;size&quot;`
+ ... 
+}</code></pre><p>可以看到，EtcdCluster 是一个有 Status 字段的 CRD。在这里，我们可以不必关心 ClusterSpec 里的其他字段，只关注 Size（即：Etcd 集群的大小）字段即可。</p>
+<p>Size 字段的存在，就意味着将来如果我们想要调整集群大小的话，应该直接修改 YAML 文件里 size 的值，并执行 kubectl apply -f。</p>
+<p>这样，Operator 就会帮我们完成 Etcd 节点的增删操作。这种“scale”能力，也是 Etcd Operator 自动化运维 Etcd 集群需要实现的主要功能。</p>
+<p>而为了能够支持这个功能，我们就不再像前面那样在–initial-cluster 参数里把拓扑结构固定死。</p>
+<p>所以，Etcd Operator 的实现，虽然选择的也是静态集群，但这个集群具体的组建过程，是逐个节点动态添加的方式，即：</p>
+<p><strong>首先，Etcd Operator 会创建一个“种子节点”；</strong></p>
+<p><strong>然后，Etcd Operator 会不断创建新的 Etcd 节点，然后将它们逐一加入到这个集群当中，直到集群的节点数等于 size。</strong></p>
+<p>这就意味着，在生成不同角色的 Etcd Pod 时，Operator 需要能够区分种子节点与普通节点。</p>
+<p>而这两种节点的不同之处，就在于一个名叫–initial-cluster-state 的启动参数：</p>
+<ul>
+<li>当这个参数值设为 new 时，就代表了该节点是种子节点。而我们前面提到过，种子节点还必须通过–initial-cluster-token 声明一个独一无二的 Token。</li>
+<li>而如果这个参数值设为 existing，那就是说明这个节点是一个普通节点，Etcd Operator 需要把它加入到已有集群里。</li>
+</ul>
+<p>那么接下来的问题就是，每个 Etcd 节点的–initial-cluster 字段的值又是怎么生成的呢？</p>
+<p>由于这个方案要求种子节点先启动，所以对于种子节点 infra0 来说，它启动后的集群只有它自己，即：<code>–initial-cluster=infra0=http://10.0.1.10:2380</code>.</p>
+<p>而对于接下来要加入的节点，比如 infra1 来说，它启动后的集群就有两个节点了，所以它的–initial-cluster 参数的值应该是：<code>infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380</code>.</p>
+<p>其他节点，都以此类推。</p>
+<p>现在，你就应该能在脑海中构思出上述三节点 Etcd 集群的部署过程了。</p>
+<p>首先，只要用户提交 YAML 文件时声明创建一个 EtcdCluster 对象（一个 Etcd 集群），那么 Etcd Operator 都应该先创建一个单节点的种子集群（Seed Member），并启动这个种子节点。</p>
+<p>以 infra0 节点为例，它的 IP 地址是 10.0.1.10，那么 Etcd Operator 生成的种子节点的启动命令，如下所示：</p>
+<pre><code>$ etcd
+  --data-dir=/var/etcd/data
+  --name=infra0
+  --initial-advertise-peer-urls=http://10.0.1.10:2380
+  --listen-peer-urls=http://0.0.0.0:2380
+  --listen-client-urls=http://0.0.0.0:2379
+  --advertise-client-urls=http://10.0.1.10:2379
+  --initial-cluster=infra0=http://10.0.1.10:2380
+  --initial-cluster-state=new
+  --initial-cluster-token=4b5215fa-5401-4a95-a8c6-892317c9bef8</code></pre><p>可以看到，这个种子节点的 initial-cluster-state 是 new，并且指定了唯一的 initial-cluster-token 参数。</p>
+<p>我们可以把这个创建种子节点（集群）的阶段称为：<strong>Bootstrap</strong>。</p>
+<p>接下来，<strong>对于其他每一个节点，Operator 只需要执行如下两个操作即可</strong>，以 infra1 为例。</p>
+<p>第一步：通过 Etcd 命令行添加一个新成员：</p>
+<pre><code>$ etcdctl member add infra1 http://10.0.1.11:2380</code></pre><p>第二步：为这个成员节点生成对应的启动参数，并启动它：</p>
+<pre><code>$ etcd
+    --data-dir=/var/etcd/data
+    --name=infra1
+    --initial-advertise-peer-urls=http://10.0.1.11:2380
+    --listen-peer-urls=http://0.0.0.0:2380
+    --listen-client-urls=http://0.0.0.0:2379
+    --advertise-client-urls=http://10.0.1.11:2379
+    --initial-cluster=infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380
+    --initial-cluster-state=existing</code></pre><p>可以看到，对于这个 infra1 成员节点来说，它的 initial-cluster-state 是 existing，也就是要加入已有集群。而它的 initial-cluster 的值，则变成了 infra0 和 infra1 两个节点的 IP 地址。</p>
+<p>所以，以此类推，不断地将 infra2 等后续成员添加到集群中，直到整个集群的节点数目等于用户指定的 size 之后，部署就完成了。</p>
+<p>在熟悉了这个部署思路之后，我再为你讲解<code>Etcd Operator 的工作原理</code>，就非常简单了。</p>
+<p>跟所有的自定义控制器一样，Etcd Operator 的启动流程也是围绕着 Informer 展开的，如下所示：</p>
+<pre><code>func (c *Controller) Start() error {
+ for {
+  err := c.initResource()
+  ...
+  time.Sleep(initRetryWaitTime)
+ }
+ c.run()
+}
+func (c *Controller) run() {
+ ...
+
+ _, informer := cache.NewIndexerInformer(source, &amp;api.EtcdCluster{}, 0, cache.ResourceEventHandlerFuncs{
+  AddFunc:    c.onAddEtcdClus,
+  UpdateFunc: c.onUpdateEtcdClus,
+  DeleteFunc: c.onDeleteEtcdClus,
+ }, cache.Indexers{})
+
+ ctx := context.TODO()
+ // TODO: use workqueue to avoid blocking
+ informer.Run(ctx.Done())
+}</code></pre><p>可以看到，<strong>Etcd Operator 启动要做的第一件事</strong>（ c.initResource），是创建 EtcdCluster 对象所需要的 CRD，即：前面提到的etcdclusters.etcd.database.coreos.com。这样 Kubernetes 就能够“认识”EtcdCluster 这个自定义 API 资源了。</p>
+<p>而<strong>接下来，Etcd Operator 会定义一个 EtcdCluster 对象的 Informer。</strong></p>
+<p>不过，需要注意的是，由于 Etcd Operator 的完成时间相对较早，所以它里面有些代码的编写方式会跟我们之前讲解的最新的编写方式不太一样。在具体实践的时候，你还是应该以我讲解的模板为主。</p>
+<p>比如，在上面的代码最后，你会看到有这样一句注释：</p>
+<pre><code>// TODO: use workqueue to avoid blocking
+...</code></pre><p>也就是说，Etcd Operator 并没有用工作队列来协调 Informer 和控制循环。这其实正是我在第 25 篇文章《深入解析声明式 API（二）：编写自定义控制器》中，给你留的关于工作队列的思考题的答案。</p>
+<p>具体来讲，我们在控制循环里执行的业务逻辑，往往是比较耗时间的。比如，创建一个真实的 Etcd 集群。而 Informer 的 WATCH 机制对 API 对象变化的响应，则非常迅速。所以，控制器里的业务逻辑就很可能会拖慢 Informer 的执行周期，甚至可能 Block 它。而要协调这样两个快、慢任务的一个典型解决方法，就是引入一个工作队列。</p>
+<blockquote>
+<p>备注：如果你感兴趣的话，可以给 Etcd Operator 提一个 patch 来修复这个问题。提 PR 修 TODO，是给一个开源项目做有意义的贡献的一个重要方式。</p>
+</blockquote>
+<p>由于 Etcd Operator 里没有工作队列，那么在它的 EventHandler 部分，就不会有什么入队操作，而直接就是每种事件对应的具体的业务逻辑了。</p>
+<p>不过，Etcd Operator 在业务逻辑的实现方式上，与常规的自定义控制器略有不同。我把在这一部分的工作原理，提炼成了一个详细的流程图，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.jpg"  alt="">
+      </p>
+<p>可以看到，Etcd Operator 的特殊之处在于，它为每一个 EtcdCluster 对象，都启动了一个控制循环，“并发”地响应这些对象的变化。显然，这种做法不仅可以简化 Etcd Operator 的代码实现，还有助于提高它的响应速度。</p>
+<p>以文章一开始的 example-etcd-cluster 的 YAML 文件为例。</p>
+<p>当这个 YAML 文件第一次被提交到 Kubernetes 之后，Etcd Operator 的 Informer，就会立刻“感知”到一个新的 EtcdCluster 对象被创建了出来。所以，EventHandler 里的“添加”事件会被触发。</p>
+<p>而这个 Handler 要做的操作也很简单，即：在 Etcd Operator 内部创建一个对应的 Cluster 对象（cluster.New），比如流程图里的 Cluster1。</p>
+<p>这个 Cluster 对象，就是一个 Etcd 集群在 Operator 内部的描述，所以它与真实的 Etcd 集群的生命周期是一致的。</p>
+<p>而一个 Cluster 对象需要具体负责的，其实有两个工作。</p>
+<p><strong>其中，第一个工作只在该 Cluster 对象第一次被创建的时候才会执行。这个工作，就是我们前面提到过的 Bootstrap，即：创建一个单节点的种子集群。</strong></p>
+<p>由于种子集群只有一个节点，所以这一步直接就会生成一个 Etcd 的 Pod 对象。这个 Pod 里有一个 InitContainer，负责检查 Pod 的 DNS 记录是否正常。如果检查通过，用户容器也就是 Etcd 容器就会启动起来。</p>
+<p>而这个 Etcd 容器最重要的部分，当然就是它的启动命令了。</p>
+<p>以我们在文章一开始部署的集群为例，它的种子节点的容器启动命令如下所示：</p>
+<pre><code>/usr/local/bin/etcd
+  --data-dir=/var/etcd/data
+  --name=example-etcd-cluster-mbzlg6sd56
+  --initial-advertise-peer-urls=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2380
+  --listen-peer-urls=http://0.0.0.0:2380
+  --listen-client-urls=http://0.0.0.0:2379
+  --advertise-client-urls=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2379
+  --initial-cluster=example-etcd-cluster-mbzlg6sd56=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2380
+  --initial-cluster-state=new
+  --initial-cluster-token=4b5215fa-5401-4a95-a8c6-892317c9bef8</code></pre><p>上述启动命令里的各个参数的含义，我已经在前面介绍过。</p>
+<p>可以看到，在这些启动参数（比如：initial-cluster）里，Etcd Operator 只会使用 Pod 的 DNS 记录，而不是它的 IP 地址。</p>
+<p>这当然是因为，在 Operator 生成上述启动命令的时候，Etcd 的 Pod 还没有被创建出来，它的 IP 地址自然也无从谈起。</p>
+<p>这也就意味着，每个 Cluster 对象，都会事先创建一个与该 EtcdCluster 同名的 Headless Service。这样，Etcd Operator 在接下来的所有创建 Pod 的步骤里，就都可以使用 Pod 的 DNS 记录来代替它的 IP 地址了。</p>
+<blockquote>
+<p>备注：Headless Service 的 DNS 记录格式是：…svc.cluster.local。如果你记不太清楚了，可以借此再回顾一下第 18 篇文章《深入理解 StatefulSet（一）：拓扑状态》中的相关内容。</p>
+</blockquote>
+<p><strong>Cluster 对象的第二个工作，则是启动该集群所对应的控制循环。</strong></p>
+<p>这个控制循环每隔一定时间，就会执行一次下面的 Diff 流程。</p>
+<p>首先，控制循环要获取到所有正在运行的、属于这个 Cluster 的 Pod 数量，也就是该 Etcd 集群的“实际状态”。</p>
+<p>而这个 Etcd 集群的“期望状态”，正是用户在 EtcdCluster 对象里定义的 size。</p>
+<p>所以接下来，控制循环会对比这两个状态的差异。</p>
+<p>如果实际的 Pod 数量不够，那么控制循环就会执行一个添加成员节点的操作（即：上述流程图中的 addOneMember 方法）；反之，就执行删除成员节点的操作（即：上述流程图中的 removeOneMember 方法）。</p>
+<p>以 addOneMember 方法为例，它执行的流程如下所示：</p>
+<ol>
+<li><p>生成一个新节点的 Pod 的名字，比如：example-etcd-cluster-v6v6s6stxd；</p>
+</li>
+<li><p>调用 Etcd Client，执行前面提到过的 etcdctl member add example-etcd-cluster-v6v6s6stxd 命令；</p>
+</li>
+<li><p>使用这个 Pod 名字，和已经存在的所有节点列表，组合成一个新的 initial-cluster 字段的值；</p>
+</li>
+<li><p>使用这个 initial-cluster 的值，生成这个 Pod 里 Etcd 容器的启动命令。如下所示：</p>
+</li>
+</ol>
+<pre><code>/usr/local/bin/etcd
+  --data-dir=/var/etcd/data
+  --name=example-etcd-cluster-v6v6s6stxd
+  --initial-advertise-peer-urls=http://example-etcd-cluster-v6v6s6stxd.example-etcd-cluster.default.svc:2380
+  --listen-peer-urls=http://0.0.0.0:2380
+  --listen-client-urls=http://0.0.0.0:2379
+  --advertise-client-urls=http://example-etcd-cluster-v6v6s6stxd.example-etcd-cluster.default.svc:2379
+  --initial-cluster=example-etcd-cluster-mbzlg6sd56=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2380,example-etcd-cluster-v6v6s6stxd=http://example-etcd-cluster-v6v6s6stxd.example-etcd-cluster.default.svc:2380
+  --initial-cluster-state=existing</code></pre><p>这样，当这个容器启动之后，一个新的 Etcd 成员节点就被加入到了集群当中。控制循环会重复这个过程，直到正在运行的 Pod 数量与 EtcdCluster 指定的 size 一致。</p>
+<p>在有了这样一个与 EtcdCluster 对象一一对应的控制循环之后，你后续对这个 EtcdCluster 的任何修改，比如：修改 size 或者 Etcd 的 version，它们对应的更新事件都会由这个 Cluster 对象的控制循环进行处理。</p>
+<p>以上，就是一个 Etcd Operator 的工作原理了。</p>
+<p>如果对比一下 Etcd Operator 与我在第 20 篇文章《深入理解 StatefulSet（三）：有状态应用实践》中讲解过的 MySQL StatefulSet 的话，你可能会有两个问题。</p>
+<p><strong>第一个问题是</strong>，在 StatefulSet 里，它为 Pod 创建的名字是带编号的，这样就把整个集群的拓扑状态固定了下来（比如：一个三节点的集群一定是由名叫 web-0、web-1 和 web-2 的三个 Pod 组成）。可是，<strong>在 Etcd Operator 里，为什么我们使用随机名字就可以了呢？</strong></p>
+<p>这是因为，Etcd Operator 在每次添加 Etcd 节点的时候，都会先执行 etcdctl member add &lt;Pod 名字 &gt;；每次删除节点的时候，则会执行 etcdctl member remove &lt;Pod 名字 &gt;。这些操作，其实就会更新 Etcd 内部维护的拓扑信息，所以 Etcd Operator 无需在集群外部通过编号来固定这个拓扑关系。</p>
+<p><strong>第二个问题是，为什么我没有在 EtcdCluster 对象里声明 Persistent Volume？</strong></p>
+<p>难道，我们不担心节点宕机之后 Etcd 的数据会丢失吗？</p>
+<p>我们知道，Etcd 是一个基于 Raft 协议实现的高可用 Key-Value 存储。根据 Raft 协议的设计原则，当 Etcd 集群里只有半数以下（在我们的例子里，小于等于一个）的节点失效时，当前集群依然可以正常工作。此时，Etcd Operator 只需要通过控制循环创建出新的 Pod，然后将它们加入到现有集群里，就完成了“期望状态”与“实际状态”的调谐工作。这个集群，是一直可用的 。</p>
+<blockquote>
+<p>备注：关于 <span class="exturl"><a class="exturl__link"   href="http://www.infoq.com/cn/articles/etcd-interpretation-application-scenario-implement-principle"  target="_blank" rel="noopener">Etcd 的工作原理和 Raft 协议</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>的设计思想，你可以阅读这篇文章来进行学习。</p>
+</blockquote>
+<p>但是，当这个 Etcd 集群里有半数以上（在我们的例子里，大于等于两个）的节点失效的时候，这个集群就会丧失数据写入的能力，从而进入“不可用”状态。此时，即使 Etcd Operator 创建出新的 Pod 出来，Etcd 集群本身也无法自动恢复起来。</p>
+<p>这个时候，我们就必须使用 Etcd 本身的备份数据来对集群进行恢复操作。</p>
+<p>在有了 Operator 机制之后，上述 Etcd 的备份操作，是由一个单独的 Etcd Backup Operator 负责完成的。</p>
+<p>创建和使用这个 Operator 的流程，如下所示：</p>
+<pre><code># 首先，创建etcd-backup-operator
+$ kubectl create -f example/etcd-backup-operator/deployment.yaml
+
+# 确认etcd-backup-operator已经在正常运行
+$ kubectl get pod
+NAME                                    READY     STATUS    RESTARTS   AGE
+etcd-backup-operator-1102130733-hhgt7   1/1       Running   0          3s
+
+# 可以看到，Backup Operator会创建一个叫etcdbackups的CRD
+$ kubectl get crd
+NAME                                    KIND
+etcdbackups.etcd.database.coreos.com    CustomResourceDefinition.v1beta1.apiextensions.k8s.io
+
+# 我们这里要使用AWS S3来存储备份，需要将S3的授权信息配置在文件里
+$ cat $AWS_DIR/credentials
+[default]
+aws_access_key_id = XXX
+aws_secret_access_key = XXX
+
+$ cat $AWS_DIR/config
+[default]
+region = &lt;region&gt;
+
+# 然后，将上述授权信息制作成一个Secret
+$ kubectl create secret generic aws --from-file=$AWS_DIR/credentials --from-file=$AWS_DIR/config
+
+# 使用上述S3的访问信息，创建一个EtcdBackup对象
+$ sed -e &apos;s|&lt;full-s3-path&gt;|mybucket/etcd.backup|g&apos; \
+    -e &apos;s|&lt;aws-secret&gt;|aws|g&apos; \
+    -e &apos;s|&lt;etcd-cluster-endpoints&gt;|&quot;http://example-etcd-cluster-client:2379&quot;|g&apos; \
+    example/etcd-backup-operator/backup_cr.yaml \
+    | kubectl create -f -</code></pre><p>需要注意的是，每当你创建一个 EtcdBackup 对象（<span class="exturl"><a class="exturl__link"   href="https://github.com/coreos/etcd-operator/blob/master/example/etcd-backup-operator/backup_cr.yaml"  target="_blank" rel="noopener">backup_cr.yaml</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>），就相当于为它所指定的 Etcd 集群做了一次备份。EtcdBackup 对象的 etcdEndpoints 字段，会指定它要备份的 Etcd 集群的访问地址。</p>
+<p>所以，在实际的环境里，我建议你把最后这个备份操作，编写成一个 Kubernetes 的 CronJob 以便定时运行。</p>
+<p>而当 Etcd 集群发生了故障之后，你就可以通过创建一个 EtcdRestore 对象来完成恢复操作。当然，这就意味着你也需要事先启动 Etcd Restore Operator。</p>
+<p>这个流程的完整过程，如下所示：</p>
+<pre><code># 创建etcd-restore-operator
+$ kubectl create -f example/etcd-restore-operator/deployment.yaml
+# 确认它已经正常运行
+$ kubectl get pods
+NAME                                     READY     STATUS    RESTARTS   AGE
+etcd-restore-operator-4203122180-npn3g   1/1       Running   0          7s
+# 创建一个EtcdRestore对象，来帮助Etcd Operator恢复数据，记得替换模板里的S3的访问信息
+$ sed -e &apos;s|&lt;full-s3-path&gt;|mybucket/etcd.backup|g&apos; \
+    -e &apos;s|&lt;aws-secret&gt;|aws|g&apos; \
+    example/etcd-restore-operator/restore_cr.yaml \
+    | kubectl create -f -</code></pre><p>上面例子里的 EtcdRestore 对象（restore_cr.yaml），会指定它要恢复的 Etcd 集群的名字和备份数据所在的 S3 存储的访问信息。</p>
+<p>而当一个 EtcdRestore 对象成功创建后，Etcd Restore Operator 就会通过上述信息，恢复出一个全新的 Etcd 集群。然后，Etcd Operator 会把这个新集群直接接管过来，从而重新进入可用的状态。</p>
+<p>EtcdBackup 和 EtcdRestore 这两个 Operator 的工作原理，与 Etcd Operator 的实现方式非常类似。所以，这一部分就交给你课后去探索了。</p>
+<p><strong>总结</strong></p>
+<p>在今天这篇文章中，我以 Etcd Operator 为例，详细介绍了一个 Operator 的工作原理和编写过程。</p>
+<p>可以看到，Etcd 集群本身就拥有良好的分布式设计和一定的高可用能力。在这种情况下，StatefulSet“为 Pod 编号”和“将 Pod 同 PV 绑定”这两个主要的特性，就不太有用武之地了。</p>
+<p>而相比之下，Etcd Operator 把一个 Etcd 集群，抽象成了一个具有一定“自治能力”的整体。而当这个“自治能力”本身不足以解决问题的时候，我们可以通过两个专门负责备份和恢复的 Operator 进行修正。这种实现方式，不仅更加贴近 Etcd 的设计思想，也更加编程友好。</p>
+<p>不过，如果我现在要部署的应用，既需要用 StatefulSet 的方式维持拓扑状态和存储状态，又有大量的编程工作要做，那我到底该如何选择呢？</p>
+<p>其实，Operator 和 StatefulSet 并不是竞争关系。你完全可以编写一个 Operator，然后在 Operator 的控制循环里创建和控制 StatefulSet 而不是 Pod。比如，业界知名的<span class="exturl"><a class="exturl__link"   href="https://github.com/prometheus-operator/prometheus-operator"  target="_blank" rel="noopener">Prometheus 项目的 Operator</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，正是这么实现的。</p>
+<p>此外，CoreOS 公司在被 RedHat 公司收购之后，已经把 Operator 的编写过程封装成了一个叫作<span class="exturl"><a class="exturl__link"   href="https://github.com/operator-framework/operator-sdk"  target="_blank" rel="noopener">Operator SDK</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>的工具（整个项目叫作 Operator Framework），它可以帮助你生成 Operator 的框架代码。感兴趣的话，你可以试用一下。</p>
+<p><strong>思考题</strong></p>
+<p>在 Operator 的实现过程中，我们再一次用到了 CRD。可是，你一定要明白，CRD 并不是万能的，它有很多场景不适用，还有性能瓶颈。你能列举出一些不适用 CRD 的场景么？你知道造成 CRD 性能瓶颈的原因主要在哪里么？</p>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/21/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/23/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

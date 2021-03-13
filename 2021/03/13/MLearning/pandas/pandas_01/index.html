@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="pandas是把numpy包里的很多命令整合一下使其处理数据更方便                     pandas读取csv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01 pandas 数据读取与展示">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/MLearning/pandas/pandas_01/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="pandas是把numpy包里的很多命令整合一下使其处理数据更方便                     pandas读取csv">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.794Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.794Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="MLearning">
+<meta name="twitter:card" content="summary"><title>01 pandas 数据读取与展示 | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/MLearning/pandas/pandas_01/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">01 pandas 数据读取与展示</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">818</span></span></div></header><div class="post-body"><p>pandas是把numpy包里的很多命令整合一下使其处理数据更方便</p>
+
+        <h2 id="pandas读取csv"   >
+          <a href="#pandas读取csv" class="heading-link"><i class="fas fa-link"></i></a>pandas读取csv</h2>
+      <a id="more"></a>
+
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.chdir(<span class="string">"/home/***/learn/python/pandas"</span>)</span><br><span class="line">print(os.getcwd()) <span class="comment"># /home/***/learn/python/pandas</span></span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">"data/titanic.csv"</span>)</span><br><span class="line"></span><br><span class="line">print(help(pd.read_csv))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(df.head(<span class="number">6</span>)) <span class="comment"># 输出前6行</span></span><br><span class="line"><span class="string">""" 输出:</span></span><br><span class="line"><span class="string">   PassengerId  Survived  Pclass                                               Name  ...            Ticket     Fare  Cabin  Embarked</span></span><br><span class="line"><span class="string">0            1         0       3                            Braund, Mr. Owen Harris  ...         A/5 21171   7.2500    NaN         S</span></span><br><span class="line"><span class="string">1            2         1       1  Cumings, Mrs. John Bradley (Florence Briggs Th...  ...          PC 17599  71.2833    C85         C</span></span><br><span class="line"><span class="string">2            3         1       3                             Heikkinen, Miss. Laina  ...  STON/O2. 3101282   7.9250    NaN         S</span></span><br><span class="line"><span class="string">3            4         1       1       Futrelle, Mrs. Jacques Heath (Lily May Peel)  ...            113803  53.1000   C123         S</span></span><br><span class="line"><span class="string">4            5         0       3                           Allen, Mr. William Henry  ...            373450   8.0500    NaN         S</span></span><br><span class="line"><span class="string">5            6         0       3                                   Moran, Mr. James  ...            330877   8.4583    NaN         Q</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[6 rows x 12 columns]</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(df.tail(<span class="number">6</span>)) <span class="comment"># 输出后6行</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""输出:</span></span><br><span class="line"><span class="string">     PassengerId  Survived  Pclass                                      Name     Sex   Age  SibSp  Parch      Ticket    Fare Cabin Embarked</span></span><br><span class="line"><span class="string">885          886         0       3      Rice, Mrs. William (Margaret Norton)  female  39.0      0      5      382652  29.125   NaN        Q</span></span><br><span class="line"><span class="string">886          887         0       2                     Montvila, Rev. Juozas    male  27.0      0      0      211536  13.000   NaN        S</span></span><br><span class="line"><span class="string">887          888         1       1              Graham, Miss. Margaret Edith  female  19.0      0      0      112053  30.000   B42        S</span></span><br><span class="line"><span class="string">888          889         0       3  Johnston, Miss. Catherine Helen "Carrie"  female   NaN      1      2  W./C. 6607  23.450   NaN        S</span></span><br><span class="line"><span class="string">889          890         1       1                     Behr, Mr. Karl Howell    male  26.0      0      0      111369  30.000  C148        C</span></span><br><span class="line"><span class="string">890          891         0       3                       Dooley, Mr. Patrick    male  32.0      0      0      370376   7.750   NaN        Q</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(df.info())</span><br><span class="line"><span class="string">"""输出:</span></span><br><span class="line"><span class="string">&lt;class 'pandas.core.frame.DataFrame'&gt;      // 读取csv返回DataFrame类型数据</span></span><br><span class="line"><span class="string">RangeIndex: 891 entries, 0 to 890          // csv总共有891行数据</span></span><br><span class="line"><span class="string">Data columns (total 12 columns):           // csv总共有12列数据</span></span><br><span class="line"><span class="string"> #   Column       Non-Null Count  Dtype  </span></span><br><span class="line"><span class="string">---  ------       --------------  -----  </span></span><br><span class="line"><span class="string"> 0   PassengerId  891 non-null    int64  </span></span><br><span class="line"><span class="string"> 1   Survived     891 non-null    int64  </span></span><br><span class="line"><span class="string"> 2   Pclass       891 non-null    int64  </span></span><br><span class="line"><span class="string"> 3   Name         891 non-null    object </span></span><br><span class="line"><span class="string"> 4   Sex          891 non-null    object </span></span><br><span class="line"><span class="string"> 5   Age          714 non-null    float64  // 只有714行数据, 需要做数据填充</span></span><br><span class="line"><span class="string"> 6   SibSp        891 non-null    int64  </span></span><br><span class="line"><span class="string"> 7   Parch        891 non-null    int64  </span></span><br><span class="line"><span class="string"> 8   Ticket       891 non-null    object   // 含有字符串, 成为object类型</span></span><br><span class="line"><span class="string"> 9   Fare         891 non-null    float64</span></span><br><span class="line"><span class="string"> 10  Cabin        204 non-null    object </span></span><br><span class="line"><span class="string"> 11  Embarked     889 non-null    object </span></span><br><span class="line"><span class="string">dtypes: float64(2), int64(5), object(5)</span></span><br><span class="line"><span class="string">memory usage: 83.7+ KB</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(df.index)  <span class="comment"># 输出: RangeIndex(start=0, stop=891, step=1)</span></span><br><span class="line">print(df.columns)  <span class="comment"># 默认第一列是列名字, 如果其它列是列明需要指定</span></span><br><span class="line"><span class="string">""" 输出:</span></span><br><span class="line"><span class="string">Index(['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',</span></span><br><span class="line"><span class="string">       'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'],</span></span><br><span class="line"><span class="string">      dtype='object')</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(df.dtypes)</span><br><span class="line"><span class="string">""" 输出:</span></span><br><span class="line"><span class="string">PassengerId      int64</span></span><br><span class="line"><span class="string">Survived         int64</span></span><br><span class="line"><span class="string">Pclass           int64</span></span><br><span class="line"><span class="string">Name            object</span></span><br><span class="line"><span class="string">Sex             object</span></span><br><span class="line"><span class="string">Age            float64</span></span><br><span class="line"><span class="string">SibSp            int64</span></span><br><span class="line"><span class="string">Parch            int64</span></span><br><span class="line"><span class="string">Ticket          object</span></span><br><span class="line"><span class="string">Fare           float64</span></span><br><span class="line"><span class="string">Cabin           object</span></span><br><span class="line"><span class="string">Embarked        object</span></span><br><span class="line"><span class="string">dtype: object</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(df.values)</span><br><span class="line"><span class="string">""" 输出:</span></span><br><span class="line"><span class="string">[[1 0 3 ... 7.25 nan 'S']</span></span><br><span class="line"><span class="string"> [2 1 1 ... 71.2833 'C85' 'C']</span></span><br><span class="line"><span class="string"> [3 1 3 ... 7.925 nan 'S']</span></span><br><span class="line"><span class="string"> ...</span></span><br><span class="line"><span class="string"> [889 0 3 ... 23.45 nan 'S']</span></span><br><span class="line"><span class="string"> [890 1 1 ... 30.0 'C148' 'C']</span></span><br><span class="line"><span class="string"> [891 0 3 ... 7.75 nan 'Q']]</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="创建自己的dataframe结构"   >
+          <a href="#创建自己的dataframe结构" class="heading-link"><i class="fas fa-link"></i></a>创建自己的dataframe结构</h2>
+      
+        <h3 id="创建dataframe结构"   >
+          <a href="#创建dataframe结构" class="heading-link"><i class="fas fa-link"></i></a>创建dataframe结构</h3>
+      <figure class="highlight pgsql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">// 数据为空的需要设置成 np.<span class="keyword">nan</span></span><br><span class="line">data = &#123;</span><br><span class="line">    "country": ["aaa", "bbb", "ccc"],</span><br><span class="line">    "population": [<span class="number">10</span>, <span class="number">12</span>, np.<span class="keyword">nan</span>],</span><br><span class="line">    "name": ["Shanghai", "Beijing", "Guangzhou"],</span><br><span class="line">    "location": [np.<span class="keyword">nan</span>, "North", "Sourth"]</span><br><span class="line">&#125;</span><br><span class="line">df_data = pd.DataFrame(data)</span><br><span class="line">print(df_data)</span><br><span class="line">// 输出:</span><br><span class="line">  country  population       <span class="type">name</span> <span class="keyword">location</span></span><br><span class="line"><span class="number">0</span>     aaa        <span class="number">10.0</span>   Shanghai      <span class="keyword">NaN</span></span><br><span class="line"><span class="number">1</span>     bbb        <span class="number">12.0</span>    Beijing    North</span><br><span class="line"><span class="number">2</span>     ccc         <span class="keyword">NaN</span>  Guangzhou   Sourth</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="取指定数据"   >
+          <a href="#取指定数据" class="heading-link"><i class="fas fa-link"></i></a>取指定数据</h3>
+      <figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">df_data_age = df_data[<span class="string">"population"</span>]</span><br><span class="line">print(df_data_age[:<span class="number">2</span>])</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="number">0</span>    <span class="number">10</span></span><br><span class="line"><span class="number">1</span>    <span class="number">12</span></span><br><span class="line"></span><br><span class="line">print(df_data_age.values[:<span class="number">2</span>])</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line">[<span class="number">10</span> <span class="number">12</span>]</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="指定自己的索引"   >
+          <a href="#指定自己的索引" class="heading-link"><i class="fas fa-link"></i></a>指定自己的索引</h3>
+      <figure class="highlight stylus"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">df_data = df_data.set_index(<span class="string">"name"</span>)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df_data.head()</span></span>)</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line">          country  population location</span><br><span class="line">name                                  </span><br><span class="line">Shanghai      aaa        <span class="number">10.0</span>      NaN</span><br><span class="line">Beijing       bbb        <span class="number">12.0</span>    North</span><br><span class="line">Guangzhou     ccc         NaN   Sourth</span><br><span class="line"></span><br><span class="line">df_data_population = df_data[<span class="string">"population"</span>]</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df_data_population[<span class="string">"Beijing"</span>])</span></span></span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="number">12.0</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="获取数据基本统计特性"   >
+          <a href="#获取数据基本统计特性" class="heading-link"><i class="fas fa-link"></i></a>获取数据基本统计特性</h3>
+      <figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只能获取数值类型的数据的基本统计结果, 而对于其它列数据不能获取基本统计特性.</span></span><br><span class="line">print(df_data.describe())</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line">       population</span><br><span class="line">count    <span class="number">2.000000</span>		<span class="comment">// 表示population这一列有2个有效数据</span></span><br><span class="line">mean    <span class="number">11.000000</span>		<span class="comment">// 均值</span></span><br><span class="line">std      <span class="number">1.414214</span>		<span class="comment">// 标准差</span></span><br><span class="line">min     <span class="number">10.000000</span>		<span class="comment">// 最小值</span></span><br><span class="line"><span class="number">25</span>%     <span class="number">10.500000</span>		<span class="comment">// 四分之一位数值</span></span><br><span class="line"><span class="number">50</span>%     <span class="number">11.000000</span>		<span class="comment">// 二分之一位数值</span></span><br><span class="line"><span class="number">75</span>%     <span class="number">11.500000</span>		<span class="comment">// 四分之三位数值</span></span><br><span class="line">max     <span class="number">12.000000</span>		<span class="comment">// 最大值</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/MLearning/pandas/pandas_01/">https://kung-fu-master.github.io/2021/03/13/MLearning/pandas/pandas_01/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/MLearning/">MLearning</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/blogs/blogs/Restful_API/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Restful API</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/blogs/blogs/chrome/"><span class="paginator-prev__text">chrome浏览器一些操作</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pandas读取csv"><span class="toc-number">1.</span> <span class="toc-text">
+          pandas读取csv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建自己的dataframe结构"><span class="toc-number">2.</span> <span class="toc-text">
+          创建自己的dataframe结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建dataframe结构"><span class="toc-number">2.1.</span> <span class="toc-text">
+          创建dataframe结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取指定数据"><span class="toc-number">2.2.</span> <span class="toc-text">
+          取指定数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定自己的索引"><span class="toc-number">2.3.</span> <span class="toc-text">
+          指定自己的索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取数据基本统计特性"><span class="toc-number">2.4.</span> <span class="toc-text">
+          获取数据基本统计特性</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

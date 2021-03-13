@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="This document describes the steps to enable Ceph cluster in Kubernetes(k8s)                       Prerequisites        A running Kubernetes environmen.                        Setup steps        The fi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ceph 02 deployment on Kubernetes">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/storage/ceph/ceph_02_deployment/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="This document describes the steps to enable Ceph cluster in Kubernetes(k8s)                       Prerequisites        A running Kubernetes environmen.                        Setup steps        The fi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="storage">
+<meta name="twitter:card" content="summary"><title>Ceph 02 deployment on Kubernetes | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/storage/ceph/ceph_02_deployment/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Ceph 02 deployment on Kubernetes</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.9k</span></span></div></header><div class="post-body"><p>This document describes the steps to enable Ceph cluster in Kubernetes(k8s)  </p>
+
+        <h2 id="Prerequisites"   >
+          <a href="#Prerequisites" class="heading-link"><i class="fas fa-link"></i></a>Prerequisites</h2>
+      <ol>
+<li>A running Kubernetes environmen.  </li>
+</ol>
+
+        <h2 id="Setup-steps"   >
+          <a href="#Setup-steps" class="heading-link"><i class="fas fa-link"></i></a>Setup steps</h2>
+      <ol>
+<li>The first step is to deploy the Rook operator. Check that you are using the example yaml files that correspond to your release of Rook.  </li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> --single-branch --branch release-1.3 https://github.com/rook/rook.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> cluster/examples/kubernetes/ceph</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f common.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f operator.yaml</span></span><br><span class="line"></span><br><span class="line">Verify the rook-ceph-operator is in the Running state before proceeding</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph get pod</span></span><br></pre></td></tr></table></div></figure>
+
+<ol start="2">
+<li>Now that the Rook operator is running we can create the Ceph cluster. For the cluster to survive reboots, make sure you set the dataDirHostPath property that is valid for your hosts.  </li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f cluster.yaml</span></span><br></pre></td></tr></table></div></figure>
+
+<ol start="3">
+<li>Use kubectl to list pods in the rook-ceph namespace. You should be able to see the following pods once they are all running. The number of osd pods will depend on the number of nodes in the cluster and the number of devices configured. If you did not modify the cluster.yaml above, it is expected that one OSD will be created per node. The CSI, rook-ceph-agent, and rook-discover pods are also optional depending on your settings.  </li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph get pod</span></span><br><span class="line">  NAME                                                 READY   STATUS      RESTARTS   AGE</span><br><span class="line">  csi-cephfsplugin-provisioner-d77bb49c6-n5tgs         5/5     Running     0          140s</span><br><span class="line">  csi-cephfsplugin-provisioner-d77bb49c6-v9rvn         5/5     Running     0          140s</span><br><span class="line">  csi-cephfsplugin-rthrp                               3/3     Running     0          140s</span><br><span class="line">  csi-rbdplugin-hbsm7                                  3/3     Running     0          140s</span><br><span class="line">  csi-rbdplugin-provisioner-5b5cd64fd-nvk6c            6/6     Running     0          140s</span><br><span class="line">  csi-rbdplugin-provisioner-5b5cd64fd-q7bxl            6/6     Running     0          140s</span><br><span class="line">  rook-ceph-agent-4zkg8                                1/1     Running     0          140s</span><br><span class="line">  rook-ceph-crashcollector-minikube-5b57b7c5d4-hfldl   1/1     Running     0          105s</span><br><span class="line">  rook-ceph-mgr-a-64cd7cdf54-j8b5p                     1/1     Running     0          77s</span><br><span class="line">  rook-ceph-mon-a-694bb7987d-fp9w7                     1/1     Running     0          105s</span><br><span class="line">  rook-ceph-mon-b-856fdd5cb9-5h2qk                     1/1     Running     0          94s</span><br><span class="line">  rook-ceph-mon-c-57545897fc-j576h                     1/1     Running     0          85s</span><br><span class="line">  rook-ceph-operator-85f5b946bd-s8grz                  1/1     Running     0          92m</span><br><span class="line">  rook-ceph-osd-0-6bb747b6c5-lnvb6                     1/1     Running     0          23s</span><br><span class="line">  rook-ceph-osd-1-7f67f9646d-44p7v                     1/1     Running     0          24s</span><br><span class="line">  rook-ceph-osd-2-6cd4b776ff-v4d68                     1/1     Running     0          25s</span><br><span class="line">  rook-ceph-osd-prepare-node1-vx2rz                    0/2     Completed   0          60s</span><br><span class="line">  rook-ceph-osd-prepare-node2-ab3fd                    0/2     Completed   0          60s</span><br><span class="line">  rook-ceph-osd-prepare-node3-w4xyz                    0/2     Completed   0          60s</span><br><span class="line">  rook-discover-dhkb8                                  1/1     Running     0          140s</span><br></pre></td></tr></table></div></figure>
+
+<ol start="4">
+<li>To verify that the cluster is in a healthy state, connect to the Rook toolbox and run the ceph status command.  </li>
+</ol>
+<ul>
+<li>All mons should be in quorum  </li>
+<li>A mgr should be active  </li>
+<li>At least one OSD should be active  </li>
+<li>If the health is not HEALTH_OK, the warnings or errors should be investigated.  </li>
+</ul>
+<p>Running the Toolbox in Kubernetes:  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f toolbox.yaml</span></span><br></pre></td></tr></table></div></figure>
+
+<p>Wait for the toolbox pod to download its container and get to the running state:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph get pod -l <span class="string">"app=rook-ceph-tools"</span></span></span><br></pre></td></tr></table></div></figure>
+
+<p>Once the rook-ceph-tools pod is running, you can connect to it with:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph <span class="built_in">exec</span> -it $(kubectl -n rook-ceph get pod -l <span class="string">"app=rook-ceph-tools"</span> -o jsonpath=<span class="string">'&#123;.items[0].metadata.name&#125;'</span>) bash</span></span><br></pre></td></tr></table></div></figure>
+
+<p>Example:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ceph status</span></span><br><span class="line">  cluster:</span><br><span class="line">    id:     a0452c76-30d9-4c1a-a948-5d8405f19a7c</span><br><span class="line">    health: HEALTH_OK</span><br><span class="line"></span><br><span class="line">  services:</span><br><span class="line">    mon: 3 daemons, quorum a,b,c (age 3m)</span><br><span class="line">    mgr: a(active, since 2m)</span><br><span class="line">    osd: 3 osds: 3 up (since 1m), 3 in (since 1m)</span><br><span class="line">...</span><br></pre></td></tr></table></div></figure>
+
+<p>When you are done with the toolbox, you can remove the deployment, but if you want continue to doing other test experiments below, please keep the toolbox:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph delete deployment rook-ceph-tools</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Object-Store"   >
+          <a href="#Object-Store" class="heading-link"><i class="fas fa-link"></i></a>Object Store</h2>
+      
+        <h3 id="1-Create-an-Object-Store"   >
+          <a href="#1-Create-an-Object-Store" class="heading-link"><i class="fas fa-link"></i></a>1. Create an Object Store</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> cluster/examples/kubernetes/ceph</span></span><br><span class="line">// Create the object store</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f object.yaml</span></span><br><span class="line">// To confirm the object store is configured, wait for the rgw pod to start</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph get pod -l app=rook-ceph-rgw</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="2-Define-a-storage-class-that-will-allow-object-clients-to-create-a-bucket"   >
+          <a href="#2-Define-a-storage-class-that-will-allow-object-clients-to-create-a-bucket" class="heading-link"><i class="fas fa-link"></i></a>2. Define a storage class that will allow object clients to create a bucket.</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Define the storage class that will allow object clients to create a bucket</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f storageclass-bucket-delete.yaml</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="3-1-Create-a-Bucket"   >
+          <a href="#3-1-Create-a-Bucket" class="heading-link"><i class="fas fa-link"></i></a>3.1 Create a Bucket</h3>
+      <p>An Object Bucket Claim (OBC) is custom resource which requests a bucket (new or existing) and is described by a Custom Resource Definition (CRD).</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Create an Object Bucket Claim (OBC) </span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f object-bucket-claim-delete.yaml</span></span><br></pre></td></tr></table></div></figure>
+
+<p>When the OBC is created, the Rook-Ceph bucket provisioner will create a new bucket.A <code>secret</code> and <code>ConfigMap</code> are created with the same name as the OBC and in the same namespace. The secret contains credentials used by the application pod to access the bucket. The ConfigMap contains bucket endpoint information and is also consumed by the pod. </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Check the created bucket name, "ceph-bkt-5124df41-7939-4aa6-b989-2bff0aa38deb" as shown below.</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe obc ceph-delete-bucket</span></span><br><span class="line">  ......</span><br><span class="line">  Spec:</span><br><span class="line">    Object Bucket Name:    obc-default-ceph-delete-bucket</span><br><span class="line">    Bucket Name:           ceph-bkt-5124df41-7939-4aa6-b989-2bff0aa38deb</span><br><span class="line">    Generate Bucket Name:  ceph-bkt</span><br><span class="line">    Storage Class Name:    rook-ceph-delete-bucket</span><br><span class="line">  Status:</span><br><span class="line">    Phase:  Bound		// [Notice]: The Status must be Bound, if `Pending`, please wait or delete and recreate the obc.</span><br><span class="line">  Events:   &lt;none&gt;</span><br></pre></td></tr></table></div></figure>
+<p>An Object Bucket (OB) is a custom resource automatically generated when a bucket is provisioned. It is a global resource, typically not visible to non-admin users, and contains information specific to the bucket. It is described by an OB CRD.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Check the OB</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get ob</span></span><br><span class="line">  NAME                             AGE</span><br><span class="line">  obc-default-ceph-delete-bucket   5m16s</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="3-2-Create-another-Bucket"   >
+          <a href="#3-2-Create-another-Bucket" class="heading-link"><i class="fas fa-link"></i></a>3.2 Create another Bucket</h3>
+      <p>Change the ObjectBucketClaim metadata.name and create another bucket.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim object-bucket-claim-delete.yaml</span></span><br><span class="line">  apiVersion: objectbucket.io/v1alpha1</span><br><span class="line">  kind: ObjectBucketClaim</span><br><span class="line">  metadata:</span><br><span class="line">    name: ceph-bucket-new		# Change bucket name</span><br><span class="line">  spec:</span><br><span class="line">    generateBucketName: ceph-bkt</span><br><span class="line">    storageClassName: rook-ceph-bucket</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f object-bucket-claim-delete.yaml</span></span><br></pre></td></tr></table></div></figure>
+
+<p><strong>Client Connections</strong><br>The following commands extract key pieces of information from the secret and configmap:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// config-map, secret, OBC will part of default if no specific name space mentioned</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_HOST=$(kubectl -n default get cm ceph-delete-bucket -o yaml | grep BUCKET_HOST | awk <span class="string">'&#123;print $2&#125;'</span> | awk <span class="string">'NR==1'</span>)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_ACCESS_KEY_ID=$(kubectl -n default get secret ceph-delete-bucket -o yaml | grep AWS_ACCESS_KEY_ID | awk <span class="string">'&#123;print $2&#125;'</span> | awk <span class="string">'NR==1'</span>| base64 --decode)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_SECRET_ACCESS_KEY=$(kubectl -n default get secret ceph-delete-bucket -o yaml | grep AWS_SECRET_ACCESS_KEY | awk <span class="string">'&#123;print $2&#125;'</span> | awk <span class="string">'NR==1'</span>| base64 --decode)</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="4-Consume-the-Object-Storage"   >
+          <a href="#4-Consume-the-Object-Storage" class="heading-link"><i class="fas fa-link"></i></a>4. Consume the Object Storage</h3>
+      <p><strong>Enter into the toolbox</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl exec $(kubectl get po -l app=rook-ceph-tools -n rook-ceph -o jsonpath='&#123;.items[0].metadata.name&#125;') -it -n rook-ceph -- bash</span><br></pre></td></tr></table></div></figure>
+
+<p>Connected to the Rook toolbox Pod and then set the four environment variables for use by your client(ie. inside the toolbox).</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_HOST=&lt;host&gt;</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_ENDPOINT=&lt;endpoint&gt;</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_ACCESS_KEY_ID=&lt;accessKey&gt;</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> AWS_SECRET_ACCESS_KEY=&lt;secretKey&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<p>Endpoint: The endpoint where the rgw service is listening. Run <code>kubectl -n rook-ceph get svc rook-ceph-rgw-my-store</code>, then combine the clusterIP and the port.</p>
+<p><strong>Install s3cmd</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> proxy=http://Proxy-Name:913 &gt;&gt; /etc/yum.conf</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum --assumeyes install s3cmd</span></span><br></pre></td></tr></table></div></figure>
+<p><strong>PUT or GET an object</strong><br>Upload a file to the newly created bucket</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"Hello Rook"</span> &gt; /tmp/rookObj</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> s3cmd put /tmp/rookObj --no-ssl --host=<span class="variable">$&#123;AWS_HOST&#125;</span> --host-bucket=  s3://&lt;-Your-Bucket-Name-&gt; // As follow.</span></span><br><span class="line">// $ s3cmd put /tmp/rookObj --no-ssl --host=$&#123;AWS_HOST&#125; --host-bucket=  s3://ceph-bkt-5124df41-7939-4aa6-b989-2bff0aa38deb</span><br><span class="line">  upload: '/tmp/rookObj' -&gt; 's3://ceph-bkt-5124df41-7939-4aa6-b989-2bff0aa38deb/rookObj'  [1 of 1]</span><br><span class="line">   11 of 11   100% in    0s   190.11 B/s  done</span><br></pre></td></tr></table></div></figure>
+
+<p>Download and verify the file from the bucket</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> s3cmd get s3://&lt;-Your-Bucket-Name-&gt;/rookObj /tmp/rookObj-download --no-ssl --host=<span class="variable">$&#123;AWS_HOST&#125;</span> --host-bucket=</span></span><br><span class="line">  download: 's3://ceph-bkt-5124df41-7939-4aa6-b989-2bff0aa38deb/rookObj' -&gt; '/tmp/rookObj-download'  [1 of 1]</span><br><span class="line">   11 of 11   100% in    0s   254.34 B/s  done</span><br><span class="line"><span class="meta">$</span><span class="bash"> cat /tmp/rookObj-download</span></span><br></pre></td></tr></table></div></figure>
+<p>List the buckets</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> s3cmd ls --no-ssl --host=<span class="variable">$&#123;AWS_HOST&#125;</span> --host-bucket=</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Teardown"   >
+          <a href="#Teardown" class="heading-link"><i class="fas fa-link"></i></a>Teardown</h2>
+      <ol>
+<li>First you will need to clean up the resources created on top of the Rook cluster.  </li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete -n rook-ceph cephblockpool replicapool</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete storageclass rook-ceph-block</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete -f csi/cephfs/kube-registry.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete storageclass csi-cephfs</span></span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>Delete the CephCluster CRD</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph delete cephcluster rook-ceph</span></span><br></pre></td></tr></table></div></figure>
+<ol start="3">
+<li>Delete the Operator and related Resources</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete -f operator.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete -f common.yaml</span></span><br></pre></td></tr></table></div></figure>
+<ol start="4">
+<li>删掉未删除的crd, 如果以前创建过Object bucket的话.</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph patch crd objectbuckets.objectbucket.io --<span class="built_in">type</span> merge -p <span class="string">'&#123;"metadata":&#123;"finalizers": [null]&#125;&#125;'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph patch crd objectbucketclaims.objectbucket.io --<span class="built_in">type</span> merge -p <span class="string">'&#123;"metadata":&#123;"finalizers": [null]&#125;&#125;'</span></span></span><br></pre></td></tr></table></div></figure>
+<ol start="5">
+<li>/var/lib/rook: Path on each host in the cluster where configuration is cached by the ceph mons and osds. so need to clean the files in the path.</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rm -rf /var/lib/rook/</span></span><br></pre></td></tr></table></div></figure>
+<p>Additional: If there are ceph related files in the “/var/lib/kubelet/plugins/“ and “/var/lib/kubelet/plugins_registry/“ path, delete them.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rm -rf /var/lib/kubelet/plugins/*</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rm -rf /var/lib/kubelet/plugins_registry/*</span></span><br></pre></td></tr></table></div></figure>
+<ol start="6">
+<li>Delete the data on hosts</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line">DISK="/dev/sdb"</span><br><span class="line"><span class="meta">#</span><span class="bash"> Zap the disk to a fresh, usable state (zap-all is important, b/c MBR has to be clean)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> You will have to run this step <span class="keyword">for</span> all disks.</span></span><br><span class="line">sgdisk --zap-all $DISK</span><br><span class="line">dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These steps only have to be run once on each node</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If rook sets up osds using ceph-volume, teardown leaves some devices mapped that lock the disks.</span></span><br><span class="line">ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %</span><br><span class="line"><span class="meta">#</span><span class="bash"> ceph-volume setup can leave ceph-&lt;UUID&gt; directories <span class="keyword">in</span> /dev (unnecessary clutter)</span></span><br><span class="line">rm -rf /dev/ceph-*</span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="FAQ"   >
+          <a href="#FAQ" class="heading-link"><i class="fas fa-link"></i></a>FAQ</h2>
+      <p>If the cluster resource still exists even though you have executed the delete command earlier, see the command below remove the finalizer.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n rook-ceph patch crd cephclusters.ceph.rook.io --<span class="built_in">type</span> merge -p <span class="string">'&#123;"metadata":&#123;"finalizers": [null]&#125;&#125;'</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="遇到的问题"   >
+          <a href="#遇到的问题" class="heading-link"><i class="fas fa-link"></i></a>遇到的问题</h2>
+      <p>删除其它机器pvc绑定的/var/lib/kubelet/plugins/*出错</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rm -rf /var/lib/kubelet/plugins/*</span></span><br><span class="line">rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount’: Device or resource busy</span><br><span class="line">rm: cannot remove ‘/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount’: Device or resource busy</span><br></pre></td></tr></table></div></figure>
+<p>解决方法:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-d6ea6990-2a0b-4f4b-9838-3a971424732d/globalmount</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> umount /var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-a08fed0b-b16d-4a74-a052-7936d6fb8340/globalmount</span></span><br></pre></td></tr></table></div></figure>
+<p>再进行删除即可</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/storage/ceph/ceph_02_deployment/">https://kung-fu-master.github.io/2021/03/13/storage/ceph/ceph_02_deployment/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/storage/">storage</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/storage/greenplum/greenplum_01_deployment/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">greenplum 01 deployment on Kubernetes</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/storage/greenplum/greenplum_K8s_%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/"><span class="paginator-prev__text">greenplum(psql) 远程连接k8s部署的greenplum</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-number">1.</span> <span class="toc-text">
+          Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setup-steps"><span class="toc-number">2.</span> <span class="toc-text">
+          Setup steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-Store"><span class="toc-number">3.</span> <span class="toc-text">
+          Object Store</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Create-an-Object-Store"><span class="toc-number">3.1.</span> <span class="toc-text">
+          1. Create an Object Store</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Define-a-storage-class-that-will-allow-object-clients-to-create-a-bucket"><span class="toc-number">3.2.</span> <span class="toc-text">
+          2. Define a storage class that will allow object clients to create a bucket.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Create-a-Bucket"><span class="toc-number">3.3.</span> <span class="toc-text">
+          3.1 Create a Bucket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Create-another-Bucket"><span class="toc-number">3.4.</span> <span class="toc-text">
+          3.2 Create another Bucket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Consume-the-Object-Storage"><span class="toc-number">3.5.</span> <span class="toc-text">
+          4. Consume the Object Storage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Teardown"><span class="toc-number">4.</span> <span class="toc-text">
+          Teardown</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">5.</span> <span class="toc-text">
+          FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">6.</span> <span class="toc-text">
+          遇到的问题</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

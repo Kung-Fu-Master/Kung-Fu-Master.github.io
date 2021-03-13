@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="docker保存&#x2F;lodad镜像       复制镜像和复制容器都是通过保存为新镜像而进行的。具体为：保存镜像 1234docker save ID &gt; xxx.tardocker load &lt; xxx.tardocker load image-name:new &lt; image.tardocker load -i image.tar  &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/linux/docker/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="docker保存&#x2F;lodad镜像       复制镜像和复制容器都是通过保存为新镜像而进行的。具体为：保存镜像 1234docker save ID &gt; xxx.tardocker load &lt; xxx.tardocker load image-name:new &lt; image.tardocker load -i image.tar  &#x2F;&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.841Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.841Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>docker | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/linux/docker/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">docker</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.1k</span></span></div></header><div class="post-body">
+        <h2 id="docker保存-lodad镜像"   >
+          <a href="#docker保存-lodad镜像" class="heading-link"><i class="fas fa-link"></i></a>docker保存/lodad镜像</h2>
+      <p>复制镜像和复制容器都是通过保存为新镜像而进行的。<br>具体为：<br>保存镜像</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker save ID &gt; xxx.tar</span><br><span class="line">docker load &lt; xxx.tar</span><br><span class="line">docker load image-name:new &lt; image.tar</span><br><span class="line">docker load -i image.tar</span><br></pre></td></tr></table></div></figure>
+
+<p>//load期间使用$df -hl可以查看最下面docker绑定的根分区大小，如果image.tar要大于根分区大小则load会报空间不足的错误，解决方法下面有解.<br>保存容器</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker export ID &gt;xxx.tar</span><br><span class="line">docker import xxx.tar container:v1</span><br></pre></td></tr></table></div></figure>
+
+<p>然后再<code>docker run -it container:v1 bash</code></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run --name faiss-gcc-9.1 -it faiss-images-gcc-9.1.0:1.0 /bin/bash  //用这个</span><br><span class="line">exit</span><br><span class="line">docker start faiss-gcc-9.1</span><br><span class="line">docker attach faiss-gcc-9.1</span><br></pre></td></tr></table></div></figure>
+
+<p>软件镜像（如 weChat.exe）—-&gt; 运行镜像—-&gt; 产生一个容器（正在运行的软件，运行的 微信程序）；<br>操作    命令    说明<br>运行</p>
+<figure class="highlight awk"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run --name container-name -d image-name:tag <span class="regexp">/bin/</span>bash</span><br><span class="line">	运行一个名为 container-name的容器,并在容器里运行<span class="regexp">/bin/</span>bash,如果不指定运行<span class="regexp">/bin/</span>bash则docker启动后就立即退出，这跟docker机制有关，docker是后台运行，必须有前台进程，没有前台程序就退出</span><br><span class="line">	<span class="comment">#退出</span></span><br><span class="line">	<span class="keyword">exit</span></span><br><span class="line">	<span class="comment">#关闭</span></span><br><span class="line">	docker stop mycentos</span><br><span class="line">	<span class="comment">#重启</span></span><br><span class="line">	<span class="number">1</span>.docker start mycentos</span><br><span class="line">	<span class="comment">#重启后,在用mycentos再打开/bin/bash</span></span><br><span class="line">	<span class="number">2</span>.docker exec -ti mycentos <span class="regexp">/bin/</span>bash    <span class="regexp">//</span><span class="number">1</span>和<span class="number">2</span>两步是合起来用的</span><br></pre></td></tr></table></div></figure>
+<p>如:docker run –name myredis –d redis     /bin/bash<br>–name：自定义容器名<br>-d：表示后台运行<br>image-name:指定运行的镜像名称</p>
+<p>tag:镜像的版本</p>
+<p>列表    docker ps（查看运行中的容器）；    加上-a；可以查看所有容器<br>停止    docker stop container-name/container-id    停止当前运行的指定容器<br>启动    docker start container-name/container-id    启动容器<br>删除    docker rm container-id    删除指定容器<br>端口映射    -p 6379:6379<br>如:docker run  –name myredis  -d -p 6379:6379 docker.io/redis<br>-p:主机端口映射到容器内部的端口</p>
+<p>容器日志    docker logs container-name/container-id<br>官网可查看更多命令：<span class="exturl"><a class="exturl__link"   href="https://docs.docker.com/engine/reference/commandline/docker/"  target="_blank" rel="noopener">https://docs.docker.com/engine/reference/commandline/docker/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>删除Images</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker rm      --   Remove one or more containers</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi     --   Remove one or more images</span></span><br></pre></td></tr></table></div></figure>
+
+<p>想要删除运行过的images必须首先删除它的container。继续来看刚才的例子，</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps -a</span></span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                   NAMES</span><br><span class="line">117843ade696        ed9c93747fe1        /bin/sh -c /usr/sbin   46 hours ago        Up 46 hours         0.0.0.0:49153-&gt;22/tcp   test_sshd</span><br></pre></td></tr></table></div></figure>
+
+<p>可以看出ed9c93747fe1的image被117843ade696的container使用着，所以必须首先删除该container</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker rm 117843ade696</span></span><br><span class="line">Error: container_delete: Impossible to remove a running container, please stop it first</span><br><span class="line">2014/03/22 16:36:44 Error: failed to remove one or more containers</span><br><span class="line">出现错误，这是因为该container正在运行中(运行docker ps查看)，先将其关闭</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker stop 117843ade696</span></span><br><span class="line">117843ade696</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm 117843ade696</span></span><br><span class="line">117843ade696</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi ed9c93747fe1</span></span><br><span class="line">Deleted: ed9c93747fe16627be822ad3f7feeb8b4468200e5357877d3046aa83cc44c6af</span><br><span class="line">Deleted: c8a0c19429daf73074040a14e527ad5734e70363c644f18c6815388b63eedc9b</span><br><span class="line">Deleted: 95dba4c468f0e53e5f1e5d76b8581d6740aab9f59141f783f8e263ccd7cf2a8e</span><br><span class="line">Deleted: c25dc743e40af6858c34375d450851bd606a70ace5d04e231a7fcc6d2ea23cc1</span><br><span class="line">Deleted: 20562f5714a5ce764845119399ef75e652e23135cd5c54265ff8218b61ccbd33</span><br><span class="line">Deleted: c8af1dc23af7a7aea0c25ba9b28bdee68caa8866f056e4f2aa2a5fa1bcb12693</span><br><span class="line">Deleted: 38fdb2c5432e08ec6121f8dbb17e1fde17d5db4c1f149a9b702785dbf7b0f3be</span><br><span class="line">Deleted: 79ca14274c80ac1df1333b89b2a41c0e0e3b91cd1b267b31bef852ceab3b2044</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE</span><br><span class="line">CentOS65            latest              e55a74a32125        2 days ago          360.6 MB</span><br></pre></td></tr></table></div></figure>
+
+<p>可以看出，image已经被删除。<br>From <span class="exturl"><a class="exturl__link"   href="https://blog.csdn.net/flydreamzhll/article/details/80900509"  target="_blank" rel="noopener">https://blog.csdn.net/flydreamzhll/article/details/80900509</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+
+        <h2 id="Docker-拷贝"   >
+          <a href="#Docker-拷贝" class="heading-link"><i class="fas fa-link"></i></a>Docker 拷贝</h2>
+      <p>将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /www/runoob 96f7f14e99ab:/www/</span><br></pre></td></tr></table></div></figure>
+
+<p>将主机/www/runoob目录拷贝到容器96f7f14e99ab中，目录重命名为www。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /www/runoob 96f7f14e99ab:/www</span><br></pre></td></tr></table></div></figure>
+
+<p>将容器96f7f14e99ab的/www目录拷贝到主机的/tmp目录中。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp  96f7f14e99ab:/www /tmp/</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">主机copy到docker</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker cp /opt/<span class="built_in">test</span>/file.txt mycontainer_id：/opt/testnew/</span></span><br><span class="line">docker文件copy到主机</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker cp mycontainer_id：/opt/testnew/file.txt /opt/<span class="built_in">test</span>/</span></span><br></pre></td></tr></table></div></figure>
+
+<p>From <span class="exturl"><a class="exturl__link"   href="http://www.runoob.com/docker/docker-cp-command.html"  target="_blank" rel="noopener">http://www.runoob.com/docker/docker-cp-command.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+
+        <h2 id="更新images"   >
+          <a href="#更新images" class="heading-link"><i class="fas fa-link"></i></a>更新images</h2>
+      <p>docker commit Container-id Images-name 将在某个image a 上做改动的新的container更新为最新的image </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker commit a981e981ef65 faiss-images</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Docker-run"   >
+          <a href="#Docker-run" class="heading-link"><i class="fas fa-link"></i></a>Docker run</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">which</span> python</span></span><br><span class="line">/usr/bin/python</span><br><span class="line"><span class="meta">$</span><span class="bash"> env</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim test.sh</span></span><br><span class="line"><span class="meta">	#</span><span class="bash">!/bin/bash</span></span><br><span class="line">	export MKLROOT=/opt/intel/compilers_and_libraries/linux/mkl/</span><br><span class="line">	export LD_PRELOAD=/opt/intel/compilers_and_libraries/linux/mkl//lib/intel64/libmkl_core.so:/opt/intel/compilers_and_libraries/linux/mkl//lib/intel64/libmkl_sequential.so</span><br><span class="line"></span><br><span class="line">	cd /test_faiss</span><br><span class="line">	python /test_faiss/test_sift1M.py</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -t image-name /bin/bash /test_faiss/test.sh</span></span><br><span class="line">				此时image已是在最新container上更新过的image</span><br><span class="line">   Vtune 绑定docker运行</span><br><span class="line"><span class="meta">$</span><span class="bash"> amplxe-cl -collect hotspots -r test_hot docker run -t faiss-images /bin/bash /test_faiss/test.sh</span></span><br><span class="line">		     		     保存目录</span><br><span class="line"><span class="meta">$</span><span class="bash"> amplxe-cl -collect hotspots -r test_hot_1 ls</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="设置镜像标签"   >
+          <a href="#设置镜像标签" class="heading-link"><i class="fas fa-link"></i></a>设置镜像标签</h2>
+      <p>我们可以使用 docker tag 命令，为镜像添加一个新的标签。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker tag 860c279d2fec runoob/centos:dev</span></span><br></pre></td></tr></table></div></figure>
+
+<p>docker tag 镜像ID，这里是 860c279d2fec ,用户名称、镜像源名(repository name)和新的标签名(tag)。<br>使用 docker images 命令可以看到，ID为860c279d2fec的镜像多一个标签。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">runoob/centos       6.7                 860c279d2fec        5 hours ago         190.6 MB</span><br><span class="line">runoob/centos       dev                860c279d2fec        5 hours ago         190.6 MB</span><br><span class="line">runoob/ubuntu       v2                  70bf1840fd7c        22 hours ago        158.5 MB</span><br><span class="line">ubuntu              14.04               90d5884b1ee0        6 days ago          188 MB</span><br><span class="line">php                 5.6                 f40e9e0f10c8        10 days ago         444.8 MB</span><br><span class="line">nginx               latest              6f8d099c3adc        13 days ago         182.7 MB</span><br><span class="line">mysql               5.6                 f2e8d6c772c0        3 weeks ago         324.6 MB</span><br><span class="line">httpd               latest              02ef73cf1bc0        3 weeks ago         194.4 MB</span><br><span class="line">ubuntu              15.10               4e3b13c8a266        5 weeks ago         136.3 MB</span><br><span class="line">hello-world         latest              690ed74de00f        6 months ago        960 B</span><br><span class="line">centos              6.7                 d95b5ca17cc3        6 months ago        190.6 MB</span><br><span class="line">training/webapp     latest              6fae60ef3446        12 months ago       348.8 MB</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Docker修改空间大小"   >
+          <a href="#Docker修改空间大小" class="heading-link"><i class="fas fa-link"></i></a>Docker修改空间大小</h2>
+      <ul>
+<li>第一种：<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$ docker info</span><br><span class="line">Containers: 0</span><br><span class="line"> Running: 0</span><br><span class="line"> Paused: 0</span><br><span class="line"> Stopped: 0</span><br><span class="line">Images: 0</span><br><span class="line">Server Version: 1.12.6</span><br><span class="line">Storage Driver: devicemapper</span><br><span class="line"><span class="built_in"> Pool </span>Name: docker-253:0-67125080-pool</span><br><span class="line"><span class="built_in"> Pool </span>Blocksize: 65.54 kB</span><br><span class="line"> Base Device Size: 10.74 GB#这个就是限制，容器根分区的大小！</span><br><span class="line"> Backing Filesystem: xfs</span><br><span class="line"> Data file: /dev/loop0</span><br><span class="line"> Metadata file: /dev/loop1</span><br><span class="line"> Data Space Used: 11.8 MB</span><br><span class="line"> Data Space Total: 107.4 GB</span><br><span class="line"> Data Space Available: 36.95 GB</span><br><span class="line"> Metadata Space Used: 581.6 kB</span><br><span class="line"> Metadata Space Total: 2.147 GB</span><br><span class="line"> Metadata Space Available: 2.147 GB</span><br><span class="line"> Thin<span class="built_in"> Pool </span>Minimum Free Space: 10.74 GB</span><br><span class="line"> Udev Sync Supported: <span class="literal">true</span></span><br><span class="line"> Deferred Removal Enabled: <span class="literal">false</span></span><br><span class="line"> Deferred Deletion Enabled: <span class="literal">false</span></span><br><span class="line"> Deferred Deleted Device Count: 0</span><br><span class="line">docker的版本是1.12,修改容器根分区的大小即可：</span><br><span class="line"></span><br><span class="line">  dm.<span class="attribute">loopdatasize</span>=100G是指存放数据的数据库空间为100g，默认是100g</span><br><span class="line">dm.<span class="attribute">loopmetadatasize</span>=10G是存放Metadata数据空间为10g，默认是2g</span><br><span class="line">dm.<span class="attribute">fs</span>=xft是指容器磁盘分区为xft</span><br><span class="line">dm.<span class="attribute">basesize</span>=20G是指容器根分区默认为20g，默认是10g</span><br></pre></td></tr></table></div></figure>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /etc/sysconfig/docker-storage</span></span><br></pre></td></tr></table></div></figure>
+修改下面参数即可<figure class="highlight brainfuck"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">DOCKER_STORAGE_OPTIONS="</span>--<span class="comment">storage</span><span class="literal">-</span><span class="comment">driver</span> <span class="comment">devicemapper</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">loopdatasize=200G</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">loopmetadatasize=10G</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">/dev/docker/</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">fs=xfs</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">basesize=30G"</span></span><br></pre></td></tr></table></div></figure>
+利用-g参数即可指定存储挂载路径。比如，示例中的配置将存储目录挂载在/data/docker/路径下<br>重新挂载新的路径后原来路径下的images和container都找不到，-g参数去掉回到默认挂载路径再按照下面重启docker服务会发现原来的images和container都存在.</li>
+</ul>
+<p>最后重启容器，问题解决</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 停止docker服务的命令如下:</span><br><span class="line">systemctl stop docker</span><br><span class="line">// 重新启动：</span><br><span class="line">systemctl daemon-reload &amp;&amp; systemctl start docker</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>第二种： //试了试不怎么灵<br>Docker默认空间大小分为两个，一个是池空间大小，另一个是容器空间大小。<br>池空间大小默认为：100G<br>容器空间大小默认为是：10G<br>所以修改空间大小也分为两个：<br>这里使用centos下的yum进行安装的Docker。</li>
+</ul>
+<p>首先，修改空间大小，必需使Docker运行在daemon环境下，即先停止正在运行的docker服务：<br>service docker stop<br>然后使用命令使用daemon环境下运行docker：<br>docker -d          //可以不需要这条<br>一、修改池空间大小方法：<br>dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/data bs=1G count=0 seek=1000<br>dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/metadata bs=1G count=0 seek=10<br>上面的1000为1TB大小，即为数据池空间大小为1TB，而10则为Metadata的空间大小，10GB<br>从运行完后，启动docker service<br>service docker start<br>使用命令查看docker池空间大小：<br>docker info</p>
+<p>可以看到池空间已经被设置为data=1TB和metadata=10GB</p>
+
+        <h2 id="关于Docker目录挂载的总结"   >
+          <a href="#关于Docker目录挂载的总结" class="heading-link"><i class="fas fa-link"></i></a>关于Docker目录挂载的总结</h2>
+      <p>Docker容器启动的时候，如果要挂载宿主机的一个目录，可以用-v参数指定。<br>譬如我要启动一个centos容器，宿主机的/test目录挂载到容器的/soft目录，可通过以下方式指定：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run -it  --privileged=<span class="literal">true</span> -v /<span class="built_in">test</span>:/soft  --name ContainerName ImagesName /bin/bash</span></span><br></pre></td></tr></table></div></figure>
+
+<p>这样在容器启动后，容器内会自动创建/soft的目录。通过这种方式，我们可以明确一点，即-v参数中，冒号”:”前面的目录是宿主机目录，后面的目录是容器内目录。<br>挂载宿主机已存在目录后，在容器内对其进行操作，报“Permission denied”。<br>可通过两种方式解决：<br>1&gt; 关闭selinux。<br>临时关闭：# setenforce 0<br>永久关闭：修改/etc/sysconfig/selinux文件，将SELINUX的值设置为disabled。<br>2&gt; 以特权方式启动容器<br>指定–privileged参数<br>如：# docker run -it –privileged=true -v /test:/soft centos /bin/bash</p>
+
+        <h2 id="容器的特权模式运行"   >
+          <a href="#容器的特权模式运行" class="heading-link"><i class="fas fa-link"></i></a>容器的特权模式运行</h2>
+      <p>–privileged 可以启动docker的特权模式，这种模式允许我们以其宿主机具有（几乎）所有能力来运行容器，包括一些内核特性和设备访问。</p>
+<p>这是让我们可以在dokcer中运行docker的必要参数</p>
+<p>让docker运行在–privileged特权模式会有一些安全风险。这种模式下运行容器对docker宿主机拥有root访问权限。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/linux/docker/">https://kung-fu-master.github.io/2021/03/13/linux/docker/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/linux/dd_command/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">dd 命令</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/linux/dmidecode/"><span class="paginator-prev__text">dmidecode</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker保存-lodad镜像"><span class="toc-number">1.</span> <span class="toc-text">
+          docker保存&#x2F;lodad镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-拷贝"><span class="toc-number">2.</span> <span class="toc-text">
+          Docker 拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新images"><span class="toc-number">3.</span> <span class="toc-text">
+          更新images</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-run"><span class="toc-number">4.</span> <span class="toc-text">
+          Docker run</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置镜像标签"><span class="toc-number">5.</span> <span class="toc-text">
+          设置镜像标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker修改空间大小"><span class="toc-number">6.</span> <span class="toc-text">
+          Docker修改空间大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于Docker目录挂载的总结"><span class="toc-number">7.</span> <span class="toc-text">
+          关于Docker目录挂载的总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器的特权模式运行"><span class="toc-number">8.</span> <span class="toc-text">
+          容器的特权模式运行</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

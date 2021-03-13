@@ -1,0 +1,470 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="deployment       Deployment 是一种更高阶资源， 用千部署应用程序并以声明的方式升级应用, 而不是通过 ReplicationController 或 ReplicaSet 进行部署， 它们都被认为是更底层的概念.当创建一个 Deployment 时， ReplicaSet 资源也会随之创建.在使用 Deployment 时， 实际">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06 Kubernetes deployment">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/06_kubernetes_deployment/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="deployment       Deployment 是一种更高阶资源， 用千部署应用程序并以声明的方式升级应用, 而不是通过 ReplicationController 或 ReplicaSet 进行部署， 它们都被认为是更底层的概念.当创建一个 Deployment 时， ReplicaSet 资源也会随之创建.在使用 Deployment 时， 实际">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.872Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.872Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary"><title>06 Kubernetes deployment | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/06_kubernetes_deployment/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">06 Kubernetes deployment</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.1k</span></span></div></header><div class="post-body">
+        <h2 id="deployment"   >
+          <a href="#deployment" class="heading-link"><i class="fas fa-link"></i></a>deployment</h2>
+      <p>Deployment 是一种更高阶资源， 用千部署应用程序并以声明的方式升级应用, 而不是通过 ReplicationController 或 ReplicaSet 进行部署， 它们都被认为是更底层的概念.<br>当创建一个 Deployment 时， ReplicaSet 资源也会随之创建.<br>在使用 Deployment 时， 实际的 pod是由 Deployment 的 Replicaset 创建和管理的， 而不是由 Deployment 直接创建和管理的.</p>
+<blockquote>
+<p>创建Deployment与创建ReplicationController并没有任何区别。Deployment也是由标签选择器、期望副数和pod模板组成的。此外，它还包含另 一 个字段，指定一 个部署策略，该策略定义在修改Deployment资源时应该如何执行更新<br>Deployment可以同时管理多个版本的 pod, 所以在命名时不需要指定应用的版本号<br>kubia-svc-loadbalancer.yaml</p>
+</blockquote>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: kubia-loadbalancer</span><br><span class="line">spec:</span><br><span class="line">  type: LoadBalancer</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    targetPort: 8080</span><br><span class="line">  selector:</span><br><span class="line">    app: kubia</span><br></pre></td></tr></table></div></figure>
+
+<p>kubia-deployment-v1.yaml</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: kubia</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: kubia</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      name: kubia</span><br><span class="line">      labels:</span><br><span class="line">        app: kubia</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - image: luksa/kubia:v1</span><br><span class="line">        name: nodejs</span><br></pre></td></tr></table></div></figure>
+
+<p>创建deployment</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f kubia-deployment-v1.yaml --record</span></span><br></pre></td></tr></table></div></figure>
+<p>查看deployment过程</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout status deployment kubia</span></span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 1 out of 3 new replicas have been updated...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 1 out of 3 new replicas have been updated...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 2 out of 3 new replicas have been updated...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 2 out of 3 new replicas have been updated...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 2 out of 3 new replicas have been updated...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 2 out of 3 new replicas have been updated...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 1 old replicas are pending termination...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 1 old replicas are pending termination...</span><br><span class="line">Waiting for deployment "kubia" rollout to finish: 1 old replicas are pending termination...</span><br><span class="line">deployment "kubia" successfully rolled out</span><br></pre></td></tr></table></div></figure>
+<p>当使用 ReplicationController 创建 pod 时， 它们的名称是由 Controller 的名称加上一个运行时生成的随机字符串.<br>由 Deployment 创建的三个 pod 名称中均包含一个额外的数字, 这个数字实际上对应 Deployment 和 ReplicaSet 中的 pod 模板的哈希值</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get po</span></span><br><span class="line">kubia-59d857b444-2nrr7   1/1     Running   0          5m15s</span><br><span class="line">kubia-59d857b444-f9pnx   1/1     Running   0          5m15s</span><br><span class="line">kubia-59d857b444-wzgnj   1/1     Running   0          5m15s</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get replicasets</span></span><br><span class="line">NAME               DESIRED   CURRENT   READY   AGE</span><br><span class="line">kubia-59d857b444   3         3         3       8m48s</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get svc</span></span><br><span class="line">NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE</span><br><span class="line">kubernetes           ClusterIP      10.96.0.1       &lt;none&gt;        443/TCP        4d22h</span><br><span class="line">kubia-loadbalancer   LoadBalancer   10.100.58.157   &lt;pending&gt;     80:31170/TCP   3s</span><br></pre></td></tr></table></div></figure>
+<p>查看master node 的IP为10.239.140.186</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl 10.239.140.186:31170</span></span><br><span class="line">This is v1 running in pod kubia-59d857b444-wzgnj</span><br></pre></td></tr></table></div></figure>
+
+<p>查看deployment详细信息</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe deployment kubia</span><br><span class="line">Name:                   kubia</span><br><span class="line">Namespace:              default</span><br><span class="line">CreationTimestamp:      Mon, 18 May 2020 15:04:12 +0800</span><br><span class="line">Labels:                 <span class="tag">&lt;<span class="name">none</span>&gt;</span></span><br><span class="line">Annotations:            deployment.kubernetes.io/revision: 1</span><br><span class="line">                        kubernetes.io/change-cause: kubectl create --filename=kubia-deployment-v1.yaml --record=true</span><br><span class="line">Selector:               app=kubia</span><br><span class="line">Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable</span><br><span class="line">StrategyType:           RollingUpdate</span><br><span class="line">MinReadySeconds:        0</span><br><span class="line">RollingUpdateStrategy:  25% max unavailable, 25% max surge</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  app=kubia</span><br><span class="line">  Containers:</span><br><span class="line">   nodejs:</span><br><span class="line">    Image:        luksa/kubia:v1</span><br><span class="line">    Port:         <span class="tag">&lt;<span class="name">none</span>&gt;</span></span><br><span class="line">    Host Port:    <span class="tag">&lt;<span class="name">none</span>&gt;</span></span><br><span class="line">    Environment:  <span class="tag">&lt;<span class="name">none</span>&gt;</span></span><br><span class="line">    Mounts:       <span class="tag">&lt;<span class="name">none</span>&gt;</span></span><br><span class="line">  Volumes:        <span class="tag">&lt;<span class="name">none</span>&gt;</span></span><br><span class="line">Conditions:</span><br><span class="line">  Type           Status  Reason</span><br><span class="line">  ----           ------  ------</span><br><span class="line">  Available      True    MinimumReplicasAvailable</span><br><span class="line">  Progressing    True    NewReplicaSetAvailable</span><br><span class="line">OldReplicaSets:  <span class="tag">&lt;<span class="name">none</span>&gt;</span></span><br><span class="line">NewReplicaSet:   kubia-59d857b444 (3/3 replicas created)</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason             Age    From                   Message</span><br><span class="line">  ----    ------             ----   ----                   -------</span><br><span class="line">  Normal  ScalingReplicaSet  7m12s  deployment-controller  Scaled up replica set kubia-59d857b444 to 3</span><br></pre></td></tr></table></div></figure>
+
+<p>略微减慢滚动升级的速度， 以便观察升级过程确实是以滚动的方式执行的。 可以通过在Deployment上设置minReadySeconds属性来实现<br>minReadySeconds的主要功能是避免部署出错版本的应用， 而不只是单纯地减慢部署的速度.<br>minReadySeconds属性指定新创建的pod至少要成功运行多久之后，才能将其视为可用.<br>通常情况下需要 将minReadySeconds设置为更高的值， 以确保pod在它们真正开始接收实际流量之后可以持续保持就绪状态.</p>
+<p>如kubectl patch命令将其设置为10秒</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl patch deployment kubia -p <span class="string">'&#123;"spec": &#123;"minreadyseconds": 10&#125;&#125;'</span></span></span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="重新部署几种方式"   >
+          <a href="#重新部署几种方式" class="heading-link"><i class="fas fa-link"></i></a>重新部署几种方式</h2>
+      <p>重建(recreate)，滚动(rollingUpdate)，蓝绿，金丝雀</p>
+
+        <h3 id="recreate"   >
+          <a href="#recreate" class="heading-link"><i class="fas fa-link"></i></a>recreate</h3>
+      <p>停止Pod并重新创建Pod</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: web-recreate</span><br><span class="line">  namespace: dev</span><br><span class="line">spec:</span><br><span class="line">  strategy:</span><br><span class="line">    type: Recreate		// 停止Pod并重新创建Pod</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: web-recreate</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">......</span><br><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: web-recreate</span><br><span class="line">  namespace: dev</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">  - host: web-recreate.mooc.com  //配置下/etc/hosts 文件 "IP web-recreate.mooc.com"</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path: /</span><br><span class="line">        backend:</span><br><span class="line">          serviceName: web-recreate</span><br><span class="line">          servicePort: 80</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="滚动更新deployment"   >
+          <a href="#滚动更新deployment" class="heading-link"><i class="fas fa-link"></i></a>滚动更新deployment</h3>
+      <p>滚动更新过程svc的IP等不会变，只是改变pod版本，修改pod的镜像就可以了</p>
+<blockquote>
+<p>实际上， 如何达到新的系统状态的过程是由 Deployment 的升级策略决定的，默认策略是执行滚动更新（策略名为 RollingUpdate)。 另 一种策略为 Recreate, 它会一次性删除所有旧版本的 pod, 然后创建新的 pod, 整个行为类似千修改ReplicationController 的 pod 模板， 然后删除所有的 pod<br>使用kubectl set image命令来更改任何包含容器资源的镜像(ReplicationController、ReplicaSet、 Deployment等）</p>
+</blockquote>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: web-rollingupdate</span><br><span class="line">  namespace: dev</span><br><span class="line">spec:</span><br><span class="line">  strategy:</span><br><span class="line">    rollingUpdate:			// 滚动更新, 不设置的话都会设成跟下面一样的默认值, $kubectl get deployment Name -o yaml查看</span><br><span class="line">      maxSurge: 25%			// 可以最大超出实力数的百分比，4个replicas，就是每次最多多启动1个实例</span><br><span class="line">      maxUnavailable: 25%	// 不可用实力百分比，4个replicas，就是每次必须有3个实例可用</span><br><span class="line">    type: RollingUpdate</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: web-rollingupdate</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: web-bluegreen</span><br><span class="line">        version: v1.0</span><br><span class="line">    spec:</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">set</span> image deployment kubia nodejs=luksa/kubia:v2</span></span><br><span class="line">deployment.apps/kubia image updated</span><br></pre></td></tr></table></div></figure>
+<p>创建rs，然后新的rs会创建一个pod，然后原来的rs删除一个pod，新的rs再创建一个pod，依次完成设定的3个pod都完成更新.<br>通过命令定时查看输出:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="keyword">while</span> sleep 0.2; <span class="keyword">do</span> curl <span class="string">"http://web-rollingupdate.mooc.com/hello?name=michael"</span>; <span class="built_in">echo</span> <span class="string">""</span>; <span class="keyword">done</span></span></span><br></pre></td></tr></table></div></figure>
+
+<p>查看Pod:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get po</span></span><br><span class="line">NAME                     READY   STATUS              RESTARTS   AGE</span><br><span class="line">fortune                  2/2     Running             0          3d</span><br><span class="line">kubia-59d857b444-6nq74   1/1     Running             0          72s</span><br><span class="line">kubia-59d857b444-jbln7   1/1     Terminating         0          72s</span><br><span class="line">kubia-59d857b444-lr2zw   1/1     Running             0          72s</span><br><span class="line">kubia-7d5c456ffc-69gg5   0/1     ContainerCreating   0          2s</span><br><span class="line">kubia-7d5c456ffc-vmz74   1/1     Running             0          14s</span><br></pre></td></tr></table></div></figure>
+
+<p>滚动更新后旧的 ReplicaSet 仍然会被保留</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get rs</span></span><br><span class="line">NAME               DESIRED   CURRENT   READY   AGE</span><br><span class="line">kubia-59d857b444   3         3         3       9m27s</span><br><span class="line">kubia-7d5c456ffc   1         1         0       3s</span><br></pre></td></tr></table></div></figure>
+<p>再等待一会再查看rs</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get rs</span></span><br><span class="line">NAME               DESIRED   CURRENT   READY   AGE</span><br><span class="line">kubia-59d857b444   0         0         0       10m</span><br><span class="line">kubia-7d5c456ffc   3         3         3       72s</span><br></pre></td></tr></table></div></figure>
+
+<p>Deployment可以非常容易地回滚到先前部署的版本，它可以让Kubernetes 取消最后一次部署的 Deployment</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">set</span> image deployment kubia nodejs=luksa/kubia:v2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get rs</span></span><br><span class="line">NAME               DESIRED   CURRENT   READY   AGE</span><br><span class="line">kubia-59d857b444   0         0         0       3h3m</span><br><span class="line">kubia-79b84b44f4   3         3         3       96s</span><br><span class="line">kubia-7d5c456ffc   0         0         0       174m</span><br></pre></td></tr></table></div></figure>
+<p>undo 命令也可以在滚动升级过程中运行，并直接停止滚动升级。 在升级过程中已创建的 pod 会被删除并被老版本的 pod 替代</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout undo deployment kubia</span></span><br><span class="line">deployment.apps/kubia rolled back</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get rs</span></span><br><span class="line">NAME               DESIRED   CURRENT   READY   AGE</span><br><span class="line">kubia-59d857b444   0         0         0       3h7m</span><br><span class="line">kubia-79b84b44f4   0         0         0       5m19s</span><br><span class="line">kubia-7d5c456ffc   3         3         3       177m</span><br></pre></td></tr></table></div></figure>
+
+<p>kubectl rollout history 来显示升级的版本</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout <span class="built_in">history</span> deployment kubia</span></span><br><span class="line">deployment.apps/kubia</span><br><span class="line">REVISION  CHANGE-CAUSE</span><br><span class="line">1         kubectl create --filename=kubia-deployment-v1.yaml --record=true</span><br><span class="line">2         kubectl create --filename=kubia-deployment-v1.yaml --record=true</span><br><span class="line">3         kubectl create --filename=kubia-deployment-v1.yaml --record=true</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="回滚到一个特定的-Deployment-版本"   >
+          <a href="#回滚到一个特定的-Deployment-版本" class="heading-link"><i class="fas fa-link"></i></a>回滚到一个特定的 Deployment 版本</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout undo deployment kubia --to-revision=l</span></span><br><span class="line">deployment.apps/kubia rolled back</span><br></pre></td></tr></table></div></figure>
+<blockquote>
+<p>旧版本的 ReplicaSet 过多会导致 ReplicaSet 列表过于混乱，可以通过指定Deployment 的 re visionHistoryLimit 属性来限制历史版本数量。默认值是 2</p>
+</blockquote>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout <span class="built_in">history</span> deployment kubia</span></span><br><span class="line">deployment.apps/kubia</span><br><span class="line">REVISION  CHANGE-CAUSE</span><br><span class="line">2         kubectl create --filename=kubia-deployment-v1.yaml --record=true</span><br><span class="line">3         kubectl create --filename=kubia-deployment-v1.yaml --record=true</span><br><span class="line">4         kubectl create --filename=kubia-deployment-v1.yaml --record=true</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="滚动升级速率"   >
+          <a href="#滚动升级速率" class="heading-link"><i class="fas fa-link"></i></a>滚动升级速率</h3>
+      <p>在 Deployment 的滚动升级期间，有两个属性会决定一次替换多少个pod: maxSurge 和 maxUnavailable。可以通过 Deployment 的 strategy 字 段下rollingUpdate 的子属性来配置.</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spec:</span><br><span class="line">  strategy:</span><br><span class="line">    rollingUpdate:</span><br><span class="line">      maxSurge· 1</span><br><span class="line">      maxUnavailable: 0</span><br><span class="line">    type: RollingUpdate</span><br></pre></td></tr></table></div></figure>
+
+<blockquote>
+<ul>
+<li>maxSurge: 决定了 Deployment 配置中期望的副本数之外，最多允许超出的 pod 实例的数量。默认值为 25%，所以 pod 实例最多可以比期望数量多25%. 这个值也可以不是百分数而是绝对值(例如，可以允许最多多出一个成两个pod).</li>
+<li>maxUnavailable: 决定了在滚动升级期间 ，相对于期望副本数能够允许有多少 pod 实例处于不可用状态。默认值也是25%, 所以可用 pod 实例的数量不能低于期望副本数的75%. 与 maxSurge 一样，也可以指定绝对值而不是百分比.</li>
+</ul>
+</blockquote>
+
+        <h3 id="暂停滚动升级"   >
+          <a href="#暂停滚动升级" class="heading-link"><i class="fas fa-link"></i></a>暂停滚动升级</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">set</span> image deployment kubia nodejs=luksa/kubia:v4</span></span><br><span class="line">deployment "kubia" image updated</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout pause deployment kubia</span></span><br><span class="line">deployment "kubia" paused</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="恢复滚动升级"   >
+          <a href="#恢复滚动升级" class="heading-link"><i class="fas fa-link"></i></a>恢复滚动升级</h3>
+      <p>如果部署被暂停， 那么在恢复部署之前， 撤销命令不会撤销它</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout resume deployment kubia</span></span><br><span class="line">deployment "kubia" resumed</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="readinessProbe"   >
+          <a href="#readinessProbe" class="heading-link"><i class="fas fa-link"></i></a>readinessProbe</h3>
+      <p>kubia-deployment-v3-with-readinesscheck.yaml</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: kubia</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3					// POD副本个数为3</span><br><span class="line">  minReadySeconds: 10			// 设置minReadySeconds 值为10s,指定新创建的pod至少要成功运行多久之后，才能将其视为可用.</span><br><span class="line">  progressDeadlineSeconds: 120	// 设置升级失败超时时间，超过则自动停止升级，如下describe deployment 可查看到"Progressing False..."信息，需要手动undo来取消升级</span><br><span class="line">  strategy:</span><br><span class="line">    rollingUpdate:</span><br><span class="line">      maxSurge: 1</span><br><span class="line">      maxUnavailable: 0			// 设置maxUnavailable的 中值为0来确保升级过程 pod被挨个替换</span><br><span class="line">    type: RollingUpdate</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: kubia</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      name: kubia</span><br><span class="line">      labels:</span><br><span class="line">        app: kubia</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - image: luksa/kubia:v3	// 修改image</span><br><span class="line">        name: nodejs</span><br><span class="line">        readinessProbe:</span><br><span class="line">          periodSeconds: 1		// 定义一个就绪探针，并且每隔—秒钟执行一次</span><br><span class="line">          httpGet:				// 就绪探针会执行发送HTTP GET请求到容器</span><br><span class="line">            path: /</span><br><span class="line">            port: 8080</span><br></pre></td></tr></table></div></figure>
+
+<p>直接使用kubectl apply来升级Deployment<br>apply命令可以用YAML 文件中声明的字段来更新Deployment。不仅更新镜像，而且还添加了就绪探针， 以及在 YAML 中添加或修改的其他声明。<br>如果新的 YAML也包含rep巨 cas字段， 当它与现有Deployment中的数量不一致时， 那么apply 操作也会对Deployment进行扩容.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f kubia-deployment-v3-with-readinesscheck.yaml</span></span><br><span class="line">deployment "kubia" configured</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="取消滚动升级"   >
+          <a href="#取消滚动升级" class="heading-link"><i class="fas fa-link"></i></a>取消滚动升级</h3>
+      <p>默认情况下， 在10分钟内不能完成滚动升级的话， 将被视为失败。 如果运行kubectl describe deployment命令， 将会显示一条ProgressDeadlineExceeded的记录.<br>判定Deployment滚动升级失败的超时时间， 可以通过设定Deployment spec中的progressDeadlineSeconds来指定.<br>如果达到了progressDeadlineSeconds指定的时间， 则滚动升级过程会自动取消.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe deployment kubia</span></span><br><span class="line">Conditions:</span><br><span class="line">  Type           Status  Reason</span><br><span class="line">  ----           ------  ------</span><br><span class="line">  Available      True    MinimumReplicasAvailable</span><br><span class="line">  Progressing    True    ReplicaSetUpdated</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<p>过了3，4分钟后再次执行</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe deployment kubia</span></span><br><span class="line">Name:                   kubia</span><br><span class="line">......</span><br><span class="line">Conditions:</span><br><span class="line">  Type           Status  Reason</span><br><span class="line">  ----           ------  ------</span><br><span class="line">  Available      True    MinimumReplicasAvailable</span><br><span class="line">  Progressing    False   ProgressDeadlineExceeded</span><br><span class="line">OldReplicaSets:  kubia-59d857b444 (3/3 replicas created)</span><br><span class="line">NewReplicaSet:   kubia-7d6c89d47b (1/1 replicas created)</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+
+<p>因为滚动升级过程不再继续， 所以只能通过rollout undo命令来取消滚动升级, 其实就是回滚上一个版本.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout undo deployment kubia</span></span><br><span class="line">deployment.apps/kubia rolled back</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="蓝绿部署"   >
+          <a href="#蓝绿部署" class="heading-link"><i class="fas fa-link"></i></a>蓝绿部署</h3>
+      <p>可以通过修改Service下的不同version值，选择应用不同版本的Pod来提供服务.<br>新版本运行起来一段时间没问题后才可以删除旧版本.<br>一般保持有两个版本的应用也就是Pod保持运行状态, 只有下个版本部署一段时间没问题后，第一个版本的可以删除.</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: web-rollingupdate</span><br><span class="line">  namespace: dev</span><br><span class="line">spec:</span><br><span class="line">  strategy:</span><br><span class="line">    rollingUpdate:			// 滚动更新, 不设置的话都会设成跟下面一样的默认值, $kubectl get deployment Name -o yaml查看</span><br><span class="line">      maxSurge: 25%			// 可以最大超出实力数的百分比，4个replicas，就是每次最多多启动1个实例</span><br><span class="line">      maxUnavailable: 25%	// 不可用实力百分比，4个replicas，就是每次必须有3个实例可用</span><br><span class="line">    type: RollingUpdate</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: web-rollingupdate</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: web-bluegreen</span><br><span class="line">        version: v2.0		// 蓝绿部署，与下面的version一致，部署不同版本的应用</span><br><span class="line">    spec:</span><br><span class="line">......</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: web-bluegreen</span><br><span class="line">  namespace: dev</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - ports: 80</span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: 8080</span><br><span class="line">  selector:</span><br><span class="line">    app: web-bluegreen</span><br><span class="line">    version: v2.0			// 与上面的version一致，部署不同版本应用, 下次部署单独抽离Service，选择不同版本version就可以了</span><br><span class="line">  type: ClusterIP</span><br><span class="line">---</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="金丝雀发布"   >
+          <a href="#金丝雀发布" class="heading-link"><i class="fas fa-link"></i></a>金丝雀发布</h3>
+      <blockquote>
+<p>在蓝绿部署的基础之上，去掉version, 修改selector就是金丝雀部署.<br>一个新的 pod 会被创建， 与此同时所有旧的 pod 还在运行。 一旦新的 pod 成功运行， 服务的一部分请求将被切换到新的 pod。 这样相当于 运行了一个金丝雀版本。金丝雀发布是一种可以将应用程序的出错版本和其影响到的用户的风险化为最小的技术.<br>与其直接向每个用户发布新版本， 不如用新版本替换 一个或一小部分的 pod。通过 这种方式， 在升级的初期只有少数用户会访问新版本。 验证新版本是否正常工作之后， 可以将剩余的 pod 继续升级或者回滚到上一个的版本</p>
+</blockquote>
+
+        <h3 id="删除deployment"   >
+          <a href="#删除deployment" class="heading-link"><i class="fas fa-link"></i></a>删除deployment</h3>
+      <p>删除deployment会连带删除创建的replicaset和由replicaset创建的pod</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete deployment kubia</span></span><br><span class="line">deployment.apps "kubia" deleted</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/06_kubernetes_deployment/">https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/06_kubernetes_deployment/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/kubernetes/">kubernetes</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/micro_service/kubernetes/04_kubernetes_service/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">04 Kubernetes service</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/micro_service/kubernetes/03_kubernetes_ns_pod/"><span class="paginator-prev__text">03 Kubernetes nodes, namespace, pod</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#deployment"><span class="toc-number">1.</span> <span class="toc-text">
+          deployment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新部署几种方式"><span class="toc-number">2.</span> <span class="toc-text">
+          重新部署几种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#recreate"><span class="toc-number">2.1.</span> <span class="toc-text">
+          recreate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滚动更新deployment"><span class="toc-number">2.2.</span> <span class="toc-text">
+          滚动更新deployment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回滚到一个特定的-Deployment-版本"><span class="toc-number">2.3.</span> <span class="toc-text">
+          回滚到一个特定的 Deployment 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滚动升级速率"><span class="toc-number">2.4.</span> <span class="toc-text">
+          滚动升级速率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#暂停滚动升级"><span class="toc-number">2.5.</span> <span class="toc-text">
+          暂停滚动升级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复滚动升级"><span class="toc-number">2.6.</span> <span class="toc-text">
+          恢复滚动升级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#readinessProbe"><span class="toc-number">2.7.</span> <span class="toc-text">
+          readinessProbe</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取消滚动升级"><span class="toc-number">2.8.</span> <span class="toc-text">
+          取消滚动升级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#蓝绿部署"><span class="toc-number">2.9.</span> <span class="toc-text">
+          蓝绿部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#金丝雀发布"><span class="toc-number">2.10.</span> <span class="toc-text">
+          金丝雀发布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除deployment"><span class="toc-number">2.11.</span> <span class="toc-text">
+          删除deployment</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

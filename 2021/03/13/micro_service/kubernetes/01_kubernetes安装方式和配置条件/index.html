@@ -1,0 +1,577 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="安装方法       reference: https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;setup&#x2F;production-environment&#x2F;tools&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01 Kubernetes安装方式和配置条件">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/01_kubernetes%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%92%8C%E9%85%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="安装方法       reference: https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;setup&#x2F;production-environment&#x2F;tools&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.872Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.872Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary"><title>01 Kubernetes安装方式和配置条件 | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/01_kubernetes%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%92%8C%E9%85%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">01 Kubernetes安装方式和配置条件</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2k</span></span></div></header><div class="post-body">
+        <h2 id="安装方法"   >
+          <a href="#安装方法" class="heading-link"><i class="fas fa-link"></i></a>安装方法</h2>
+      <p>reference: <span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/setup/production-environment/tools/"  target="_blank" rel="noopener">https://kubernetes.io/docs/setup/production-environment/tools/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<a id="more"></a>
+
+<ul>
+<li><span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/"  target="_blank" rel="noopener">Bootstrapping clusters with kubeadm</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/setup/production-environment/tools/kops/"  target="_blank" rel="noopener">Installing Kubernetes with kops</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/setup/production-environment/tools/kubespray/"  target="_blank" rel="noopener">Installing Kubernetes with Kubespray</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+
+        <h2 id="Before-you-begin"   >
+          <a href="#Before-you-begin" class="heading-link"><i class="fas fa-link"></i></a>Before you begin</h2>
+      <ul>
+<li>One or more machines running one of:<ul>
+<li>Ubuntu 16.04+</li>
+<li>Debian 9+</li>
+<li>CentOS 7</li>
+<li>Red Hat Enterprise Linux (RHEL) 7</li>
+<li>Fedora 25+</li>
+<li>HypriotOS v1.0.1+</li>
+<li>Flatcar Container Linux (tested with 2512.3.0)</li>
+</ul>
+</li>
+<li>2 GB or more of RAM per machine (any less will leave little room for your apps).</li>
+<li>2 CPUs or more.</li>
+<li>Full network connectivity between all machines in the cluster (public or private network is fine).</li>
+<li>Unique hostname, MAC address, and product_uuid for every node. See here for more details.</li>
+<li>Certain ports are open on your machines. See here for more details.</li>
+<li>Swap disabled. You MUST disable swap in order for the kubelet to work properly.</li>
+</ul>
+
+        <h2 id="Verify-the-MAC-address-and-product-uuid-are-unique-for-every-node"   >
+          <a href="#Verify-the-MAC-address-and-product-uuid-are-unique-for-every-node" class="heading-link"><i class="fas fa-link"></i></a>Verify the MAC address and product_uuid are unique for every node</h2>
+      <ul>
+<li>您可以使用命令 <strong><code>ip link</code></strong> 或 <strong><code>ifconfig -a</code></strong> 来获取网络接口的 MAC 地址</li>
+<li>可以使用 <strong><code>sudo cat /sys/class/dmi/id/product_uuid</code></strong> 命令对 product_uuid 校验<br>一般来讲，硬件设备会拥有唯一的地址，但是有些虚拟机的地址可能会重复。Kubernetes 使用这些值来唯一确定集群中的节点。 如果这些值在每个节点上不唯一，可能会导致安装<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes/kubeadm/issues/31"  target="_blank" rel="noopener">失败</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</li>
+</ul>
+
+        <h2 id="检查网络适配器"   >
+          <a href="#检查网络适配器" class="heading-link"><i class="fas fa-link"></i></a>检查网络适配器</h2>
+      <p>如果您有一个以上的网络适配器，同时您的 Kubernetes 组件通过默认路由不可达，我们建议您预先添加 IP 路由规则，这样 Kubernetes 集群就可以通过对应的适配器完成连接。</p>
+
+        <h2 id="确保-iptables-工具不使用-nftables-后端"   >
+          <a href="#确保-iptables-工具不使用-nftables-后端" class="heading-link"><i class="fas fa-link"></i></a>确保 iptables 工具不使用 nftables 后端</h2>
+      <p>在 Linux 中，nftables 当前可以作为内核 iptables 子系统的替代品。 <strong>iptables</strong> 工具可以充当兼容性层，其行为类似于 iptables 但实际上是在配置 nftables。 nftables 后端与当前的 kubeadm 软件包不兼容：它会导致重复防火墙规则并破坏 <strong>kube-proxy</strong>。</p>
+<p>如果您系统的 <strong>iptables</strong> 工具使用 nftables 后端，则需要把 <strong>iptables</strong> 工具切换到“旧版”模式来避免这些问题。 默认情况下，至少在 Debian 10 (Buster)、Ubuntu 19.04、Fedora 29 和较新的发行版本中会出现这种问题。RHEL 8 不支持切换到旧版本模式，因此与当前的 kubeadm 软件包不兼容</p>
+
+        <h3 id="iptables-legacy"   >
+          <a href="#iptables-legacy" class="heading-link"><i class="fas fa-link"></i></a>iptables_legacy</h3>
+      
+        <h4 id="“Debian-或-Ubuntu”"   >
+          <a href="#“Debian-或-Ubuntu”" class="heading-link"><i class="fas fa-link"></i></a>“Debian 或 Ubuntu”</h4>
+      <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --<span class="built_in">set</span> iptables /usr/sbin/iptables-legacy</span><br><span class="line">update-alternatives --<span class="built_in">set</span> ip6tables /usr/sbin/ip6tables-legacy</span><br><span class="line">update-alternatives --<span class="built_in">set</span> arptables /usr/sbin/arptables-legacy</span><br><span class="line">update-alternatives --<span class="built_in">set</span> ebtables /usr/sbin/ebtables-legacy</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="“Fedora”"   >
+          <a href="#“Fedora”" class="heading-link"><i class="fas fa-link"></i></a>“Fedora”</h4>
+      <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --<span class="built_in">set</span> iptables /usr/sbin/iptables-legacy</span><br></pre></td></tr></table></div></figure>
+
+<p>Make sure that the <strong>br_netfilter</strong> module is loaded. This can be done by running <strong><code>lsmod | grep br_netfilter</code></strong>. To load it explicitly call <strong><code>sudo modprobe br_netfilter</code></strong>.</p>
+<p>As a requirement for your Linux Node’s iptables to correctly see bridged traffic, you should ensure <strong><code>net.bridge.bridge-nf-call-iptables</code></strong> is set to 1 in your <strong><code>sysctl</code></strong> config, e.g.</p>
+<figure class="highlight gauss"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;<span class="built_in">EOF</span> | sudo tee /etc/modules-load.d/k8s.conf</span><br><span class="line">br_netfilter</span><br><span class="line"><span class="built_in">EOF</span></span><br><span class="line"></span><br><span class="line">cat &lt;&lt;<span class="built_in">EOF</span> | sudo tee /etc/sysctl.d/k8s.conf</span><br><span class="line">net.bridge.bridge-nf-<span class="keyword">call</span>-ip6tables = <span class="number">1</span></span><br><span class="line">net.bridge.bridge-nf-<span class="keyword">call</span>-iptables = <span class="number">1</span></span><br><span class="line"><span class="built_in">EOF</span></span><br><span class="line">sudo sysctl --<span class="keyword">system</span></span><br></pre></td></tr></table></div></figure>
+<p>For more details please see the <span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/#network-plugin-requirements"  target="_blank" rel="noopener">Network Plugin Requirements page</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</p>
+
+        <h2 id="检查所需端口"   >
+          <a href="#检查所需端口" class="heading-link"><i class="fas fa-link"></i></a>检查所需端口</h2>
+      
+        <h3 id="控制平面节点-s"   >
+          <a href="#控制平面节点-s" class="heading-link"><i class="fas fa-link"></i></a>控制平面节点(s)</h3>
+      <div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">Protocol</th>
+<th align="left">Direction</th>
+<th align="left">Port Range</th>
+<th align="left">Purpose</th>
+<th align="left">Used By</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">TCP</td>
+<td align="left">Inbound</td>
+<td align="left">6443*</td>
+<td align="left">Kubernetes API server</td>
+<td align="left">All</td>
+</tr>
+<tr>
+<td align="left">TCP</td>
+<td align="left">Inbound</td>
+<td align="left">2379-2380</td>
+<td align="left">etcd server client API</td>
+<td align="left">kube-apiserver, etcd</td>
+</tr>
+<tr>
+<td align="left">TCP</td>
+<td align="left">Inbound</td>
+<td align="left">10250</td>
+<td align="left">kubelet API</td>
+<td align="left">Self, Control plane</td>
+</tr>
+<tr>
+<td align="left">TCP</td>
+<td align="left">Inbound</td>
+<td align="left">10251</td>
+<td align="left">kube-scheduler</td>
+<td align="left">Self</td>
+</tr>
+<tr>
+<td align="left">TCP</td>
+<td align="left">Inbound</td>
+<td align="left">10252</td>
+<td align="left">kube-controller-manager</td>
+<td align="left">Self</td>
+</tr>
+</tbody></table></div>
+
+        <h3 id="工作节点-s"   >
+          <a href="#工作节点-s" class="heading-link"><i class="fas fa-link"></i></a>工作节点(s)</h3>
+      <div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">Protocol</th>
+<th align="left">Direction</th>
+<th align="left">Port Range</th>
+<th align="left">Purpose</th>
+<th align="left">Used By</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">TCP</td>
+<td align="left">Inbound</td>
+<td align="left">10250</td>
+<td align="left">kubelet API</td>
+<td align="left">Self, Control plane</td>
+</tr>
+<tr>
+<td align="left">TCP</td>
+<td align="left">Inbound</td>
+<td align="left">30000-32767</td>
+<td align="left">NodePort Services†</td>
+<td align="left">All</td>
+</tr>
+</tbody></table></div>
+<p>† D Default port range for <span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/concepts/services-networking/service/"  target="_blank" rel="noopener">NodePort Services</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</p>
+<p>Any port numbers marked with * are overridable, so you will need to ensure any custom ports you provide are also open</p>
+<p>Although etcd ports are included in control-plane nodes, you can also host your own etcd cluster externally or on custom ports.</p>
+<p>The pod network plugin you use (see below) may also require certain ports to be open. Since this differs with each pod network plugin, please see the documentation for the plugins about what port(s) those need.</p>
+
+        <h2 id="安装-runtime"   >
+          <a href="#安装-runtime" class="heading-link"><i class="fas fa-link"></i></a>安装 runtime</h2>
+      <p>To run containers in Pods, Kubernetes uses a <span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/setup/production-environment/container-runtimes"  target="_blank" rel="noopener">container runtime</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.<br>从 v1.6.0 版本起，Kubernetes 开始默认允许使用 CRI（容器运行时接口）。</p>
+<p>从 v1.14.0 版本起，kubeadm 将通过观察已知的 UNIX 域套接字来自动检测 Linux 节点上的容器运行时。 下表中是可检测到的正在运行的 runtime 和 socket 路径。</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">运行时</th>
+<th align="left">域套接字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Docker</td>
+<td align="left"><div style="width: 200pt">/var/run/docker.sock</div></td>
+</tr>
+<tr>
+<td align="left">containerd</td>
+<td align="left">/run/containerd/containerd.sock</td>
+</tr>
+<tr>
+<td align="left">CRI-O</td>
+<td align="left">/var/run/crio/crio.sock</td>
+</tr>
+</tbody></table></div>
+<p>如果同时检测到 docker 和 containerd，则优先选择 docker。 这是必然的，因为 docker 18.09 附带了 containerd 并且两者都是可以检测到的。 如果检测到其他两个或多个运行时，kubeadm 将以一个合理的错误信息退出。</p>
+<p>在非 Linux 节点上，默认使用 docker 作为容器 runtime。</p>
+<p>如果选择的容器 runtime 是 docker，则通过内置 dockershim CRI 在 kubelet 的内部实现其的应用。</p>
+<p>基于 CRI 的其他 runtimes 有：</p>
+<ul>
+<li><span class="exturl"><a class="exturl__link"   href="https://github.com/containerd/cri"  target="_blank" rel="noopener">containerd</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> （containerd 的内置 CRI 插件）</li>
+<li><span class="exturl"><a class="exturl__link"   href="https://cri-o.io/"  target="_blank" rel="noopener">cri-o</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes/frakti"  target="_blank" rel="noopener">frakti</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+<p>请参考 <a href="/zh/docs/setup/production-environment/container-runtimes/">CRI 安装指南</a>获取更多信息。</p>
+
+        <h2 id="安装-kubeadm、kubelet-和-kubectl"   >
+          <a href="#安装-kubeadm、kubelet-和-kubectl" class="heading-link"><i class="fas fa-link"></i></a>安装 kubeadm、kubelet 和 kubectl</h2>
+      <p>您需要在每台机器上安装以下的软件包：</p>
+<ul>
+<li><p><code>kubeadm</code>：用来初始化集群的指令。</p>
+</li>
+<li><p><code>kubelet</code>：在集群中的每个节点上用来启动 pod 和容器等。</p>
+</li>
+<li><p><code>kubectl</code>：用来与集群通信的命令行工具。</p>
+</li>
+</ul>
+<p>kubeadm <strong>不能</strong> 帮您安装或者管理 <code>kubelet</code> 或 <code>kubectl</code>，所以您需要确保它们与通过 kubeadm 安装的控制平面的版本相匹配。<br>如果不这样做，则存在发生版本偏差的风险，可能会导致一些预料之外的错误和问题。<br>然而，控制平面与 kubelet 间的相差一个次要版本不一致是支持的，但 kubelet 的版本不可以超过 API 服务器的版本。<br>例如，1.7.0 版本的 kubelet 可以完全兼容 1.8.0 版本的 API 服务器，反之则不可以。</p>
+<p>有关安装 <code>kubectl</code> 的信息，请参阅<a href="/zh/docs/tasks/tools/install-kubectl/">安装和设置 kubectl</a>文档。</p>
+
+        <h2 id="Warning"   >
+          <a href="#Warning" class="heading-link"><i class="fas fa-link"></i></a>Warning</h2>
+      <blockquote>
+<p>这些指南不包括系统升级时使用的所有 Kubernetes 程序包。这是因为 kubeadm 和 Kubernetes<br>有<a href="/zh/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/">特殊的升级注意事项</a>。</p>
+</blockquote>
+<p>关于版本偏差的更多信息，请参阅以下文档：</p>
+<ul>
+<li>Kubernetes <a href="/zh/docs/setup/release/version-skew-policy/">版本与版本间的偏差策略</a></li>
+<li>Kubeadm-specific <a href="/zh/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#version-skew-policy">版本偏差策略</a></li>
+</ul>
+
+        <h2 id="k8s-install"   >
+          <a href="#k8s-install" class="heading-link"><i class="fas fa-link"></i></a>k8s_install</h2>
+      
+        <h3 id="“Ubuntu、Debian-或-HypriotOS”"   >
+          <a href="#“Ubuntu、Debian-或-HypriotOS”" class="heading-link"><i class="fas fa-link"></i></a>“Ubuntu、Debian 或 HypriotOS”</h3>
+      <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https curl</span><br><span class="line">curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -</span><br><span class="line">cat &lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list</span><br><span class="line">deb https://apt.kubernetes.io/ kubernetes-xenial main</span><br><span class="line">EOF</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y kubelet kubeadm kubectl</span><br><span class="line">sudo apt-mark hold kubelet kubeadm kubectl</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="“CentOS、RHEL-或-Fedora”"   >
+          <a href="#“CentOS、RHEL-或-Fedora”" class="heading-link"><i class="fas fa-link"></i></a>“CentOS、RHEL 或 Fedora”</h3>
+      <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 SELinux 设置为 permissive 模式（相当于将其禁用）</span></span><br><span class="line">setenforce 0</span><br><span class="line">sed -i <span class="string">'s/^SELINUX=enforcing$/SELINUX=permissive/'</span> /etc/selinux/config</span><br><span class="line"></span><br><span class="line">yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes</span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> --now kubelet</span><br></pre></td></tr></table></div></figure>
+
+<p>  <strong>请注意：</strong></p>
+<ul>
+<li><p>通过运行命令 <code>setenforce 0</code> 和 <code>sed ...</code> 将 SELinux 设置为 permissive 模式可以有效的将其禁用。<br>这是允许容器访问主机文件系统所必须的，例如正常使用 pod 网络。<br>您必须这么做，直到 kubelet 做出升级支持 SELinux 为止。</p>
+</li>
+<li><p>一些 RHEL/CentOS 7 的用户曾经遇到过问题：由于 iptables 被绕过而导致流量无法正确路由的问题。您应该确保<br>在 <code>sysctl</code> 配置中的 <code>net.bridge.bridge-nf-call-iptables</code> 被设置为 1。</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></div></figure></li>
+<li><p>确保在此步骤之前已加载了 <code>br_netfilter</code> 模块。这可以通过运行 <code>lsmod | grep br_netfilter</code> 来完成。要显示加载它，请调用 <code>modprobe br_netfilter</code>。</p>
+</li>
+</ul>
+<p>kubelet 现在每隔几秒就会重启，因为它陷入了一个等待 kubeadm 指令的死循环。</p>
+
+        <h2 id="在控制平面节点上配置-kubelet-使用的-cgroup-驱动程序"   >
+          <a href="#在控制平面节点上配置-kubelet-使用的-cgroup-驱动程序" class="heading-link"><i class="fas fa-link"></i></a>在控制平面节点上配置 kubelet 使用的 cgroup 驱动程序</h2>
+      <p>使用 docker 时，kubeadm 会自动为其检测 cgroup 驱动并在运行时对 <code>/var/lib/kubelet/kubeadm-flags.env</code> 文件进行配置。</p>
+<p>如果您使用不同的 CRI，您需要使用 <code>cgroup-driver</code> 值修改 <code>/etc/default/kubelet</code> 文件（对于 CentOS、RHEL、Fedora，修改 <code>/etc/sysconfig/kubelet</code> 文件），像这样：</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KUBELET_EXTRA_ARGS=--cgroup-driver=&lt;value&gt;</span><br></pre></td></tr></table></div></figure>
+
+<p>这个文件将由 <code>kubeadm init</code> 和 <code>kubeadm join</code> 使用以获取额外的用户自定义的 kubelet 参数。</p>
+<p>请注意，您 <strong>只</strong> 需要在您的 cgroup 驱动程序不是 <code>cgroupfs</code> 时这么做，因为它已经是 kubelet 中的默认值。</p>
+<p>需要重新启动 kubelet：</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart kubelet</span><br></pre></td></tr></table></div></figure>
+
+<p>自动检测其他容器运行时的 cgroup 驱动，例如在进程中工作的 CRI-O 和 containerd。</p>
+
+        <h2 id="故障排查"   >
+          <a href="#故障排查" class="heading-link"><i class="fas fa-link"></i></a>故障排查</h2>
+      <p>如果您在使用 kubeadm 时遇到困难，请参阅我们的<a href="/zh/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/">故障排查文档</a>。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/01_kubernetes%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%92%8C%E9%85%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6/">https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/01_kubernetes%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%92%8C%E9%85%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/kubernetes/">kubernetes</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/micro_service/kubernetes/01_kubernetes_build/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">01 Kubernetes build with kubeadm</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/micro_service/kubernetes/05_kubernetes_volume/"><span class="paginator-prev__text">05 Kubernetes volumes</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装方法"><span class="toc-number">1.</span> <span class="toc-text">
+          安装方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-you-begin"><span class="toc-number">2.</span> <span class="toc-text">
+          Before you begin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Verify-the-MAC-address-and-product-uuid-are-unique-for-every-node"><span class="toc-number">3.</span> <span class="toc-text">
+          Verify the MAC address and product_uuid are unique for every node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查网络适配器"><span class="toc-number">4.</span> <span class="toc-text">
+          检查网络适配器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#确保-iptables-工具不使用-nftables-后端"><span class="toc-number">5.</span> <span class="toc-text">
+          确保 iptables 工具不使用 nftables 后端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables-legacy"><span class="toc-number">5.1.</span> <span class="toc-text">
+          iptables_legacy</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#“Debian-或-Ubuntu”"><span class="toc-number">5.1.1.</span> <span class="toc-text">
+          “Debian 或 Ubuntu”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#“Fedora”"><span class="toc-number">5.1.2.</span> <span class="toc-text">
+          “Fedora”</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查所需端口"><span class="toc-number">6.</span> <span class="toc-text">
+          检查所需端口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制平面节点-s"><span class="toc-number">6.1.</span> <span class="toc-text">
+          控制平面节点(s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作节点-s"><span class="toc-number">6.2.</span> <span class="toc-text">
+          工作节点(s)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-runtime"><span class="toc-number">7.</span> <span class="toc-text">
+          安装 runtime</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-kubeadm、kubelet-和-kubectl"><span class="toc-number">8.</span> <span class="toc-text">
+          安装 kubeadm、kubelet 和 kubectl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Warning"><span class="toc-number">9.</span> <span class="toc-text">
+          Warning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#k8s-install"><span class="toc-number">10.</span> <span class="toc-text">
+          k8s_install</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#“Ubuntu、Debian-或-HypriotOS”"><span class="toc-number">10.1.</span> <span class="toc-text">
+          “Ubuntu、Debian 或 HypriotOS”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#“CentOS、RHEL-或-Fedora”"><span class="toc-number">10.2.</span> <span class="toc-text">
+          “CentOS、RHEL 或 Fedora”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在控制平面节点上配置-kubelet-使用的-cgroup-驱动程序"><span class="toc-number">11.</span> <span class="toc-text">
+          在控制平面节点上配置 kubelet 使用的 cgroup 驱动程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#故障排查"><span class="toc-number">12.</span> <span class="toc-text">
+          故障排查</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

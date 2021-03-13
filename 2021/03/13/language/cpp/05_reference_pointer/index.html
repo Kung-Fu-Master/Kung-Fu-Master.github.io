@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Reference       对于像 char、bool、int、float 等基本类型的数据，它们占用的内存往往只有几个字节，对它们进行内存拷贝非常快速.而数组、结构体、对象是一系列数据的集合，数据的数量没有限制，可能很少，也可能成千上万，对它们进行频繁的内存拷贝可能会消耗很多时间，拖慢程序的执行效率.C&#x2F;C++ 禁止在函数调用时直接传递数组的内容，而是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05 Reference &amp; pointer">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/language/cpp/05_reference_pointer/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Reference       对于像 char、bool、int、float 等基本类型的数据，它们占用的内存往往只有几个字节，对它们进行内存拷贝非常快速.而数组、结构体、对象是一系列数据的集合，数据的数量没有限制，可能很少，也可能成千上万，对它们进行频繁的内存拷贝可能会消耗很多时间，拖慢程序的执行效率.C&#x2F;C++ 禁止在函数调用时直接传递数组的内容，而是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.810Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.810Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>05 Reference &amp; pointer | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/language/cpp/05_reference_pointer/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">05 Reference &amp; pointer</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.9k</span></span></div></header><div class="post-body">
+        <h2 id="Reference"   >
+          <a href="#Reference" class="heading-link"><i class="fas fa-link"></i></a>Reference</h2>
+      <p>对于像 char、bool、int、float 等基本类型的数据，它们占用的内存往往只有几个字节，对它们进行内存拷贝非常快速.<br>而数组、结构体、对象是一系列数据的集合，数据的数量没有限制，可能很少，也可能成千上万，对它们进行频繁的内存拷贝可能会消耗很多时间，拖慢程序的执行效率.<br>C/C++ 禁止在函数调用时直接传递数组的内容，而是强制传递数组指针.<br>而对于结构体和对象没有这种限制，调用函数时既可以传递指针，也可以直接传递内容；为了提高效率，建议传递指针.<br>但是在 C++ 中，我们有了一种比指针更加便捷的传递聚合类型数据的方式，那就是引用（Reference）.<br>引用类似于 Windows 中的快捷方式，一个可执行程序可以有多个快捷方式，通过这些快捷方式和可执行程序本身都能够运行程序；引用还类似于人的绰号（笔名），使用绰号（笔名）和本名都能表示一个人。.<br>引用的定义方式类似于指针，只是用&amp;取代了*，语法格式为：</p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type &amp;name = data;</span><br></pre></td></tr></table></div></figure>
+<p>引用必须在定义的同时初始化，并且以后也要从一而终，不能再引用其它数据，这有点类似于常量（const 变量）.`  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">99</span>;</span><br><span class="line">    <span class="keyword">int</span> &amp;b = a;  <span class="comment">// 变量赋值给引用变量</span></span><br><span class="line">    <span class="keyword">int</span> &amp;c = b;  <span class="comment">// 引用便量赋值给引用变量, a, b, c 指向同一块内存地址.</span></span><br><span class="line">    b = <span class="number">66</span>;      <span class="comment">// 引用也可以修改原始变量中所存储的数据</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">", "</span> &lt;&lt; b &lt;&lt; <span class="string">", "</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; &amp;a &lt;&lt; <span class="string">", "</span> &lt;&lt; &amp;b &lt;&lt; <span class="string">", "</span> &lt;&lt; &amp;c &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>输出:  </p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">66</span>, <span class="number">66</span>, <span class="number">66</span></span><br><span class="line"><span class="number">0x7ffe710a246c</span>, <span class="number">0x7ffe710a246c</span>, <span class="number">0x7ffe710a246c</span></span><br></pre></td></tr></table></div></figure>
+<p>从输出结果可以看出，a 和 r 的地址一样，都是0x7ffe7cc6fe64；或者说地址为0x7ffe7cc6fe64的内存有两个名字，a 和 r，想要访问该内存上的数据时，使用哪个名字都行。  </p>
+<p>如果读者不希望通过引用来修改原始的数据，那么可以在定义时添加 const 限制，形式为：  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> type &amp;name = value;</span><br></pre></td></tr></table></div></figure>
+<p>也可以是：  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type <span class="keyword">const</span> &amp;name = value;</span><br></pre></td></tr></table></div></figure>
+<p>这种引用方式为常引用</p>
+
+        <h3 id="C-引用作为函数参数"   >
+          <a href="#C-引用作为函数参数" class="heading-link"><i class="fas fa-link"></i></a>C++引用作为函数参数</h3>
+      <p>在定义或声明函数时，我们可以将函数的形参指定为引用的形式，这样在调用函数时就会将实参和形参绑定在一起，让它们都指代同一份数据。如此一来，如果在函数体中修改了形参的数据，那么实参的数据也会被修改，从而拥有“在函数内部影响函数外部数据”的效果。  </p>
+<p>按引用传参在使用形式上比指针更加直观。在以后的 C++ 编程中，鼓励读者大量使用引用，它一般可以代替指针（当然指针在C++中也不可或缺）.  </p>
+<p><strong>指针传递与引用传递区别如下：</strong></p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap1</span><span class="params">(<span class="keyword">int</span> *m, <span class="keyword">int</span> *n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = *m;</span><br><span class="line">    *m = *n;</span><br><span class="line">    *n = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap2</span><span class="params">(<span class="keyword">int</span> &amp;m, <span class="keyword">int</span> &amp;n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = m;</span><br><span class="line">    m = n;</span><br><span class="line">    n = temp;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Reference address: "</span> &lt;&lt; &amp;m &lt;&lt; <span class="string">" , "</span> &lt;&lt; &amp;n &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> num1 = <span class="number">1</span>, num2 = <span class="number">2</span>;</span><br><span class="line">swap1(&amp;num1, &amp;num2);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"num1: "</span> &lt;&lt; num1 &lt;&lt; <span class="string">", num2: "</span> &lt;&lt; num2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">num1 = <span class="number">1</span>;</span><br><span class="line">num2 = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Address: "</span> &lt;&lt; &amp;num1 &lt;&lt; <span class="string">" , "</span> &lt;&lt; &amp;num2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">swap2(num1, num2);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"num1: "</span> &lt;&lt; num1 &lt;&lt; <span class="string">", num2: "</span> &lt;&lt; num2 &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></div></figure>
+<p>输出:  </p>
+<figure class="highlight yaml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">num1:</span> <span class="number">2</span><span class="string">,</span> <span class="attr">num2:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">Address:</span> <span class="number">0x7fff31e04090</span> <span class="string">,</span> <span class="number">0x7fff31e0408c</span></span><br><span class="line"><span class="attr">Reference address:</span> <span class="number">0x7fff31e04090</span> <span class="string">,</span> <span class="number">0x7fff31e0408c</span></span><br><span class="line"><span class="attr">num1:</span> <span class="number">2</span><span class="string">,</span> <span class="attr">num2:</span> <span class="number">1</span></span><br></pre></td></tr></table></div></figure>
+<p>可以看到引用参数在内存中地址和实参变量地址相同.  </p>
+
+        <h3 id="C-引用作为函数返回值"   >
+          <a href="#C-引用作为函数返回值" class="heading-link"><i class="fas fa-link"></i></a>C++引用作为函数返回值</h3>
+      <figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> &amp;<span class="title">plus10</span><span class="params">(<span class="keyword">int</span> &amp;num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    num += <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">10</span>;</span><br><span class="line">plus10(num);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"num: "</span> &lt;&lt; num &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></div></figure>
+<p>输出:</p>
+<figure class="highlight yaml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">num:</span> <span class="number">20</span></span><br></pre></td></tr></table></div></figure>
+<p>在将引用作为函数返回值时应该注意一个小问题，就是不能返回局部数据（例如局部变量、局部对象、局部数组等）的引用，因为当函数调用完成后局部数据就会被销毁，有可能在下次使用时数据就不存在了，C++ 编译器检测到该行为时也会给出警告.<br>但可以返回用非局部变量赋值的引用变量如下面的&amp;n.  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> &amp;<span class="title">plus10</span><span class="params">(<span class="keyword">int</span> &amp;num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> &amp;n = num;</span><br><span class="line">    n += <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">    <span class="comment">// int m = r + 10;  </span></span><br><span class="line">    <span class="comment">// return m;        //错误用法, 禁止返回局部数据的引用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="引用实质"   >
+          <a href="#引用实质" class="heading-link"><i class="fas fa-link"></i></a>引用实质</h3>
+      <p>其实引用只是对指针进行了简单的封装，它的底层依然是通过指针实现的，引用占用的内存和指针占用的内存长度一样，在 32 位环境下是 4 个字节，在 64 位环境下是 8 个字节，之所以不能获取引用的地址，是因为编译器进行了内部转换.  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">99</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r = a;</span><br><span class="line">r = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;&amp;r&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></div></figure>
+<p>编译时会被转换成如下的形式：</p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">99</span>;</span><br><span class="line"><span class="keyword">int</span> *r = &amp;a;</span><br><span class="line">*r = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;r&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="“引用”-与-“指针”-区别"   >
+          <a href="#“引用”-与-“指针”-区别" class="heading-link"><i class="fas fa-link"></i></a>“引用” 与 “指针” 区别</h2>
+      <ol>
+<li><p>引用必须在定义时初始化，并且以后也要从一而终，不能再指向其他数据；而指针没有这个限制，指针在定义时不必赋值，以后也能指向任意数据。</p>
+</li>
+<li><p>可以有 const 指针，但是没有 const 引用。也就是说，引用变量不能定义为下面的形式：</p>
+</li>
+</ol>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> &amp; <span class="keyword">const</span> r = a;</span><br></pre></td></tr></table></div></figure>
+<p>因为 r 本来就不能改变指向，加上 const 是多此一举。</p>
+<ol start="3">
+<li>指针可以有多级，但是引用只能有一级，例如，int **p是合法的，而int &amp;&amp;r是不合法的。如果希望定义一个引用变量来指代另外一个引用变量，那么也只需要加一个&amp;，如下所示：</li>
+</ol>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r = a;</span><br><span class="line"><span class="keyword">int</span> &amp;rr = r;</span><br></pre></td></tr></table></div></figure>
+<ol start="4">
+<li>指针和引用的自增（++）自减（–）运算意义不一样。对指针使用 ++ 表示指向下一份数据，对引用使用 ++ 表示它所指代的数据本身加 1；自减（–）也是类似的道理.  </li>
+</ol>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r = a;</span><br><span class="line">r++;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; r &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">2</span>] = &#123;<span class="number">27</span>, <span class="number">84</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> *p = arr;</span><br><span class="line">p++;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></div></figure>
+<p>输出:</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">84</span></span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="指针"   >
+          <a href="#指针" class="heading-link"><i class="fas fa-link"></i></a>指针</h2>
+      <p>指针就是数据或代码在内存中的地址，指针变量指向的就是内存中的数据或代码。这里有一个关键词需要强调，就是内存，指针只能指向内存，不能指向寄存器或者硬盘，因为寄存器和硬盘没法寻址。  </p>
+
+        <h3 id="指针无法指向的变量等"   >
+          <a href="#指针无法指向的变量等" class="heading-link"><i class="fas fa-link"></i></a>指针无法指向的变量等</h3>
+      <p>例如表达式的结果、函数的返回值等，它们可能会放在内存中，也可能会放在寄存器中。一旦它们被放到了寄存器中，就没法用&amp;获取它们的地址了，也就没法用指针指向它们了。  </p>
+<p><code>寄存器离 CPU 近，并且速度比内存快，将临时数据放到寄存器是为了加快程序运行.</code>  </p>
+<p>int、double、bool、char 等基本类型的数据往往不超过 8 个字节，用一两个寄存器就能存储，所以这些类型的临时数据通常会放到寄存器中；而对象、结构体变量是自定义类型的数据，大小不可预测，所以这些类型的临时数据通常会放到内存中.  </p>
+<ol>
+<li>下面的代码演示了表达式所产生的临时结果, 这些表达式的结果都会被放到寄存器中，尝试用&amp;获取它们的地址都是错误的。</li>
+</ol>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n = <span class="number">100</span>, m = <span class="number">200</span>;</span><br><span class="line"><span class="keyword">int</span> *p1 = &amp;(m + n);    <span class="comment">//m + n 的结果为 300</span></span><br><span class="line"><span class="keyword">int</span> *p2 = &amp;(n + <span class="number">100</span>);  <span class="comment">//n + 100 的结果为 200</span></span><br><span class="line"><span class="keyword">bool</span> *p4 = &amp;(m &lt; n);   <span class="comment">//m &lt; n 的结果为 false</span></span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>下面的代码演示了函数返回值所产生的临时结果, func() 的返回值 100 也会被放到寄存器中，也没法用&amp;获取它的地址.  </li>
+</ol>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> *p = &amp;(func());</span><br></pre></td></tr></table></div></figure>
+<ol start="3">
+<li>常量表达式由于不包含变量，没有不稳定因素，所以在编译阶段就能求值。编译器不会分配单独的内存来存储常量表达式的值，而是将常量表达式的值和代码合并到一起，放到虚拟地址空间中的代码区.<br>诸如 100、200+34、34.5*23、3+7/3 等不包含变量的表达式称为常量表达式（Constant expression).  </li>
+</ol>
+
+        <h3 id="引用错误使用临时变量"   >
+          <a href="#引用错误使用临时变量" class="heading-link"><i class="fas fa-link"></i></a>引用错误使用临时变量</h3>
+      <p>引用作为函数参数时，有时候很容易给它传递临时数据, 这是不允许的, 因为引用和指针在本质上是一样的，引用仅仅是对指针进行了简单的封装.  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isOdd</span><span class="params">(<span class="keyword">int</span> &amp;n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n%<span class="number">2</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">isOdd(a);      <span class="comment">// 正确</span></span><br><span class="line">isOdd(a + <span class="number">9</span>);  <span class="comment">// 错误</span></span><br><span class="line">isOdd(<span class="number">27</span>);     <span class="comment">// 错误</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="引用正确使用临时变量"   >
+          <a href="#引用正确使用临时变量" class="heading-link"><i class="fas fa-link"></i></a>引用正确使用临时变量</h3>
+      <p>const 引用和普通引用不一样，我们只能通过 const 引用读取数据的值，而不能修改它的值，所以不用考虑同步更新的问题，也不会产生两份不同的数据，为 const 引用创建临时变量反而会使得引用更加灵活和通用.  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isOdd</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> &amp;n)</span></span>&#123;  <span class="comment">//改为常引用</span></span><br><span class="line">    <span class="keyword">if</span>(n/<span class="number">2</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>由于在函数体中不会修改 n 的值，所以可以用 const 限制 n，这样一来，下面的函数调用就都是正确的了：</p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">isOdd(a);        <span class="comment">//正确</span></span><br><span class="line">isOdd(a + <span class="number">9</span>);    <span class="comment">//正确</span></span><br><span class="line">isOdd(<span class="number">27</span>);       <span class="comment">//正确</span></span><br><span class="line">isOdd(<span class="number">23</span> + <span class="number">55</span>);  <span class="comment">//正确</span></span><br></pre></td></tr></table></div></figure>
+<p>对于第 2 行代码，编译器不会创建临时变量，会直接绑定到变量 a；对于第 3~5 行代码，编译器会创建临时变量来存储临时数据。也就是说，编译器只有在必要时才会创建临时变量</p>
+
+        <h2 id="引用类型的函数形参请尽可能的使用-const"   >
+          <a href="#引用类型的函数形参请尽可能的使用-const" class="heading-link"><i class="fas fa-link"></i></a>引用类型的函数形参请尽可能的使用 const</h2>
+      <p>当引用的类型和数据的类型不一致时，如果它们的类型是相近的，并且遵守「数据类型的自动转换」规则，那么编译器就会创建一个临时变量，并将数据赋值给这个临时变量（这时候会发生自动类型转换），然后再将引用绑定到这个临时的变量，这与「将 const 引用绑定到临时数据时」采用的方案是一样的.  </p>
+<p>引用作为函数参数时，如果在函数体内部不会修改引用所绑定的数据，那么请尽量为该引用添加 const 限制.  </p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">volume</span><span class="params">(<span class="keyword">const</span> <span class="keyword">double</span> &amp;len, <span class="keyword">const</span> <span class="keyword">double</span> &amp;width, <span class="keyword">const</span> <span class="keyword">double</span> &amp;hei)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> len * width * <span class="number">2</span> + len * hei * <span class="number">2</span> + width * hei * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">12</span>, b = <span class="number">3</span>, c = <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">double</span> v1 = volume(a, b, c);</span><br><span class="line">    <span class="keyword">double</span> v2 = volume(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>);</span><br><span class="line">    <span class="keyword">double</span> v3 = volume(<span class="number">89.4</span>, <span class="number">32.7</span>, <span class="number">19</span>);</span><br><span class="line">    <span class="keyword">double</span> v4 = volume(a + <span class="number">12.5</span>, b + <span class="number">23.4</span>, <span class="number">16.78</span>);</span><br><span class="line">    <span class="keyword">double</span> v5 = volume(a + b, a + c, b + c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lf, %lf, %lf, %lf, %lf\n"</span>, v1, v2, v3, v4, v5);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>运行结果：</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">672.000000</span>, <span class="number">2200.000000</span>, <span class="number">10486.560000</span>, <span class="number">3001.804000</span>, <span class="number">3122.000000</span></span><br></pre></td></tr></table></div></figure>
+<p>概括起来说，将引用类型的形参添加 const 限制的理由有三个：</p>
+<ul>
+<li>使用 const 可以避免无意中修改数据的编程错误；</li>
+<li>使用 const 能让函数接收 const 和非 const 类型的实参，否则将只能接收非 const 类型的实参；</li>
+<li>使用 const 引用能够让函数正确生成并使用临时变量。</li>
+</ul>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/language/cpp/05_reference_pointer/">https://kung-fu-master.github.io/2021/03/13/language/cpp/05_reference_pointer/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/language/cpp/04_destructor/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">04 Destructor</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/language/cpp/06_%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/"><span class="paginator-prev__text">06 继承与派生</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.</span> <span class="toc-text">
+          Reference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#C-引用作为函数参数"><span class="toc-number">1.1.</span> <span class="toc-text">
+          C++引用作为函数参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-引用作为函数返回值"><span class="toc-number">1.2.</span> <span class="toc-text">
+          C++引用作为函数返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用实质"><span class="toc-number">1.3.</span> <span class="toc-text">
+          引用实质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#“引用”-与-“指针”-区别"><span class="toc-number">2.</span> <span class="toc-text">
+          “引用” 与 “指针” 区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指针"><span class="toc-number">3.</span> <span class="toc-text">
+          指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针无法指向的变量等"><span class="toc-number">3.1.</span> <span class="toc-text">
+          指针无法指向的变量等</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用错误使用临时变量"><span class="toc-number">3.2.</span> <span class="toc-text">
+          引用错误使用临时变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用正确使用临时变量"><span class="toc-number">3.3.</span> <span class="toc-text">
+          引用正确使用临时变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用类型的函数形参请尽可能的使用-const"><span class="toc-number">4.</span> <span class="toc-text">
+          引用类型的函数形参请尽可能的使用 const</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

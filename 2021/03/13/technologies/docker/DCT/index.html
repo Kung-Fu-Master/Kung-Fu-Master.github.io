@@ -1,0 +1,522 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="reference: https:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;security&#x2F;trust&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Content Trust(DCT) and Notary">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/technologies/docker/DCT/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="reference: https:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;security&#x2F;trust&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary"><title>Docker Content Trust(DCT) and Notary | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/technologies/docker/DCT/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Docker Content Trust(DCT) and Notary</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3k</span></span></div></header><div class="post-body"><p>reference: <span class="exturl"><a class="exturl__link"   href="https://docs.docker.com/engine/security/trust/"  target="_blank" rel="noopener">https://docs.docker.com/engine/security/trust/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<a id="more"></a>
+
+<p><strong><code>Note:</code></strong> 每次重新部署DCT和Notary时候要重启shell终端, 因为设置了很多临时环境变量会导致重新部署Notary不成功!</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> DOCKER_CONTENT_TRUST_SERVER</span><br><span class="line"><span class="built_in">unset</span> DOCKER_CONTENT_TRUST</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Machine-configuration"   >
+          <a href="#Machine-configuration" class="heading-link"><i class="fas fa-link"></i></a>Machine configuration</h2>
+      <div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">机器</th>
+<th align="left">IP</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">master</td>
+<td align="left">10.239.140.65</td>
+<td align="center">部署了docker registry仓库和notary服务器</td>
+</tr>
+<tr>
+<td align="left">laboratory</td>
+<td align="left">10.239.131.157</td>
+<td align="center">用来测试上传下载master上的registry中的images</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li>master机器：<figure class="highlight accesslog"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hosts</span><br><span class="line">......</span><br><span class="line"><span class="number">10.239.140.65</span> master</span><br><span class="line"><span class="number">10.239.131.157</span> laboratory</span><br><span class="line"><span class="number">127.0.0.1</span> notary-server</span><br></pre></td></tr></table></div></figure></li>
+<li>laboratory机器:<figure class="highlight accesslog"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10.239.140.65</span> master notaryserver</span><br><span class="line"><span class="number">10.239.131.157</span> laboratory</span><br></pre></td></tr></table></div></figure>
+
+</li>
+</ul>
+
+        <h2 id="master机器"   >
+          <a href="#master机器" class="heading-link"><i class="fas fa-link"></i></a>master机器</h2>
+      
+        <h3 id="部署registry本地仓库"   >
+          <a href="#部署registry本地仓库" class="heading-link"><i class="fas fa-link"></i></a>部署registry本地仓库</h3>
+      <figure class="highlight jboss-cli"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span>改变容器运行时存储位置</span><br><span class="line">$ vim <span class="string">/etc/docker/daemon.json</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="string">"insecure-registries"</span> :[<span class="string">"10.239.140.65:5000"</span>, <span class="string">"master:5000"</span>],</span><br><span class="line"><span class="string">"registry-mirrors"</span>: [<span class="string">"https://uxk0ognt.mirror.aliyuncs.com"</span>],</span><br><span class="line"><span class="string">"live-restore"</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">"data-root"</span>: <span class="string">"/home/&lt;user-name&gt;/data"</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">//</span> 重新加载docker daemon, systemctl daemon-reload会重启doker运行时.</span><br><span class="line">$ systemctl <span class="keyword">reload</span> docker</span><br><span class="line"></span><br><span class="line"><span class="string">//</span> 部署私有仓库</span><br><span class="line">$ docker run -d -p 5000<span class="function">:5000</span> -v <span class="string">/home/</span>&lt;user-name&gt;<span class="string">/data/registry</span>:<span class="string">/var/lib/registry</span> <span class="params">--restart=always</span> <span class="params">--name</span> registry registry<span class="function">:2</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h3 id="安装docker-compose"   >
+          <a href="#安装docker-compose" class="heading-link"><i class="fas fa-link"></i></a>安装docker-compose</h3>
+      <figure class="highlight dts"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo curl -L <span class="string">"https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)"</span> -o <span class="meta-keyword">/usr/</span>local<span class="meta-keyword">/bin/</span>docker-compose</span><br><span class="line"></span><br><span class="line"><span class="comment">// Apply executable permissions to the binary:</span></span><br><span class="line">$ sudo chmod +x <span class="meta-keyword">/usr/</span>local<span class="meta-keyword">/bin/</span>docker-compose</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="部署notary-server"   >
+          <a href="#部署notary-server" class="heading-link"><i class="fas fa-link"></i></a>部署notary server</h3>
+      <p><strong><code>master机器上部署notary server, signer, mysql服务</code></strong></p>
+<p>notary只能在master机器上部署</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/theupdateframework/notary.git</span></span><br><span class="line">cd notary/fixtures/</span><br><span class="line">vim regenerateTestingCerts.sh</span><br><span class="line">	在<span class="string">"notary-server.cnf"</span>部分的subjectAltName变量修改成如下, 加上master机器IP</span><br><span class="line">	subjectAltName = DNS:notary-server, DNS:notaryserver, DNS:localhost, IP:<span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>, IP:<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外 notary-server.key, notary-signer.key, notary-escrow.key默认用已存在的key</span></span><br><span class="line"><span class="comment">// 需要再在regenerateTestingCerts.sh脚本里添加重新生成这三者</span></span><br><span class="line">vim regenerateTestingCerts.sh</span><br><span class="line">	......</span><br><span class="line">	<span class="number">56</span> # Then generate notary-server</span><br><span class="line">	<span class="number">57</span> openssl genrsa -<span class="keyword">out</span> <span class="string">"notary-server.key"</span> <span class="number">3072</span></span><br><span class="line">	<span class="number">58</span> # Use the existing notary-server key</span><br><span class="line">	......</span><br><span class="line">	<span class="number">80</span> # Then generate notary-signer</span><br><span class="line">	<span class="number">81</span> openssl genrsa -<span class="keyword">out</span> <span class="string">"notary-signer.key"</span> <span class="number">3072</span></span><br><span class="line">	<span class="number">82</span> # Use the existing notary-signer key</span><br><span class="line">	......</span><br><span class="line">	<span class="number">104</span> # Then generate notary-escrow</span><br><span class="line">	<span class="number">105</span> openssl genrsa -<span class="keyword">out</span> <span class="string">"notary-escrow.key"</span> <span class="number">3072</span></span><br><span class="line">	<span class="number">106</span> # Use the existing notary-escrow key</span><br><span class="line">	......</span><br><span class="line"></span><br><span class="line">cd ..    <span class="comment">//回到notary根目录</span></span><br><span class="line">vim  -O server.Dockerfile signer.Dockerfile 添加如下两行配置proxy</span><br><span class="line">	ENV http_proxy=http:<span class="comment">//child-prc.intel.com:913</span></span><br><span class="line">	ENV https_proxy=http:<span class="comment">//child-prc.intel.com:913</span></span><br><span class="line">docker-compose build  <span class="comment">// 构建image, 但不会启动容器</span></span><br><span class="line">docker-compose up -d  <span class="comment">// 启动容器, -d:后台运行</span></span><br><span class="line">mkdir -p ~/.notary &amp;&amp; cp cmd/notary/config.json cmd/notary/root-ca.crt ~/.notary</span><br><span class="line"></span><br><span class="line"><span class="comment">// 拷贝 notary-server.crt到docker可信赖目录</span></span><br><span class="line">mkdir -p ~/.docker/tls/<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">4443</span></span><br><span class="line">cp fixtures/notary-server.crt ~/.docker/tls/<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">4443</span>/ca.crt</span><br></pre></td></tr></table></div></figure>
+
+<p><strong><code>NOTE:</code></strong> 完整的regenerateTestingCerts.sh文件请参考<a href="../../../../../02/02/technologies/docker/regenerateTestingCerts/">regenerateTestingCerts.sh</a>文档</p>
+<p>修改<strong><code>~/.notary/config.json</code></strong>文件内容如下:</p>
+<figure class="highlight json"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"trust_dir"</span> : <span class="string">"~/.docker/trust"</span>,</span><br><span class="line">    <span class="attr">"remote_server"</span>: &#123;</span><br><span class="line">        <span class="attr">"url"</span>: <span class="string">"https://127.0.0.1:4443"</span>,</span><br><span class="line">        <span class="attr">"root_ca"</span>: <span class="string">"root-ca.crt"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>所有notary server 配置文件设置信息请参考如下连接:<br><span class="exturl"><a class="exturl__link"   href="https://docs.docker.com/notary/reference/server-config/"  target="_blank" rel="noopener">https://docs.docker.com/notary/reference/server-config/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>添加<strong><code>trust_dir</code></strong>后运行如下命令可以查看已存在的key, 但是需要参考下面下载notary client才可执行</p>
+<figure class="highlight lsl"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ notary <span class="type">key</span> <span class="type">list</span></span><br></pre></td></tr></table></div></figure>
+
+<p>Add <strong><code>127.0.0.1 notary-server</code></strong> to your <strong><code>/etc/hosts</code></strong>, or if using docker-machine, add $(docker-machine ip) notary-server).<br>You can run through the examples in the getting started docs and advanced usage docs, but without the<strong><code>-s</code></strong> (server URL) argument to the <strong><code>notary</code></strong> command since the server URL is specified already in the configuration, file you copied.</p>
+<p>You can also leave off the <strong><code>-d ~/.docker/trust</code></strong> argument if you do not care to use <strong><code>notary</code></strong> with Docker images.</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker ps | grep notary</span><br><span class="line">	bcaa8af05a11        notary_server                    <span class="string">"/usr/bin/env sh -c …"</span>   <span class="number">3</span> hours ago         Up <span class="number">3</span> hours          <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">4443</span>-&gt;<span class="number">4443</span>/tcp, <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">32769</span>-&gt;<span class="number">8080</span>/tcp   notary_server_1</span><br><span class="line">	<span class="number">8</span>a5f51586629        notary_signer                    <span class="string">"/usr/bin/env sh -c …"</span>   <span class="number">3</span> hours ago         Up <span class="number">3</span> hours                                                            notary_signer_1</span><br><span class="line">	<span class="number">17920752</span>ae65        mariadb:<span class="number">10.4</span>                     <span class="string">"docker-entrypoint.s…"</span>   <span class="number">3</span> hours ago         Up <span class="number">3</span> hours          <span class="number">3306</span>/tcp                                          notary_mysql_1</span><br></pre></td></tr></table></div></figure>
+
+<p>验证证书:</p>
+<figure class="highlight stata"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl verify -CAfile &lt;(<span class="keyword">cat</span> fixtures/intermediate-<span class="keyword">ca</span>.crt fixtures/root-<span class="keyword">ca</span>.crt) fixtures/notary-server.crt</span><br></pre></td></tr></table></div></figure>
+
+<p>(可选操作)添加notary根证书到主机 <strong><code>/etc/pki/ca-trust/source/anchors/</code></strong>目录, 让主机信任证书, 这里可以跳过不设置.</p>
+<figure class="highlight vim"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">cp</span> fixtures/root-<span class="keyword">ca</span>.crt /etc/pki/<span class="keyword">ca</span>-trust/<span class="keyword">source</span>/anchors/</span><br><span class="line">sudo <span class="keyword">cp</span> fixtures/intermediate-<span class="keyword">ca</span>.crt /etc/pki/<span class="keyword">ca</span>-trust/<span class="keyword">source</span>/anchors/</span><br><span class="line"><span class="keyword">update</span>-<span class="keyword">ca</span>-trust</span><br></pre></td></tr></table></div></figure>
+
+
+<p>测试 connect to notary server</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl s_client -connect <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">4443</span> -CAfile fixtures/root-ca.crt -no_ssl3 -no_ssl2</span><br><span class="line">openssl s_client -connect <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">4443</span> -CAfile ~/.notary/root-ca.crt -no_ssl3 -no_ssl2</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="设置环境变量"   >
+          <a href="#设置环境变量" class="heading-link"><i class="fas fa-link"></i></a>设置环境变量</h3>
+      <p>配置notary server端证书到docker目录</p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//export DOCKER_CONTENT_TRUST_SERVER=https://&lt;URL&gt;:&lt;PORT&gt;</span></span><br><span class="line"><span class="keyword">export</span> DOCKER_CONTENT_TRUST_SERVER=https:<span class="comment">//127.0.0.1:4443</span></span><br><span class="line"><span class="keyword">export</span> DOCKER_CONTENT_TRUST=<span class="number">1</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h3 id="生成key和证书"   >
+          <a href="#生成key和证书" class="heading-link"><i class="fas fa-link"></i></a>生成key和证书.</h3>
+      <p><strong>可以在master机器上生成key和证书可以用来</strong><code>sign image</code><strong>, 在laboratory机器上生成key和证书可以用来sign image</strong>, <strong><code>此时master机器和laboraty机器作用一样</code></strong></p>
+<p>A prerequisite for signing an image is a Docker Registry with a Notary server attached (Such as the Docker Hub ). Instructions for standing up a self-hosted environment can be found here <span class="exturl"><a class="exturl__link"   href="https://docs.docker.com/engine/security/trust/deploying_notary/"  target="_blank" rel="noopener">deploying_notary</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</p>
+<p>To sign a Docker Image you will need a delegation key pair. These keys can be generated locally using <strong><code>$ docker trust key generate</code></strong> or generated by a certificate authority.</p>
+<p>在master机器和laboratry分别执行以下操作生成key和证书, 名字可以一个叫jeff, 另一个叫tester01.</p>
+<figure class="highlight maxima"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out <span class="built_in">key</span>.pem <span class="number">3072</span></span><br><span class="line">openssl req -<span class="built_in">new</span> -sha512 -<span class="built_in">key</span> <span class="built_in">key</span>.pem -out <span class="built_in">key</span>.csr</span><br><span class="line">	填写信息直接回车, 到要填写CN处输入*然后回车</span><br><span class="line">	Common Name (eg, your name <span class="keyword">or</span> your server's hostname) []:*</span><br><span class="line">openssl x509 -req -sha512 -days <span class="number">365</span> -<span class="keyword">in</span> <span class="built_in">key</span>.csr -signkey <span class="built_in">key</span>.pem -out <span class="built_in">key</span>.crt</span><br><span class="line">chmod <span class="number">600</span> <span class="built_in">key</span>.pem</span><br><span class="line">export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE=<span class="string">"12345678"</span> //有这一步后下面的命令就不需要再输入密码</span><br><span class="line"></span><br><span class="line">docker trust <span class="built_in">key</span> <span class="built_in">load</span> <span class="built_in">key</span>.pem --name jeff</span><br><span class="line">	输入passphrase: <span class="number">12345678</span></span><br></pre></td></tr></table></div></figure>
+
+<p>之后会在 <strong><code>~/.docker/trust/private/</code></strong> 生成相应的key</p>
+<p>Within the Docker CLI we can sign and push a container image with the <strong><code>$ docker trust</code></strong> command syntax. This is built on top of the Notary feature set, more information on Notary can be found here <span class="exturl"><a class="exturl__link"   href="https://docs.docker.com/notary/getting_started/"  target="_blank" rel="noopener">notary-get-start</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</p>
+
+        <h3 id="签名仓库和镜像"   >
+          <a href="#签名仓库和镜像" class="heading-link"><i class="fas fa-link"></i></a>签名仓库和镜像</h3>
+      <p><strong>私有仓库(如10.239.140.65:5000/python)先前已经存在, 上传 <code>jeff</code> 的 <code>signer key</code> 到此私有仓库，于此同时初始化此私有仓库</strong></p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker trust signer add --key certs/key.crt jeff <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python</span><br><span class="line">notary delegation list <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python</span><br></pre></td></tr></table></div></figure>
+
+<p><strong><code>NOTE:</code></strong> 通过registry:2 搭建的private repository里的 <strong><code>python目录</code></strong> 就相当于一个私有仓库, 而其它目录如 <strong><code>dir02</code></strong> 就是另外的仓库.<br>如果用 <strong><code>trust signer</code></strong> 上传到 <strong><code>dir02</code></strong> 就会重新生成singer key到 <strong><code>dir02</code></strong>仓库, 此过程会需要你重新设置 <strong>dir02</strong>仓库singer key的PASSPHRASE<br>上面操作后应该是会在宿主机 <strong><code>ls ~/.docker/trust/private/</code></strong> 生成signer key, 下次操作时候可以注意下.</p>
+<p><strong>签名本地image并上传到private repository</strong><br>use the delegation private key to sign a particular tag and push it up to the registry：<br>使用  <strong><code>jeff</code></strong> 的 <strong><code>signer key</code></strong>签名 image并上传到部署的registry私有仓库.</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker trust sign <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br></pre></td></tr></table></div></figure>
+<p>Remote trust data for a tag or a repository can be viewed by the $ docker trust inspect command:<br>如果sign过的image显示信息如下:</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ docker trust inspect --pretty <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line">Signatures <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line"></span><br><span class="line">SIGNED TAG               DIGEST                                                             SIGNERS</span><br><span class="line"><span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span>   b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33   jeff</span><br><span class="line"></span><br><span class="line">List of signers <span class="keyword">and</span> their keys <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line"></span><br><span class="line">SIGNER              KEYS</span><br><span class="line">jeff                <span class="number">3e6</span>bcd979c6c</span><br><span class="line"></span><br><span class="line">Administrative keys <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line"></span><br><span class="line">  Repository Key:       fd98d671f8da8902c3202891513c743408039cf747185ce74a3790142a0a2535</span><br><span class="line">  Root Key:     f6ee60c9640fb9ed3a3086c3d884a1fde655a31e5fd0eed70e07ba985c634f95</span><br></pre></td></tr></table></div></figure>
+
+<p>没有sign过的image显示信息如下, 缺少SIGNED TAG信息:</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ docker trust inspect --pretty <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim</span><br><span class="line">No signatures <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim</span><br><span class="line"></span><br><span class="line">List of signers <span class="keyword">and</span> their keys <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim</span><br><span class="line"></span><br><span class="line">SIGNER              KEYS</span><br><span class="line">jeff                <span class="number">3e6</span>bcd979c6c</span><br><span class="line"></span><br><span class="line">Administrative keys <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim</span><br><span class="line"></span><br><span class="line">  Repository Key:       fd98d671f8da8902c3202891513c743408039cf747185ce74a3790142a0a2535</span><br><span class="line">  Root Key:     f6ee60c9640fb9ed3a3086c3d884a1fde655a31e5fd0eed70e07ba985c634f95</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="去掉镜像签名"   >
+          <a href="#去掉镜像签名" class="heading-link"><i class="fas fa-link"></i></a>去掉镜像签名</h3>
+      <p>去除Remote Trust data for a tag:</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker trust revoke <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br></pre></td></tr></table></div></figure>
+
+<p>使docker 客户端强制实行DCT<br>Content trust is disabled by default in the Docker Client. To enable it, set the DOCKER_CONTENT_TRUST environment variable to 1</p>
+<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">DOCKER_CONTENT_TRUST</span>=1</span><br></pre></td></tr></table></div></figure>
+
+<p>When DCT is enabled in the Docker client, <strong><code>docker</code></strong> CLI commands that operate on tagged images must either have content signatures or explicit content hashes. The commands that operate with DCT are:<br> • push<br> • build<br> • create<br> • pull<br> • run</p>
+<p>For example, with DCT enabled a docker pull someimage:latest only succeeds if someimage:latest is signed. However, an operation with an explicit content hash always succeeds as long as the hash exists:</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim</span><br><span class="line">No valid trust data <span class="keyword">for</span> <span class="number">3.9</span><span class="number">.1</span>-slim</span><br><span class="line"></span><br><span class="line">$ docker pull <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line">Pull (<span class="number">1</span> of <span class="number">1</span>): <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span>@sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line">sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33: Pulling <span class="keyword">from</span> python</span><br><span class="line">Digest: sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line">Status: Image <span class="keyword">is</span> up to date <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/<span class="symbol">python@</span>sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line">Tagging <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/<span class="symbol">python@</span>sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33 as <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line"><span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line"></span><br><span class="line">$ docker pull <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-<span class="symbol">slim@</span>sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line">sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33: Pulling <span class="keyword">from</span> python</span><br><span class="line">Digest: sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line">Status: Image <span class="keyword">is</span> up to date <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/<span class="symbol">python@</span>sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line"><span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-<span class="symbol">slim@</span>sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line"></span><br><span class="line">$ docker images | grep python </span><br><span class="line">看不到上面的<span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-<span class="symbol">slim@</span>sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33</span><br><span class="line"></span><br><span class="line">但是可以通过tag命令给此image再添加标签如:</span><br><span class="line">$ docker tag <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:<span class="number">3.9</span><span class="number">.1</span>-<span class="symbol">slim@</span>sha256:b2013807b8af03d66f60a979f20d4e93e4e4a111df1287d9632c8cfd41ecfa33 <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python:test</span><br><span class="line">$ docker images | grep python</span><br><span class="line"><span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python                               test                           edd87973afe0        <span class="number">2</span> weeks ago         <span class="number">114</span>MB</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="laboratory机器"   >
+          <a href="#laboratory机器" class="heading-link"><i class="fas fa-link"></i></a>laboratory机器</h2>
+      
+        <h3 id="配置环境变量"   >
+          <a href="#配置环境变量" class="heading-link"><i class="fas fa-link"></i></a>配置环境变量</h3>
+      <figure class="highlight accesslog"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hosts</span><br><span class="line"><span class="number">10.239.140.65</span> master notaryserver</span><br><span class="line"><span class="number">10.239.131.157</span> laboratory</span><br></pre></td></tr></table></div></figure>
+
+<p>设置DCT 可信任变量</p>
+<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">DOCKER_CONTENT_TRUST_SERVER</span>=https://10.239.140.65:4443</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">DOCKER_CONTENT_TRUST</span>=1</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="拷贝master-notary证书"   >
+          <a href="#拷贝master-notary证书" class="heading-link"><i class="fas fa-link"></i></a>拷贝master notary证书</h3>
+      <p>scp master机器的notary-server证书和root-ca证书 到laboratory机器.</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/.docker/tls/<span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">4443</span>/</span><br><span class="line">scp <span class="symbol">root@</span><span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:/root/.docker/tls/<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">4443</span>/ca.crt ~/.docker/tls/<span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">4443</span>/ca.crt</span><br><span class="line">mkdir -p ~/.notary</span><br><span class="line">scp <span class="symbol">root@</span><span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:/root/.notary/root-ca.crt ~/.notary/root-ca.crt</span><br></pre></td></tr></table></div></figure>
+
+<p>编写notary config 文件</p>
+<figure class="highlight arcade"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cat ~<span class="regexp">/.notary/</span>config.json</span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"trust_dir"</span> : <span class="string">"~/.docker/trust"</span>,</span><br><span class="line">        <span class="string">"remote_server"</span>: &#123;</span><br><span class="line">                <span class="string">"url"</span>: <span class="string">"https://10.239.140.65:4443"</span>,</span><br><span class="line">                <span class="string">"root_ca"</span>: <span class="string">"root-ca.crt"</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="生成key和证书-1"   >
+          <a href="#生成key和证书-1" class="heading-link"><i class="fas fa-link"></i></a>生成key和证书</h3>
+      <p>在laboratory机器上生成signer <strong><code>bob</code></strong> 的 key 和 证书, 添加signer <strong><code>bob</code></strong> 的 key到指定 registry 仓库, 之后sign image</p>
+<figure class="highlight maxima"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> certs</span><br><span class="line">cd certs</span><br><span class="line">openssl genrsa -out <span class="built_in">key</span>.pem <span class="number">3072</span></span><br><span class="line">openssl req -<span class="built_in">new</span> -sha512 -<span class="built_in">key</span> <span class="built_in">key</span>.pem -out <span class="built_in">key</span>.csr</span><br><span class="line">	填写信息直接回车, 到要填写CN处输入*然后回车</span><br><span class="line">	Common Name (eg, your name <span class="keyword">or</span> your server's hostname) []:*</span><br><span class="line">openssl x509 -req -sha512 -days <span class="number">365</span> -<span class="keyword">in</span> <span class="built_in">key</span>.csr -signkey <span class="built_in">key</span>.pem -out <span class="built_in">key</span>.crt</span><br><span class="line">chmod <span class="number">600</span> <span class="built_in">key</span>.pem</span><br><span class="line">export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE=<span class="string">"12345678"</span> //有这一步后下面的命令就不需要再输入密码</span><br><span class="line"></span><br><span class="line">docker trust <span class="built_in">key</span> <span class="built_in">load</span> <span class="built_in">key</span>.pem --name bob</span><br><span class="line">	输入passphrase: <span class="number">12345678</span></span><br><span class="line">之后会在 **`~/.docker/trust/private/`** 生成相应的<span class="built_in">key</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="签名仓库和镜像并上传"   >
+          <a href="#签名仓库和镜像并上传" class="heading-link"><i class="fas fa-link"></i></a>签名仓库和镜像并上传</h3>
+      <figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加signer key到10.239.140.65:5000/python-test10仓库</span></span><br><span class="line">$ docker trust signer add --key certs/key.crt bob <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python-test10</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看delegation key</span></span><br><span class="line">$ notary delegation list <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python-test10</span><br><span class="line">  ROLE                PATHS             KEY IDS                                                             THRESHOLD</span><br><span class="line">  ----                -----             -------                                                             ---------</span><br><span class="line">  targets/releases    <span class="string">""</span> &lt;all paths&gt;    <span class="number">7e1f</span>01ed1d6d0698d5cd5856ec9be27debed33645d2450f20495b70a8a5db83c    <span class="number">1</span></span><br><span class="line">  targets/bob         <span class="string">""</span> &lt;all paths&gt;    <span class="number">7e1f</span>01ed1d6d0698d5cd5856ec9be27debed33645d2450f20495b70a8a5db83c    <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// sign image并上传到10.239.140.65:5000/python-test10仓库</span></span><br><span class="line">$ docker trust sign <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python-test10:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 再次sign同一个image会提示image的sign已存在</span></span><br><span class="line">$ docker trust sign <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python-test10:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line">  Signing <span class="keyword">and</span> pushing trust metadata <span class="keyword">for</span> <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python-test10:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br><span class="line">  Existing signatures <span class="keyword">for</span> tag <span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span> digest b9c45d9576c0e70dfe19ec5f481ec4b59daf970a5036463fcb523cf8ebf7fc5c <span class="keyword">from</span>:</span><br><span class="line">  bob</span><br><span class="line">  Successfully signed <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span>/python-test10:<span class="number">3.9</span><span class="number">.1</span>-slim-security<span class="number">-01</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="查看registry私有仓库"   >
+          <a href="#查看registry私有仓库" class="heading-link"><i class="fas fa-link"></i></a>查看registry私有仓库</h3>
+      <figure class="highlight dts"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查看所有仓库</span></span><br><span class="line">$ curl <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span><span class="meta-keyword">/v2/</span>_catalog</span><br><span class="line"></span><br><span class="line"><span class="comment">//查看指定仓库所有tag</span></span><br><span class="line">$ curl <span class="number">10.239</span><span class="number">.140</span><span class="number">.65</span>:<span class="number">5000</span><span class="meta-keyword">/v2/</span>python-test10<span class="meta-keyword">/tags/</span>list</span><br><span class="line">&#123;<span class="string">"name"</span>:<span class="string">"python-test10"</span>,<span class="string">"tags"</span>:[<span class="string">"3.9.1-slim-security-01"</span>, <span class="string">"3.9.1-slim-security-02"</span>]&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h2 id="notary-client"   >
+          <a href="#notary-client" class="heading-link"><i class="fas fa-link"></i></a>notary client</h2>
+      <p><strong>master和laboratory都需要下载notary client, notary client是一个二进制可执行文件.</strong></p>
+<p>If you would like to use your own Notary server, it is important to use the same or a newer Notary version, as the client for feature compatibility (ex: client version 0.2, server/signer version &gt;= 0.2). (reference: <span class="exturl"><a class="exturl__link"   href="https://docs.docker.com/notary/getting_started/#inspect-a-docker-hub-repository"  target="_blank" rel="noopener">https://docs.docker.com/notary/getting_started/#inspect-a-docker-hub-repository</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>)<br>查看nodary server signer版本</p>
+<figure class="highlight awk"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker images | grep notary</span><br><span class="line"></span><br><span class="line">wget https:<span class="regexp">//gi</span>thub.com<span class="regexp">/theupdateframework/</span>notary<span class="regexp">/releases/</span>download<span class="regexp">/v0.6.1/</span>notary-Linux-amd64</span><br><span class="line">chmod +x notary-Linux-amd64</span><br><span class="line">cp notary-Linux-amd64 <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>notary</span><br></pre></td></tr></table></div></figure>
+
+<p>查看notary client版本</p>
+<figure class="highlight yaml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">notary</span> <span class="string">version</span></span><br><span class="line"><span class="string">notary</span></span><br><span class="line"> <span class="attr">Version:</span>    <span class="number">0.6</span><span class="number">.1</span></span><br><span class="line"> <span class="attr">Git commit:</span> <span class="string">d6e1431f</span></span><br></pre></td></tr></table></div></figure>
+
+<p>The Notary client used in isolation does not know where the trust repositories are located. So, you must provide the <strong><code>-s</code></strong> (or long form <strong><code>--server</code></strong> ) flag to tell the client which repository server it should communicate with.</p>
+<p>Additionally, Notary stores your own signing keys, and a cache of previously downloaded trust metadata in a directory, provided with the <strong><code>-d</code></strong> flag. When interacting with Docker Hub repositories, you must instruct the client to use the associated trust directory, which by default is found at <strong><code>.docker/trust</code></strong> within the calling user’s home directory (failing to use this directory may result in errors when publishing updates to your trust data):</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ notary -s https:<span class="comment">//notary.docker.io -d ~/.docker/trust list docker.io/library/alpine</span></span><br><span class="line">   NAME                                 DIGEST                                SIZE (BYTES)    ROLE</span><br><span class="line">------------------------------------------------------------------------------------------------------</span><br><span class="line">  <span class="number">2.6</span>      e9cec9aec697d8b9d450edd32860ecd363f2f3174c8338beb5f809422d182c63   <span class="number">1374</span>           targets</span><br><span class="line">  <span class="number">2.7</span>      <span class="number">9f</span>08005dff552038f0ad2f46b8e65ff3d25641747d3912e3ea8da6785046561a   <span class="number">1374</span>           targets</span><br><span class="line">  <span class="number">3.1</span>      e876b57b2444813cd474523b9c74aacacc238230b288a22bccece9caf2862197   <span class="number">1374</span>           targets</span><br><span class="line">  <span class="number">3.2</span>      <span class="number">4</span>a8c62881c6237b4c1434125661cddf09434d37c6ef26bf26bfaef0b8c5e2f05   <span class="number">1374</span>           targets</span><br><span class="line">  <span class="number">3.3</span>      <span class="number">2</span>d4f890b7eddb390285e3afea9be98a078c2acd2fb311da8c9048e3d1e4864d3   <span class="number">1374</span>           targets</span><br><span class="line">  edge     <span class="number">878</span>c1b1d668830f01c2b1622ebf1656e32ce830850775d26a387b2f11f541239   <span class="number">1374</span>           targets</span><br><span class="line">  latest   <span class="number">24</span>a36bbc059b1345b7e8be0df20f1b23caa3602e85d42fff7ecd9d0bd255de56   <span class="number">1377</span>           targets</span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h2 id="Rotate-keys"   >
+          <a href="#Rotate-keys" class="heading-link"><i class="fas fa-link"></i></a>Rotate keys</h2>
+      <p>Reference: <span class="exturl"><a class="exturl__link"   href="https://github.com/theupdateframework/notary/blob/master/docs/advanced_usage.md#manage-keys"  target="_blank" rel="noopener">https://github.com/theupdateframework/notary/blob/master/docs/advanced_usage.md#manage-keys</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="清理notary"   >
+          <a href="#清理notary" class="heading-link"><i class="fas fa-link"></i></a>清理notary</h2>
+      <figure class="highlight properties"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cd</span> <span class="string">notary</span></span><br><span class="line"><span class="attr">rm</span> <span class="string">-rf ~/.notary</span></span><br><span class="line"><span class="attr">rm</span> <span class="string">-rf ~/.docker</span></span><br><span class="line"><span class="meta">docker-compose</span> <span class="string">down</span></span><br><span class="line"><span class="attr">docker</span> <span class="string">rmi notary_server:latest</span></span><br><span class="line"><span class="attr">docker</span> <span class="string">rmi notary_signer:latest</span></span><br><span class="line"><span class="attr">unset</span> <span class="string">DOCKER_CONTENT_TRUST_SERVER</span></span><br><span class="line"><span class="attr">unset</span> <span class="string">DOCKER_CONTENT_TRUST</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="清理notary-key"   >
+          <a href="#清理notary-key" class="heading-link"><i class="fas fa-link"></i></a>清理notary key</h3>
+      <p>Remove the key from the local Docker Trust store</p>
+<figure class="highlight sas"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 查看有哪些<span class="meta">key</span></span><br><span class="line">notary <span class="meta">key</span> <span class="meta">list</span></span><br><span class="line"></span><br><span class="line">// 清理<span class="meta">key</span></span><br><span class="line">notary <span class="meta">key</span> <span class="meta">remove</span> 1091060d7bfd938dfa5be703fa057974f9322a4faef6f580334f3d6df44c02d1</span><br></pre></td></tr></table></div></figure>
+<p>以下命令可以直接从本地删除key, 因此避免误删最好备份.</p>
+<figure class="highlight typescript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~<span class="regexp">/.notary/</span>trust/<span class="keyword">private</span>/&lt;key-<span class="built_in">number</span>&gt;</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/technologies/docker/DCT/">https://kung-fu-master.github.io/2021/03/13/technologies/docker/DCT/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/docker/">docker</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/storage/minio/minIO_04_client_SDK/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">MinIO 04 client SDK</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/technologies/docker/docker_02_private_hub/"><span class="paginator-prev__text">docker 02 private hub &amp; journal</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Machine-configuration"><span class="toc-number">1.</span> <span class="toc-text">
+          Machine configuration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#master机器"><span class="toc-number">2.</span> <span class="toc-text">
+          master机器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#部署registry本地仓库"><span class="toc-number">2.1.</span> <span class="toc-text">
+          部署registry本地仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装docker-compose"><span class="toc-number">2.2.</span> <span class="toc-text">
+          安装docker-compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署notary-server"><span class="toc-number">2.3.</span> <span class="toc-text">
+          部署notary server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置环境变量"><span class="toc-number">2.4.</span> <span class="toc-text">
+          设置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成key和证书"><span class="toc-number">2.5.</span> <span class="toc-text">
+          生成key和证书.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#签名仓库和镜像"><span class="toc-number">2.6.</span> <span class="toc-text">
+          签名仓库和镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#去掉镜像签名"><span class="toc-number">2.7.</span> <span class="toc-text">
+          去掉镜像签名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#laboratory机器"><span class="toc-number">3.</span> <span class="toc-text">
+          laboratory机器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置环境变量"><span class="toc-number">3.1.</span> <span class="toc-text">
+          配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拷贝master-notary证书"><span class="toc-number">3.2.</span> <span class="toc-text">
+          拷贝master notary证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成key和证书-1"><span class="toc-number">3.3.</span> <span class="toc-text">
+          生成key和证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#签名仓库和镜像并上传"><span class="toc-number">3.4.</span> <span class="toc-text">
+          签名仓库和镜像并上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看registry私有仓库"><span class="toc-number">3.5.</span> <span class="toc-text">
+          查看registry私有仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#notary-client"><span class="toc-number">4.</span> <span class="toc-text">
+          notary client</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rotate-keys"><span class="toc-number">5.</span> <span class="toc-text">
+          Rotate keys</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#清理notary"><span class="toc-number">6.</span> <span class="toc-text">
+          清理notary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#清理notary-key"><span class="toc-number">6.1.</span> <span class="toc-text">
+          清理notary key</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Linux curl命令详解       在Linux中curl是一个利用URL规则在命令行下工作的文件传输工具，可以说是一款很强大的http命令行工具。它支持文件的上传和下载，是综合传输工具，但按传统，习惯称url为下载工具。常见参数： 1234567891011121314151617-A&#x2F;--user-agent &lt;string&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="curl &amp; wget">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/linux/curl_wget/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Linux curl命令详解       在Linux中curl是一个利用URL规则在命令行下工作的文件传输工具，可以说是一款很强大的http命令行工具。它支持文件的上传和下载，是综合传输工具，但按传统，习惯称url为下载工具。常见参数： 1234567891011121314151617-A&#x2F;--user-agent &lt;string&gt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.841Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.841Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>curl &amp; wget | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/linux/curl_wget/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">curl &amp; wget</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.3k</span></span></div></header><div class="post-body">
+        <h2 id="Linux-curl命令详解"   >
+          <a href="#Linux-curl命令详解" class="heading-link"><i class="fas fa-link"></i></a>Linux curl命令详解</h2>
+      <p>在Linux中curl是一个利用URL规则在命令行下工作的文件传输工具，可以说是一款很强大的http命令行工具。它支持文件的上传和下载，是综合传输工具，但按传统，习惯称url为下载工具。<br>常见参数：</p>
+<figure class="highlight haml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">A/--user-agent &lt;string&gt;              设置用户代理发送给服务器</span></span><br><span class="line"><span class="ruby">-b/--cookie &lt;name=string/file&gt;    cookie字符串或文件读取位置</span></span><br><span class="line"><span class="ruby">-c/--cookie-jar &lt;file&gt;                    操作结束后把cookie写入到这个文件中</span></span><br><span class="line"><span class="ruby">-C/--continue-at &lt;offset&gt;            断点续转</span></span><br><span class="line"><span class="ruby">-D/--dump-header &lt;file&gt;              把header信息写入到该文件中</span></span><br><span class="line"><span class="ruby">-e/--referer                                  来源网址</span></span><br><span class="line"><span class="ruby">-f/--fail                                          连接失败时不显示http错误</span></span><br><span class="line"><span class="ruby">-H/--header                           添加 HTTP 请求的标头.</span></span><br><span class="line"><span class="ruby">-o/--output                                  把输出写到该文件中</span></span><br><span class="line"><span class="ruby">-O/--remote-name                      把输出写到该文件中，保留远程文件的文件名</span></span><br><span class="line"><span class="ruby">-r/--range &lt;range&gt;                      检索来自HTTP/<span class="number">1.1</span>或FTP服务器字节范围</span></span><br><span class="line"><span class="ruby">-s/--silent                                    静音模式。不输出任何东西</span></span><br><span class="line"><span class="ruby">-T/--upload-file &lt;file&gt;                  上传文件</span></span><br><span class="line"><span class="ruby">-u/--user &lt;user[<span class="symbol">:password</span>]&gt;      设置服务器的用户和密码</span></span><br><span class="line"><span class="ruby">-w/--write-out [format]                什么输出完成后</span></span><br><span class="line"><span class="ruby">-x/--proxy &lt;host[<span class="symbol">:port</span>]&gt;              在给定的端口上使用HTTP代理</span></span><br><span class="line"><span class="ruby">-<span class="comment">#/--progress-bar                        进度条显示当前的传送状态</span></span></span><br></pre></td></tr></table></div></figure>
+<p>wget更像一个迅雷，是个专门用来下载文件的下载利器.</p>
+<p><strong><code>/dev/null</code></strong> 是类 unix 系统的 空设备, <strong><code>&gt; /del/null</code></strong> 就是把标准输出重定向到空设备，不显示也不保存, <strong><code>2&gt;&amp;1</code></strong> 是把标准错误重定向到标准输出，也就是前面的空设备.</p>
+
+        <h3 id="基本命令"   >
+          <a href="#基本命令" class="heading-link"><i class="fas fa-link"></i></a>基本命令</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://man.linuxde.net/text.iso                    <span class="comment">#O大写，不用O只是打印内容不会下载</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget http://www.linuxde.net/text.iso                       <span class="comment">#不用参数，直接下载文件</span></span></span><br><span class="line">root@alpha:/home/test# curl -O http://man.linuxde.net/text.iso</span><br><span class="line"><span class="meta">%</span><span class="bash"> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span></span><br><span class="line">								Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  6332  100  6332    0     0   441k      0 --:--:-- --:--:-- --:--:--  441k</span><br></pre></td></tr></table></div></figure>
+
+<p><strong><code>-H</code></strong> 参数添加 HTTP 请求的标头。</p>
+<figure class="highlight scilab"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加 HTTP 标头Accept-Language: en-US.</span></span><br><span class="line">$ curl -H <span class="string">'Accept-Language: en-US'</span> https:<span class="comment">//google.com</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加两个 HTTP 标头.</span></span><br><span class="line">$ curl -H <span class="string">'Accept-Language: en-US'</span> -H <span class="string">'Secret-Message: xyzzy'</span> https:<span class="comment">//google.com</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加 HTTP 请求的标头是Content-Type: application/json，然后用 -d 参数发送 JSON 数据.</span></span><br><span class="line">$ curl -d <span class="string">'&#123;"</span>login<span class="string">": "</span>emma<span class="string">", "</span>pass<span class="string">": "</span><span class="number">123</span><span class="string">"&#125;'</span> -H <span class="string">'Content-Type: application/json'</span> https:<span class="comment">//google.com/login</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h3 id="保存网页"   >
+          <a href="#保存网页" class="heading-link"><i class="fas fa-link"></i></a>保存网页</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl http://www.linux.com &gt;&gt; linux.html</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="下载文件"   >
+          <a href="#下载文件" class="heading-link"><i class="fas fa-link"></i></a>下载文件</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://man.linuxde.net/text.iso                    <span class="comment">#O大写，不用O只是打印内容不会下载</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget http://www.linuxde.net/text.iso                       <span class="comment">#不用参数，直接下载文件</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="下载文件并重命名"   >
+          <a href="#下载文件并重命名" class="heading-link"><i class="fas fa-link"></i></a>下载文件并重命名</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -o rename.iso http://man.linuxde.net/text.iso         <span class="comment">#o小写</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget -O rename.zip http://www.linuxde.net/text.iso         <span class="comment">#O大写</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="断点续传"   >
+          <a href="#断点续传" class="heading-link"><i class="fas fa-link"></i></a>断点续传</h3>
+      <p>在windows中，我们可以使用迅雷这样的软件进行断点续传。curl可以通过内置option:-C同样可以达到相同的效果<br>如果在下载dodo1.JPG的过程中突然掉线了，可以使用以下的方式续传</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -O -C -URL http://man.linuxde.net/text.iso            #C大写</span><br><span class="line">wget -c http://www.linuxde.net/text.iso                    #c小写</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="限速下载"   >
+          <a href="#限速下载" class="heading-link"><i class="fas fa-link"></i></a>限速下载</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl --<span class="built_in">limit</span>-rate 50k -O http://man.linuxde.net/text.iso</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget --<span class="built_in">limit</span>-rate=50k http://www.linuxde.net/text.iso</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="显示响应头部信息"   >
+          <a href="#显示响应头部信息" class="heading-link"><i class="fas fa-link"></i></a>显示响应头部信息</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -I http://man.linuxde.net/text.iso</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget --server-response http://www.linuxde.net/test.iso</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="wget利器–打包下载网站"   >
+          <a href="#wget利器–打包下载网站" class="heading-link"><i class="fas fa-link"></i></a>wget利器–打包下载网站</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget --mirror -p --convert-links -P /var/www/html http://man.linuxde.net/</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="O-大写-保存网页中的文件-要注意这里后面的url要具体到某个文件，不然抓不下来"   >
+          <a href="#O-大写-保存网页中的文件-要注意这里后面的url要具体到某个文件，不然抓不下来" class="heading-link"><i class="fas fa-link"></i></a>-O(大写)保存网页中的文件, 要注意这里后面的url要具体到某个文件，不然抓不下来</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/hello.sh</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="x来支持设置代理"   >
+          <a href="#x来支持设置代理" class="heading-link"><i class="fas fa-link"></i></a>-x来支持设置代理</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -x 192.168.100.100:1080 http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="保存http的response里面的cookie信息。内置option-c（小写）"   >
+          <a href="#保存http的response里面的cookie信息。内置option-c（小写）" class="heading-link"><i class="fas fa-link"></i></a>保存http的response里面的cookie信息。内置option:-c（小写）</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -c cookiec.txt  http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="保存http的response里面的header信息。内置option-D"   >
+          <a href="#保存http的response里面的header信息。内置option-D" class="heading-link"><i class="fas fa-link"></i></a>保存http的response里面的header信息。内置option: -D</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -D cookied.txt http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option-b"   >
+          <a href="#很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option-b" class="heading-link"><i class="fas fa-link"></i></a>很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option: -b</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -b cookiec.txt http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="以服务器上的名称保存文件到本地-O（大写"   >
+          <a href="#以服务器上的名称保存文件到本地-O（大写" class="heading-link"><i class="fas fa-link"></i></a>以服务器上的名称保存文件到本地: -O（大写)</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/dodo1.JPG</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="循环下载"   >
+          <a href="#循环下载" class="heading-link"><i class="fas fa-link"></i></a>循环下载</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/dodo[1-5].JPG</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/&#123;hello,bb&#125;/dodo[1-5].JPG</span></span><br></pre></td></tr></table></div></figure>
+<p>下载<span class="exturl"><a class="exturl__link"   href="http://www.linux.com/hello/dodo[1-5].JPG"  target="_blank" rel="noopener">http://www.linux.com/hello/dodo[1-5].JPG</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 和 <span class="exturl"><a class="exturl__link"   href="http://www.linux.com/bb/dodo[1-5].JPG"  target="_blank" rel="noopener">http://www.linux.com/bb/dodo[1-5].JPG</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 文件</p>
+
+        <h3 id="显示进度条"   >
+          <a href="#显示进度条" class="heading-link"><i class="fas fa-link"></i></a>显示进度条</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -<span class="comment"># -O http://www.linux.com/dodo1.JPG</span></span></span><br><span class="line">root@alpha:/home/zhan/test# curl -# -O http://www.linux.com/dodo1.JPG</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">###################################################################################### 100.0%</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="上传文件"   >
+          <a href="#上传文件" class="heading-link"><i class="fas fa-link"></i></a>上传文件</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -T dodo1.JPG -u 用户名:密码 ftp://www.linux.com/img/</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="Additional"   >
+          <a href="#Additional" class="heading-link"><i class="fas fa-link"></i></a>Additional</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@alpha:/home/zhan/images_test# curl 10.239.140.186:8081</span><br><span class="line">You have hit fef0dd414fe4</span><br><span class="line">root@alpha:/home/zhan/images_test# wget 10.239.140.186:8081</span><br><span class="line">--2020-05-11 14:59:53--  http://10.239.140.186:8081/</span><br><span class="line">Resolving child-prc.intel.com (child-prc.intel.com)... 10.239.4.100</span><br><span class="line">Connecting to child-prc.intel.com (child-prc.intel.com)|10.239.4.100|:913... connected.</span><br><span class="line">Proxy request sent, awaiting response... 200 OK</span><br><span class="line">Length: unspecified</span><br><span class="line">Saving to: ‘index.html’</span><br><span class="line"></span><br><span class="line">index.html                              [ &lt;=&gt;                                                                ]      24  --.-KB/s    in 0s</span><br><span class="line"></span><br><span class="line">2020-05-11 14:59:53 (3.27 MB/s) - ‘index.html’ saved [24]</span><br><span class="line"></span><br><span class="line">root@alpha:/home/zhan/images_test# ls</span><br><span class="line">index.html</span><br><span class="line">root@alpha:/home/zhan/images_test# cat index.html</span><br><span class="line">You have hit fef0dd414fe4</span><br><span class="line">root@alpha:/home/zhan/images_test#</span><br></pre></td></tr></table></div></figure>
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/linux/curl_wget/">https://kung-fu-master.github.io/2021/03/13/linux/curl_wget/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/linux/cppc%E5%8A%A8%E6%80%81%E8%B0%83%E9%A2%91/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">cppc动态调频</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/linux/curl%E5%8D%87%E7%BA%A7/"><span class="paginator-prev__text">curl 升级</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-curl命令详解"><span class="toc-number">1.</span> <span class="toc-text">
+          Linux curl命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本命令"><span class="toc-number">1.1.</span> <span class="toc-text">
+          基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保存网页"><span class="toc-number">1.2.</span> <span class="toc-text">
+          保存网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载文件"><span class="toc-number">1.3.</span> <span class="toc-text">
+          下载文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载文件并重命名"><span class="toc-number">1.4.</span> <span class="toc-text">
+          下载文件并重命名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#断点续传"><span class="toc-number">1.5.</span> <span class="toc-text">
+          断点续传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限速下载"><span class="toc-number">1.6.</span> <span class="toc-text">
+          限速下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#显示响应头部信息"><span class="toc-number">1.7.</span> <span class="toc-text">
+          显示响应头部信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wget利器–打包下载网站"><span class="toc-number">1.8.</span> <span class="toc-text">
+          wget利器–打包下载网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#O-大写-保存网页中的文件-要注意这里后面的url要具体到某个文件，不然抓不下来"><span class="toc-number">1.9.</span> <span class="toc-text">
+          -O(大写)保存网页中的文件, 要注意这里后面的url要具体到某个文件，不然抓不下来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x来支持设置代理"><span class="toc-number">1.10.</span> <span class="toc-text">
+          -x来支持设置代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保存http的response里面的cookie信息。内置option-c（小写）"><span class="toc-number">1.11.</span> <span class="toc-text">
+          保存http的response里面的cookie信息。内置option:-c（小写）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保存http的response里面的header信息。内置option-D"><span class="toc-number">1.12.</span> <span class="toc-text">
+          保存http的response里面的header信息。内置option: -D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option-b"><span class="toc-number">1.13.</span> <span class="toc-text">
+          很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option: -b</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以服务器上的名称保存文件到本地-O（大写"><span class="toc-number">1.14.</span> <span class="toc-text">
+          以服务器上的名称保存文件到本地: -O（大写)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环下载"><span class="toc-number">1.15.</span> <span class="toc-text">
+          循环下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#显示进度条"><span class="toc-number">1.16.</span> <span class="toc-text">
+          显示进度条</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传文件"><span class="toc-number">1.17.</span> <span class="toc-text">
+          上传文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional"><span class="toc-number">1.18.</span> <span class="toc-text">
+          Additional</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

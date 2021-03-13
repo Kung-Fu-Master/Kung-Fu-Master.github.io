@@ -1,0 +1,572 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://kung-fu-master.github.io/page/28/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/page/28/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E7%A0%94%E7%A9%B6/">intel_pstate/acpi-cpufreq驱动研究</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">265</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>查看intel_pstate &amp; cpu-freq驱动<br>Tag: v5.0<br>1.<br>linux/drivers/cpufreq/intel_pstate.c<br>    update_turbo_state(void)</p>
+<pre><code>if (hwp_active)
+    intel_pstate_hwp_enable(struct cpudata *cpudata)  
+        0x773-&gt;0, 0x770-&gt;1
+
+Pn: core_get_min_pstate(void)          CPU min MHz   // msr: 0x771 P0,P1,Pn HWP Performance Range Enumeration
+    (0xce &gt;&gt; 40) &amp; 0xFF = 0x0a = 10 -&gt; 1000MHz
+
+P1: core_get_max_pstate_physical(void)     CPU max MHz
+    (0xce &gt;&gt; 8) &amp; 0xFF  = 0x17 = 23 -&gt; 2.3GHz
+
+P1: core_get_tdp_ratio(u64 plat_info) //1332
+    tdp_msr = 0x64b(0x80000000) &amp; 0x03 + 0x648 = 0x648
+    rdmsr 0x648 = 0x17 = 23 -&gt; 2.3GHz
+
+P1: core_get_max_pstate(void) //1365
+    if(hwp_active) return tdp_ratio = 2.3GHz
+    tar_levels = 0x64c(80000000) &amp; 0xff = 0
+    if (tdp_ratio - 1 == tar_levels) max_pstate = tar_levels
+
+P0: core_get_turbo_pstate(void)  //1400
+    0x1ad &amp; 255 = 0x27 = 39 -&gt; 3.9GHz   msr寄存器0x1ad前7bit值
+
+intel_pstate_set_pstate(struct cpudata *cpu, int pstate) // 1453
+    0x199
+    0x198 Core Voltage (R/O) P-state core voltage can be computed by MSR_PERF_STATUS[37:32] * (float) 1/(2^13).
+
+intel_pstate_hwp_boost_up(struct cpudata *cpu) // 1516
+
+intel_pstate_hwp_boost_down(struct cpudata *cpu) // 1562
+
+intel_pstate_calc_avg_perf(struct cpudata *cpu) //1618
+    core_avg_perf = (aperf &lt;&lt; 14) / mperf
+
+get_avg_frequency(struct cpudata *cpu) // 1667
+    (aperf &lt;&lt; 14) / mperf * cpu_khz &gt;&gt; 14      cpu_khz /* TSC clocks / usec, not used here */    
+
+get_avg_pstate(struct cpudata *cpu) //1672
+    (aperf &lt;&lt; 14) / mperf * max_pstate_physical &gt;&gt; 14    
+
+static struct cpufreq_driver *default_driver = &amp;intel_pstate; // 2327
+    默认是intel_pstate驱动
+
+early_param(&quot;intel_pstate&quot;, intel_pstate_setup); //2682
+    读取 /etc/default/grub 引导文件中的参数</code></pre><p>2.<br>linux/drivers/cpufreq/acpi-cpufreq.c</p>
+<p>3.<br>linux/drivers/cpufreq/cppc_cpufreq.c</p>
+<p>4.<br>linux/drivers/idle/intel_idle.c</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/VirtualBox%E5%AE%89%E8%A3%85Centos7/">VirutalBos安装Centos7</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">501</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>Reference Link:<br>(外网): <span class="exturl"><a class="exturl__link"   href="https://www.avoiderrors.com/install-centos-7-virtual-box/"  target="_blank" rel="noopener">https://www.avoiderrors.com/install-centos-7-virtual-box/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>(csdn): <span class="exturl"><a class="exturl__link"   href="https://blog.csdn.net/qq_23033339/article/details/80867195"  target="_blank" rel="noopener">https://blog.csdn.net/qq_23033339/article/details/80867195</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>(csdn): <span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/hihtml5/p/8217062.html"  target="_blank" rel="noopener">https://www.cnblogs.com/hihtml5/p/8217062.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="1-Download-and-install-VirtualBox-from-its-official-website-and-make-sure-that-you-had-downloaded-the-latest-version"   >
+          <a href="#1-Download-and-install-VirtualBox-from-its-official-website-and-make-sure-that-you-had-downloaded-the-latest-version" class="heading-link"><i class="fas fa-link"></i></a>1. Download and install VirtualBox from its official website, and make sure that you had downloaded the latest version.</h2>
+      
+        <h2 id="2-Also-download-the-official-CentOS-ISO-from-the-official-website-the-latest-CentOS-build-is-7"   >
+          <a href="#2-Also-download-the-official-CentOS-ISO-from-the-official-website-the-latest-CentOS-build-is-7" class="heading-link"><i class="fas fa-link"></i></a>2. Also download the official CentOS ISO from the official website, the latest CentOS build is 7.</h2>
+      
+        <h2 id="3-Run-your-VirtualBox-after-you-had-installed-it-on-your-computer-and-located-its-icon-on-the-desktop-and-click-on-“New“"   >
+          <a href="#3-Run-your-VirtualBox-after-you-had-installed-it-on-your-computer-and-located-its-icon-on-the-desktop-and-click-on-“New“" class="heading-link"><i class="fas fa-link"></i></a>3. Run your VirtualBox after you had installed it on your computer and located its icon on the desktop and click on “New“.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="01.png"  alt="">
+      </p>
+
+        <h2 id="4-Give-your-new-OS-name-and-set-your-RAM-memory-and-also-select-the-version-to-be-“Red-Hat-64-bit"   >
+          <a href="#4-Give-your-new-OS-name-and-set-your-RAM-memory-and-also-select-the-version-to-be-“Red-Hat-64-bit" class="heading-link"><i class="fas fa-link"></i></a>4. Give your new OS name and set your RAM memory, and also select the version to be “Red Hat (64-bit).</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="02.png"  alt="">
+      </p>
+
+        <h2 id="5-On-the-Hard-Disk-step-select-“Create-a-virtual-hard-drive-now”-and-then-click-Create"   >
+          <a href="#5-On-the-Hard-Disk-step-select-“Create-a-virtual-hard-drive-now”-and-then-click-Create" class="heading-link"><i class="fas fa-link"></i></a>5. On the Hard Disk step, select “Create a virtual hard drive now” and then click Create.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="03.png"  alt="">
+      </p>
+
+        <h2 id="6-Select-VDI-“VirtualBox-Disk-Image”-and-click-Next-and-then-select-“Dynamically-allocated”-and-click-Next-then-Create"   >
+          <a href="#6-Select-VDI-“VirtualBox-Disk-Image”-and-click-Next-and-then-select-“Dynamically-allocated”-and-click-Next-then-Create" class="heading-link"><i class="fas fa-link"></i></a>6. Select VDI “VirtualBox Disk Image” and click Next, and then select “Dynamically allocated” and click Next then Create.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="04.png"  alt="">
+      <br>默认选项即可，默认选择的是VirtualBox虚拟机软件专用的磁盘映像格式，其他虚拟机软件可能无法读取。</p>
+<p>点击下一步，进行设置如何分配虚拟硬盘</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="05.png"  alt="">
+      <br>默认选项即可，两者有何不同界面上已经有很详细的说明了。</p>
+<p>点击下一步，指定虚拟硬盘文件的存放位置和虚拟硬盘的大小。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="06.png"  alt="">
+      </p>
+
+        <h2 id="7-添加ISO和网络-From-the-Setting-click-on-Storage-and-then-add-the-ISO-file-to-the-optical-drive-to-install-the-operating-system"   >
+          <a href="#7-添加ISO和网络-From-the-Setting-click-on-Storage-and-then-add-the-ISO-file-to-the-optical-drive-to-install-the-operating-system" class="heading-link"><i class="fas fa-link"></i></a>7. (添加ISO和网络)From the Setting click on Storage, and then add the ISO file to the optical drive to install the operating system.</h2>
+      <p><strong>NOTE:</strong>如下图System选项下Proessor默认处理器数量是1, 可以根据个人需要设置成3+</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="07.jpg"  alt="">
+      </p>
+<p>VirtualBox的四种网络连接方式</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="09.png"  alt="">
+      <br>virtualbox默认的网络连接方式如下</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="10.png"  alt="">
+      <br>可以看到桥接模式是最佳选项，它支持所有情况的访问, 修改虚拟机连接方式为桥接网卡, 如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="11.png"  alt="">
+      </p>
+<p>按照下图配置虚拟机的网络</p>
+<p><strong>Linux系统上通过执行<code>ip addr</code>查看并选择系统网卡</strong></p>
+
+        <h2 id="8-You-had-successfully-configured-your-CentOS-well-power-on-your-virtual-machine-by-clicking-on-Start"   >
+          <a href="#8-You-had-successfully-configured-your-CentOS-well-power-on-your-virtual-machine-by-clicking-on-Start" class="heading-link"><i class="fas fa-link"></i></a>8. You had successfully configured your CentOS well, power on your virtual machine by clicking on Start.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="08.png"  alt="">
+      </p>
+
+        <h2 id="9-From-the-boot-menu-select-“Install-CentOS-Linux-7”-and-press-Enter"   >
+          <a href="#9-From-the-boot-menu-select-“Install-CentOS-Linux-7”-and-press-Enter" class="heading-link"><i class="fas fa-link"></i></a>9. From the boot menu select “Install CentOS Linux 7” and press Enter.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="12.png"  alt="">
+      </p>
+
+        <h2 id="10-Select-your-language-and-press-on-Continue"   >
+          <a href="#10-Select-your-language-and-press-on-Continue" class="heading-link"><i class="fas fa-link"></i></a>10. Select your language and press on Continue.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="13.png"  alt="">
+      </p>
+
+        <h2 id="11-Setup-your-time-settings-location-network-and-then-click-“Begin-Installation”"   >
+          <a href="#11-Setup-your-time-settings-location-network-and-then-click-“Begin-Installation”" class="heading-link"><i class="fas fa-link"></i></a>11. Setup your time settings, location, network, and then click “Begin Installation”.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="14.png"  alt="">
+      <br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="14.1.jpg"  alt="">
+      <br><strong>NOTE:</strong> 以太网默认enp0s3打开之后会显示<strong><code>已连接</code></strong>并且自动生成<strong><code>IP地址</code></strong></p>
+
+        <h2 id="12-During-the-installation-you-set-the-root-and-the-user-account"   >
+          <a href="#12-During-the-installation-you-set-the-root-and-the-user-account" class="heading-link"><i class="fas fa-link"></i></a>12. During the installation, you set the root and the user account.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="15.png"  alt="">
+      </p>
+
+        <h2 id="13-After-the-installation-is-completed-press-on-Reboot"   >
+          <a href="#13-After-the-installation-is-completed-press-on-Reboot" class="heading-link"><i class="fas fa-link"></i></a>13. After the installation is completed, press on Reboot.</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="16.png"  alt="">
+      </p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/Windows10mstsc%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Centos7.0/">Windows10 mstsc远程登录Centos7.0</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">532</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>配置iptables防火墙<br>    在xrdp使用是3389端口，所以在iptables中也要开放相应的端口，否则无法访问<br> 　　iptables -A INPUT -p tcp –dport 3389 -j ACCEPT<br>    　　service iptables save<br>From <span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/Skyar/p/5260368.html"  target="_blank" rel="noopener">https://www.cnblogs.com/Skyar/p/5260368.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+<p>centos 安装xrdp远程连接桌面</p>
+<ol>
+<li>安装epel库，否则无法安装xrdp</li>
+</ol>
+<p>yum install epel-release<br>2.安装 xrdp<br>yum install xrdp<br>3. 安装tigervnc-server<br>yum install tigervnc-server<br>4. 配置xrdp.ini文件<br>vim /etc/xrdp/xrdp.ini<br>把max_bpp=32 改成24<br>5.配置selinux<br>chcon -t bin_t /usr/sbin/xrdp<br>chcon -t bin_t /usr/sbin/xrdp-sesman<br>6.设置xrdp服务，开机自动启动<br>systemctl start xrdp<br>systemctl enable xrdp<br>7.打开防火墙<br>firewall-cmd  –permanent –zone=public –add-port=3389/tcp<br>firewall-cmd –reload<br>8.查看xrdp是否启动<br>systemctl status xrdp.service<br>ss -antup|grep xrdp<br>9.启动window rdp连接<br>From <span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/Jesse-Li/p/10284221.html"  target="_blank" rel="noopener">https://www.cnblogs.com/Jesse-Li/p/10284221.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+<p>2 关闭防火墙<br>systemctl stop firewalld.service<br>• 1<br>设置开机不启动防火墙<br>systemctl disable firewalld.servie</p>
+<p>3、关闭SElinux<br>1）查看selinux状态<br>sestatus<br>• 1<br>2）临时关闭selinux<br>setenforce 0<br>• 1<br>永久关闭selinux<br>vim /etc/selinux/config<br>SELINUX=disabled</p>
+<p>查看服务列表状态:</p>
+<ol>
+<li><p>systemctl list-units –type=service </p>
+</li>
+<li><p>systemctl   list-unit-files       列出所有已经安装的  服务  及  状态      （可为人所读,  内容简略、清晰）：</p>
+</li>
+<li><p>systemctl 可以列出正在运行的服务状态</p>
+</li>
+</ol>
+<p>启动一个服务：<br>systemctl start postfix.service</p>
+<p>关闭一个服务：<br>systemctl stop postfix.service</p>
+<p>重启一个服务：<br>systemctl restart postfix.service</p>
+<p>显示一个服务的状态：<br>systemctl status postfix.service</p>
+<p>在开机时启用一个服务：systemctl enable postfix.service<br>在开机时禁用一个服务：systemctl disable postfix.service</p>
+<p>查看服务是否开机启动：   systemctl is-enabled postfix.service</p>
+<p>查看已启动的服务列表：   systemctl list-unit-files | grep enabled</p>
+<p>查看启动失败的服务列表：   systemctl –failed</p>
+<p>PS：使用命令 systemctl is-enabled postfix.service 得到的值可以是enable、disable或static，这里的 static 它是指对应的 Unit 文件中没有定义[Install]区域，因此无法配置为开机启动服务。</p>
+<p> 说明：启用服务就是在当前“runlevel”的配置文件目录   /etc/systemd/system/multi-user.target.wants  里，建立  /usr/lib/systemd/system   里面对应服务配置文件的软链接；<br>禁用服务就是删除此软链接，添加服务就是添加软连接。</p>
+<p>From <span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/devilmaycry812839668/p/8481760.html"  target="_blank" rel="noopener">https://www.cnblogs.com/devilmaycry812839668/p/8481760.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/centos%E5%8D%87%E7%BA%A7gcc%E5%88%B09.1.0/">centos升级gcc到9.1.0</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">480</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>centos 升级GCC到9.1.0<br>下载gcc-9.1.0源代码<br>cd gcc-9.1.0<br>vim contrib/download_prerequisites   #查看需要安装的依赖库<br> 30 gmp=’gmp-6.1.0.tar.bz2’<br> 31 mpfr=’mpfr-3.1.4.tar.bz2’<br> 32 mpc=’mpc-1.0.3.tar.gz’<br> 33 isl=’isl-0.18.tar.bz2’<br>直接搜索相应库下载对应版本或下面链接<br>1.gmp <span class="exturl"><a class="exturl__link"   href="http://ftp.gnu.org/gnu/gmp/"  target="_blank" rel="noopener">http://ftp.gnu.org/gnu/gmp/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>2.mpfr <span class="exturl"><a class="exturl__link"   href="http://ftp.gnu.org/gnu/mpfr/"  target="_blank" rel="noopener">http://ftp.gnu.org/gnu/mpfr/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>3.mpc <span class="exturl"><a class="exturl__link"   href="http://ftp.gnu.org/gnu/mpc/"  target="_blank" rel="noopener">http://ftp.gnu.org/gnu/mpc/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>4.isl <span class="exturl"><a class="exturl__link"   href="http://isl.gforge.inria.fr/"  target="_blank" rel="noopener">http://isl.gforge.inria.fr/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>cd gmp-6.1.0<br>./configure –prefix=/usr/local/gmp-6.1.0 &amp;&amp; make<br>make install</p>
+<p>cd mpfr-3.1.4<br>./configure –prefix=/usr/local/mpfr-3.1.4 –with-gmp=/usr/local/gmp-6.1.0 &amp;&amp; make<br>make install</p>
+<p>cd mpc-1.0.3<br>./configure –prefix=/usr/local/mpc-1.0.3 –with-gmp=/usr/local/gmp-6.1.0 –with-mpfr=/usr/local/mpfr-3.1.4 &amp;&amp; make<br>make install</p>
+<p>cd isl-0.18<br>$./configure –prefix=/usr/local/isl-0.18 –with-gmp-prefix=/usr/local/gmp-6.1.0<br>$make<br>$make check<br>$make install</p>
+<p>$export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/isl-0.18/lib<br>或设置到所有tty<br>#vi ~/.bashrc<br>添加export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/isl-0.18/lib<br>再source bashrc</p>
+<p>如果报检测不到gmp,mpfr,mpc相关文件，则把下面对应的也加入进来<br>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mpc-1.0.3/lib:/usr/local/gmp-6.1.0/lib:/usr/local/mpfr-3.1.4/lib:/usr/local/isl-0.18/lib</p>
+<p>cd gcc-9.1.0<br>$./configure –prefix=/usr/local/gcc-9.1.0 –enable-threads=posix –disable-checking –disable-multilib –enable-languages=c,c++ –with-gmp=/usr/local/gmp-6.1.0 –with-mpfr=/usr/local/mpfr-3.1.4 –with-mpc=/usr/local/mpc-1.0.3 –with-isl=/usr/local/isl-0.18<br>$make -j4 #启用4个job，需要大约25分钟时间<br>$make install<br>查看安装路径：<br>$whereis gcc<br>如果有旧的Gcc,替换版本：<br>$cd /usr/bin<br>$mv gcc gcc.bak<br>$mv g++ g++.bak<br>$ln -s /usr/local/gcc-9.1.0/bin/gcc /usr/bin/gcc<br>$ln -s /usr/local/gcc-9.1.0/bin/g++ /usr/bin/g++<br>查看版本：<br>$gcc -v<br>$g++ -v</p>
+<p>运行以下命令检查动态库：<br>strings /usr/lib64/libstdc++.so.6 | grep GLIBC</p>
+<p>cp /usr/local/gcc-9.1.0/lib64/libstdc++.so.6.0.26 /usr/lib64/<br>mv libstdc++.so.6 libstdc++.so.6.bak<br>ln libstdc++.so.6.0.26 libstdc++.so.6</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/Intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E5%88%87%E6%8D%A2/">Intel_pstate/acpi-cpufreq驱动切换</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">47</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>By default it is intel_pstate driver<br>               Change intel_pstate driver to acpi-cpufreq as follow:</p>
+<pre><code>/etc/default/grub, </code></pre><p>change<br>GRUB_CMDLINE_LINUX=”<strong><em>quiet”<br>to<br>GRUB_CMDLINE_LINUX=”</em></strong>quiet intel_pstate=disable”<br>then<br>UEFI 系统上的指令是 grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg<br>after reboot, then acpi-cpufreq driver willbe used.</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/Linux_kernel_userspace%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">Linux kernel userspace体系结构</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">861</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>linux 系统体系结构：<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="linux_gun.jpg"  alt="">
+      </p>
+<p>linux kernel体系结构：<br>arm有7种工作模式，x86也实现了4个不同级别RING0-RING3,RING0级别最高，<br>这样linux用户代码运行在RING3下，内核运行在RING0,这样系统本身就得到了<br>充分的保护<br>用户空间(用户模式)转到内核空间(系统模式)方法：<br>·系统调用<br>·硬件中断<br>linux kernel 体系结构：<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="linux_kernel.jpg"  alt="">
+      </p>
+<p>虚拟文件系统VFS:<br>VFS(虚拟文件系统)隐藏各种文件系统的具体细节，为文件操作提供统一的接口</p>
+<p>二.Linux内核源代码<br>linux内核下载<span class="exturl"><a class="exturl__link"   href="http://www.kernel.org"  target="_blank" rel="noopener">www.kernel.org</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>目录结构:<br>解压linux kernel tar后目录<br>·arch:根据cpu体系结构不同而分的代码<br>·block:部分块设备驱动程序<br>·crypto:加密，压缩，CRC校验算法<br>·documentation:内核文档<br>·drivers:设备驱动程序<br>·fs(虚拟文件系统vfs):文件系统<br>·include:内核所需的头文件，(与平台无关的头文件在include/linux中)<br>·lib:库文件代码(与平台相关的)<br>·mm:实现内存管理，与硬件体系结构无关的(与硬件体系结构相关的在arch中)<br>·net:网络协议的代码<br>·samples:一些内核编程的范例<br>·scripts:配置内核的脚本<br>·security:SElinux的模块<br>·sound:音频设备的驱动程序<br>·usr:cpio命令实现，用于制作根文件系统的命令(文件系统与内核放到一块的命令)<br>·virt:内核虚拟机<br>linux DOC 编译生成:<br>linux源根目录/Documentation/00-INDEX:目录索引<br>linux源根目录/Documentation/HOWTO:指南<br>·生成linux内核帮助文档:在linux源根目录(Documentation) 执行make htmldocs<br>ubuntu16下需要执行sudo apt-get install xmlto安装插件才可生成doc文档</p>
+<p>三.Linux内核配置与编译<br>清理文件(在linux源码根目录):<br>·make clean:只清理所有产生的文件<br>·make mrproper:清理所有产生的文件与config配置文件<br>·make distclean:清理所有产生的文件与config配置文件，并且编辑过的与补丁文件<br>↓<br>配置(收集硬件信息如cpu型号，网卡等…):<br>·make config:基于文本模式的交互配置<br>·make menuconfig:基于文本模式的菜单模式(推荐使用)<br>·make oldconfig:使用已有的.config,但会询问新增的配置项<br>·make xconfig:图形化的配置(需要安装图形化系统)<br>配置方法：<br>1)使用make menuconfig操作方法：<br>1&gt;按y:编译&gt;连接&gt;镜像文件<br>2&gt;按m:编译<br>3&gt;按n:什么都不做<br>4&gt;按”空格键”:y,n轮换<br>配置完并保存后会在linux源码根目录下生成一个.config文件<br>注意：在ubuntu11上要执行apt-get install libncurses5-dev来安装支持包</p>
+<p>四.linux内核模块开发<br>描述：<br>linux内核组件非常庞大，内核ximage并不包含某组件，而是在该组件需要被使用的时候，动态的添加到正在运行的内核中(也可以卸载)，这种机制叫做“内核模块”的机制。内核模块通常通过使用makefile文件对模块进行编译<br>模块安装与卸载:<br>1)加载：insmod hello.ko<br>2)卸载：rmmod hello<br>3)查看：lsmod<br>4)加载(自动寻找模块依赖)：modprobe hello<br>modprobe会根据文件/lib/modules/version/modules.dep来查看要加载的模块，看它是否还依赖于其他模块，如果是,会先找到这些模块，把它们先加载到内核</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/PTU(Power%20Thermal%20Utility)/">PTU(Power Thermal Utility)</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">38</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>PTU (Power Thermal Utility)<br>Intel PTU (Power Thermal Utility) 可以用來測試 CPU 與 Memory 但是這工具需要有 Intel 帳號.</p>
+<p>From <span class="exturl"><a class="exturl__link"   href="https://blog.csdn.net/guyan1101/article/details/80591831"  target="_blank" rel="noopener">https://blog.csdn.net/guyan1101/article/details/80591831</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/TSC/">TSC</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">27</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>linux/Documentation/virtual/kvm/timekeeping.txt</p>
+<p>From <span class="exturl"><a class="exturl__link"   href="https://github.com/torvalds/linux/blob/6f0d349d922ba44e4348a17a78ea51b7135965b1/Documentation/virtual/kvm/timekeeping.txt"  target="_blank" rel="noopener">https://github.com/torvalds/linux/blob/6f0d349d922ba44e4348a17a78ea51b7135965b1/Documentation/virtual/kvm/timekeeping.txt</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+<p>1) Overview<br>2) Timing Devices<br>3) TSC Hardware<br>4) Virtualization Problems</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/U%E7%9B%98RAW%E7%B1%BB%E5%9E%8B%E4%BF%AE%E5%A4%8D/">U盘RAW类型修复</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">131</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="U盘RAW类型修复"   >
+          <a href="#U盘RAW类型修复" class="heading-link"><i class="fas fa-link"></i></a>U盘RAW类型修复</h2>
+      <p>由于不正常断电等因素，U盘插在windows上后OS读取不到，打开磁盘管理器查看发现U盘TYPE为RAW.<br>解决办法: </p>
+<ol>
+<li><p>打开系统磁盘管理器，鼠标右击U盘所在的卷，选择删除卷</p>
+</li>
+<li><p>下载DiskGenius压缩包，免安装，双击”DiskGenius.exe”打开<br><span class="exturl"><a class="exturl__link"   href="https://dl.pconline.com.cn/download/356592-1.html"  target="_blank" rel="noopener">https://dl.pconline.com.cn/download/356592-1.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</li>
+<li><p>查看左边一列，右击U盘所在的选项，选择”清除扇区数据”，然后格式化，选择卷标等，之后就可以了.</p>
+</li>
+</ol>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/U%E7%9B%98%E5%88%86%E5%8C%BA%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D/">U盘制作启动盘分区后恢复</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">230</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="第一种操作步骤"   >
+          <a href="#第一种操作步骤" class="heading-link"><i class="fas fa-link"></i></a>第一种操作步骤</h2>
+      <ol>
+<li>插入U盘。</li>
+<li>按windows键，右键点击运行，再左键点击以管理员身份运行。</li>
+<li>输入diskpart,按enter。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="diskpart.png"  alt="">
+      </li>
+<li>输入list disk,按enter。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="list_disk.png"  alt="">
+      </li>
+<li>之后会看到<br>disk 0<br>disk 1<br>如果你给你电脑磁盘分过区的话可能还有disk 2  、  disk 3等<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="list_disk.png"  alt="">
+      </li>
+<li>输入select disk X(X代表磁盘后面的数字0、1，可磁盘的大小来判断数字是多少，一般是1),按enter<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="select_disk.png"  alt="">
+      </li>
+<li>输入clean，按enter<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="clean.png"  alt="">
+      </li>
+<li>以上完成之后，到“磁盘管理”选择U盘，新建简单卷，并重命名你的U盘</li>
+</ol>
+<p>打开“磁盘管理”方法:<br>任务栏”Search”输入”disk management”, 选择运行”Create and format hard disk partitions”<br>“新建简单卷”方法:<br>打开磁盘管理后，选中U盘所在Disk 如Disk1， 右击鼠标，选中第一个新建卷，默认下一步，期间”Volume lable”输入盘volume名字就可以了.</p>
+
+        <h2 id="第二种使用DiskGenius软件"   >
+          <a href="#第二种使用DiskGenius软件" class="heading-link"><i class="fas fa-link"></i></a>第二种使用DiskGenius软件</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.PNG"  alt="">
+      <br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.PNG"  alt="">
+      </p>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/27/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/29/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Reference       参考下载并生成AWS s3 SDKSetting Up the AWS SDK for C++ source codeSDK_usage_guide.mdUsing CMake Exports with the AWS SDK for C++AWS SDK for C++ Developer GuideCreating, Li">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MinIO 04 client SDK">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_04_client_SDK/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Reference       参考下载并生成AWS s3 SDKSetting Up the AWS SDK for C++ source codeSDK_usage_guide.mdUsing CMake Exports with the AWS SDK for C++AWS SDK for C++ Developer GuideCreating, Li">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="storage">
+<meta name="twitter:card" content="summary"><title>MinIO 04 client SDK | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_04_client_SDK/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">MinIO 04 client SDK</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.7k</span></span></div></header><div class="post-body">
+        <h2 id="Reference"   >
+          <a href="#Reference" class="heading-link"><i class="fas fa-link"></i></a>Reference</h2>
+      <p>参考下载并生成AWS s3 SDK<br><span class="exturl"><a class="exturl__link"   href="https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/setup.html"  target="_blank" rel="noopener">Setting Up the AWS SDK for C++</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p><span class="exturl"><a class="exturl__link"   href="https://github.com/aws/aws-sdk-cpp"  target="_blank" rel="noopener">source code</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://github.com/aws/aws-sdk-cpp/blob/master/Docs/SDK_usage_guide.md"  target="_blank" rel="noopener">SDK_usage_guide.md</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://aws.amazon.com/blogs/developer/using-cmake-exports-with-the-aws-sdk-for-c/"  target="_blank" rel="noopener">Using CMake Exports with the AWS SDK for C++</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/welcome.html"  target="_blank" rel="noopener">AWS SDK for C++ Developer Guide</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/examples-s3-buckets.html"  target="_blank" rel="noopener">Creating, Listing, and Deleting Buckets</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://docs.aws.amazon.com/code-samples/latest/catalog/welcome.html"  target="_blank" rel="noopener">AWS Code Sample Catalog</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://github.com/awsdocs/aws-doc-sdk-examples/tree/master/cpp/example_code/s3"  target="_blank" rel="noopener">aws-doc-sdk-examples</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="Samples"   >
+          <a href="#Samples" class="heading-link"><i class="fas fa-link"></i></a>Samples</h2>
+      
+        <h3 id="c-SDK"   >
+          <a href="#c-SDK" class="heading-link"><i class="fas fa-link"></i></a>c++ SDK</h3>
+      <p>gcc/g++ 4.9+</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> g++ -v</span></span><br><span class="line">......</span><br><span class="line">gcc version 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC)</span><br></pre></td></tr></table></div></figure>
+
+<p>安装cmake</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cmake --version</span></span><br><span class="line">cmake version 3.17.0</span><br><span class="line">CMake suite maintained and supported by Kitware (kitware.com/cmake).</span><br></pre></td></tr></table></div></figure>
+<p>安装依赖库openssl &amp; curl</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install openssl-devel libcurl-devel</span></span><br></pre></td></tr></table></div></figure>
+<p>升级curl</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rpm -Uvh https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/libmetalink-0.1.3-1.el7.x86_64.rpm</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum --showduplicates list curl --disablerepo=<span class="string">"*"</span> --enablerepo=<span class="string">"city*"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl.x86_64                                            7.72.0-2.0.cf.rhel7                                             @city-fan.org</span></span><br><span class="line">......</span><br><span class="line">Available Packages</span><br><span class="line">curl.x86_64                                            7.72.0-2.0.cf.rhel7                                             city-fan.org</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="Download-aws-sdk"   >
+          <a href="#Download-aws-sdk" class="heading-link"><i class="fas fa-link"></i></a>Download aws sdk</h4>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget https://github.com/aws/aws-sdk-cpp/archive/1.8.55.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf 1.8.55.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir build_dir</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> build_dir</span></span><br><span class="line">(编译全部, 会耗费一个小时左右时间, 推荐使用以下只编译S3 service)$ cmake /home/***/aws-sdk-cpp-1.8.55/ -DCMAKE_BUILD_TYPE=Debug</span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake /home/***/aws-sdk-cpp-1.8.55/ -D CMAKE_BUILD_TYPE=[Debug | Release] -D BUILD_ONLY=<span class="string">"s3"</span></span></span><br><span class="line">make</span><br><span class="line">make install // 安装头文件等到系统/usr/local/include目录</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="开发SDK"   >
+          <a href="#开发SDK" class="heading-link"><i class="fas fa-link"></i></a>开发SDK</h4>
+      <p>拷贝aws sdk的头文件和动态库到项目目录</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 拷贝整个aws头文件到项目目录</span><br><span class="line">cp /usr/local/include/aws ***/cpp/include/</span><br><span class="line"></span><br><span class="line">// 拷贝aws两个动态库到项目目录</span><br><span class="line">cp /usr/local/lib64/libaws-cpp-sdk-core.so ***/cpp/libs/</span><br><span class="line">cp /usr/local/lib64/libaws-cpp-sdk-s3.so ***/cpp/libs/</span><br></pre></td></tr></table></div></figure>
+
+<p>查看项目目录</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls cpp</span></span><br><span class="line">CMakeLists.txt  include/  libs/  main/  src/</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> tree cpp</span></span><br><span class="line">cpp</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── include</span><br><span class="line">│   ├── aws</span><br><span class="line">│   │   ├── core</span><br><span class="line">│   │   │   ├── Aws.h</span><br><span class="line">│   │   │   └── ....h</span><br><span class="line">│   │   ├── s3</span><br><span class="line">│   │   │   ├── model</span><br><span class="line">│   │   │   │   ├── Bucket.h</span><br><span class="line">│   │   │   │   ├── CreateBucketRequest.h</span><br><span class="line">│   │   │   │   └── ....h</span><br><span class="line">│   │   │   ├── S3Client.h</span><br><span class="line">│   │   │   └── ....h</span><br><span class="line">│   │   └── utils</span><br><span class="line">│   │       ├── StringUtils.h</span><br><span class="line">│   │       ├── UUID.h</span><br><span class="line">│   │       └── ....h</span><br><span class="line">│   └── minio_client_sdk.h</span><br><span class="line">├── libs</span><br><span class="line">│   ├── libaws-cpp-sdk-core.so</span><br><span class="line">│   ├── libaws-cpp-sdk-s3.so</span><br><span class="line">│   └── libminio_client_SDK.so</span><br><span class="line">├── main</span><br><span class="line">│   ├── CMakeLists.txt</span><br><span class="line">│   └── main.cpp</span><br><span class="line">└── src</span><br><span class="line">    ├── CMakeLists.txt</span><br><span class="line">    └── minio_client_sdk.cpp</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="cpp-CMakeLists-txt"   >
+          <a href="#cpp-CMakeLists-txt" class="heading-link"><i class="fas fa-link"></i></a>cpp/CMakeLists.txt</h4>
+      <figure class="highlight stylus"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">CMAKE_MINIMUM_REQUIRED</span><span class="params">(VERSION <span class="number">3.14</span>)</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">(minio_SDK)</span></span></span><br><span class="line"></span><br><span class="line">#头文件查找优先级高于系统默认目录/usr/include和/usr/local/include</span><br><span class="line"><span class="function"><span class="title">INCLUDE_DIRECTORIES</span><span class="params">($&#123;PROJECT_SOURCE_DIR&#125;/include)</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">ADD_SUBDIRECTORY</span><span class="params">($&#123;PROJECT_SOURCE_DIR&#125;/src)</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">add_subdirectory</span><span class="params">($&#123;PROJECT_SOURCE_DIR&#125;/main)</span></span></span><br><span class="line"></span><br><span class="line">#MESSAGE(STATUS $&#123;SRC_LIST&#125;)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="cpp-main"   >
+          <a href="#cpp-main" class="heading-link"><i class="fas fa-link"></i></a>cpp/main</h4>
+      <p><strong>cpp/main/CMakeLists.txt</strong></p>
+<figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#头文件搜索目录,PROJECT_SOURCE_DIR为cmake预定义变量，项目的顶层目录</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#链接库搜索目录</span></span><br><span class="line"><span class="comment">#它相当于g++命令的-L选项的作用，也相当于环境变量中增加LD_LIBRARY_PATH的路径的作用</span></span><br><span class="line"><span class="keyword">link_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/libs)</span><br><span class="line"></span><br><span class="line"><span class="comment">#重新定义目标二进制可执行文件的存放位置</span></span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/build/bin)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(main main.cpp) <span class="comment">#生成.cpp文件的可执行文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#指定多个链接库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(main minio_client_SDK aws-cpp-sdk-core aws-cpp-sdk-s3)</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>cpp/main/main.cpp</strong></p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/S3Client.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;minio_client_sdk.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> minio_server_address = <span class="string">"127.0.0.1:30007"</span>;</span><br><span class="line">    <span class="built_in">string</span> access_key = <span class="string">"hceminio"</span>;</span><br><span class="line">    <span class="built_in">string</span> access_secret = <span class="string">"hceminio123"</span>;</span><br><span class="line">    Aws::SDKOptions m_options;</span><br><span class="line">    S3Client *m_client = access_minio_server(minio_server_address, m_options, access_key, access_secret);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> uuid = random_UUID();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"UUID: "</span> &lt;&lt; uuid &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    delete_Bucket(m_client, <span class="string">"bucket04"</span>);</span><br><span class="line">    list_Buckets(m_client);</span><br><span class="line">    create_Bucket(m_client, <span class="string">"bucket04"</span>);</span><br><span class="line"></span><br><span class="line">    list_Objects(m_client, <span class="string">"bucket01"</span>);</span><br><span class="line">    delete_Object(m_client, <span class="string">"bucket01"</span>, <span class="string">"pic_object1"</span>);</span><br><span class="line">    download_Object(m_client, <span class="string">"bucket01"</span>, <span class="string">"clean.sh"</span>, <span class="string">"t1.txt"</span>);</span><br><span class="line">    upload_Object(m_client, <span class="string">"bucket01"</span>, <span class="string">"pic_object4"</span>, <span class="string">"tt.txt"</span>);</span><br><span class="line"></span><br><span class="line">    close_minio_server(m_client, m_options);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="cpp-src"   >
+          <a href="#cpp-src" class="heading-link"><i class="fas fa-link"></i></a>cpp/src</h4>
+      <p><strong>cpp/src/CMakeLists.txt</strong></p>
+<figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#指定头文件搜索目录，若顶层CMakeLists.txt也指定了文件搜索目录，则该处可以省略</span></span><br><span class="line"><span class="comment">#头文件查找优先级高于系统默认目录/usr/include和/usr/local/include</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">FILE</span>(GLOB SRC_LIST <span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/src/*.cpp"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#重新定义目标链接库文件的存放位置</span></span><br><span class="line"><span class="keyword">SET</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/libs)</span><br><span class="line"></span><br><span class="line"><span class="comment">#将SRC_LIST变量中的所有.cpp文件编译生成库名为add的静态库</span></span><br><span class="line"><span class="comment">#SHARED为生成动态库, STATIC为生成静态库.</span></span><br><span class="line"><span class="keyword">ADD_LIBRARY</span>(minio_client_SDK SHARED <span class="variable">$&#123;SRC_LIST&#125;</span>)</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>cpp/src/minio_client_sdk.cpp</strong></p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MINIO_CLIENT_SDK</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/S3Client.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/core/Aws.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/core/auth/AWSCredentialsProvider.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/core/utils/StringUtils.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/core/utils/UUID.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Aws::S3;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Aws::S3::Model;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/Bucket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/CreateBucketRequest.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/DeleteBucketRequest.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/DeleteObjectRequest.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/GetObjectRequest.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/ListObjectsRequest.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/Object.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/model/PutObjectRequest.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">S3Client *<span class="title">access_minio_server</span><span class="params">(<span class="built_in">string</span> minio_server_address, Aws::SDKOptions m_options, <span class="built_in">string</span> access_key, <span class="built_in">string</span> access_secret)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    S3Client *m_client = &#123;<span class="literal">NULL</span>&#125;;</span><br><span class="line"></span><br><span class="line">    Aws::InitAPI(m_options);</span><br><span class="line">    Aws::Client::ClientConfiguration cfg;</span><br><span class="line">    cfg.endpointOverride = minio_server_address.c_str();</span><br><span class="line">    cfg.scheme = Aws::Http::Scheme::HTTP;</span><br><span class="line">    cfg.verifySSL = <span class="literal">false</span>;</span><br><span class="line">    m_client = <span class="keyword">new</span> S3Client(Aws::Auth::AWSCredentials(access_key.c_str(), access_secret.c_str()), cfg, Aws::Client::AWSAuthV4Signer::PayloadSigningPolicy::Never, <span class="literal">false</span>, Aws::S3::US_EAST_1_REGIONAL_ENDPOINT_OPTION::NOT_SET);</span><br><span class="line">    <span class="keyword">return</span> m_client;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">close_minio_server</span><span class="params">(S3Client *m_client, Aws::SDKOptions m_options)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m_client != <span class="literal">nullptr</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span> m_client;</span><br><span class="line">        m_client = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Aws::ShutdownAPI(m_options);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">random_UUID</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Aws::String random_uuid = Aws::Utils::UUID::RandomUUID();</span><br><span class="line">    Aws::String uuid = Aws::Utils::StringUtils::ToLower(random_uuid.c_str());</span><br><span class="line">    <span class="keyword">return</span> uuid.c_str();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">list_Buckets</span><span class="params">(S3Client *m_client)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Aws::S3::Model::ListBucketsOutcome outcome = m_client-&gt;ListBuckets();</span><br><span class="line">    <span class="keyword">if</span> (outcome.IsSuccess())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Bucket names:"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span></span><br><span class="line">                  &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        Aws::Vector&lt;Aws::S3::Model::Bucket&gt; buckets = outcome.GetResult().GetBuckets();</span><br><span class="line">        <span class="keyword">for</span> (Aws::S3::Model::Bucket &amp;bucket : buckets)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; bucket.GetName() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error: ListBuckets: "</span> &lt;&lt; outcome.GetError().GetMessage() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">create_Bucket</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Aws::S3::Model::CreateBucketRequest request;</span><br><span class="line">    request.SetBucket(bucketName.c_str());</span><br><span class="line">    Aws::S3::Model::CreateBucketOutcome outcome = m_client-&gt;CreateBucket(request);</span><br><span class="line">    <span class="keyword">if</span> (!outcome.IsSuccess())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> err = outcome.GetError();</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error: CreateBucket: "</span> &lt;&lt; err.GetExceptionName() &lt;&lt; <span class="string">": "</span> &lt;&lt; err.GetMessage() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">delete_Bucket</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Aws::S3::Model::DeleteBucketRequest request;</span><br><span class="line">    request.SetBucket(bucketName.c_str());</span><br><span class="line">    Aws::S3::Model::DeleteBucketOutcome outcome = m_client-&gt;DeleteBucket(request);</span><br><span class="line">    <span class="keyword">if</span> (!outcome.IsSuccess())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> err = outcome.GetError();</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error: DeleteBucket: "</span> &lt;&lt; err.GetExceptionName() &lt;&lt; <span class="string">": "</span> &lt;&lt; err.GetMessage() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">list_Objects</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Aws::S3::Model::ListObjectsRequest request;</span><br><span class="line">    request.WithBucket(bucketName.c_str());</span><br><span class="line">    <span class="keyword">auto</span> outcome = m_client-&gt;ListObjects(request);</span><br><span class="line">    <span class="keyword">if</span> (outcome.IsSuccess())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Objects in bucket '"</span> &lt;&lt; bucketName &lt;&lt; <span class="string">"':"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span></span><br><span class="line">                  &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        Aws::Vector&lt;Aws::S3::Model::Object&gt; objects = outcome.GetResult().GetContents();</span><br><span class="line">        <span class="keyword">for</span> (Aws::S3::Model::Object &amp;object : objects)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; object.GetKey() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error: ListObjects: "</span> &lt;&lt; outcome.GetError().GetMessage() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">download_Object</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName, <span class="built_in">string</span> objectKey, <span class="built_in">string</span> pathKey)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Aws::S3::Model::GetObjectRequest object_request;</span><br><span class="line">    object_request.WithBucket(bucketName.c_str()).WithKey(objectKey.c_str());</span><br><span class="line">    <span class="keyword">auto</span> get_object_outcome = m_client-&gt;GetObject(object_request);</span><br><span class="line">    <span class="keyword">if</span> (get_object_outcome.IsSuccess())</span><br><span class="line">    &#123;</span><br><span class="line">        Aws::OFStream local_file;</span><br><span class="line">        local_file.open(pathKey.c_str(), <span class="built_in">std</span>::ios::out | <span class="built_in">std</span>::ios::binary);</span><br><span class="line">        local_file &lt;&lt; get_object_outcome.GetResult().GetBody().rdbuf();</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Done!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"GetObject error: "</span> &lt;&lt; get_object_outcome.GetError().GetExceptionName() &lt;&lt; <span class="string">" "</span> &lt;&lt; get_object_outcome.GetError().GetMessage() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">upload_Object</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName, <span class="built_in">string</span> objectKey, <span class="built_in">string</span> pathKey)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PutObjectRequest putObjectRequest;</span><br><span class="line">    putObjectRequest.WithBucket(bucketName.c_str()).WithKey(objectKey.c_str());</span><br><span class="line">    <span class="keyword">auto</span> input_data = Aws::MakeShared&lt;Aws::FStream&gt;(<span class="string">"PutObjectInputStream"</span>, pathKey.c_str(), <span class="built_in">std</span>::ios_base::in | <span class="built_in">std</span>::ios_base::binary);</span><br><span class="line">    putObjectRequest.SetBody(input_data);</span><br><span class="line">    <span class="keyword">auto</span> putObjectResult = m_client-&gt;PutObject(putObjectRequest);</span><br><span class="line">    <span class="keyword">if</span> (putObjectResult.IsSuccess())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Done!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"PutObject error: "</span> &lt;&lt; putObjectResult.GetError().GetExceptionName() &lt;&lt; <span class="string">" "</span> &lt;&lt; putObjectResult.GetError().GetMessage() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">delete_Object</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName, <span class="built_in">string</span> objectKey)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Aws::S3::Model::DeleteObjectRequest request;</span><br><span class="line">    request.WithKey(objectKey.c_str()).WithBucket(bucketName.c_str());</span><br><span class="line">    Aws::S3::Model::DeleteObjectOutcome outcome = m_client-&gt;DeleteObject(request);</span><br><span class="line">    <span class="keyword">if</span> (!outcome.IsSuccess())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> err = outcome.GetError();</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error: DeleteObject: "</span> &lt;&lt; err.GetExceptionName() &lt;&lt; <span class="string">": "</span> &lt;&lt; err.GetMessage() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="cpp-include"   >
+          <a href="#cpp-include" class="heading-link"><i class="fas fa-link"></i></a>cpp/include</h4>
+      <p><strong>cpp/include/minio_client_sdk.h</strong></p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/core/Aws.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aws/s3/S3Client.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Aws::S3;</span><br><span class="line"></span><br><span class="line"><span class="function">S3Client *<span class="title">access_minio_server</span><span class="params">(<span class="built_in">string</span> minio_server_address, Aws::SDKOptions m_options, <span class="built_in">string</span> access_key, <span class="built_in">string</span> access_secret)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">close_minio_server</span><span class="params">(S3Client *m_client, Aws::SDKOptions m_options)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">random_UUID</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">list_Buckets</span><span class="params">(S3Client *m_client)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">create_Bucket</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">delete_Bucket</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">list_Objects</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">download_Object</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName, <span class="built_in">string</span> objectKey, <span class="built_in">string</span> pathKey)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">upload_Object</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName, <span class="built_in">string</span> objectKey, <span class="built_in">string</span> pathKey)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">delete_Object</span><span class="params">(S3Client *m_client, <span class="built_in">string</span> bucketName, <span class="built_in">string</span> objectKey)</span></span>;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="编译执行"   >
+          <a href="#编译执行" class="heading-link"><i class="fas fa-link"></i></a>编译执行</h4>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> cpp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./bin/main</span></span><br></pre></td></tr></table></div></figure>
+
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_04_client_SDK/">https://kung-fu-master.github.io/2021/03/13/storage/minio/minIO_04_client_SDK/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/storage/">storage</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/storage/minio/minIO_03_client.md/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">MinIO 03 client</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/technologies/docker/DCT/"><span class="paginator-prev__text">Docker Content Trust(DCT) and Notary</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.</span> <span class="toc-text">
+          Reference</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Samples"><span class="toc-number">2.</span> <span class="toc-text">
+          Samples</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#c-SDK"><span class="toc-number">2.1.</span> <span class="toc-text">
+          c++ SDK</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Download-aws-sdk"><span class="toc-number">2.1.1.</span> <span class="toc-text">
+          Download aws sdk</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开发SDK"><span class="toc-number">2.1.2.</span> <span class="toc-text">
+          开发SDK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cpp-CMakeLists-txt"><span class="toc-number">2.1.3.</span> <span class="toc-text">
+          cpp&#x2F;CMakeLists.txt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cpp-main"><span class="toc-number">2.1.4.</span> <span class="toc-text">
+          cpp&#x2F;main</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cpp-src"><span class="toc-number">2.1.5.</span> <span class="toc-text">
+          cpp&#x2F;src</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cpp-include"><span class="toc-number">2.1.6.</span> <span class="toc-text">
+          cpp&#x2F;include</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编译执行"><span class="toc-number">2.1.7.</span> <span class="toc-text">
+          编译执行</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://kung-fu-master.github.io/page/12/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/page/12/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/chown/">chown改变文件所属用户和用户组</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">286</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="chown"   >
+          <a href="#chown" class="heading-link"><i class="fas fa-link"></i></a>chown</h2>
+      <p>Linux chown（英文全拼：change owner）命令用于设置文件所有者和文件关联组的命令.  </p>
+<p>chown 需要超级用户 root 的权限才能执行此命令.  </p>
+
+        <h3 id="语法"   >
+          <a href="#语法" class="heading-link"><i class="fas fa-link"></i></a>语法:</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown [-cfhvR] [--help] [--version] user[:group] file...</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="参数"   >
+          <a href="#参数" class="heading-link"><i class="fas fa-link"></i></a>参数:</h3>
+      <figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">user : 新的文件拥有者的使用者 ID</span><br><span class="line">group : 新的文件拥有者的使用者组(group)</span><br><span class="line">-c : 显示更改的部分的信息</span><br><span class="line">-f : 忽略错误信息</span><br><span class="line">-h :修复符号链接</span><br><span class="line">-v : 显示详细的处理信息</span><br><span class="line">-R : 处理指定目录以及其子目录下的所有文件</span><br><span class="line">--help : 显示辅助说明</span><br><span class="line">--version : 显示版本</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="实例"   >
+          <a href="#实例" class="heading-link"><i class="fas fa-link"></i></a>实例</h3>
+      <p>将当前前目录下的所有文件与子目录的拥有者皆设为当前登陆用户</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R `whoami` ./</span><br></pre></td></tr></table></div></figure>
+<p>把 /var/run/httpd.pid 的所有者设置 root：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown root /var/run/httpd.pid</span><br></pre></td></tr></table></div></figure>
+<p>将文件 file1.txt 的拥有者设为 runoob，群体的使用者 runoobgroup :</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown runoob:runoobgroup file1.txt</span><br></pre></td></tr></table></div></figure>
+<p>将当前前目录下的所有文件与子目录的拥有者皆设为 runoob，群体的使用者 runoobgroup:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R runoob:runoobgroup *</span><br></pre></td></tr></table></div></figure>
+
+<p>把 /home/runoob 的关联组设置为 512 （关联组ID），不改变所有者：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown :512 /home/runoob</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/cmake/">cmake</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.9k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="cmake-安装"   >
+          <a href="#cmake-安装" class="heading-link"><i class="fas fa-link"></i></a>cmake 安装</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget https://github.com/Kitware/CMake/releases/download/v3.17.0/cmake-3.17.0-Linux-x86_64.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf cmake-3.17.0-Linux-x86_64.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ln -s /&lt;PATH&gt;/cmake-3.17.0-Linux-x86_64/bin/cmake /usr/bin/cmake</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake -version</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="函数使用说明"   >
+          <a href="#函数使用说明" class="heading-link"><i class="fas fa-link"></i></a>函数使用说明</h2>
+      <p>参考链接:<span class="exturl"><a class="exturl__link"   href="https://www.jianshu.com/p/aaa19816f7ad"  target="_blank" rel="noopener">https://www.jianshu.com/p/aaa19816f7ad</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="编写-CMakeLists-txt"   >
+          <a href="#编写-CMakeLists-txt" class="heading-link"><i class="fas fa-link"></i></a>编写 CMakeLists.txt</h2>
+      
+        <h3 id="1-源文件只有一两个时候"   >
+          <a href="#1-源文件只有一两个时候" class="heading-link"><i class="fas fa-link"></i></a>1. 源文件只有一两个时候</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> touch CMakeLists.txt</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CMake 最低版本号要求, 指定运行此配置文件所需的 CMake 的最低版本</span></span><br><span class="line">cmake_minimum_required(VERSION 2.8)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 项目信息, 参数值是 Demo1，该命令表示项目的名称是 Demo1</span></span><br><span class="line">project(Demo1)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 指定生成目标, 将名为 main.cc 的源文件编译成一个名称为 Demo 的可执行文件</span></span><br><span class="line">add_executable(Demo main.cc MathFunctions.cc)</span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="2-如果源文件很多"   >
+          <a href="#2-如果源文件很多" class="heading-link"><i class="fas fa-link"></i></a>2. 如果源文件很多</h3>
+      <p>把所有源文件的名字都加进add_executable将是一件烦人的工作, 更省事的方法是使用 aux_source_directory 命令，该命令会查找指定目录下的所有源文件，然后将结果存进指定变量名, 其语法如下:  </p>
+<figure class="highlight reasonml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aux<span class="constructor">_source_directory(&lt;<span class="params">dir</span>&gt; &lt;<span class="params">variable</span>&gt;)</span></span><br></pre></td></tr></table></div></figure>
+
+<p>可以修改 CMakeLists.txt 如下：</p>
+<figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>)</span><br><span class="line"><span class="keyword">project</span>(Demo2)</span><br><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_SRCS 变量</span></span><br><span class="line"><span class="keyword">aux_source_directory</span>(. DIR_SRCS)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line"><span class="keyword">add_executable</span>(Demo <span class="variable">$&#123;DIR_SRCS&#125;</span>)</span><br></pre></td></tr></table></div></figure>
+
+<p>CMake 会将当前目录所有源文件的文件名赋值给变量 DIR_SRCS ，再指示变量 DIR_SRCS 中的源文件需要编译成一个名称为 Demo 的可执行文件。  </p>
+
+        <h3 id="3-多个目录，多个源文件"   >
+          <a href="#3-多个目录，多个源文件" class="heading-link"><i class="fas fa-link"></i></a>3. 多个目录，多个源文件</h3>
+      <figure class="highlight jboss-cli"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./Demo3</span></span><br><span class="line">    |</span><br><span class="line">    +<span class="params">---</span> main.cc</span><br><span class="line">    |</span><br><span class="line">    +<span class="params">---</span> math/</span><br><span class="line">          |</span><br><span class="line">          +<span class="params">---</span> MathFunctions.cc</span><br><span class="line">          |</span><br><span class="line">          +<span class="params">---</span> MathFunctions.h</span><br></pre></td></tr></table></div></figure>
+
+<p>需要分别在项目根目录 Demo3 和 math 目录里各编写一个 CMakeLists.txt 文件。为了方便，我们可以先将 math 目录里的文件编译成静态库再由 main 函数调用.<br>根目录中的 CMakeLists.tx</p>
+<figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span> (VERSION <span class="number">2.8</span>)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line"><span class="keyword">project</span> (Demo3)</span><br><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_SRCS 变量</span></span><br><span class="line"><span class="keyword">aux_source_directory</span>(. DIR_SRCS)</span><br><span class="line"><span class="comment"># 添加 math 子目录, 这样 math 目录下的 CMakeLists.txt 文件和源代码也会被处理</span></span><br><span class="line"><span class="keyword">add_subdirectory</span>(<span class="keyword">math</span>)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line"><span class="keyword">add_executable</span>(Demo main.cc)</span><br><span class="line"><span class="comment"># 添加链接库, 指明可执行文件 Demo 需要连接一个名为 MathFunctions 的链接库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(Demo MathFunctions)</span><br></pre></td></tr></table></div></figure>
+
+<p>子目录math中的 CMakeLists.txt：</p>
+<figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_LIB_SRCS 变量</span></span><br><span class="line"><span class="keyword">aux_source_directory</span>(. DIR_LIB_SRCS)</span><br><span class="line"><span class="comment"># 生成链接库, 将math 目录中的源文件编译为静态链接库</span></span><br><span class="line"><span class="keyword">add_library</span> (MathFunctions <span class="variable">$&#123;DIR_LIB_SRCS&#125;</span>)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="编译"   >
+          <a href="#编译" class="heading-link"><i class="fas fa-link"></i></a>编译</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake .</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="安装和测试"   >
+          <a href="#安装和测试" class="heading-link"><i class="fas fa-link"></i></a>安装和测试</h2>
+      <p>这两个功能分别可以通过在产生 Makefile 后使用 make install 和 make test 来执行.<br>首先先在 math/CMakeLists.txt 文件里添加下面两行：</p>
+<figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定 MathFunctions 库的安装路径</span></span><br><span class="line"><span class="keyword">install</span> (TARGETS MathFunctions DESTINATION <span class="keyword">bin</span>)</span><br><span class="line"><span class="keyword">install</span> (FILES MathFunctions.h DESTINATION <span class="keyword">include</span>)</span><br></pre></td></tr></table></div></figure>
+<p>指明 MathFunctions 库的安装路径。之后同样修改根目录的 CMakeLists 文件，在末尾添加下面几行：</p>
+<figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定安装路径</span></span><br><span class="line"><span class="keyword">install</span> (TARGETS Demo DESTINATION <span class="keyword">bin</span>)</span><br><span class="line"><span class="keyword">install</span> (FILES <span class="string">"$&#123;PROJECT_BINARY_DIR&#125;/config.h"</span></span><br><span class="line">         DESTINATION <span class="keyword">include</span>)</span><br></pre></td></tr></table></div></figure>
+<p>通过上面的定制，生成的 Demo 文件和 MathFunctions 函数库 libMathFunctions.o 文件将会被复制到 /usr/local/bin 中，而 MathFunctions.h 和生成的 config.h 文件则会被复制到 /usr/local/include 中。我们可以验证一下（顺带一提的是，这里的 /usr/local/ 是默认安装到的根目录，可以通过修改 CMAKE_INSTALL_PREFIX 变量的值来指定这些文件应该拷贝到哪个根目录）.  </p>
+
+        <h2 id="Cmake常用命令"   >
+          <a href="#Cmake常用命令" class="heading-link"><i class="fas fa-link"></i></a>Cmake常用命令</h2>
+      
+        <h3 id="1-add-library"   >
+          <a href="#1-add-library" class="heading-link"><i class="fas fa-link"></i></a>1. add_library</h3>
+      <p>该指令的主要作用就是将指定的源文件生成链接文件，然后添加到工程中去。该指令常用的语法如下：</p>
+<figure class="highlight css"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">add_library</span>(&lt;<span class="selector-tag">name</span>&gt; <span class="selector-attr">[STATIC | SHARED | MODULE]</span></span><br><span class="line">            <span class="selector-attr">[EXCLUDE_FROM_ALL]</span></span><br><span class="line">            <span class="selector-attr">[source1]</span> <span class="selector-attr">[source2]</span> <span class="selector-attr">[...]</span>)</span><br></pre></td></tr></table></div></figure>
+<p><name>表示库文件的名字，该库文件会根据命令里列出的源文件来创建。<br>STATIC、SHARED和MODULE的作用是指定生成的库文件的类型。<br>STATIC库是目标文件的归档文件，在链接其它目标的时候使用。<br>SHARED库会被动态链接（动态链接库），在运行时会被加载。<br>MODULE库是一种不会被链接到其它目标中的插件，但是可能会在运行时使用dlopen-系列的函数。<br>默认状态下，库文件将会在于源文件目录树的构建目录树的位置被创建，该命令也会在这里被调用。<br>而语法中的source1 source2分别表示各个源文件。</p>
+
+        <h4 id="使用案例"   >
+          <a href="#使用案例" class="heading-link"><i class="fas fa-link"></i></a>使用案例</h4>
+      <figure class="highlight stylus"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">add_subdirectory</span><span class="params">(sub_dir)</span></span></span><br><span class="line"><span class="function"><span class="title">file</span><span class="params">(GLOB HDRS <span class="string">"*.h"</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">file</span><span class="params">(GLOB SRCS <span class="string">"*.c"</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(TARGET_NAME pnp_module)</span></span></span><br><span class="line"><span class="function"><span class="title">add_library</span><span class="params">($&#123;TARGET_NAME&#125; SHARED $&#123;HDRS&#125; $&#123;SRCS&#125;)</span></span></span><br><span class="line">target_link_libraries($&#123;TARGET_NAME&#125; PRIVATE</span><br><span class="line">        $&#123;CMAKE_THREAD_LIBS_INIT&#125;				<span class="comment">// 库引用了需要使用-lpthread的.c源码文件，需要加上这句</span></span><br><span class="line">        pnp_utils_static</span><br><span class="line">        m)</span><br><span class="line"></span><br><span class="line"><span class="comment">// CMAKE_CURRENT_SOURCE_DIR：这是当前处理的CMakeLists.txt所在的目录。当前正在处理的源目录的路径。这是当前正由cmake处理的源目录的完整路径。</span></span><br><span class="line"><span class="comment">// CMAKE_CURRENT_LIST_DIR：这是当前正在处理的listfile的目录。当前正在处理的列表文件的完整目录。</span></span><br><span class="line"><span class="comment">// 在处理sub_dir/CMakeLists.txt时，CMAKE_CURRENT_LIST_DIR将引用项目/ src，而CMAKE_CURRENT_SOURCE_DIR仍指向外部目录项目。</span></span><br><span class="line"><span class="function"><span class="title">target_include_directories</span><span class="params">($&#123;TARGET_NAME&#125; PUBLIC $&#123;CMAKE_CURRENT_LIST_DIR&#125;)</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="2-target-link-libraries"   >
+          <a href="#2-target-link-libraries" class="heading-link"><i class="fas fa-link"></i></a>2. target_link_libraries</h3>
+      <p>该指令的作用为将目标文件与库文件进行链接。该指令的语法如下：</p>
+<figure class="highlight inform7"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">target_link_libraries(&lt;target&gt; <span class="comment">[item1]</span> <span class="comment">[item2]</span> <span class="comment">[...]</span></span><br><span class="line">                      <span class="comment">[<span class="comment">[debug|optimized|general]</span> &lt;item&gt;]</span> ...)</span><br></pre></td></tr></table></div></figure>
+<p><target>是指通过add_executable()和add_library()指令生成已经创建的目标文件。<br>[item]表示库文件没有后缀的名字。<br>默认情况下，库依赖项是传递的。当这个目标链接到另一个目标时，链接到这个目标的库也会出现在另一个目标的连接线上。<br>这个传递的接口存储在interface_link_libraries的目标属性中，可以通过设置该属性直接重写传递接口。</p>
+<dl>
+<dt>cmake target_link_libraries() 中<PUBLIC|PRIVATE|INTERFACE> 的区别<dt>
+<dd>如果目标的头文件中包含了依赖的头文件(源文件间接包含)，那么这里就是PUBLIC</dd>
+<dd>如果目标仅源文件中包含了依赖的头文件，那么这里就是PRIVATE</dd>
+<dd>如果目标的头文件包含依赖，但源文件未包含，那么这里就是INTERFACE</dd>
+</dl>
+
+
+        <h4 id="使用案例："   >
+          <a href="#使用案例：" class="heading-link"><i class="fas fa-link"></i></a>使用案例：</h4>
+      <ul>
+<li>案例1：</li>
+</ul>
+<figure class="highlight stylus"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">TARGET_LINK_LIBRARIES</span><span class="params">(myProject hello)</span></span>			<span class="comment">// 连接libhello.so库</span></span><br><span class="line"><span class="function"><span class="title">TARGET_LINK_LIBRARIES</span><span class="params">(myProject libhello.a)</span></span></span><br><span class="line"><span class="function"><span class="title">TARGET_LINK_LIBRARIES</span><span class="params">(myProject libhello.so)</span></span></span><br><span class="line"><span class="comment">// 库引用了需要使用-lpthread的.c源码文件，需要加上$&#123;CMAKE_THREAD_LIBS_INIT&#125;</span></span><br><span class="line">target_link_libraries ($&#123;PROJECT_NAME&#125; $&#123;CMAKE_THREAD_LIBS_INIT&#125;)</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>案例2：</li>
+</ul>
+<figure class="highlight reasonml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">add<span class="constructor">_executable(<span class="params">myProject</span> <span class="params">main</span>.<span class="params">cpp</span>)</span></span><br><span class="line">target<span class="constructor">_link_libraries(<span class="params">myProject</span> <span class="params">eng</span> <span class="params">mx</span>)</span>     </span><br><span class="line">#equals <span class="keyword">to</span> below </span><br><span class="line">target<span class="constructor">_link_libraries(<span class="params">myProject</span> -<span class="params">leng</span> -<span class="params">lmx</span>)</span> `</span><br><span class="line">target<span class="constructor">_link_libraries(<span class="params">myProject</span> <span class="params">libeng</span>.<span class="params">so</span> <span class="params">libmx</span>.<span class="params">so</span>)</span>`</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="3-target-include-directories"   >
+          <a href="#3-target-include-directories" class="heading-link"><i class="fas fa-link"></i></a>3. target_include_directories</h3>
+      <p>为add_executable() 或者add_library() 中定义的输出目标指定编译选项<br>Include的头文件的查找目录，也就是Gcc的[-Idir…]选项</p>
+<figure class="highlight fortran"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target_include_directories(&lt;<span class="keyword">target</span>&gt; [SYSTEM] [BEFORE]</span><br><span class="line">							&lt;<span class="keyword">INTERFACE</span>|<span class="keyword">PUBLIC</span>|<span class="keyword">PRIVATE</span>&gt; [items1...]</span><br><span class="line">							[&lt;<span class="keyword">INTERFACE</span>|<span class="keyword">PUBLIC</span>|<span class="keyword">PRIVATE</span>&gt; [items2...]</span><br><span class="line">							...])</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="使用案例-1"   >
+          <a href="#使用案例-1" class="heading-link"><i class="fas fa-link"></i></a>使用案例:</h4>
+      <figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gcc头文件查找目录，相当于-I选项，e.g -I/foo/bar</span></span><br><span class="line"><span class="comment">#CMAKE_SOURCE_DIR是cmake内置变量表示当前项目根目录</span></span><br><span class="line"><span class="keyword">target_include_directories</span>(test_elf</span><br><span class="line">    PRIVATE</span><br><span class="line">    <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span></span><br><span class="line">    <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/common</span><br><span class="line">    <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/syscalls</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 其他编译选项定义，e.g -fPIC</span></span><br><span class="line"><span class="keyword">target_compile_options</span>(test_elf</span><br><span class="line">    PRIVATE</span><br><span class="line">    -std=c99 </span><br><span class="line">    -Wall </span><br><span class="line">    -Wextra </span><br><span class="line">    -Werror</span><br><span class="line">)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="DCMAKE-BUILD-TYPE"   >
+          <a href="#DCMAKE-BUILD-TYPE" class="heading-link"><i class="fas fa-link"></i></a>-DCMAKE_BUILD_TYPE</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -DCMAKE_BUILD_TYPE=Debug ..</span><br></pre></td></tr></table></div></figure>
+<p>通过以上编译能够使用 <strong><code>gdb</code></strong> 进行调试, 否则无法gdb来调试生成的可执行文件.</p>
+
+        <h2 id="遇到的问题"   >
+          <a href="#遇到的问题" class="heading-link"><i class="fas fa-link"></i></a>遇到的问题</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake ..</span></span><br><span class="line">出现如下错误</span><br><span class="line">......</span><br><span class="line">CMake Error at /usr/local/cmake-3.17.0-Linux-x86_64/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake:164 (message):</span><br><span class="line">  Could NOT find PythonLibs (missing: PYTHON_LIBRARIES PYTHON_INCLUDE_DIRS)</span><br><span class="line">Call Stack (most recent call first):</span><br><span class="line">  /usr/local/cmake-3.17.0-Linux-x86_64/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake:445 (_FPHSA_FAILURE_MESSAGE)</span><br><span class="line">  /usr/local/cmake-3.17.0-Linux-x86_64/share/cmake-3.17/Modules/FindPythonLibs.cmake:310 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)</span><br><span class="line">  python/CMakeLists.txt:2 (find_package)</span><br></pre></td></tr></table></div></figure>
+<p>原因是没有安装python的开发版</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install python-devel</span></span><br></pre></td></tr></table></div></figure>
+<p>网上还有这种操作的, 可以pass掉<code>cmake -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/python2.7/config/libpython2.7.so ..</code></p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/cppc%E5%8A%A8%E6%80%81%E8%B0%83%E9%A2%91/">cppc动态调频</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">480</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>CPPC的全称是Collaborative Processor Performance Control<br>CPC的全称是Per cpu table called，是bios提供的一组acpi表(ACPI表示高级配置和电源管理接口（Advanced Configuration and Power Management Interface))，用于设置cpu的频率。这组acpi表如下：</p>
+<figure class="highlight yaml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">.</span> <span class="string">/*</span></span><br><span class="line"><span class="number">2</span><span class="string">.</span> <span class="string">*</span> <span class="string">An</span> <span class="string">example</span> <span class="string">CPC</span> <span class="string">table</span> <span class="string">looks</span> <span class="string">like</span> <span class="string">the</span> <span class="string">following.</span></span><br><span class="line"><span class="number">3</span><span class="string">.</span> <span class="string">*</span></span><br><span class="line"><span class="number">4</span><span class="string">.</span> <span class="string">*</span>	<span class="string">Name(_CPC,</span> <span class="string">Package()</span></span><br><span class="line"><span class="number">5</span><span class="string">.</span> <span class="string">*</span>			<span class="string">&#123;</span></span><br><span class="line"><span class="number">6</span><span class="string">.</span> <span class="string">*</span>			<span class="number">17</span><span class="string">,</span></span><br><span class="line"><span class="number">7</span><span class="string">.</span> <span class="string">*</span>			<span class="string">NumEntries</span></span><br><span class="line"><span class="number">8</span><span class="string">.</span> <span class="string">*</span>			<span class="number">1</span><span class="string">,</span></span><br><span class="line"><span class="number">9</span><span class="string">.</span> <span class="string">*</span>			<span class="string">//</span> <span class="string">Revision</span></span><br><span class="line"><span class="number">10</span><span class="string">.</span> <span class="string">*</span>			<span class="string">ResourceTemplate()&#123;Register(PCC,</span> <span class="number">32</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0x120</span><span class="string">,</span> <span class="number">2</span><span class="string">)&#125;,</span></span><br><span class="line"><span class="number">11</span><span class="string">.</span> <span class="string">*</span>			<span class="string">//</span> <span class="string">Highest</span> <span class="string">Performance</span></span><br><span class="line"><span class="number">12</span><span class="string">.</span> <span class="string">*</span>			<span class="string">ResourceTemplate()&#123;Register(PCC,</span> <span class="number">32</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0x124</span><span class="string">,</span> <span class="number">2</span><span class="string">)&#125;,</span></span><br><span class="line"><span class="number">13</span><span class="string">.</span> <span class="string">*</span>			<span class="string">//</span> <span class="string">Nominal</span> <span class="string">Performance</span></span><br><span class="line"><span class="number">14</span><span class="string">.</span> <span class="string">*</span>			<span class="string">ResourceTemplate()&#123;Register(PCC,</span> <span class="number">32</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0x128</span><span class="string">,</span> <span class="number">2</span><span class="string">)&#125;,</span></span><br><span class="line"><span class="number">15</span><span class="string">.</span> <span class="string">*</span>			<span class="string">//</span> <span class="string">Lowest</span> <span class="string">Nonlinear</span> <span class="string">Performance</span></span><br><span class="line"><span class="number">16</span><span class="string">.</span> <span class="string">*</span>			<span class="string">ResourceTemplate()&#123;Register(PCC,</span> <span class="number">32</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0x12C</span><span class="string">,</span> <span class="number">2</span><span class="string">)&#125;,</span></span><br><span class="line"><span class="number">17</span><span class="string">.</span> <span class="string">*</span>			<span class="string">//</span> <span class="string">Lowest</span> <span class="string">Performance</span></span><br><span class="line"><span class="number">18</span><span class="string">.</span> <span class="string">*</span>			<span class="string">ResourceTemplate()&#123;Register(PCC,</span> <span class="number">32</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0x130</span><span class="string">,</span> <span class="number">2</span><span class="string">)&#125;,</span></span><br><span class="line"><span class="number">19</span><span class="string">.</span> <span class="string">*</span>			<span class="string">//</span> <span class="string">Guaranteed</span> <span class="string">Performance</span> <span class="string">Register</span></span><br><span class="line"><span class="number">20</span><span class="string">.</span> <span class="string">*</span>			<span class="string">ResourceTemplate()&#123;Register(PCC,</span> <span class="number">32</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0x110</span><span class="string">,</span> <span class="number">2</span><span class="string">)&#125;,</span></span><br><span class="line"><span class="number">21</span><span class="string">.</span> <span class="string">*</span>			<span class="string">//</span> <span class="string">Desired</span> <span class="string">Performance</span> <span class="string">Register</span></span><br><span class="line"><span class="number">22</span><span class="string">.</span> <span class="string">*</span>			<span class="string">ResourceTemplate()&#123;Register(SystemMemory,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0</span><span class="string">,</span> <span class="number">0</span><span class="string">)&#125;,</span></span><br><span class="line"><span class="number">23</span><span class="string">.</span> <span class="string">*</span>			<span class="string">..</span></span><br><span class="line"><span class="number">24</span><span class="string">.</span> <span class="string">*</span>			<span class="string">..</span></span><br><span class="line"><span class="number">25</span><span class="string">.</span> <span class="string">*</span>			<span class="string">..</span></span><br><span class="line"><span class="number">26</span><span class="string">.</span> <span class="string">*</span></span><br><span class="line"><span class="number">27</span><span class="string">.</span> <span class="string">*</span>		<span class="string">&#125;</span></span><br><span class="line"><span class="number">28</span><span class="string">.</span> <span class="string">*</span> <span class="string">Each</span> <span class="string">Register()</span> <span class="string">encodes</span> <span class="string">how</span> <span class="string">to</span> <span class="string">access</span> <span class="string">that</span> <span class="string">specific</span> <span class="string">register.</span></span><br><span class="line"><span class="number">29</span><span class="string">.</span> <span class="string">*</span> <span class="attr">e.g. a sample PCC entry has the following encoding:</span></span><br><span class="line"><span class="number">30</span><span class="string">.</span> <span class="string">*</span></span><br><span class="line"><span class="number">31</span><span class="string">.</span> <span class="string">*</span>	<span class="string">Register</span> <span class="string">(</span></span><br><span class="line"><span class="number">32</span><span class="string">.</span> <span class="string">*</span>		<span class="string">PCC,</span></span><br><span class="line"><span class="number">33</span><span class="string">.</span> <span class="string">*</span>		<span class="string">AddressSpaceKeyword</span></span><br><span class="line"><span class="number">34</span><span class="string">.</span> <span class="string">*</span>		<span class="number">8</span><span class="string">,</span></span><br><span class="line"><span class="number">35</span><span class="string">.</span> <span class="string">*</span>		<span class="string">//RegisterBitWidth</span></span><br><span class="line"><span class="number">36</span><span class="string">.</span> <span class="string">*</span>		<span class="number">8</span><span class="string">,</span></span><br><span class="line"><span class="number">37</span><span class="string">.</span> <span class="string">*</span>		<span class="string">//RegisterBitOffset</span></span><br><span class="line"><span class="number">38</span><span class="string">.</span> <span class="string">*</span>		<span class="number">0x30</span><span class="string">,</span></span><br><span class="line"><span class="number">39</span><span class="string">.</span> <span class="string">*</span>		<span class="string">//RegisterAddress</span></span><br><span class="line"><span class="number">40</span><span class="string">.</span> <span class="string">*</span>		<span class="number">9</span></span><br><span class="line"><span class="number">41</span><span class="string">.</span> <span class="string">*</span>		<span class="string">//AccessSize</span> <span class="string">(subspace</span> <span class="string">ID)</span></span><br><span class="line"><span class="number">42</span><span class="string">.</span> <span class="string">*</span>		<span class="number">0</span></span><br><span class="line"><span class="number">43</span><span class="string">.</span> <span class="string">*</span>		<span class="string">)</span></span><br><span class="line"><span class="number">44</span><span class="string">.</span> <span class="string">*</span>	<span class="string">&#125;</span></span><br><span class="line"><span class="number">45</span><span class="string">.</span> <span class="string">*/</span></span><br></pre></td></tr></table></div></figure>
+
+<p>那cppc表具体要怎么工作呢？具体在driver/cpufreq/cppc_cpufreq.c中。<br>这里的cppc_cpufreq_init是入口函数，这个函数向cpufreq的framework注册了一个可以调频的cpu driver</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">static int __init cppc_cpufreq_init(void)</span><br><span class="line">&#123;</span><br><span class="line">ret = cpufreq_register_driver(&amp;cppc_cpufreq_driver);</span><br><span class="line">if (ret)</span><br><span class="line">goto out;</span><br><span class="line">&#125;</span><br><span class="line">static struct cpufreq_driver cppc_cpufreq_driver = &#123;</span><br><span class="line">.flags = CPUFREQ_CONST_LOOPS,</span><br><span class="line">.verify = cppc_verify_policy,</span><br><span class="line"> .target = cppc_cpufreq_set_target,</span><br><span class="line"> .get = cppc_cpufreq_get_rate,</span><br><span class="line"> .init = cppc_cpufreq_cpu_init,</span><br><span class="line"> .stop_cpu = cppc_cpufreq_stop_cpu,</span><br><span class="line"> .name = "cppc_cpufreq",</span><br><span class="line"> &#125;;</span><br><span class="line"> //cppc_cpufreq_driver 最终的函数就是target，最终cpu调频就是通过target 这个回调函数来实现</span><br><span class="line"> static int cppc_cpufreq_set_target(struct cpufreq_policy *policy,</span><br><span class="line"> unsigned int target_freq,</span><br><span class="line"> unsigned int relation)</span><br><span class="line"> &#123;</span><br><span class="line"> struct cppc_cpudata *cpu;</span><br><span class="line"> struct cpufreq_freqs freqs;</span><br><span class="line"> u32 desired_perf;</span><br><span class="line"> int ret = 0;</span><br><span class="line"> cpu = all_cpu_data[policy-&gt;cpu];</span><br><span class="line"> //得到要设置的频率</span><br><span class="line"> desired_perf = cppc_cpufreq_khz_to_perf(cpu, target_freq);</span><br><span class="line"> /* Return if it is exactly the same perf */</span><br><span class="line"> if (desired_perf == cpu-&gt;perf_ctrls.desired_perf)</span><br><span class="line"> return ret;</span><br><span class="line"><span class="meta"> cpu-&gt;</span><span class="bash">perf_ctrls.desired_perf = desired_perf;</span></span><br><span class="line"> freqs.old = policy-&gt;cur;</span><br><span class="line"> freqs.new = target_freq;</span><br><span class="line"> cpufreq_freq_transition_begin(policy, &amp;freqs);</span><br><span class="line"> //通过acpi 提供的的接口来设置cpu 频率</span><br><span class="line"> ret = cppc_set_perf(cpu-&gt;cpu, &amp;cpu-&gt;perf_ctrls);</span><br><span class="line"> cpufreq_freq_transition_end(policy, &amp;freqs, ret != 0);</span><br><span class="line"> if (ret)</span><br><span class="line"> pr_debug("Failed to set target on CPU:%d. ret:%d\n",</span><br><span class="line"><span class="meta"> cpu-&gt;</span><span class="bash">cpu, ret);</span></span><br><span class="line"> return ret;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>这里的cppc_set_perf实现在driver/acpi/cppc_acpi.c中实现，通过这个接口可以通过固件来设置cpu频率。</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/curl_wget/">curl &amp; wget</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.3k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="Linux-curl命令详解"   >
+          <a href="#Linux-curl命令详解" class="heading-link"><i class="fas fa-link"></i></a>Linux curl命令详解</h2>
+      <p>在Linux中curl是一个利用URL规则在命令行下工作的文件传输工具，可以说是一款很强大的http命令行工具。它支持文件的上传和下载，是综合传输工具，但按传统，习惯称url为下载工具。<br>常见参数：</p>
+<figure class="highlight haml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">A/--user-agent &lt;string&gt;              设置用户代理发送给服务器</span></span><br><span class="line"><span class="ruby">-b/--cookie &lt;name=string/file&gt;    cookie字符串或文件读取位置</span></span><br><span class="line"><span class="ruby">-c/--cookie-jar &lt;file&gt;                    操作结束后把cookie写入到这个文件中</span></span><br><span class="line"><span class="ruby">-C/--continue-at &lt;offset&gt;            断点续转</span></span><br><span class="line"><span class="ruby">-D/--dump-header &lt;file&gt;              把header信息写入到该文件中</span></span><br><span class="line"><span class="ruby">-e/--referer                                  来源网址</span></span><br><span class="line"><span class="ruby">-f/--fail                                          连接失败时不显示http错误</span></span><br><span class="line"><span class="ruby">-H/--header                           添加 HTTP 请求的标头.</span></span><br><span class="line"><span class="ruby">-o/--output                                  把输出写到该文件中</span></span><br><span class="line"><span class="ruby">-O/--remote-name                      把输出写到该文件中，保留远程文件的文件名</span></span><br><span class="line"><span class="ruby">-r/--range &lt;range&gt;                      检索来自HTTP/<span class="number">1.1</span>或FTP服务器字节范围</span></span><br><span class="line"><span class="ruby">-s/--silent                                    静音模式。不输出任何东西</span></span><br><span class="line"><span class="ruby">-T/--upload-file &lt;file&gt;                  上传文件</span></span><br><span class="line"><span class="ruby">-u/--user &lt;user[<span class="symbol">:password</span>]&gt;      设置服务器的用户和密码</span></span><br><span class="line"><span class="ruby">-w/--write-out [format]                什么输出完成后</span></span><br><span class="line"><span class="ruby">-x/--proxy &lt;host[<span class="symbol">:port</span>]&gt;              在给定的端口上使用HTTP代理</span></span><br><span class="line"><span class="ruby">-<span class="comment">#/--progress-bar                        进度条显示当前的传送状态</span></span></span><br></pre></td></tr></table></div></figure>
+<p>wget更像一个迅雷，是个专门用来下载文件的下载利器.</p>
+<p><strong><code>/dev/null</code></strong> 是类 unix 系统的 空设备, <strong><code>&gt; /del/null</code></strong> 就是把标准输出重定向到空设备，不显示也不保存, <strong><code>2&gt;&amp;1</code></strong> 是把标准错误重定向到标准输出，也就是前面的空设备.</p>
+
+        <h3 id="基本命令"   >
+          <a href="#基本命令" class="heading-link"><i class="fas fa-link"></i></a>基本命令</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://man.linuxde.net/text.iso                    <span class="comment">#O大写，不用O只是打印内容不会下载</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget http://www.linuxde.net/text.iso                       <span class="comment">#不用参数，直接下载文件</span></span></span><br><span class="line">root@alpha:/home/test# curl -O http://man.linuxde.net/text.iso</span><br><span class="line"><span class="meta">%</span><span class="bash"> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span></span><br><span class="line">								Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  6332  100  6332    0     0   441k      0 --:--:-- --:--:-- --:--:--  441k</span><br></pre></td></tr></table></div></figure>
+
+<p><strong><code>-H</code></strong> 参数添加 HTTP 请求的标头。</p>
+<figure class="highlight scilab"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加 HTTP 标头Accept-Language: en-US.</span></span><br><span class="line">$ curl -H <span class="string">'Accept-Language: en-US'</span> https:<span class="comment">//google.com</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加两个 HTTP 标头.</span></span><br><span class="line">$ curl -H <span class="string">'Accept-Language: en-US'</span> -H <span class="string">'Secret-Message: xyzzy'</span> https:<span class="comment">//google.com</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加 HTTP 请求的标头是Content-Type: application/json，然后用 -d 参数发送 JSON 数据.</span></span><br><span class="line">$ curl -d <span class="string">'&#123;"</span>login<span class="string">": "</span>emma<span class="string">", "</span>pass<span class="string">": "</span><span class="number">123</span><span class="string">"&#125;'</span> -H <span class="string">'Content-Type: application/json'</span> https:<span class="comment">//google.com/login</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h3 id="保存网页"   >
+          <a href="#保存网页" class="heading-link"><i class="fas fa-link"></i></a>保存网页</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl http://www.linux.com &gt;&gt; linux.html</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="下载文件"   >
+          <a href="#下载文件" class="heading-link"><i class="fas fa-link"></i></a>下载文件</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://man.linuxde.net/text.iso                    <span class="comment">#O大写，不用O只是打印内容不会下载</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget http://www.linuxde.net/text.iso                       <span class="comment">#不用参数，直接下载文件</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="下载文件并重命名"   >
+          <a href="#下载文件并重命名" class="heading-link"><i class="fas fa-link"></i></a>下载文件并重命名</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -o rename.iso http://man.linuxde.net/text.iso         <span class="comment">#o小写</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget -O rename.zip http://www.linuxde.net/text.iso         <span class="comment">#O大写</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="断点续传"   >
+          <a href="#断点续传" class="heading-link"><i class="fas fa-link"></i></a>断点续传</h3>
+      <p>在windows中，我们可以使用迅雷这样的软件进行断点续传。curl可以通过内置option:-C同样可以达到相同的效果<br>如果在下载dodo1.JPG的过程中突然掉线了，可以使用以下的方式续传</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -O -C -URL http://man.linuxde.net/text.iso            #C大写</span><br><span class="line">wget -c http://www.linuxde.net/text.iso                    #c小写</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="限速下载"   >
+          <a href="#限速下载" class="heading-link"><i class="fas fa-link"></i></a>限速下载</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl --<span class="built_in">limit</span>-rate 50k -O http://man.linuxde.net/text.iso</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget --<span class="built_in">limit</span>-rate=50k http://www.linuxde.net/text.iso</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="显示响应头部信息"   >
+          <a href="#显示响应头部信息" class="heading-link"><i class="fas fa-link"></i></a>显示响应头部信息</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -I http://man.linuxde.net/text.iso</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget --server-response http://www.linuxde.net/test.iso</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="wget利器–打包下载网站"   >
+          <a href="#wget利器–打包下载网站" class="heading-link"><i class="fas fa-link"></i></a>wget利器–打包下载网站</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget --mirror -p --convert-links -P /var/www/html http://man.linuxde.net/</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="O-大写-保存网页中的文件-要注意这里后面的url要具体到某个文件，不然抓不下来"   >
+          <a href="#O-大写-保存网页中的文件-要注意这里后面的url要具体到某个文件，不然抓不下来" class="heading-link"><i class="fas fa-link"></i></a>-O(大写)保存网页中的文件, 要注意这里后面的url要具体到某个文件，不然抓不下来</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/hello.sh</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="x来支持设置代理"   >
+          <a href="#x来支持设置代理" class="heading-link"><i class="fas fa-link"></i></a>-x来支持设置代理</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -x 192.168.100.100:1080 http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="保存http的response里面的cookie信息。内置option-c（小写）"   >
+          <a href="#保存http的response里面的cookie信息。内置option-c（小写）" class="heading-link"><i class="fas fa-link"></i></a>保存http的response里面的cookie信息。内置option:-c（小写）</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -c cookiec.txt  http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="保存http的response里面的header信息。内置option-D"   >
+          <a href="#保存http的response里面的header信息。内置option-D" class="heading-link"><i class="fas fa-link"></i></a>保存http的response里面的header信息。内置option: -D</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -D cookied.txt http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option-b"   >
+          <a href="#很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option-b" class="heading-link"><i class="fas fa-link"></i></a>很多网站都是通过监视你的cookie信息来判断你是否按规矩访问他们的网站的，因此我们需要使用保存的cookie信息。内置option: -b</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -b cookiec.txt http://www.linux.com</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="以服务器上的名称保存文件到本地-O（大写"   >
+          <a href="#以服务器上的名称保存文件到本地-O（大写" class="heading-link"><i class="fas fa-link"></i></a>以服务器上的名称保存文件到本地: -O（大写)</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/dodo1.JPG</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="循环下载"   >
+          <a href="#循环下载" class="heading-link"><i class="fas fa-link"></i></a>循环下载</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/dodo[1-5].JPG</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -O http://www.linux.com/&#123;hello,bb&#125;/dodo[1-5].JPG</span></span><br></pre></td></tr></table></div></figure>
+<p>下载<span class="exturl"><a class="exturl__link"   href="http://www.linux.com/hello/dodo[1-5].JPG"  target="_blank" rel="noopener">http://www.linux.com/hello/dodo[1-5].JPG</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 和 <span class="exturl"><a class="exturl__link"   href="http://www.linux.com/bb/dodo[1-5].JPG"  target="_blank" rel="noopener">http://www.linux.com/bb/dodo[1-5].JPG</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 文件</p>
+
+        <h3 id="显示进度条"   >
+          <a href="#显示进度条" class="heading-link"><i class="fas fa-link"></i></a>显示进度条</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -<span class="comment"># -O http://www.linux.com/dodo1.JPG</span></span></span><br><span class="line">root@alpha:/home/zhan/test# curl -# -O http://www.linux.com/dodo1.JPG</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">###################################################################################### 100.0%</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="上传文件"   >
+          <a href="#上传文件" class="heading-link"><i class="fas fa-link"></i></a>上传文件</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -T dodo1.JPG -u 用户名:密码 ftp://www.linux.com/img/</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="Additional"   >
+          <a href="#Additional" class="heading-link"><i class="fas fa-link"></i></a>Additional</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@alpha:/home/zhan/images_test# curl 10.239.140.186:8081</span><br><span class="line">You have hit fef0dd414fe4</span><br><span class="line">root@alpha:/home/zhan/images_test# wget 10.239.140.186:8081</span><br><span class="line">--2020-05-11 14:59:53--  http://10.239.140.186:8081/</span><br><span class="line">Resolving child-prc.intel.com (child-prc.intel.com)... 10.239.4.100</span><br><span class="line">Connecting to child-prc.intel.com (child-prc.intel.com)|10.239.4.100|:913... connected.</span><br><span class="line">Proxy request sent, awaiting response... 200 OK</span><br><span class="line">Length: unspecified</span><br><span class="line">Saving to: ‘index.html’</span><br><span class="line"></span><br><span class="line">index.html                              [ &lt;=&gt;                                                                ]      24  --.-KB/s    in 0s</span><br><span class="line"></span><br><span class="line">2020-05-11 14:59:53 (3.27 MB/s) - ‘index.html’ saved [24]</span><br><span class="line"></span><br><span class="line">root@alpha:/home/zhan/images_test# ls</span><br><span class="line">index.html</span><br><span class="line">root@alpha:/home/zhan/images_test# cat index.html</span><br><span class="line">You have hit fef0dd414fe4</span><br><span class="line">root@alpha:/home/zhan/images_test#</span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/curl%E5%8D%87%E7%BA%A7/">curl 升级</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">611</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>官网:<br><span class="exturl"><a class="exturl__link"   href="https://curl.haxx.se/download.html#LinuxRedhat"  target="_blank" rel="noopener">https://curl.haxx.se/download.html#LinuxRedhat</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://mirror.city-fan.org/ftp/contrib/sysutils/Mirroring/"  target="_blank" rel="noopener">https://mirror.city-fan.org/ftp/contrib/sysutils/Mirroring/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="http://www.city-fan.org/ftp/contrib/yum-repo/rhel6/x86_64/"  target="_blank" rel="noopener">http://www.city-fan.org/ftp/contrib/yum-repo/rhel6/x86_64/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="卸载旧版本curl"   >
+          <a href="#卸载旧版本curl" class="heading-link"><i class="fas fa-link"></i></a>卸载旧版本curl</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep curl</span><br><span class="line">  libcurl-7.29.0-57.el7_8.1.x86_64</span><br><span class="line">  python-pycurl-7.19.0-19.el7.x86_64</span><br><span class="line">  curl-7.29.0-57.el7_8.1.x86_64</span><br><span class="line">  libcurl-devel-7.29.0-57.el7_8.1.x86_64</span><br></pre></td></tr></table></div></figure>
+
+<p>卸载: 基本语法</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e &lt;RPM包的名称&gt;</span><br></pre></td></tr></table></div></figure>
+<p>增加参数 –nodeps ,就可以强制删除，但是一般不推荐这样做，因为依赖于该软件包的程序可能无法运行.  </p>
+
+        <h2 id="安装curl包"   >
+          <a href="#安装curl包" class="heading-link"><i class="fas fa-link"></i></a>安装curl包</h2>
+      <p>基本语法:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh  &lt;RPM包全路径名称&gt;</span><br></pre></td></tr></table></div></figure>
+
+<p>参数说明： i=install 安装 v=verbose 提示 h=hash  进度条</p>
+
+        <h2 id="升级curl包"   >
+          <a href="#升级curl包" class="heading-link"><i class="fas fa-link"></i></a>升级curl包</h2>
+      <p>需要升级curl包根本原因在于 curl 7.19或7.29 版本不支持 TLS v1.1 以上的协议，如果需要支持 TLS v1.2 版本，至少需要升级到 curl 7.34 版本。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh  http://www.city-fan.org/ftp/contrib/yum-repo/rhel6/x86_64/city-fan.org-release-2-1.rhel6.noarch.rpm</span><br><span class="line">yum --showduplicates list curl --disablerepo="*" --enablerepo="city*"</span><br><span class="line">(与上面好像不一样)yum --showduplicates list curl --disablerepo="*"  --enablerepo="fan*"</span><br><span class="line">  Loaded plugins: fastestmirror, langpacks</span><br><span class="line">  Loading mirror speeds from cached hostfile</span><br><span class="line">   * city-fan.org: nervion.us.es</span><br><span class="line">   * city-fan.org-source: nervion.us.es</span><br><span class="line">  Installed Packages</span><br><span class="line">  curl.x86_64                                             7.29.0-57.el7_8.1                                               @updates</span><br><span class="line">  Available Packages</span><br><span class="line">  curl.x86_64                                             7.72.0-2.0.cf.rhel7                                             city-fan.org</span><br></pre></td></tr></table></div></figure>
+<p>修改该 “city-fan.org” repo的enable为1</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/city-fan.org.repo</span><br><span class="line">[city-fan.org]</span><br><span class="line">name=city-fan.org repository for Red Hat Enterprise Linux (and clones) $releasever ($basearch)</span><br><span class="line"><span class="meta">#</span><span class="bash">baseurl=http://mirror.city-fan.org/ftp/contrib/yum-repo/rhel<span class="variable">$releasever</span>/<span class="variable">$basearch</span></span></span><br><span class="line">mirrorlist=http://mirror.city-fan.org/ftp/contrib/yum-repo/mirrorlist-rhel$releasever</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-city-fan.org</span><br></pre></td></tr></table></div></figure>
+
+<p>安装最新的curl</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install curl</span><br><span class="line">  ......</span><br><span class="line"><span class="meta">  ---&gt;</span><span class="bash"> Package libcurl-devel.x86_64 0:7.29.0-57.el7_8.1 will be updated</span></span><br><span class="line"><span class="meta">  ---&gt;</span><span class="bash"> Package libcurl-devel.x86_64 0:7.72.0-2.0.cf.rhel7 will be an update</span></span><br><span class="line">  ......</span><br></pre></td></tr></table></div></figure>
+
+<p>如果提示缺少依赖 libnghttp2.so.14()(64bit)</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/Packages/l/libnghttp2-1.6.0-1.el6.1.x86_64.rpm</span><br></pre></td></tr></table></div></figure>
+
+<p>然后重复第4步即可<br>查看curl版本</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -V</span><br><span class="line">curl 7.72.0 (x86_64-redhat-linux-gnu) libcurl/7.72.0 NSS/3.44 zlib/1.2.7 libpsl/0.7.0 (+libicu/50.1.2) libssh2/1.9.0 nghttp2/1.33.0</span><br><span class="line">Release-Date: 2020-08-19</span><br><span class="line">Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp</span><br><span class="line">Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Metalink NTLM NTLM_WB PSL SPNEGO SSL UnixSockets</span><br></pre></td></tr></table></div></figure>
+
+<p>(疑惑地方)实践安装后在 curl 7.72 版本中，使用的密码学库并没有从 NSS 替换为 OpenSSL 了，输入以下命令可以看出：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl-config --ssl-backends</span><br><span class="line">  NSS</span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h2 id="reference"   >
+          <a href="#reference" class="heading-link"><i class="fas fa-link"></i></a>reference</h2>
+      <p><span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/kingsonfu/p/10069755.html"  target="_blank" rel="noopener">https://www.cnblogs.com/kingsonfu/p/10069755.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://bbs.huaweicloud.com/blogs/123952"  target="_blank" rel="noopener">https://bbs.huaweicloud.com/blogs/123952</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/cut/">cut</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">262</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="cut"   >
+          <a href="#cut" class="heading-link"><i class="fas fa-link"></i></a>cut</h2>
+      <p><strong><code>cut</code></strong> 命令用来显示行中的指定部分，删除文件中指定字段. <strong><code>cut</code></strong> 经常用来显示文件的内容.  </p></div><div class="post-readmore"><a class="post-readmore__link" href="/2021/03/13/linux/cut/"><span class="post-readmore__text">阅读全文</span><span class="post-readmore__icon"><i class="fas fa-long-arrow-alt-right"></i></span></a></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/dd_command/">dd 命令</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">490</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>Linux dd 命令用于读取、转换并输出数据。<br>dd可从标准输入或文件中读取数据，根据指定的格式来转换数据，再输出到文件、设备或标准输出。</p>
+<p>参数说明:<br>if=文件名：输入文件名，默认为标准输入。即指定源文件。<br>of=文件名：输出文件名，默认为标准输出。即指定目的文件。</p>
+<p>bs=bytes：同时设置读入/输出的块大小为bytes个字节</p>
+<p>conv=&lt;关键字&gt;，关键字可以有以下11种：<br>  conversion：用指定的参数转换文件。<br>  ascii：转换ebcdic为ascii<br>  ebcdic：转换ascii为ebcdic<br>  ibm：转换ascii为alternate ebcdic<br>  block：把每一行转换为长度为cbs，不足部分用空格填充<br>  unblock：使每一行的长度都为cbs，不足部分用空格填充<br>  lcase：把大写字符转换为小写字符<br>  ucase：把小写字符转换为大写字符<br>  swab：交换输入的每对字节<br>  noerror：出错时不停止<br>  notrunc：不截短输出文件<br>  sync：将每个输入块填充到ibs个字节，不足部分用空（NUL）字符补齐。</p>
+<p>–help：显示帮助信息<br>–version：显示版本信息</p>
+
+        <h3 id="实例"   >
+          <a href="#实例" class="heading-link"><i class="fas fa-link"></i></a>实例</h3>
+      <p>在Linux 下制作启动盘，可使用如下命令：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dd <span class="keyword">if</span>=boot.img of=/dev/fd0 bs=1440k</span></span><br></pre></td></tr></table></div></figure>
+
+<p>将testfile文件中的所有英文字母转换为大写，然后转成为testfile_1文件，在命令提示符中使用如下命令：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dd <span class="keyword">if</span>=testfile_2 of=testfile_1 conv=ucase</span></span><br></pre></td></tr></table></div></figure>
+
+<p>由标准输入设备读入字符串，并将字符串转换成大写后，再输出到标准输出设备</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dd conv=ucase</span></span><br></pre></td></tr></table></div></figure>
+
+<p>输入以上命令后按回车键，输入字符串，再按回车键，按组合键Ctrl+D 退出</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dd conv=ucase </span></span><br><span class="line">hello		// 输入字符串后按回车键  </span><br><span class="line">HELLO		// 按组合键Ctrl+D才会输出并退出，转换成大写结果  </span><br><span class="line">0+1 records in</span><br><span class="line">0+1 records out</span><br><span class="line">6 bytes (6 B) copied, 5.79589 s, 0.0 kB/s</span><br></pre></td></tr></table></div></figure>
+
+
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/docker/">docker</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.1k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="docker保存-lodad镜像"   >
+          <a href="#docker保存-lodad镜像" class="heading-link"><i class="fas fa-link"></i></a>docker保存/lodad镜像</h2>
+      <p>复制镜像和复制容器都是通过保存为新镜像而进行的。<br>具体为：<br>保存镜像</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker save ID &gt; xxx.tar</span><br><span class="line">docker load &lt; xxx.tar</span><br><span class="line">docker load image-name:new &lt; image.tar</span><br><span class="line">docker load -i image.tar</span><br></pre></td></tr></table></div></figure>
+
+<p>//load期间使用$df -hl可以查看最下面docker绑定的根分区大小，如果image.tar要大于根分区大小则load会报空间不足的错误，解决方法下面有解.<br>保存容器</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker export ID &gt;xxx.tar</span><br><span class="line">docker import xxx.tar container:v1</span><br></pre></td></tr></table></div></figure>
+
+<p>然后再<code>docker run -it container:v1 bash</code></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run --name faiss-gcc-9.1 -it faiss-images-gcc-9.1.0:1.0 /bin/bash  //用这个</span><br><span class="line">exit</span><br><span class="line">docker start faiss-gcc-9.1</span><br><span class="line">docker attach faiss-gcc-9.1</span><br></pre></td></tr></table></div></figure>
+
+<p>软件镜像（如 weChat.exe）—-&gt; 运行镜像—-&gt; 产生一个容器（正在运行的软件，运行的 微信程序）；<br>操作    命令    说明<br>运行</p>
+<figure class="highlight awk"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run --name container-name -d image-name:tag <span class="regexp">/bin/</span>bash</span><br><span class="line">	运行一个名为 container-name的容器,并在容器里运行<span class="regexp">/bin/</span>bash,如果不指定运行<span class="regexp">/bin/</span>bash则docker启动后就立即退出，这跟docker机制有关，docker是后台运行，必须有前台进程，没有前台程序就退出</span><br><span class="line">	<span class="comment">#退出</span></span><br><span class="line">	<span class="keyword">exit</span></span><br><span class="line">	<span class="comment">#关闭</span></span><br><span class="line">	docker stop mycentos</span><br><span class="line">	<span class="comment">#重启</span></span><br><span class="line">	<span class="number">1</span>.docker start mycentos</span><br><span class="line">	<span class="comment">#重启后,在用mycentos再打开/bin/bash</span></span><br><span class="line">	<span class="number">2</span>.docker exec -ti mycentos <span class="regexp">/bin/</span>bash    <span class="regexp">//</span><span class="number">1</span>和<span class="number">2</span>两步是合起来用的</span><br></pre></td></tr></table></div></figure>
+<p>如:docker run –name myredis –d redis     /bin/bash<br>–name：自定义容器名<br>-d：表示后台运行<br>image-name:指定运行的镜像名称</p>
+<p>tag:镜像的版本</p>
+<p>列表    docker ps（查看运行中的容器）；    加上-a；可以查看所有容器<br>停止    docker stop container-name/container-id    停止当前运行的指定容器<br>启动    docker start container-name/container-id    启动容器<br>删除    docker rm container-id    删除指定容器<br>端口映射    -p 6379:6379<br>如:docker run  –name myredis  -d -p 6379:6379 docker.io/redis<br>-p:主机端口映射到容器内部的端口</p>
+<p>容器日志    docker logs container-name/container-id<br>官网可查看更多命令：<span class="exturl"><a class="exturl__link"   href="https://docs.docker.com/engine/reference/commandline/docker/"  target="_blank" rel="noopener">https://docs.docker.com/engine/reference/commandline/docker/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>删除Images</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker rm      --   Remove one or more containers</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi     --   Remove one or more images</span></span><br></pre></td></tr></table></div></figure>
+
+<p>想要删除运行过的images必须首先删除它的container。继续来看刚才的例子，</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps -a</span></span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                   NAMES</span><br><span class="line">117843ade696        ed9c93747fe1        /bin/sh -c /usr/sbin   46 hours ago        Up 46 hours         0.0.0.0:49153-&gt;22/tcp   test_sshd</span><br></pre></td></tr></table></div></figure>
+
+<p>可以看出ed9c93747fe1的image被117843ade696的container使用着，所以必须首先删除该container</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker rm 117843ade696</span></span><br><span class="line">Error: container_delete: Impossible to remove a running container, please stop it first</span><br><span class="line">2014/03/22 16:36:44 Error: failed to remove one or more containers</span><br><span class="line">出现错误，这是因为该container正在运行中(运行docker ps查看)，先将其关闭</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker stop 117843ade696</span></span><br><span class="line">117843ade696</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm 117843ade696</span></span><br><span class="line">117843ade696</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi ed9c93747fe1</span></span><br><span class="line">Deleted: ed9c93747fe16627be822ad3f7feeb8b4468200e5357877d3046aa83cc44c6af</span><br><span class="line">Deleted: c8a0c19429daf73074040a14e527ad5734e70363c644f18c6815388b63eedc9b</span><br><span class="line">Deleted: 95dba4c468f0e53e5f1e5d76b8581d6740aab9f59141f783f8e263ccd7cf2a8e</span><br><span class="line">Deleted: c25dc743e40af6858c34375d450851bd606a70ace5d04e231a7fcc6d2ea23cc1</span><br><span class="line">Deleted: 20562f5714a5ce764845119399ef75e652e23135cd5c54265ff8218b61ccbd33</span><br><span class="line">Deleted: c8af1dc23af7a7aea0c25ba9b28bdee68caa8866f056e4f2aa2a5fa1bcb12693</span><br><span class="line">Deleted: 38fdb2c5432e08ec6121f8dbb17e1fde17d5db4c1f149a9b702785dbf7b0f3be</span><br><span class="line">Deleted: 79ca14274c80ac1df1333b89b2a41c0e0e3b91cd1b267b31bef852ceab3b2044</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE</span><br><span class="line">CentOS65            latest              e55a74a32125        2 days ago          360.6 MB</span><br></pre></td></tr></table></div></figure>
+
+<p>可以看出，image已经被删除。<br>From <span class="exturl"><a class="exturl__link"   href="https://blog.csdn.net/flydreamzhll/article/details/80900509"  target="_blank" rel="noopener">https://blog.csdn.net/flydreamzhll/article/details/80900509</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+
+        <h2 id="Docker-拷贝"   >
+          <a href="#Docker-拷贝" class="heading-link"><i class="fas fa-link"></i></a>Docker 拷贝</h2>
+      <p>将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /www/runoob 96f7f14e99ab:/www/</span><br></pre></td></tr></table></div></figure>
+
+<p>将主机/www/runoob目录拷贝到容器96f7f14e99ab中，目录重命名为www。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /www/runoob 96f7f14e99ab:/www</span><br></pre></td></tr></table></div></figure>
+
+<p>将容器96f7f14e99ab的/www目录拷贝到主机的/tmp目录中。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp  96f7f14e99ab:/www /tmp/</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">主机copy到docker</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker cp /opt/<span class="built_in">test</span>/file.txt mycontainer_id：/opt/testnew/</span></span><br><span class="line">docker文件copy到主机</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker cp mycontainer_id：/opt/testnew/file.txt /opt/<span class="built_in">test</span>/</span></span><br></pre></td></tr></table></div></figure>
+
+<p>From <span class="exturl"><a class="exturl__link"   href="http://www.runoob.com/docker/docker-cp-command.html"  target="_blank" rel="noopener">http://www.runoob.com/docker/docker-cp-command.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
+
+        <h2 id="更新images"   >
+          <a href="#更新images" class="heading-link"><i class="fas fa-link"></i></a>更新images</h2>
+      <p>docker commit Container-id Images-name 将在某个image a 上做改动的新的container更新为最新的image </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker commit a981e981ef65 faiss-images</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Docker-run"   >
+          <a href="#Docker-run" class="heading-link"><i class="fas fa-link"></i></a>Docker run</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">which</span> python</span></span><br><span class="line">/usr/bin/python</span><br><span class="line"><span class="meta">$</span><span class="bash"> env</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim test.sh</span></span><br><span class="line"><span class="meta">	#</span><span class="bash">!/bin/bash</span></span><br><span class="line">	export MKLROOT=/opt/intel/compilers_and_libraries/linux/mkl/</span><br><span class="line">	export LD_PRELOAD=/opt/intel/compilers_and_libraries/linux/mkl//lib/intel64/libmkl_core.so:/opt/intel/compilers_and_libraries/linux/mkl//lib/intel64/libmkl_sequential.so</span><br><span class="line"></span><br><span class="line">	cd /test_faiss</span><br><span class="line">	python /test_faiss/test_sift1M.py</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -t image-name /bin/bash /test_faiss/test.sh</span></span><br><span class="line">				此时image已是在最新container上更新过的image</span><br><span class="line">   Vtune 绑定docker运行</span><br><span class="line"><span class="meta">$</span><span class="bash"> amplxe-cl -collect hotspots -r test_hot docker run -t faiss-images /bin/bash /test_faiss/test.sh</span></span><br><span class="line">		     		     保存目录</span><br><span class="line"><span class="meta">$</span><span class="bash"> amplxe-cl -collect hotspots -r test_hot_1 ls</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="设置镜像标签"   >
+          <a href="#设置镜像标签" class="heading-link"><i class="fas fa-link"></i></a>设置镜像标签</h2>
+      <p>我们可以使用 docker tag 命令，为镜像添加一个新的标签。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker tag 860c279d2fec runoob/centos:dev</span></span><br></pre></td></tr></table></div></figure>
+
+<p>docker tag 镜像ID，这里是 860c279d2fec ,用户名称、镜像源名(repository name)和新的标签名(tag)。<br>使用 docker images 命令可以看到，ID为860c279d2fec的镜像多一个标签。</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">runoob/centos       6.7                 860c279d2fec        5 hours ago         190.6 MB</span><br><span class="line">runoob/centos       dev                860c279d2fec        5 hours ago         190.6 MB</span><br><span class="line">runoob/ubuntu       v2                  70bf1840fd7c        22 hours ago        158.5 MB</span><br><span class="line">ubuntu              14.04               90d5884b1ee0        6 days ago          188 MB</span><br><span class="line">php                 5.6                 f40e9e0f10c8        10 days ago         444.8 MB</span><br><span class="line">nginx               latest              6f8d099c3adc        13 days ago         182.7 MB</span><br><span class="line">mysql               5.6                 f2e8d6c772c0        3 weeks ago         324.6 MB</span><br><span class="line">httpd               latest              02ef73cf1bc0        3 weeks ago         194.4 MB</span><br><span class="line">ubuntu              15.10               4e3b13c8a266        5 weeks ago         136.3 MB</span><br><span class="line">hello-world         latest              690ed74de00f        6 months ago        960 B</span><br><span class="line">centos              6.7                 d95b5ca17cc3        6 months ago        190.6 MB</span><br><span class="line">training/webapp     latest              6fae60ef3446        12 months ago       348.8 MB</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Docker修改空间大小"   >
+          <a href="#Docker修改空间大小" class="heading-link"><i class="fas fa-link"></i></a>Docker修改空间大小</h2>
+      <ul>
+<li>第一种：<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$ docker info</span><br><span class="line">Containers: 0</span><br><span class="line"> Running: 0</span><br><span class="line"> Paused: 0</span><br><span class="line"> Stopped: 0</span><br><span class="line">Images: 0</span><br><span class="line">Server Version: 1.12.6</span><br><span class="line">Storage Driver: devicemapper</span><br><span class="line"><span class="built_in"> Pool </span>Name: docker-253:0-67125080-pool</span><br><span class="line"><span class="built_in"> Pool </span>Blocksize: 65.54 kB</span><br><span class="line"> Base Device Size: 10.74 GB#这个就是限制，容器根分区的大小！</span><br><span class="line"> Backing Filesystem: xfs</span><br><span class="line"> Data file: /dev/loop0</span><br><span class="line"> Metadata file: /dev/loop1</span><br><span class="line"> Data Space Used: 11.8 MB</span><br><span class="line"> Data Space Total: 107.4 GB</span><br><span class="line"> Data Space Available: 36.95 GB</span><br><span class="line"> Metadata Space Used: 581.6 kB</span><br><span class="line"> Metadata Space Total: 2.147 GB</span><br><span class="line"> Metadata Space Available: 2.147 GB</span><br><span class="line"> Thin<span class="built_in"> Pool </span>Minimum Free Space: 10.74 GB</span><br><span class="line"> Udev Sync Supported: <span class="literal">true</span></span><br><span class="line"> Deferred Removal Enabled: <span class="literal">false</span></span><br><span class="line"> Deferred Deletion Enabled: <span class="literal">false</span></span><br><span class="line"> Deferred Deleted Device Count: 0</span><br><span class="line">docker的版本是1.12,修改容器根分区的大小即可：</span><br><span class="line"></span><br><span class="line">  dm.<span class="attribute">loopdatasize</span>=100G是指存放数据的数据库空间为100g，默认是100g</span><br><span class="line">dm.<span class="attribute">loopmetadatasize</span>=10G是存放Metadata数据空间为10g，默认是2g</span><br><span class="line">dm.<span class="attribute">fs</span>=xft是指容器磁盘分区为xft</span><br><span class="line">dm.<span class="attribute">basesize</span>=20G是指容器根分区默认为20g，默认是10g</span><br></pre></td></tr></table></div></figure>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /etc/sysconfig/docker-storage</span></span><br></pre></td></tr></table></div></figure>
+修改下面参数即可<figure class="highlight brainfuck"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">DOCKER_STORAGE_OPTIONS="</span>--<span class="comment">storage</span><span class="literal">-</span><span class="comment">driver</span> <span class="comment">devicemapper</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">loopdatasize=200G</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">loopmetadatasize=10G</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">/dev/docker/</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">fs=xfs</span> --<span class="comment">storage</span><span class="literal">-</span><span class="comment">opt</span> <span class="comment">dm</span><span class="string">.</span><span class="comment">basesize=30G"</span></span><br></pre></td></tr></table></div></figure>
+利用-g参数即可指定存储挂载路径。比如，示例中的配置将存储目录挂载在/data/docker/路径下<br>重新挂载新的路径后原来路径下的images和container都找不到，-g参数去掉回到默认挂载路径再按照下面重启docker服务会发现原来的images和container都存在.</li>
+</ul>
+<p>最后重启容器，问题解决</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 停止docker服务的命令如下:</span><br><span class="line">systemctl stop docker</span><br><span class="line">// 重新启动：</span><br><span class="line">systemctl daemon-reload &amp;&amp; systemctl start docker</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>第二种： //试了试不怎么灵<br>Docker默认空间大小分为两个，一个是池空间大小，另一个是容器空间大小。<br>池空间大小默认为：100G<br>容器空间大小默认为是：10G<br>所以修改空间大小也分为两个：<br>这里使用centos下的yum进行安装的Docker。</li>
+</ul>
+<p>首先，修改空间大小，必需使Docker运行在daemon环境下，即先停止正在运行的docker服务：<br>service docker stop<br>然后使用命令使用daemon环境下运行docker：<br>docker -d          //可以不需要这条<br>一、修改池空间大小方法：<br>dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/data bs=1G count=0 seek=1000<br>dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/metadata bs=1G count=0 seek=10<br>上面的1000为1TB大小，即为数据池空间大小为1TB，而10则为Metadata的空间大小，10GB<br>从运行完后，启动docker service<br>service docker start<br>使用命令查看docker池空间大小：<br>docker info</p>
+<p>可以看到池空间已经被设置为data=1TB和metadata=10GB</p>
+
+        <h2 id="关于Docker目录挂载的总结"   >
+          <a href="#关于Docker目录挂载的总结" class="heading-link"><i class="fas fa-link"></i></a>关于Docker目录挂载的总结</h2>
+      <p>Docker容器启动的时候，如果要挂载宿主机的一个目录，可以用-v参数指定。<br>譬如我要启动一个centos容器，宿主机的/test目录挂载到容器的/soft目录，可通过以下方式指定：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run -it  --privileged=<span class="literal">true</span> -v /<span class="built_in">test</span>:/soft  --name ContainerName ImagesName /bin/bash</span></span><br></pre></td></tr></table></div></figure>
+
+<p>这样在容器启动后，容器内会自动创建/soft的目录。通过这种方式，我们可以明确一点，即-v参数中，冒号”:”前面的目录是宿主机目录，后面的目录是容器内目录。<br>挂载宿主机已存在目录后，在容器内对其进行操作，报“Permission denied”。<br>可通过两种方式解决：<br>1&gt; 关闭selinux。<br>临时关闭：# setenforce 0<br>永久关闭：修改/etc/sysconfig/selinux文件，将SELINUX的值设置为disabled。<br>2&gt; 以特权方式启动容器<br>指定–privileged参数<br>如：# docker run -it –privileged=true -v /test:/soft centos /bin/bash</p>
+
+        <h2 id="容器的特权模式运行"   >
+          <a href="#容器的特权模式运行" class="heading-link"><i class="fas fa-link"></i></a>容器的特权模式运行</h2>
+      <p>–privileged 可以启动docker的特权模式，这种模式允许我们以其宿主机具有（几乎）所有能力来运行容器，包括一些内核特性和设备访问。</p>
+<p>这是让我们可以在dokcer中运行docker的必要参数</p>
+<p>让docker运行在–privileged特权模式会有一些安全风险。这种模式下运行容器对docker宿主机拥有root访问权限。</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/dmidecode/">dmidecode</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">122</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="dmidecode命令"   >
+          <a href="#dmidecode命令" class="heading-link"><i class="fas fa-link"></i></a>dmidecode命令</h2>
+      <figure class="highlight vim"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查看服务器型号：dmidecode | <span class="keyword">grep</span> <span class="string">"Product Name"</span></span><br><span class="line">查看主板的序列号：dmidecode | <span class="keyword">grep</span> <span class="string">"Serial Number"</span></span><br><span class="line">查看系统序列号：dmidecode -s <span class="built_in">system</span>-serial-<span class="keyword">number</span></span><br><span class="line">查看内存信息：dmidecode -t memory</span><br><span class="line">查看OEM信息：dmidecode -t <span class="number">11</span></span><br></pre></td></tr></table></div></figure>
+
+<p>不带选项执行dmidecode命令通常会输出所有的硬件信息。dmidecode命令有个很有用的选项-t，可以按指定类型输出相关信息，假如要获得处理器方面的信息，则可以执行：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dmidecode -t processor</span><br></pre></td></tr></table></div></figure>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/etc_profile-etc_bashrc-~.bashrc/">/etc/profile, /etc/bashrc, ~/.bashrc</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">457</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>1、Ubuntu保存环境变量的几个文件</p>
+<ul>
+<li><p>/etc/profile<br>在用户登录时，操作系统定制用户环境时使用的第一个文件，此文件为系统的每个用户设置环境信息，当用户第一次登录时，该文件被执行。</p>
+</li>
+<li><p>/etc/environment<br>在用户登录时，操作系统使用的第二个文件， 系统在读取用户个人的profile前，设置环境文件的环境变量。</p>
+</li>
+<li><p>~/.profile<br>在用户登录时，用到的第三个文件 是.profile文件，每个用户都可使用该文件输入专用于自己使用的shell信息，当用户登录时，该文件仅仅执行一次！默认情况下，会设置一些环境变量，执行用户的.bashrc文件。</p>
+</li>
+<li><p>/etc/bashrc<br>为每一个运行bash shell的用户执行此文件，当bash shell被打开时，该文件被读取。</p>
+</li>
+<li><p>~/.bashrc<br>该文件包含专用于用户的bash shell的bash信息，当登录时以及每次打开新的shell时，该该文件被读取。</p>
+<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">…</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">http_proxy</span>=http://child-prc.intel.com:913/</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">https_proxy</span>=http://child-prc.intel.com:913/</span><br></pre></td></tr></table></div></figure>
+<p>这样修改每次yum,pip等工具下载文件时候不能再写policy<br>使文件立刻生效，$ source ~/.profile</p>
+</li>
+</ul>
+<p>Note： 以上文件可通过$ sudo gedit 文件名 或 $ sudo vim 文件名打开；建议只修改<del>/.profile文件，如果只修改</del>/.bashrc文件，后期使用go get 命令时，会提示GOPATH未设置。<br>2、设置GOPATH和GOROOT<br>$ sudo gedit ~/.profile<br>在文件最后添加<br> export GOROOT=”/usr/lib/go-1.8” // 引号内设置为你自己的go安装目录<br> export GOBIN=$GOROOT/bin<br> export GOPATH=”/home/test/gopath” // 引号内设置为自己的go项目的工作区间<br> export PATH=$PATH:$GOPATH/bin    // 原路径后用冒号连接新路径</p>
+<p>使文件立刻生效，$ source ~/.profile<br>重启系统即可</p>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/11/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/13/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

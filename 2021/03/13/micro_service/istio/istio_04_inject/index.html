@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="What kind of resources can be injected       Job, DaemonSet, ReplicaSet, Pod, Deployment, 被istio sidecar 注入后会进行iptable重新网络初始化等操作 Service, Secrets, ConfigMap 这三个被istio注入后不会有啥改变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="istio 04 sidecar inject">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_04_inject/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="What kind of resources can be injected       Job, DaemonSet, ReplicaSet, Pod, Deployment, 被istio sidecar 注入后会进行iptable重新网络初始化等操作 Service, Secrets, ConfigMap 这三个被istio注入后不会有啥改变">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_04_inject/pilot-agent_envoy.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_04_inject/ports_used_by_istio.PNG">
+<meta property="article:published_time" content="2021-03-13T05:00:42.857Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.857Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="istio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_04_inject/pilot-agent_envoy.PNG"><title>istio 04 sidecar inject | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_04_inject/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">istio 04 sidecar inject</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.3k</span></span></div></header><div class="post-body">
+        <h2 id="What-kind-of-resources-can-be-injected"   >
+          <a href="#What-kind-of-resources-can-be-injected" class="heading-link"><i class="fas fa-link"></i></a>What kind of resources can be injected</h2>
+      <p>Job, DaemonSet, ReplicaSet, Pod, Deployment, 被istio sidecar 注入后会进行iptable重新网络初始化等操作</p>
+<p>Service, Secrets, ConfigMap 这三个被istio注入后不会有啥改变</p>
+
+        <h2 id="sidecar-注入步骤实例"   >
+          <a href="#sidecar-注入步骤实例" class="heading-link"><i class="fas fa-link"></i></a>sidecar 注入步骤实例</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> touch jiuxi-deployment.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create ns jiuxi-ns</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f jiuxi-deployment.yaml -n jiuxi-ns</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml -o jiuxi-deployment-inject.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml | kubectl apply -f - -n jiuxi-ns</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="1-源文件部署-no-sidecar"   >
+          <a href="#1-源文件部署-no-sidecar" class="heading-link"><i class="fas fa-link"></i></a>1. 源文件部署, no sidecar:</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ vim jiuxi-deployment.yaml</span><br><span class="line">apiVersion: app/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: jiuxi</span><br><span class="line">  labels:</span><br><span class="line">    app: jiuxi</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: jiuxi</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: jiuxi</span><br><span class="line">    spec</span><br><span class="line">      containers:</span><br><span class="line">      - name: nginx</span><br><span class="line">        image:nginx:1.14-alpine</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br></pre></td></tr></table></div></figure>
+<p>部署:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f jiuxi-deployment.yaml -n jiuxi-ns</span></span><br></pre></td></tr></table></div></figure>
+<p>查看pod提供对外服务的端口号:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubect <span class="built_in">exec</span> -it po/jiuxi-*** -n jiuxi-ns -- netstat -ntlp</span></span><br><span class="line">Active Internete connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address       Foreign Address      State      PID/Program name</span><br><span class="line">tcp     0          0.0.0.0:80             0.0.0.0:*          LISTEN     1/nginx: master pro</span><br></pre></td></tr></table></div></figure>
+<p>可以看到有个master主进程对外提供80端口服务</p>
+
+        <h3 id="2-sidecar注入"   >
+          <a href="#2-sidecar注入" class="heading-link"><i class="fas fa-link"></i></a>2. sidecar注入</h3>
+      <p>是先生成全新的deployment部署pod, 再同时删除原来的deployment和pod资源，从pod的名字哈希后缀可以观察到变化.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml | kubectl apply -f - -n jiuxi-ns</span></span><br></pre></td></tr></table></div></figure>
+<p>可以观察到READY的有2个pod且pod名称hash部分有变化, dump到文件中查看inject后的资源配置信息 </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml &gt; jiuxi-deployment-inject.yaml</span></span><br></pre></td></tr></table></div></figure>
+<p>sidecar注入后可以观察到pod里有两个运行的容器 <code>nginx</code>, <code>istio-proxy</code>, 还有一个已运行结束的<code>istio-init</code>容器.<br><code>istio-init</code>容器是用来初始化网络命名空间, 使得<code>nginx</code>和<code>istio-proxy</code>处于相同的网络空间中.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns po/jiuxi-* -c nginx -- ifconfig	// 或者将ifcongig替换为route -n(查看路由表)</span></span><br><span class="line">eth0: ......</span><br><span class="line">      inet addr:10.244.10.11......</span><br><span class="line">lo:</span><br><span class="line">    ......</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns po/jiuxi-* -c istio-proxy -- ifconfig // 或者将ifcongig替换为route -n(查看路由表)</span></span><br><span class="line">eth0: ......</span><br><span class="line">      inet addr:10.244.10.11......</span><br><span class="line">lo:</span><br><span class="line">    ......</span><br></pre></td></tr></table></div></figure>
+<p>从以上可以看到<code>nginx</code>和<code>istio-proxy</code>处于相同的网络空间中.<br>sidecar 注入后查看pod提供对外服务的端口号:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubect <span class="built_in">exec</span> -it po/jiuxi-*** -c nginx -n jiuxi-ns -- netstat -ntlp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubect <span class="built_in">exec</span> -it po/jiuxi-*** -c istio-proxy -n jiuxi-ns -- netstat -ntlp</span></span><br><span class="line">Proto Recv-Q Send-Q Local Address       Foreign Address      State      PID/Program name</span><br><span class="line">tcp     0          0.0.0.0:80             0.0.0.0:*          LISTEN     1/nginx: master pro</span><br><span class="line">......//Pod对外服务端口号会多增加5个</span><br></pre></td></tr></table></div></figure>
+<p>部署istio后搭建bookinfo实例, 查看productpage 网络</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> k <span class="built_in">exec</span> -it -n book-info productpage-v1-7df7cb7f86-gjtfz -c istio-proxy -- netstat -ntlp</span></span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 0.0.0.0:15090           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 127.0.0.1:15000         0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 0.0.0.0:15001           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 0.0.0.0:15006           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 0.0.0.0:15021           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp6       0      0 :::9080                 :::*                    LISTEN      -</span><br><span class="line">tcp6       0      0 :::15020                :::*                    LISTEN      1/pilot-agent</span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="3-istio-iptables"   >
+          <a href="#3-istio-iptables" class="heading-link"><i class="fas fa-link"></i></a>3. istio-iptables</h3>
+      <p>tcp/ip协议栈一般都是由OS内核去实现的,无论是linux, windows, mac. 因为编码时候不会考虑传输层是什么, 怎么封报, 只是在应用层用http协议或调一些SDK或者调用开源包来实现数据转发或者说是报文的封装等.<br>但是真正实现网络层协议的还是在操作系统内核来干这些事情.<br>操作系统内核又一个模块 <code>netfilter</code>, 它有一部分功能就是来制定些网络策略, 如不允许某一个IP或某一个网段的IP或者POD来访问你的主机.<br>我们不太可能直接去操作位于内核的<code>netfilter</code>来制定这些策略和管理.<br>Linux 给我们了一个客户端工具<code>iptables</code>，通过这个工具可以跟OS的<code>netfilter模块</code>进行交互来向它发送指令执行策略制定.<br><code>iptables</code>可以看作一个客户端, <code>netfilter</code>可以看作一个server端.</p>
+<p>istio-init容器在启动后不久就停止运行，改变了容器的网络策略，查看此容器日志: </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl logs -f -n jiuxi-ns jiuxi-*** -c istio-init </span></span><br><span class="line">......</span><br><span class="line">* nat			//nat表增加下面四条链</span><br><span class="line">:PREROUTING ACCEPT [0:0]</span><br><span class="line">:INPUT ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [0:0]</span><br><span class="line">:POSTROUTING ACCEPT [0:0]</span><br><span class="line">:ISTIO_INBOUND - [0:0]</span><br><span class="line">:ISTIO_IN_REDIRECT - [0:0]</span><br><span class="line">:ISTIO_OUTPUT - [0:0]</span><br><span class="line">:ISTIO_REDIRECT - [0:0]</span><br><span class="line">-A PREROUTING -p tcp -j ISTIO_INBOUND</span><br><span class="line">-A OUTPUT -p tcp -j ISTIO_OUTPUT</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 22 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 15090 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 15021 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 15020 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -j ISTIO_IN_REDIRECT</span><br><span class="line">-A ISTIO_IN_REDIRECT -p tcp -j REDIRECT --to-ports 15006</span><br><span class="line">-A ISTIO_OUTPUT -s 127.0.0.6/32 -o lo -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT ! -d 127.0.0.1/32 -o lo -m owner --uid-owner 1337 -j ISTIO_IN_REDIRECT</span><br><span class="line">-A ISTIO_OUTPUT -o lo -m owner ! --uid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -m owner --uid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT ! -d 127.0.0.1/32 -o lo -m owner --gid-owner 1337 -j ISTIO_IN_REDIRECT</span><br><span class="line">-A ISTIO_OUTPUT -o lo -m owner ! --gid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -m owner --gid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -d 127.0.0.1/32 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -j ISTIO_REDIRECT</span><br><span class="line">-A ISTIO_REDIRECT -p tcp -j REDIRECT --to-ports 15001	// 从任意地方来的和到任意地方去的流量, 协议是tcp/ip协议, 都会转到15001这个端口</span><br><span class="line">COMMIT</span><br><span class="line"><span class="meta">#</span><span class="bash"> Completed on Thu Aug 13 08:59:39 2020</span></span><br></pre></td></tr></table></div></figure>
+
+<p>查看此pod被调度到哪台机器上</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps | grep -i istio-proxy</span></span><br><span class="line">// 要使用privileged权限</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it --privileged &lt;istio-proxy_container_ID&gt; bash</span></span><br><span class="line">istio-proxy@jiuxi-***:/$</span><br><span class="line">istio-proxy@jiuxi-***:/$ sudo su root</span><br><span class="line">istio-proxy@jiuxi-***:/$ iptables -nvL -t nat	//通过iptables去查nat表里的iptables明细</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_INBOUND ()		// 可以看到nat表增加了4条链</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_IN_REDIRECT ()</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_OUTPUT ()</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_REDIRECT (1 references)		// 从任意地方来的和到任意地方去的流量, 协议是tcp/ip协议, 都会转到15001这个端口</span><br><span class="line"> pkts bytes target    prot  opt  in    out    source     destination</span><br><span class="line"> 0      0   REDIRECT  tcp   --    *     *     0.0.0.0/0   0.0.0.0/0      redir ports 15001</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="4-istio-proxy容器进程pilot-agent-和-envoy"   >
+          <a href="#4-istio-proxy容器进程pilot-agent-和-envoy" class="heading-link"><i class="fas fa-link"></i></a>4. istio-proxy容器进程pilot-agent 和 envoy</h3>
+      <p>下图中的istio-pilot也就是pilot-agent进程.<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="pilot-agent_envoy.PNG"  alt="">
+      <br><strong>pilot-agent作用</strong></p>
+<ol>
+<li>pilot-agent(可以看作pilot的客户端)不停的跟pilot服务端(istiod pod里运行的pilot-discovery进程可以看作是pilot的服务端)进行通讯拿取从api-server获取的最新的资源路由等规则.  </li>
+<li>pilot-agent进程启动并生成envoy进程的启动配置.  </li>
+<li>pilot-agent启动envoy进程.  </li>
+<li>pilot-agent监控并管理envoy的运行情况, 比如envoy出错时负责重启, envoy配置变更后重新加载; 外部流控的一些规则发生变化后, pilot-agent会监听这种变化, 然后将envoy以新的配置重新加载.  </li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns jiuxi-*** -c istio-proxy -- ps -ef</span></span><br><span class="line">UID   PID  PPID  C STIME  TTY    TIME    CMD</span><br><span class="line">                                         /usr/local/bin/pilot-agent proxy</span><br><span class="line">                                         /usr/local/bin/envoy -c /etc/ist</span><br><span class="line">                                         ps -ef</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>envoy作用</strong><br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="ports_used_by_istio.PNG"  alt="">
+      <br>之所以不用nginx而用envoy做sidecar原因是nginx功能啥都有,太重了, envoy更偏轻量级, 更方便使用.  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns jiuxi-*** -c istio-proxy -- netstat -ntlp</span></span><br></pre></td></tr></table></div></figure>
+<p>可以看到15000端口号只允许本容器的127.0.0.1环回地址访问, 只能供本容器的进程访问.</p>
+
+        <h3 id="用同样的image运行了不同进程解析"   >
+          <a href="#用同样的image运行了不同进程解析" class="heading-link"><i class="fas fa-link"></i></a>用同样的image运行了不同进程解析</h3>
+      <p>istio-init容器和istio-proxy容器都使用相同的image 如: docker.io/istio/proxyv2:1.5.0, 但是istio-init容器运行iptables进程，istio-proxy容器运行pilot-envoy和envoy两个进程，原因如下:  </p>
+<p>当用户同时在kubernetes中的yaml中写了command和args时候自然是可以覆盖DockerFile中ENTRYPOINT的命令行和参数，完整情况如下:  </p>
+<ul>
+<li>如果command 和 args 均没有写，那么用Docker默认的配置.</li>
+<li>如果command写了, 但args没有写，那么Docker默认的配置会被忽略而且仅仅执行.yaml文件的command(不带任何参数的).</li>
+<li>如果command没写, 但args写了，那么Docker默认配置的ENTRYPOINT的命令行会被执行, 但是调用的参数是.yaml中的args.(istio-proxy和istio-init容器都是这样)</li>
+<li>如果command和args都写了, 那么Docker默认的配置被忽略, 使用.yaml的配置</li>
+</ul>
+<ol>
+<li>查看istio/proxyv2:1.5.0 image 原数据</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images | grep -i proxyv2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker inspect &lt;istio/proxyv2:1.5.0_ID&gt;</span></span><br><span class="line">......</span><br><span class="line">"Cmd": null,</span><br><span class="line">......</span><br><span class="line">"Entrypoint":[	//image被运行成容器时候执行的命令</span><br><span class="line">    "usr/local/bin/pilot-agent"</span><br><span class="line">],</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>查看istio-init 容器yaml资源配置</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get po -n jiuxi-ns jiuxi-***</span></span><br><span class="line">......</span><br><span class="line">initContainers:</span><br><span class="line">- args:			// 有command, 因此容器会仅执行此command而且忽略image原数据里的args参数</span><br><span class="line">  - istio-iptables</span><br><span class="line">  - -p</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<p>查看istio-init容器进程</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps -a --no-trunc| grep istio-init</span></span><br><span class="line">......</span><br><span class="line">"/usr/local/bin/pilot-agent istio-iptables -p 15001 -z 15006 -u 1337 -m REDIRECT -i * -x  -b * -d 15090,15021,15020"</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<ol start="3">
+<li>查看 istio-proxy 容器yaml资源配置</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get po -n jiuxi-ns jiuxi-***	//可以在同一个pod资源文件查看istio-proxy和istio-init的yaml配置</span></span><br><span class="line">......</span><br><span class="line">- args:				// 有args但是没有command, 因此用image原数据里的command并用此yaml里的args参数.</span><br><span class="line">  - proxy</span><br><span class="line">  - sidecar</span><br><span class="line">  - domain</span><br><span class="line">  - $(POD_NAMESPACE).svc.cluster.local</span><br><span class="line">  - configPath</span><br><span class="line">  /etc/istio/proxy			// pilot-agent生成envoy配置文件</span><br><span class="line">  - --binaryPath</span><br><span class="line">  - /usr/local/bin/envoy	// pilot-agent启动envoy进程</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<p>查看istio-proxy容器进程</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps --no-trunc| grep istio-proxy</span></span><br><span class="line">......</span><br><span class="line">"/usr/local/bin/pilot-agent proxy sidecar --domain istio-system.svc.cluster.local istio-proxy-prometheus --proxyLogLevel=warning --proxyComponentLogLevel=misc:error --controlPlaneAuthPolicy NONE --trust-domain=cluster.local"</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="sidecar-自动注入"   >
+          <a href="#sidecar-自动注入" class="heading-link"><i class="fas fa-link"></i></a>sidecar 自动注入</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl label ns jiuxi-ns istio-injection=enabled	//添加标签，部署到此namespace空间下的pod自动sidecar注入</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl label ns jiuxi-ns istio-injection-		//取消标签操作</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="sidecar注入到svc等其它资源"   >
+          <a href="#sidecar注入到svc等其它资源" class="heading-link"><i class="fas fa-link"></i></a>sidecar注入到svc等其它资源</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl expose deployment jiuxi -n deployment		// 在deployment资源基础上自动生成svc</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get svc -n jiuxi-ns jiuxi -o yaml &gt; jiuxi-svc.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-svc.yaml -o jiuxi-svc-inject.yaml //sidecar 注入svc，会发现svc的yaml文件内容并没有变化</span></span><br></pre></td></tr></table></div></figure>
+
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_04_inject/">https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_04_inject/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/istio/">istio</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Istio 03 configuration &amp; dashboard</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/linux/RHEL8.0%E5%BC%80%E6%9C%BA%E6%80%BB%E6%98%AF%E8%A6%81dhclient%E6%89%8B%E5%8A%A8%E8%8E%B7%E5%8F%96IP/"><span class="paginator-prev__text">RHEL8.0开机总是要dhclient手动获取IP</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-kind-of-resources-can-be-injected"><span class="toc-number">1.</span> <span class="toc-text">
+          What kind of resources can be injected</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sidecar-注入步骤实例"><span class="toc-number">2.</span> <span class="toc-text">
+          sidecar 注入步骤实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-源文件部署-no-sidecar"><span class="toc-number">2.1.</span> <span class="toc-text">
+          1. 源文件部署, no sidecar:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-sidecar注入"><span class="toc-number">2.2.</span> <span class="toc-text">
+          2. sidecar注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-istio-iptables"><span class="toc-number">2.3.</span> <span class="toc-text">
+          3. istio-iptables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-istio-proxy容器进程pilot-agent-和-envoy"><span class="toc-number">2.4.</span> <span class="toc-text">
+          4. istio-proxy容器进程pilot-agent 和 envoy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用同样的image运行了不同进程解析"><span class="toc-number">2.5.</span> <span class="toc-text">
+          用同样的image运行了不同进程解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sidecar-自动注入"><span class="toc-number">3.</span> <span class="toc-text">
+          sidecar 自动注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sidecar注入到svc等其它资源"><span class="toc-number">4.</span> <span class="toc-text">
+          sidecar注入到svc等其它资源</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

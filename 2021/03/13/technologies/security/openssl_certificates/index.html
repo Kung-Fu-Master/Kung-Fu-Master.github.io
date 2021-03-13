@@ -1,0 +1,463 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="X.509证书标准定义的两种编码格式PEM和DER                           PEM编码（Privacy Enhanced Mail）       特点：纯文本文件, 以—–BEGIN CERTIFICATE—–开头, 以—–END CERTIFICATE—–结尾,内容是 base64 编码. 但使用文本编辑器只能查看表面的结构,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openssl certificates">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/technologies/security/openssl_certificates/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="X.509证书标准定义的两种编码格式PEM和DER                           PEM编码（Privacy Enhanced Mail）       特点：纯文本文件, 以—–BEGIN CERTIFICATE—–开头, 以—–END CERTIFICATE—–结尾,内容是 base64 编码. 但使用文本编辑器只能查看表面的结构,">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.919Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.919Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="security">
+<meta name="twitter:card" content="summary"><title>openssl certificates | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/technologies/security/openssl_certificates/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">openssl certificates</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.8k</span></span></div></header><div class="post-body">
+        <h1 id="X-509证书标准定义的两种编码格式PEM和DER"   >
+          <a href="#X-509证书标准定义的两种编码格式PEM和DER" class="heading-link"><i class="fas fa-link"></i></a>X.509证书标准定义的两种编码格式PEM和DER</h1>
+      
+        <h2 id="PEM编码（Privacy-Enhanced-Mail）"   >
+          <a href="#PEM编码（Privacy-Enhanced-Mail）" class="heading-link"><i class="fas fa-link"></i></a>PEM编码（Privacy Enhanced Mail）</h2>
+      <p>特点：纯文本文件, 以—–BEGIN CERTIFICATE—–开头, 以—–END CERTIFICATE—–结尾,<br>内容是 base64 编码. 但使用文本编辑器只能查看表面的结构, 需要输入命令例如  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> 某个PEM格式数字证书.pem -text -noout</span></span><br></pre></td></tr></table></div></figure>
+
+<p>才能看到原始的数字证书信息.  </p>
+<figure class="highlight jboss-cli"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="params">-----BEGIN</span> CERTIFICATE<span class="params">-----</span></span><br><span class="line">MIID7TCCAtWgAwIBAgIJAOIRDhOcxsx6MA0GCSqGSIb3DQEBCwUAMIGLMQswCQYD</span><br><span class="line">……</span><br><span class="line">xAJz+w8tjrDWcf826VN14IL+<span class="string">/Cmqlg/rIfB5CHdwVIfWwpuGB66q/UiPegZMNs8a</span></span><br><span class="line">3g==</span><br><span class="line"><span class="params">-----END</span> CERTIFICATE<span class="params">-----</span></span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="DER编码（Distinguished-Encoding-Rules）"   >
+          <a href="#DER编码（Distinguished-Encoding-Rules）" class="heading-link"><i class="fas fa-link"></i></a>DER编码（Distinguished Encoding Rules）</h2>
+      <p>特点：二进制文件格式, 一般应使用 Windows/Java 开发工具打开, 也可以使用openssl命令行工具提取其中信息或进行编码转换.  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> 某个DER格式的数字证书.der -inform der -text -noout</span></span><br></pre></td></tr></table></div></figure>
+<p>上面这个命令查看二进制文件中的证书信息.  </p>
+
+        <h2 id="文件扩展名"   >
+          <a href="#文件扩展名" class="heading-link"><i class="fas fa-link"></i></a>文件扩展名</h2>
+      <div class="table-container"><table><tr><td bgcolor=#54FF9F><font face="fantasy" size=4>我们身边有很多常见的数字证书文件, 他们的扩展名通常既不叫".pem"也不叫".der", 但无论扩展名是什么, 其内部编码格式只能从PEM和DER这两种编码格式中选择一种.</font></td></tr></table></div>  
+不同平台所偏好的编码格式不同, 不同类型的数字证书文件中存储的内容也略有差别, 不过对于大部分证书文件, 我们都可以借助命令行工具随时将其转换成另一种编码格式.  
+
+<ul>
+<li><strong>CRT</strong> - CRT应该是certificate的三个字母,其实还是证书的意思,常见于NIX系统,有可能是PEM编码,也有可能是DER编码,大多数应该是PEM编码,相信你已经知道怎么辨别. <strong>证书内容包含: signer(如CA:kubernetes),个人信息,过期时间,公钥public key,加密算法(非对称加密算法RSA2048, 对称机密算法AES256等),签名算法(sign algorithm)等信息.</strong>  </li>
+<li><strong>KEY</strong> - 通常用来存放一个公钥或者私钥,并非X.509证书,编码同样的,可能是PEM,也可能是DER.<br>查看KEY的办法:  </li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> mykey.key -text -noout</span></span><br></pre></td></tr></table></div></figure>
+<p>如果是DER格式的话,同理应该这样了:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> mykey.key -text -noout -inform der</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/zhan/istio-1.6.0/samples/certs/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> root-cert.pem -text -noout</span></span><br><span class="line">Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> root-cert.pem -text -noout | grep Validity -A 2</span></span><br><span class="line">Validity</span><br><span class="line">        Not Before: Jan 24 19:15:51 2018 GMT</span><br><span class="line">        Not After : Dec 31 19:15:51 2117 GMT</span><br><span class="line">-A n这样的shell写法，输出当前行之后的n行内容</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li><strong>CSR - Certificate Signing Request</strong>,即证书签名请求,这个并不是证书,而是向权威证书颁发机构获得签名证书的申请,其核心内容是一个<strong>公钥和个人信息</strong>,在生成这个申请的时候, 要对应生成的有一个私钥,私钥要自己保管好, client端把包含public key的csr文件发给CA, 用CA的private key给csr文件做签名(sign)生成client端证书. <strong>CSR文件</strong>内容一般包含: <strong>个人信息,公钥public key,加密算法(非对称加密算法RSA2048, 对称机密算法AES256等),签名算法(sign algorithm)等信息.</strong><br>查看的办法:</li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -noout -text -<span class="keyword">in</span> my.csr</span></span><br></pre></td></tr></table></div></figure>
+
+<p>(如果是DER格式的话照旧命令行加上-inform der,这里不写了)</p>
+
+        <h2 id="证书编码的转换"   >
+          <a href="#证书编码的转换" class="heading-link"><i class="fas fa-link"></i></a>证书编码的转换</h2>
+      <p> • PEM转为DER：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> cert.crt -outform der -out cert.der</span></span><br></pre></td></tr></table></div></figure>
+<p> • DER转为PEM：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> cert.crt -inform der -outform pem -out cert.pem</span></span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="获得证书的步骤"   >
+          <a href="#获得证书的步骤" class="heading-link"><i class="fas fa-link"></i></a>获得证书的步骤</h2>
+      <div class="table-container"><table><tr><td bgcolor=#54FF9F> • 向权威证书颁发机构申请证书</td></tr></table></div>
+用以下命令生成一个csr:
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -newkey rsa:2048 -new -nodes -keyout my.key -out my.csr</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls</span></span><br><span class="line">my.csr  my.key</span><br></pre></td></tr></table></div></figure>
+<p>把<strong>csr</strong>交给权威证书颁发机构,权威证书颁发机构对此进行签名,完成.保留好csr,<strong>当权威证书颁发机构颁发的证书过期的时候,你还可以用同样的csr来申请新的证书,key保持不变.</strong></p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F> • 或者生成自签名的证书</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls</span></span><br><span class="line">cert.pem  key.pem</span><br></pre></td></tr></table></div></figure>
+
+<p>在生成证书的过程中会要你填一堆的东西,其实真正要填的只有Common Name,通常填写你服务器的域名,如”yourcompany.com”,或者你服务器的IP地址,其它都可以留空的.<br>生产环境中还是不要使用自签的证书,否则浏览器会不认,或者如果你是企业应用的话能够强制让用户的浏览器接受你的自签证书也行.向权威机构要证书通常是要钱的,但现在也有免费的,仅仅需要一个简单的域名验证即可.有兴趣的话查查”沃通数字证书”.</p>
+
+        <h2 id="生成证书"   >
+          <a href="#生成证书" class="heading-link"><i class="fas fa-link"></i></a>生成证书</h2>
+      
+        <h3 id="一：生成CA证书"   >
+          <a href="#一：生成CA证书" class="heading-link"><i class="fas fa-link"></i></a>一：生成CA证书</h3>
+      <p>目前不使用第三方权威机构的CA来认证，自己充当CA的角色。<br>网上下载一个openssl软件<br>1.创建私钥：<br>通常是rsa算法  </p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**ca-key.pem**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl genrsa -out ca/ca-key.pem 2048</span></span><br><span class="line">查看key</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> ca/ca-key.pem -text -noout</span></span><br><span class="line">如果是DER格式的话,同理应该这样</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> ca/ca-key.pem -text -noout -inform der</span></span><br></pre></td></tr></table></div></figure>
+
+<p>2.创建证书请求：  </p>
+<blockquote>
+<p>因此在用户向CA申请数字证书时，用户首先需要在自己的电脑中先产生一个公私钥对。用户需要保管好自己的私钥，然后再把公钥和你的个人信息发送给CA机构，CA机构通过你的公钥和个人信息最终签发出数字证书。<br>而CSR文件，其实就是包含了用户公钥和个人信息的一个数据文件。用户产生出这个CSR文件，再把这个CSR文件发送给CA，CA就会根据CSR中的内容来签发出数字证书。  </p>
+</blockquote>
+<p>在制作csr文件的时，必须使用自己的私钥来签署申，还可以设定一个密钥.</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**ca-req.csr**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -new -out ca/ca-req.csr -key ca/ca-key.pem</span></span><br><span class="line">  Country Name (2 letter code) [AU]:cn</span><br><span class="line">  State or Province Name (full name) [Some-State]:zhejiang</span><br><span class="line">  Locality Name (eg, city) []:hangzhou</span><br><span class="line">  Organization Name (eg, company) [Internet Widgits Pty Ltd]:skyvision</span><br><span class="line">  Organizational Unit Name (eg, section) []:test</span><br><span class="line">  Common Name (eg, YOUR name) []:root</span><br><span class="line">  Email Address []:sky</span><br></pre></td></tr></table></div></figure>
+
+<p>3.自签署证书 ：</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**ca/ca-cert.pem**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -req -<span class="keyword">in</span> ca/ca-req.csr -out ca/ca-cert.pem -signkey ca/ca-key.pem -days 3650</span></span><br><span class="line">查看证书格式:</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> ca/ca-cert.pem -text -noout</span></span><br></pre></td></tr></table></div></figure>
+
+<p>4.将证书导出成浏览器支持的.p12格式 ：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl pkcs12 -<span class="built_in">export</span> -clcerts -<span class="keyword">in</span> ca/ca-cert.pem -inkey ca/ca-key.pem -out ca/ca.p12</span></span><br></pre></td></tr></table></div></figure>
+<p>密码：changeit</p>
+
+        <h3 id="二-生成server证书。"   >
+          <a href="#二-生成server证书。" class="heading-link"><i class="fas fa-link"></i></a>二.生成server证书。</h3>
+      <p>1.创建私钥 ：</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**server/server-key.pem**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl genrsa -out server/server-key.pem 2048</span></span><br><span class="line">查看key</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> server/server-key.pem -text -noout</span></span><br><span class="line">如果是DER格式的话,同理应该这样</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> server/server-key.pem -text -noout -inform der</span></span><br></pre></td></tr></table></div></figure>
+
+<p>2.创建证书请求 ：</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**server/server-req.csr**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -new -out server/server-req.csr -key server/server-key.pem</span></span><br></pre></td></tr></table></div></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Country Name (2 letter code) [AU]:cn</span><br><span class="line">State or Province Name (full name) [Some-State]:zhejiang</span><br><span class="line">Locality Name (eg, city) []:hangzhou</span><br><span class="line">Organization Name (eg, company) [Internet Widgits Pty Ltd]:skyvision</span><br><span class="line">Organizational Unit Name (eg, section) []:test</span><br><span class="line">Common Name (eg, YOUR name) []:192.168.1.246 注释：一定要写服务器所在的ip地址</span><br><span class="line">Email Address []:sky</span><br></pre></td></tr></table></div></figure>
+<p>查看csr文件内容:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> $ openssl req -<span class="keyword">in</span> server-req.csr -text -noout // -noout 不用输出csr文件原始内容</span></span><br></pre></td></tr></table></div></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Certificate Request:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 0 (0x0)</span><br><span class="line">        Subject: C&#x3D;XX, L&#x3D;Default City, O&#x3D;Default Company Ltd, CN&#x3D;10.239.140.186</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: rsaEncryption</span><br><span class="line">                Public-Key: (2048 bit)</span><br><span class="line">                Modulus:</span><br><span class="line">                    00:e2:0c:a7:33:33:d9:9b:90:1b:29:30:3c:81:31:</span><br><span class="line">                    09:97:0a:a9:76:d5:54:be:63:17:21:0c:b9:3a:f0:</span><br><span class="line">                    a6:02:37:1a:d4:1e:53:4e:e0:c8:d9:5f:27:57:7f:</span><br><span class="line">                    f3:eb:7f:9d:ad:79:d6:e7:40:64:c8:bc:3d:f3:b4:</span><br><span class="line">                    16:d6:30:e9:16:04:b6:a0:0e:8f:75:e4:4b:d6:8e:</span><br><span class="line">                    0a:8e:75:d8:41:89:09:90:96:b0:8d:32:5f:b5:96:</span><br><span class="line">                    1d:65:d6:a6:b4:c7:eb:3d:3b:f9:62:36:69:7d:07:</span><br><span class="line">                    6d:05:89:ce:a6:a5:98:a0:b2:5f:ab:bc:25:ba:08:</span><br><span class="line">                    d8:86:0a:b9:c0:91:ca:f8:d3:bb:36:14:21:f9:c2:</span><br><span class="line">                    b5:53:43:a9:2c:03:39:9b:93:ef:1d:d9:20:ef:dd:</span><br><span class="line">                    ff:57:c6:b5:47:e8:bb:46:32:e3:1d:3b:2e:5b:15:</span><br><span class="line">                    11:80:72:f6:2e:f5:b2:cc:02:7f:b1:d6:e9:3d:8e:</span><br><span class="line">                    0e:66:f6:6d:45:0e:2f:8c:d5:c3:92:dc:a1:9a:d9:</span><br><span class="line">                    b0:33:82:30:69:0a:05:ee:08:1b:a6:81:f4:bb:31:</span><br><span class="line">                    0d:fa:26:37:eb:4f:c8:58:df:e5:be:cc:ac:9a:62:</span><br><span class="line">                    42:f1:af:8c:35:88:e4:f3:b4:76:8f:6c:13:1f:9a:</span><br><span class="line">                    61:e0:08:0f:f2:b1:d6:f3:61:b4:0a:5d:9a:61:5f:</span><br><span class="line">                    e1:0b</span><br><span class="line">                Exponent: 65537 (0x10001)</span><br><span class="line">        Attributes:</span><br><span class="line">            a0:00</span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">         5b:62:35:07:43:99:dc:af:7c:61:1e:76:4e:f8:ef:59:b2:27:</span><br><span class="line">         60:71:30:15:5d:f3:0b:b1:b4:53:29:ec:d1:7c:18:48:0a:b3:</span><br><span class="line">         fe:b7:6d:80:ef:dc:c6:24:04:3d:bd:c1:b8:61:49:f3:1e:fb:</span><br><span class="line">         22:0f:fb:06:99:ec:db:18:ac:34:ff:4b:15:f8:84:06:01:4d:</span><br><span class="line">         68:4f:0c:a2:a5:34:dc:1b:61:44:c7:ff:ef:5d:92:a1:09:3f:</span><br><span class="line">         11:27:1c:a7:30:8e:97:6a:08:03:99:e6:6a:8f:1d:d6:ea:e7:</span><br><span class="line">         cd:18:a7:eb:36:3d:e7:6b:5e:ef:72:85:ca:eb:89:97:02:cf:</span><br><span class="line">         fc:38:31:58:e1:66:85:d1:e7:49:e2:72:ef:b1:60:36:55:d7:</span><br><span class="line">         90:bd:8d:0e:d8:c6:8f:d2:bf:bf:43:85:36:04:2e:f1:ec:5f:</span><br><span class="line">         d8:1b:17:22:a4:6a:de:a7:b2:2b:00:30:27:e6:4b:32:4d:55:</span><br><span class="line">         70:b0:61:3d:3f:f2:9d:e7:24:f6:4c:1f:bf:63:6a:d9:16:ef:</span><br><span class="line">         cb:91:a3:a4:43:b5:1f:11:85:ad:0e:b1:57:39:f2:0a:56:ec:</span><br><span class="line">         52:90:b0:11:96:c6:28:e0:de:0c:eb:f2:b1:66:ce:04:48:7f:</span><br><span class="line">         11:90:09:1d:fd:ca:a7:25:66:32:a2:64:33:1a:5e:a9:85:50:</span><br><span class="line">         8a:2d:90:a5</span><br></pre></td></tr></table></div></figure>
+
+<p>3.自签署证书 ：</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**server/server-cert.pem**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -req -<span class="keyword">in</span> server/server-req.csr -out server/server-cert.pem -signkey server/server-key.pem -CA ca/ca-cert.pem -CAkey ca/ca-key.pem -CAcreateserial -days 3650</span></span><br></pre></td></tr></table></div></figure>
+<figure class="highlight asciidoc"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>-CA选项指明用于被签名的csr证书</span><br><span class="line"><span class="bullet">* </span>-CAkey选项指明用于签名的密钥</span><br><span class="line"><span class="bullet">* </span>-CAcreateserial指明文件不存在时自动生成</span><br></pre></td></tr></table></div></figure>
+<p>查看证书格式:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> server/server-cert.pem -text -noout</span></span><br></pre></td></tr></table></div></figure>
+<p>可以查看到证书里所包含的public key等相关信息:</p>
+<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">Certificate:</span><br><span class="line">Data:</span><br><span class="line">    Version: <span class="number">1</span> (<span class="number">0x0</span>)</span><br><span class="line">    Serial Number:</span><br><span class="line">        cc:db:c0:f2:<span class="number">12</span>:e8:<span class="number">09</span>:<span class="number">27</span></span><br><span class="line">Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">    Issuer: C=XX, L=Default City, O=Default Company Ltd, CN=AI	<span class="comment">// 签发者(CA机构)</span></span><br><span class="line">    Validity</span><br><span class="line">        Not Before: Jul <span class="number">16</span> <span class="number">07</span>:<span class="number">01</span>:<span class="number">18</span> <span class="number">2020</span> GMT</span><br><span class="line">        Not After : Jul <span class="number">14</span> <span class="number">07</span>:<span class="number">01</span>:<span class="number">18</span> <span class="number">2030</span> GMT</span><br><span class="line">    Subject: C=XX, L=Default City, O=Default Company Ltd, CN=sky</span><br><span class="line">    Subject Public Key Info:</span><br><span class="line">        Public Key Algorithm: rsaEncryption</span><br><span class="line">            Public-Key: (<span class="number">2048</span> bit)			<span class="comment">// public key, 因此本地可以不需要再存储保留public key, 证书里已包含.</span></span><br><span class="line">            Modulus:</span><br><span class="line">                <span class="number">00</span>:cd:d7:ed:e9:c6:<span class="number">5</span>e:fa:bc:ef:<span class="number">1</span>e:<span class="number">4</span>e:<span class="number">92</span>:<span class="number">52</span>:<span class="number">99</span>:</span><br><span class="line">                f0:<span class="number">34</span>:<span class="number">96</span>:<span class="number">67</span>:<span class="number">7</span>b:<span class="number">32</span>:<span class="number">1</span>b:f6:<span class="number">53</span>:df:ca:<span class="number">7</span>b:e5:<span class="number">72</span>:<span class="number">6</span>a:</span><br><span class="line">                <span class="number">29</span>:e5:<span class="number">85</span>:<span class="number">27</span>:eb:<span class="number">71</span>:<span class="number">00</span>:c6:<span class="number">90</span>:ac:c1:<span class="number">64</span>:<span class="number">62</span>:<span class="number">0</span>d:<span class="number">2</span>b:</span><br><span class="line">                b1:bc:b8:ee:e1:d4:<span class="number">54</span>:b7:<span class="number">95</span>:<span class="number">21</span>:<span class="number">1</span>e:de:<span class="number">56</span>:c7:<span class="number">25</span>:</span><br><span class="line">                <span class="number">4</span>c:d4:<span class="number">2</span>d:<span class="number">29</span>:<span class="number">5f</span>:<span class="number">48</span>:<span class="number">19</span>:<span class="number">8</span>a:<span class="number">05</span>:c4:<span class="number">33</span>:d3:<span class="number">06</span>:<span class="number">16</span>:ec:</span><br><span class="line">                <span class="number">68</span>:e2:<span class="number">81</span>:<span class="number">07</span>:cf:f9:d1:<span class="number">15</span>:b2:<span class="number">68</span>:<span class="number">3</span>d:da:<span class="number">44</span>:c3:d5:</span><br><span class="line">                ba:a3:<span class="number">0f</span>:<span class="number">9</span>e:<span class="number">34</span>:<span class="number">34</span>:<span class="number">71</span>:<span class="number">53</span>:<span class="number">4f</span>:<span class="number">02</span>:<span class="number">4</span>b:eb:f8:de:fd:</span><br><span class="line">                <span class="number">94</span>:<span class="number">3f</span>:f4:ee:<span class="number">12</span>:<span class="number">48</span>:ea:b1:<span class="number">60</span>:<span class="number">62</span>:be:<span class="number">58</span>:<span class="number">47</span>:<span class="number">78</span>:<span class="number">29</span>:</span><br><span class="line">                <span class="number">59</span>:<span class="number">5</span>b:ae:<span class="number">57</span>:<span class="number">53</span>:<span class="number">23</span>:<span class="number">31</span>:aa:<span class="number">78</span>:cc:<span class="number">6</span>c:f0:f7:e9:<span class="number">76</span>:</span><br><span class="line">                <span class="number">4</span>a:b9:<span class="number">25</span>:<span class="number">79</span>:<span class="number">3f</span>:<span class="number">9</span>c:<span class="number">05</span>:<span class="number">4</span>e:f0:<span class="number">8</span>e:<span class="number">87</span>:<span class="number">32</span>:df:<span class="number">87</span>:<span class="number">72</span>:</span><br><span class="line">                <span class="number">67</span>:<span class="number">64</span>:<span class="number">2</span>e:<span class="number">9f</span>:<span class="number">85</span>:<span class="number">15</span>:<span class="number">64</span>:bf:ca:ce:<span class="number">33</span>:<span class="number">71</span>:ee:bb:<span class="number">1</span>a:</span><br><span class="line">                d3:<span class="number">26</span>:<span class="number">09</span>:<span class="number">34</span>:<span class="number">9</span>b:<span class="number">65</span>:b9:<span class="number">15</span>:<span class="number">71</span>:<span class="number">28</span>:<span class="number">14</span>:<span class="number">37</span>:<span class="number">48</span>:<span class="number">79</span>:<span class="number">1</span>b:</span><br><span class="line">                b1:<span class="number">99</span>:a4:<span class="number">8</span>c:cc:<span class="number">27</span>:a1:a4:c4:<span class="number">28</span>:<span class="number">8</span>e:<span class="number">01</span>:e5:<span class="number">08</span>:db:</span><br><span class="line">                e6:<span class="number">45</span>:<span class="number">6</span>e:<span class="number">3</span>d:d9:<span class="number">03</span>:a9:cb:<span class="number">17</span>:<span class="number">25</span>:b7:c9:c9:<span class="number">4</span>b:fb:</span><br><span class="line">                e5:<span class="number">93</span>:d1:de:<span class="number">31</span>:fe:a9:<span class="number">34</span>:<span class="number">29</span>:c3:<span class="number">29</span>:a4:<span class="number">27</span>:c2:eb:</span><br><span class="line">                <span class="number">66</span>:<span class="number">99</span>:c6:db:ba:<span class="number">52</span>:<span class="number">07</span>:<span class="number">30</span>:<span class="number">97</span>:d4:<span class="number">0</span>a:<span class="number">1</span>e:<span class="number">1</span>b:<span class="number">5</span>d:<span class="number">72</span>:</span><br><span class="line">                f6:ff:<span class="number">19</span>:<span class="number">92</span>:<span class="number">22</span>:c0:<span class="number">44</span>:<span class="number">76</span>:<span class="number">74</span>:f7:a7:<span class="number">0</span>d:c5:<span class="number">77</span>:c8:</span><br><span class="line">                <span class="number">1</span>c:<span class="number">55</span></span><br><span class="line">            Exponent: <span class="number">65537</span> (<span class="number">0x10001</span>)</span><br><span class="line">Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">     <span class="number">28</span>:d1:d9:<span class="number">29</span>:a5:<span class="number">40</span>:f3:d3:d6:<span class="number">95</span>:<span class="number">87</span>:fd:<span class="number">2</span>c:<span class="number">70</span>:dc:<span class="number">0f</span>:<span class="number">1</span>c:<span class="number">86</span>:</span><br><span class="line">     <span class="number">08</span>:<span class="number">35</span>:d0:a8:<span class="number">8</span>e:d0:<span class="number">5</span>d:<span class="number">78</span>:<span class="number">28</span>:ae:<span class="number">88</span>:<span class="number">33</span>:<span class="number">61</span>:db:cd:b6:<span class="number">80</span>:<span class="number">1</span>c:</span><br><span class="line">     <span class="number">88</span>:<span class="number">62</span>:b8:ce:cf:<span class="number">87</span>:<span class="number">14</span>:<span class="number">15</span>:bd:<span class="number">27</span>:<span class="number">9</span>a:<span class="number">3</span>e:<span class="number">77</span>:cb:a1:e0:<span class="number">11</span>:<span class="number">0</span>d:</span><br><span class="line">     <span class="number">89</span>:ef:f2:e8:b2:<span class="number">2</span>c:cf:<span class="number">96</span>:<span class="number">26</span>:bd:<span class="number">06</span>:<span class="number">3</span>a:<span class="number">7</span>b:<span class="number">8f</span>:<span class="number">4</span>b:fa:b2:c3:</span><br><span class="line">     f9:<span class="number">14</span>:<span class="number">3</span>e:<span class="number">18</span>:ef:<span class="number">57</span>:b5:<span class="number">37</span>:<span class="number">95</span>:<span class="number">01</span>:a0:<span class="number">0f</span>:bf:<span class="number">6</span>e:<span class="number">5</span>c:c9:<span class="number">47</span>:<span class="number">7</span>b:</span><br><span class="line">     <span class="number">1</span>a:ed:ca:<span class="number">7</span>a:<span class="number">31</span>:a1:<span class="number">89</span>:e8:<span class="number">0</span>d:<span class="number">4</span>d:<span class="number">95</span>:d2:<span class="number">61</span>:e3:b8:<span class="number">48</span>:e5:<span class="number">86</span>:</span><br><span class="line">     <span class="number">19</span>:<span class="number">91</span>:<span class="number">3</span>e:<span class="number">00</span>:<span class="number">86</span>:<span class="number">07</span>:<span class="number">50</span>:df:e2:<span class="number">57</span>:<span class="number">29</span>:<span class="number">69</span>:<span class="number">61</span>:c4:cc:<span class="number">55</span>:<span class="number">8f</span>:<span class="number">60</span>:</span><br><span class="line">     de:<span class="number">20</span>:c1:<span class="number">0</span>d:<span class="number">7</span>d:c7:<span class="number">98</span>:<span class="number">52</span>:f4:<span class="number">34</span>:<span class="number">08</span>:<span class="number">90</span>:c5:<span class="number">90</span>:<span class="number">34</span>:ec:<span class="number">86</span>:<span class="number">0f</span>:</span><br><span class="line">     ad:<span class="number">9</span>b:e7:<span class="number">1</span>a:d4:<span class="number">7</span>b:d9:dd:<span class="number">59</span>:<span class="number">82</span>:de:<span class="number">54</span>:d3:<span class="number">87</span>:<span class="number">8</span>e:e7:<span class="number">82</span>:ae:</span><br><span class="line">     <span class="number">22</span>:<span class="number">70</span>:cf:e7:d7:<span class="number">8</span>c:f1:<span class="number">55</span>:<span class="number">57</span>:<span class="number">6</span>d:<span class="number">41</span>:e6:<span class="number">44</span>:<span class="number">3</span>c:<span class="number">83</span>:b7:<span class="number">73</span>:<span class="number">7</span>e:</span><br><span class="line">     <span class="number">9</span>a:d5:<span class="number">1</span>d:af:<span class="number">72</span>:e9:<span class="number">4</span>e:<span class="number">88</span>:d4:<span class="number">4f</span>:<span class="number">9f</span>:<span class="number">33</span>:<span class="number">2f</span>:dc:<span class="number">1</span>b:<span class="number">50</span>:<span class="number">10</span>:<span class="number">8</span>b:</span><br><span class="line">     db:cd:e4:<span class="number">0</span>e:e6:<span class="number">96</span>:cd:c6:<span class="number">27</span>:c7:<span class="number">4</span>b:c7:<span class="number">9f</span>:<span class="number">05</span>:<span class="number">74</span>:<span class="number">32</span>:<span class="number">35</span>:<span class="number">7</span>e:</span><br><span class="line">     <span class="number">99</span>:<span class="number">78</span>:<span class="number">36</span>:<span class="number">30</span>:ae:<span class="number">78</span>:<span class="number">4</span>b:c3:<span class="number">1</span>a:<span class="number">6</span>b:b8:db:<span class="number">62</span>:<span class="number">23</span>:b8:ab:<span class="number">22</span>:<span class="number">11</span>:</span><br><span class="line">     <span class="number">11</span>:<span class="number">81</span>:<span class="number">95</span>:<span class="number">5</span>d:<span class="number">46</span>:f0:<span class="number">45</span>:<span class="number">15</span>:<span class="number">77</span>:<span class="number">1f</span>:<span class="number">6</span>b:c0:bf:<span class="number">9</span>d:a2:d2:b4:<span class="number">62</span>:</span><br><span class="line">     c9:b5:<span class="number">2</span>b:dd</span><br></pre></td></tr></table></div></figure>
+
+<p>4.将证书导出成浏览器支持的.p12格式 ：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl pkcs12 -<span class="built_in">export</span> -clcerts -<span class="keyword">in</span> server/server-cert.pem -inkey server/server-key.pem -out server/server.p12</span></span><br></pre></td></tr></table></div></figure>
+<p>密码：changeit</p>
+<p>Additional：<br>因为server端的证书是由CA的private key签名(sign)server端的public key及其持有者的真实身份得到的, 因此server端证书里就包含server的public key.<br>就不需要用Openssl生成server端的public key. 用server端的<strong>csr（certificate signing requests）</strong>生成server证书即可. client端也一样.<br>client端只需要用CA的public key(CA的public key所有人都能获取)解密server端存放在CA的证书文件就可以得到Server端的public key.<br>然后client端就可以用解密得到的server端的public key对server端用自身private key加密的信息附带的摘要A(digest)进行解密.<br>client端将server端发过来的信息用Hash得到摘要B(digest)与解密得到的摘要A(digest)对比, 如果一直则说明信息没有被黑客篡改.<br>如果中间黑客把server端加密的摘要A(digest)修改了，则client用从CA的public key解密得到的server端的public key是解不开摘要A(digest)的, 说明摘要信息被黑客篡改, 内容不可靠.  </p>
+<p>如果要生成RSA公钥, command如下:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> server/server-key.pem -pubout -out server/server-public-key.pem</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="三-生成client证书。"   >
+          <a href="#三-生成client证书。" class="heading-link"><i class="fas fa-link"></i></a>三.生成client证书。</h3>
+      <p>1.创建私钥 ：</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**client/client-key.pem**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl genrsa -out client/client-key.pem 2048</span></span><br><span class="line">查看key</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> client/client-key.pem -text -noout</span></span><br><span class="line">如果是DER格式的话,同理应该这样</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> client/client-key.pem -text -noout -inform der</span></span><br></pre></td></tr></table></div></figure>
+
+<p>2.创建证书请求 ：</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**client/client-req.csr**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -new -out client/client-req.csr -key client/client-key.pem</span></span><br><span class="line">  Country Name (2 letter code) [AU]:cn</span><br><span class="line">  State or Province Name (full name) [Some-State]:zhejiang</span><br><span class="line">  Locality Name (eg, city) []:hangzhou</span><br><span class="line">  Organization Name (eg, company) [Internet Widgits Pty Ltd]:skyvision</span><br><span class="line">  Organizational Unit Name (eg, section) []:test</span><br><span class="line">  Common Name (eg, YOUR name) []:sky</span><br><span class="line">  Email Address []:sky 注释：就是登入中心的用户（本来用户名应该是Common Name，但是中山公安的不知道为什么使用的Email Address，其他版本没有测试）</span><br><span class="line">  Please enter the following ‘extra’ attributes</span><br><span class="line">  to be sent with your certificate request</span><br><span class="line">  A challenge password []:123456</span><br><span class="line">  An optional company name []:tsing</span><br></pre></td></tr></table></div></figure>
+
+<p>3.自签署证书 ：</p>
+<div class="table-container"><table><tr><td bgcolor=#54FF9F>**client/client-cert.pem**</td></tr></table></div>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -req -<span class="keyword">in</span> client/client-req.csr -out client/client-cert.pem -signkey client/client-key.pem -CA ca/ca-cert.pem -CAkey ca/ca-key.pem -CAcreateserial -days 3650</span></span><br><span class="line"> * -CA选项指明用于被签名的csr证书</span><br><span class="line"> * -CAkey选项指明用于签名的密钥</span><br><span class="line"> * -CAcreateserial指明文件不存在时自动生成</span><br><span class="line">查看证书格式:</span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -<span class="keyword">in</span> client/client-cert.pem -text -noout</span></span><br></pre></td></tr></table></div></figure>
+
+<p>4.将证书导出成浏览器支持的.p12格式 ：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl pkcs12 -<span class="built_in">export</span> -clcerts -<span class="keyword">in</span> client/client-cert.pem -inkey client/client-key.pem -out client/client.p12</span></span><br></pre></td></tr></table></div></figure>
+<p>密码：changeit</p>
+<p>Additional. 生成RSA公钥:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl rsa -<span class="keyword">in</span> client/client-key.pem -pubout -out client/client-public-key.pem</span></span><br></pre></td></tr></table></div></figure>
+
+<p>请一定严格根据里面的步骤来，待实验成功后，修改你自己想要修改的内容。我就是一开始没有安装该填写的来，结果生成的证书就无法配对成功。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/technologies/security/openssl_certificates/">https://kung-fu-master.github.io/2021/03/13/technologies/security/openssl_certificates/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/security/">security</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/technologies/security/jwt_jwks/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">jwt jwks</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/technologies/security/openssl/"><span class="paginator-prev__text">openssl</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#X-509证书标准定义的两种编码格式PEM和DER"><span class="toc-number">1.</span> <span class="toc-text">
+          X.509证书标准定义的两种编码格式PEM和DER</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PEM编码（Privacy-Enhanced-Mail）"><span class="toc-number">1.1.</span> <span class="toc-text">
+          PEM编码（Privacy Enhanced Mail）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DER编码（Distinguished-Encoding-Rules）"><span class="toc-number">1.2.</span> <span class="toc-text">
+          DER编码（Distinguished Encoding Rules）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件扩展名"><span class="toc-number">1.3.</span> <span class="toc-text">
+          文件扩展名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#证书编码的转换"><span class="toc-number">1.4.</span> <span class="toc-text">
+          证书编码的转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获得证书的步骤"><span class="toc-number">1.5.</span> <span class="toc-text">
+          获得证书的步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成证书"><span class="toc-number">1.6.</span> <span class="toc-text">
+          生成证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一：生成CA证书"><span class="toc-number">1.6.1.</span> <span class="toc-text">
+          一：生成CA证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-生成server证书。"><span class="toc-number">1.6.2.</span> <span class="toc-text">
+          二.生成server证书。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-生成client证书。"><span class="toc-number">1.6.3.</span> <span class="toc-text">
+          三.生成client证书。</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

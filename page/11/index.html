@@ -1,0 +1,983 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://kung-fu-master.github.io/page/11/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/page/11/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/micro_service/istio/istio_01_conception/">Istio 01 conception</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.8k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="Istio架构组件简介"   >
+          <a href="#Istio架构组件简介" class="heading-link"><i class="fas fa-link"></i></a>Istio架构组件简介</h2>
+      <blockquote>
+<p>官网: <span class="exturl"><a class="exturl__link"   href="https://istio.io/"  target="_blank" rel="noopener">https://istio.io/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>官网中文: <span class="exturl"><a class="exturl__link"   href="https://istio.io/zh/"  target="_blank" rel="noopener">https://istio.io/zh/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>Github: <span class="exturl"><a class="exturl__link"   href="https://github.com/istio/istio"  target="_blank" rel="noopener">https://github.com/istio/istio</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>中文社区: <span class="exturl"><a class="exturl__link"   href="https://istio.cn/"  target="_blank" rel="noopener">https://istio.cn/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</blockquote>
+
+        <h3 id="简介"   >
+          <a href="#简介" class="heading-link"><i class="fas fa-link"></i></a>简介</h3>
+      <blockquote>
+<p>Istio 是一个由谷歌、IBM 与 Lyft 共同开发的开源项目，旨在提供一种统一化的微服务连接、安全保障、管理与监控方式。具体来说，Istio 是一个开源服务网格平台，它确保微服务在处理故障时以指定的方式相互连接。</p>
+</blockquote>
+
+        <h3 id="架构"   >
+          <a href="#架构" class="heading-link"><i class="fas fa-link"></i></a>架构</h3>
+      <blockquote>
+<p>Istio 服务网格逻辑上分为数据平面和控制平面。</p>
+<ul>
+<li>数据平面由一组以 sidecar 方式部署的智能代理（Envoy）组成。这些代理可以调节和控制微服务及 Mixer 之间所有的网络通信。</li>
+<li>控制平面负责管理和配置代理来路由流量。此外控制平面配置 Mixer 以实施策略和收集遥测数据。<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="istio_arch.jpeg"  alt="">
+      </li>
+</ul>
+</blockquote>
+
+        <h3 id="Envoy"   >
+          <a href="#Envoy" class="heading-link"><i class="fas fa-link"></i></a>Envoy</h3>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="envoy_xds.png"  alt="">
+      </p>
+<figure class="highlight groovy"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">Listeners:</span> 设置监听<span class="string">IP:</span>Port, 到达sidecar的请求都会到这里来.</span><br><span class="line"><span class="string">Routes:</span> 根据route, 如: - <span class="string">match:</span> &#123;<span class="string">prefix:</span>”/”&#125; <span class="string">route:</span> &#123;<span class="string">cluster:</span> service_envoy&#125;选择 Cluster.</span><br><span class="line"><span class="string">Clusters:</span> 找到相应的Cluster <span class="string">name:</span> service_envoy, 定义了一些轮询规则等.</span><br><span class="line"><span class="string">Endpoints:</span> 指定路由转发到哪里, <span class="string">IP:</span>Port</span><br></pre></td></tr></table></div></figure>
+
+<p>Envoy是经过CNCF(Cloud Native Computing Foundation,云原生计算基金会(是一个开源软件基金会，它致力于云原生（Cloud Native）技术的普及和可持续发展。)非常成功毕业的sidecar软件.<br>从CNCF毕业的软件还有Prometheus, Kubernetes.</p>
+<blockquote>
+<p>Istio 使用 Envoy 代理的扩展版本，Envoy 是以 C++ 开发的高性能代理，用于调解服务网格中所有服务的所有入站和出站流量。Envoy 的许多内置功能被 istio 发扬光大，例如：<br>Envoy 被部署为 sidecar，和对应服务在同一个 Kubernetes pod 中。这允许 Istio 将大量关于流量行为的信号作为属性提取出来，而这些属性又可以在 Mixer 中用于执行策略决策，并发送给监控系统，以提供整个网格行为的信息。<br>Sidecar 代理模型还可以将 Istio 的功能添加到现有部署中，而无需重新构建或重写代码。可以阅读更多来了解为什么我们在设计目标中选择这种方式。</p>
+<ul>
+<li>动态服务发现</li>
+<li>负载均衡</li>
+<li>TLS 终止</li>
+<li>HTTP/2 &amp; gRPC 代理</li>
+<li>熔断器</li>
+<li>健康检查、基于百分比流量拆分的灰度发布</li>
+<li>故障注入</li>
+<li>丰富的度量指标</li>
+</ul>
+</blockquote>
+
+        <h3 id="Mixer"   >
+          <a href="#Mixer" class="heading-link"><i class="fas fa-link"></i></a>Mixer</h3>
+      <blockquote>
+<p>Mixer 是一个独立于平台的组件，负责在服务网格上执行访问控制和使用策略，并从 Envoy 代理和其他服务收集遥测数据。代理提取请求级属性，发送到 Mixer 进行评估。有关属性提取和策略评估的更多信息，请参见 Mixer 配置。<br>Mixer 中包括一个灵活的插件模型，使其能够接入到各种主机环境和基础设施后端，从这些细节中抽象出 Envoy 代理和 Istio 管理的服务。</p>
+</blockquote>
+
+        <h3 id="Pilot"   >
+          <a href="#Pilot" class="heading-link"><i class="fas fa-link"></i></a>Pilot</h3>
+      <blockquote>
+<p>控制面中负责流量管理的组件为Pilot</p>
+</blockquote>
+
+        <h3 id="流量管理"   >
+          <a href="#流量管理" class="heading-link"><i class="fas fa-link"></i></a>流量管理</h3>
+      <p>Istio 维护了一个内部服务注册表 (service registry)，它包含在服务网格中运行的一组服务及其相应的服务 endpoints。Istio 使用服务注册表生成 Envoy 配置。<br>Istio 不提供服务发现，尽管大多数服务都是通过 Pilot adapter 自动加入到服务注册表里的，而且这反映了底层平台（Kubernetes、Consul、plain DNS）的已发现的服务。还有就是，可以使用 ServiceEntry 配置手动进行注册。</p>
+
+        <h3 id="Envoy-1"   >
+          <a href="#Envoy-1" class="heading-link"><i class="fas fa-link"></i></a>Envoy</h3>
+      <blockquote>
+<p>Istio 选择了开源的Envoy作为它的网络代理，envoy是2016年用c++的高性能的代理组件，用于管理所有服务的入口和出口流量.<br>envoy内置了很多功能，像服务发现，负载均衡，多种协议的支持，断路器，流量分割，健康检查，模拟一些故障，还有监控指标等等.<br>envoy会以sidecar的形式部署在每一个POD中负责完成Istio的核心功能，如果把Istio比作公司，envoy就是这个公司的一些员工，所有的具体工作都是由envoy干的</p>
+</blockquote>
+
+        <h3 id="Pilot-1"   >
+          <a href="#Pilot-1" class="heading-link"><i class="fas fa-link"></i></a>Pilot</h3>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="Pilot_Architecture.png"  alt="">
+      </p>
+<blockquote>
+<p>控制面中负责流量管理的组件为Pilot<br>Pilot 和 Envoy组件有了Istio就可以运转起来了，其它组件可以不需要.<br>Pilot 好比是envoy的直接领导，顶头上司，告诉并协助envoy怎样工作，因为envoy跑在一个容器里的.</p>
+</blockquote>
+<ul>
+<li>Pilot告诉envoy集群都有哪些服务，envoy就可以做服务发现了.</li>
+<li>Pilot根据用户配置的流量管理和服务信息转换成envoy能够识别的格式，然后分发给envoy，告诉envoy哪些POD需要多少流量，envoy就能做A/B测试，蓝绿部署.</li>
+<li>Pilot告诉envoy多长时间算超时，应该重试几次.<blockquote>
+<p>Pilot 为 Envoy sidecar 提供服务发现功能，为智能路由（例如 A/B 测试、金丝雀部署等）和弹性（超时、重试、熔断器等）提供流量管理功能。它将控制流量行为的高级路由规则转换为特定于 Envoy 的配置，并在运行时将它们传播到 sidecar。<br>Pilot 将平台特定的服务发现机制抽象化并将其合成为符合 Envoy 数据平面 API 的任何 sidecar 都可以使用的标准格式。这种松散耦合使得 Istio 能够在多种环境下运行（例如，Kubernetes、Consul、Nomad），同时保持用于流量管理的相同操作界面。</p>
+</blockquote>
+</li>
+<li>Platform Adapter: 平台适配器。针对多种集群管理平台实现的控制器，得到API server的DNS服务注册信息（即service名与podIP的对应表）、入口资源以及存储流量管理规则的第三方资源</li>
+<li>Abstract Model：维护了envoy中对service的规范表示。接收上层获取的service信息转化为规范模型</li>
+<li>Envoy API：下发服务发现、流量规则到envoy上</li>
+<li>Rules API：由运维人员管理。可通过API配置高级管理规则</li>
+</ul>
+
+        <h3 id="Mixer-独立组件"   >
+          <a href="#Mixer-独立组件" class="heading-link"><i class="fas fa-link"></i></a>Mixer (独立组件)</h3>
+      <p>两大功能: 策略，遥测</p>
+<blockquote>
+<p>策略: 为整个集群执行访问控制, 哪些用户可以访问哪些服务，还有一些策略的管理，像对一些服务的访问速度的限制等，比如服务A最多接受100QPS，超过的就会被直接扔掉<br>遥测: 数据的收集和汇报，从envoy(proxy)收集数据，收集的是服务之间流转的数据, 收集的数据会汇报给其它对象，每个汇报的对象都有Adapter(适配器)转换汇报的数据为自己认识的格式，如Prometheus.<br>可以不用Mixer也可以把Istio跑起来</p>
+</blockquote>
+
+        <h3 id="Galley"   >
+          <a href="#Galley" class="heading-link"><i class="fas fa-link"></i></a>Galley</h3>
+      <blockquote>
+<p>最初负责验证配置，Istio1.1之后升级为Istio整个平面的配置管理中心，校验各种配置是否正确</p>
+</blockquote>
+
+        <h3 id="Citadel"   >
+          <a href="#Citadel" class="heading-link"><i class="fas fa-link"></i></a>Citadel</h3>
+      <blockquote>
+<p>安全相关的，为用户到服务，服务到服务之间提供安全的通信，可以让http服务无感知的升级成为https服务，还有服务的访问授权等.</p>
+</blockquote>
+
+        <h2 id="Istio-解决的问题"   >
+          <a href="#Istio-解决的问题" class="heading-link"><i class="fas fa-link"></i></a>Istio 解决的问题</h2>
+      <blockquote>
+<ul>
+<li>原来的单个应用拆分成多个微服务, 它们之间相互调用才能完成微服务，组件(服务模块)越多，出错概率越大，就会非常难以排查.</li>
+<li>用户请求出现问题: 1.错误， 2.慢响应<ul>
+<li>请求错误，得知道哪个步骤出错了，微服务之间哪些能调用成功哪些失败.</li>
+<li>请求响应太慢, 各个链路调用，耗时是多少，哪些并发执行哪些串行.</li>
+</ul>
+</li>
+<li>设置timeout</li>
+<li>设置重试机制</li>
+<li>某些节点异常(如load高)</li>
+</ul>
+</blockquote>
+
+        <h3 id="A-B测试"   >
+          <a href="#A-B测试" class="heading-link"><i class="fas fa-link"></i></a>A/B测试</h3>
+      <ul>
+<li><p>A/B测试的基本思想是什么?</p>
+<blockquote>
+<p>A/B测试的基本思想包括：提供两个方案并行测试。不同方案之间只存在一个变量，排除其他干扰因素。以某种标准判定结果优劣，筛出最优方案。其中第二点，即单变量，需要重点关注。因为某种方案的优劣，不光与方案本身有关，也可能与方案所适配的环境密不可分。<br>所谓A/B测试，简单说来就是针对想调研的问题提供两种不同的备选解决方案（比如两个下单页面），然后让一部分用户使用方案A，另一部分用户使用方案B像LinkedIn的升级迭代一样，最终通过数据观察对比确定最优方案。</p>
+</blockquote>
+</li>
+<li><p>A/B测试案例</p>
+<blockquote>
+<p>在互联网产品开发过程中，我们经常面临多种方案的抉择。有些选择轻而易举，例如面向大众的偏理性产品，主色调定位蓝色最权威稳重而广为接受（比如百度、Facebook）；强调安全的服务，绿色是常规之选。但有些时候，备选方案模棱两可，甚至区别看起来无关紧要，例如某个按钮是用橙色还是红色，摆放的位置偏左还是偏右。面对这种情况，传统解决方式要么是根据设计师的审美来定，要么是一群人共同表决，要么由某个领导拍板决定。无论哪种方式，都不免受到个人主观因素的制约，未必代表的了广大用户在实际使用场景中的认知。“不识庐山真面目，只缘身在此山中。”通常解决此类情况，最合理的办法之一，就是进行A/B测试（A/B Testing）。所谓A/B测试，简单说来就是针对想调研的问题提供两种不同的备选解决方案（比如两个下单页面），然后让一部分用户使用方案A，另一部分用户使用方案B，最终通过数据观察对比确定最优方案。在现实生活中，达尔文《物种起源》中提到的物竞天择原理，本质上就是在谈同一物种的不同变体经过外部环境测试后存留延续下的最优结果，也算是一种A/B测试。</p>
+</blockquote>
+</li>
+<li><p>团队使用A/B测试有什么好处？</p>
+<blockquote>
+<p>在数据面前任何妄加揣测的评断都可能是不准确的。通过A/B测试，产品团队能够获悉哪些对激发用户活跃度有所帮助，哪些又徒劳无功（有时候后者显得更为重要，因为它能终结一场无意义的争吵，或是缩减许多不必要的消耗）。一次测试或许能带来良好的改善效果，但也绝非意味着提升空间已然消失。微软公司的测试经验表明，在他们做的所有测试中，有三分之一被验证为成功有效，剩下的三分之二平平无奇或压根就是失败的。谷歌在2009年做了12000多次测试，但其中只有10％带来了业务变化。产品不息，测试不止。永远不要满足于当下的结果，因为世界上总有更好的解决方案</p>
+</blockquote>
+</li>
+</ul>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/micro_service/istio/istio_02_installation_upgrade/">Istio 02 Installation and upgrade</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.4k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="Download-the-specific-version-of-Istio"   >
+          <a href="#Download-the-specific-version-of-Istio" class="heading-link"><i class="fas fa-link"></i></a>Download the specific version of Istio</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.6.4 sh -</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> istio/bin/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./istioctl -h</span></span><br><span class="line">  Istio configuration command line utility for service operators to</span><br><span class="line">  debug and diagnose their Istio mesh.</span><br><span class="line">  </span><br><span class="line">  Usage:</span><br><span class="line">    istioctl [command]</span><br><span class="line">  </span><br><span class="line">  Available Commands:</span><br><span class="line">    analyze         Analyze Istio configuration and print validation messages</span><br><span class="line">    authz           (authz is experimental. Use `istioctl experimental authz`)</span><br><span class="line">    convert-ingress Convert Ingress configuration into Istio VirtualService configuration</span><br><span class="line">    dashboard       Access to Istio web UIs</span><br><span class="line">    deregister      De-registers a service instance</span><br><span class="line">    experimental    Experimental commands that may be modified or deprecated</span><br><span class="line">    help            Help about any command</span><br><span class="line">    install         Applies an Istio manifest, installing or reconfiguring Istio on a cluster.</span><br><span class="line">    kube-inject     Inject Envoy sidecar into Kubernetes pod resources</span><br><span class="line">    manifest        Commands related to Istio manifests</span><br><span class="line">    operator        Commands related to Istio operator controller.</span><br><span class="line">    profile         Commands related to Istio configuration profiles</span><br><span class="line">    proxy-config    Retrieve information about proxy configuration from Envoy [kube only]</span><br><span class="line">    proxy-status    Retrieves the synchronization status of each Envoy in the mesh [kube only]</span><br><span class="line">    register        Registers a service instance (e.g. VM) joining the mesh</span><br><span class="line">    upgrade         Upgrade Istio control plane in-place</span><br><span class="line">    validate        Validate Istio policy and rules (NOTE: validate is deprecated and will be removed in 1.6. Use 'istioctl analyze' to validate configuration.)</span><br><span class="line">    verify-install  Verifies Istio Installation Status or performs pre-check for the cluster before Istio installation</span><br><span class="line">    version         Prints out build version information</span><br><span class="line">  </span><br><span class="line">  Flags:</span><br><span class="line">        --context string          The name of the kubeconfig context to use</span><br><span class="line">    -h, --help                    help for istioctl</span><br><span class="line">    -i, --istioNamespace string   Istio system namespace (default "istio-system")</span><br><span class="line">    -c, --kubeconfig string       Kubernetes configuration file</span><br><span class="line">    -n, --namespace string        Config namespace</span><br><span class="line">  </span><br><span class="line">  Additional help topics:</span><br><span class="line">    istioctl options         Displays istioctl global options</span><br><span class="line">  </span><br><span class="line">  Use "istioctl [command] --help" for more information about a command.</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="istio目录介绍"   >
+          <a href="#istio目录介绍" class="heading-link"><i class="fas fa-link"></i></a>istio目录介绍</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">ll istio-*</span></span><br><span class="line">  bin/ ,***, manifests/, samples/, tools/</span><br></pre></td></tr></table></div></figure>
+<p>bin/目录存放istioctl客户端工具.<br>manifests/目录存放istio安装表单.<br>samples/目录存放一些使用样例.<br>tools/目录下的istioctl.bash文件是能在输入$ istioctl m 时候自动补全命令,如 $istioctl manifest.  , 需要先执行$ source istioctl.bash才能生效，新版本istio好像不用设置也能有自动补全功能.  </p>
+
+        <h2 id="Istioctl工具介绍"   >
+          <a href="#Istioctl工具介绍" class="heading-link"><i class="fas fa-link"></i></a>Istioctl工具介绍</h2>
+      <p>official website: <span class="exturl"><a class="exturl__link"   href="https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/"  target="_blank" rel="noopener">https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p><strong>Istioctl 与 Kubectl关系</strong><br>从一开始istioctl和kubectl工具有一定的融合部分，如apply, delete等共同功能, 随着istioctl版本提升启用了一些与kubectl重合的功能并完善开发了自己的一套功能.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 查看pilot和envoy配置策略等的同步情况, pilot是否完全将配置信息同步到envoy</span><br><span class="line"><span class="meta">$</span><span class="bash"> ./istioctl proxy-status</span></span><br><span class="line">// 查询属于某个pod的envoy规则等</span><br><span class="line"><span class="meta">$</span><span class="bash"> ./istioctl proxy-config &lt;clusters|listeners|routes|endpoints|bootstrap&gt; &lt;pod-name[.namespace]&gt;</span></span><br><span class="line"></span><br><span class="line">// 检测安装是否成功</span><br><span class="line"><span class="meta">$</span><span class="bash"> ./istioctl verify-install</span></span><br><span class="line">  ......</span><br><span class="line">  Checked 25 custom resource definitions	// 可以看到Istio 1.6.4只有25个crd</span><br><span class="line">  Checked 3 Istio Deployments</span><br><span class="line">  Istio is installed successfully</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="istioctl-command"   >
+          <a href="#istioctl-command" class="heading-link"><i class="fas fa-link"></i></a>istioctl command</h2>
+      
+        <h3 id="istioctl-profile"   >
+          <a href="#istioctl-profile" class="heading-link"><i class="fas fa-link"></i></a>istioctl profile</h3>
+      <p>查看profile list</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl profile list</span></span><br></pre></td></tr></table></div></figure>
+<p>输出profile</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl profile dump demo &gt; demo.yaml</span></span><br><span class="line">vim demo.yaml</span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="安装-istio到kubernetes"   >
+          <a href="#安装-istio到kubernetes" class="heading-link"><i class="fas fa-link"></i></a>安装 istio到kubernetes</h2>
+      <p><strong>第一种:默认安装</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">istioctl install --set profile=demo</span><br></pre></td></tr></table></div></figure>
+<p><strong>第二种:</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd istio-1.6.4</span><br><span class="line">vim manifests/profiles/demo.yaml</span><br><span class="line"> ......</span><br><span class="line"> 34             - port: 80          // Service 端口</span><br><span class="line"> 35               targetPort: 8080  // 指向Pod的端口, containerPort是container容器暴露出来的端口, 类似Dockerfile中的expose操作</span><br><span class="line"> 36               nodePort: 31500   // 添加nodePort, 固定service的80端口映射到的宿主机的31500端口</span><br><span class="line"> 37               name: http2</span><br><span class="line"> ......</span><br><span class="line">istioctl install -f manifests/profiles/demo.yaml</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Istioctl-analyze"   >
+          <a href="#Istioctl-analyze" class="heading-link"><i class="fas fa-link"></i></a>Istioctl analyze</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl analyze -n book-info</span></span><br><span class="line">  √ No Validation issues found when analyzing namespace: book-info</span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="Istio-upgrade-and-rollback"   >
+          <a href="#Istio-upgrade-and-rollback" class="heading-link"><i class="fas fa-link"></i></a>Istio upgrade and rollback</h2>
+      <p>因为技术变更太快, 请先参考官网最新教程：<br>Official website: <span class="exturl"><a class="exturl__link"   href="https://istio.io/latest/zh/docs/setup/upgrade/istioctl-upgrade/"  target="_blank" rel="noopener">https://istio.io/latest/zh/docs/setup/upgrade/istioctl-upgrade/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>istio1.6 提供了简单的升级命令方式，直接通过命令 $ istioctl upgrade 就可以更新Istio control plane in-place<br>且提供了金丝雀发布方式，更新和回滚过程可以看到有两个istiod在istio-system命名空间下.</p>
+<p>使用istioctl升级时候, 老版本和新版本之间版本号要接近，相差太远如由istio1.0升级到istio1.6.8有可能会失败.</p>
+<p><strong>升级步骤</strong><br>查看升级前的istioctl 版本</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl version</span></span><br><span class="line">client versin: 1.5.0			// 指istioctl 这个二进制客户端工具</span><br><span class="line">control plane version: 1.5.0	// istio部署在k8s上的控制面资源, 如pilot等</span><br><span class="line">dataplane version: 1.5.0		// istio部署在k8s上的数据面资源, 如envoy</span><br></pre></td></tr></table></div></figure>
+<p><strong>1. 升级istioctl客户端二进制工具</strong><br>Download istio最新版本如istio-1.6.8, 解压缩<code>tar -zxvf istio-1.6.8.tar.gz</code>进入istio-1.6.8/bin<br>linux Path环境变量中的老版本istioctl去掉添加新版本的istioctl客户端工具.  </p>
+<p><strong>2. 升级istio在k8s上的数据面和控制面</strong><br>升级时候要保证升级的是同样的profile, 如demo, 或者default</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl profile list 		// 查看istioctl有哪些profile</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl profile dump demo &gt; demo.yaml	// 先dump出跟老版本相同选择的新版本的profile, 如新老版本都采用demo 这个profile</span></span><br></pre></td></tr></table></div></figure>
+
+<p>第一种:根据新版本的demo.yaml来进行升级</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim demo.yaml 	//先修改下dump出来的新版本的demo.yaml</span></span><br><span class="line">jwtPolicy: third-party-jwt ---&gt; 改为 jwtPolicy: first-party-jwt</span><br><span class="line">如果这里不修改会报证书无法挂载情况.</span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl upgrade -f demo.yaml</span></span><br></pre></td></tr></table></div></figure>
+<p>第二种:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl manifest apply -<span class="built_in">set</span> profile=demo --<span class="built_in">set</span> values.global.jwtPolicy=first-party-jwt</span></span><br></pre></td></tr></table></div></figure>
+<p>查看升级后的istioctl 版本</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl version</span></span><br><span class="line">client versin: 1.6.8			// 指istioctl 这个二进制客户端工具</span><br><span class="line">control plane version: 1.6.8	// istio部署在k8s上的控制面资源, 如pilot等</span><br><span class="line">dataplane version: 1.5.0 (1 proxies), 1.6.8 (3 proxies)	// istio部署在k8s上的数据面资源, 如envoy, 发现还有老版本注入的envoy, 也需要`手动`或`自动升级`</span><br></pre></td></tr></table></div></figure>
+<p><strong>3. 升级已经注入到pod中的sidecar</strong><br>如果以前采用的是自动sidecar注入, 则将所有pods通过滚动更新来更新sidecar</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl rollout restart deployment --namespace &lt;namespace with auto injection&gt;</span></span><br></pre></td></tr></table></div></figure>
+<p>如果以前采用的是手动sidecar注入, 则更新sidecar通过执行如下命令:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f &lt; (istioctl kube-inject -f &lt;original-application-deployment.yaml&gt;) //实例如下</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f nginx.yaml | kubectl apply -f -</span></span><br></pre></td></tr></table></div></figure>
+<p>通过<code>kubectl get pods -n &lt;Namespace&gt;</code> 来观察到新版本生成后老版本的pod才terminate.<br>重新查看istioctl version</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl version</span></span><br><span class="line">client versin: 1.6.8</span><br><span class="line">control plane version: 1.6.8</span><br><span class="line">dataplane version: 1.6.8 (4 proxies)</span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/">Istio 03 configuration &amp; dashboard</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.6k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="Architecture"   >
+          <a href="#Architecture" class="heading-link"><i class="fas fa-link"></i></a>Architecture</h2>
+      <blockquote>
+<p>新的 Mixer 模型使用 Envoy 中的扩展来提供更多功能。Istio 社区正在领导 Envoy 的 WebAssembly（Wasm）运行时的实现，Wasm 让我们可以使用超过 20 种的语言来开发模块化、沙盒化的扩展。可以在代理继续提供流量的同时动态加载、重载扩展<br>通过 preview 配置文件安装 Istio 1.5 不会再安装 Mixer<br>如果有需要，您可以保持安装并启用 Mixer。最终，Mixer 将成为 Istio 单独的发行组件，成为 istio-ecosystem 的一部分<br>简化其余控制平面的 deployment。为此，我们将几个控制平面组件合并为一个组件：Istiod。该二进制文件包括 Pilot、Citadel、Galley 和 Sidecar 注入器的功能。这种方法从许多方面改善了 Istio 的安装和管理，降低了安装和配置的复杂性、维护工作量以及问题诊断时间，同时提高了响应速度。 关于 Istiod 的更多内容请查看 <span class="exturl"><a class="exturl__link"   href="https://blog.christianposta.com/microservices/istio-as-an-example-of-when-not-to-do-microservices/"  target="_blank" rel="noopener">Christian Posta 的这篇博客</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.<br>Istiod 作为 1.5 中所有配置文件的默认配置<br>从图片来看，我们正在从这里：<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="istio_arch_19.JPG"  alt="">
+      <br>迁移到这里：<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="istio_arch_20.JPG"  alt="">
+      <br>2020 年，我们将继续专注于普及，实现默认 零配置 的目标，该默认设置不需要您更改应用程序的任何配置即可使用 Istio 的大多数功能。</p>
+</blockquote>
+
+        <h2 id="Security-Policy"   >
+          <a href="#Security-Policy" class="heading-link"><i class="fas fa-link"></i></a>Security Policy</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="security_policy.PNG"  alt="">
+      </p>
+
+        <h3 id="AuthorizationPolicy"   >
+          <a href="#AuthorizationPolicy" class="heading-link"><i class="fas fa-link"></i></a>AuthorizationPolicy</h3>
+      <p>授权认证, 精细化管理网格内的服务可以被哪些服务访问</p>
+<ul>
+<li>From-来源: 指定从哪里来的服务可以访问此由Label Selector指定的服务</li>
+<li>To-操作: 能访问到哪些路径,如使用get方法, Path路径等</li>
+<li>When- 条件: 当满足某条件的时候可以访问服务</li>
+</ul>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ cat mtls-auth.yaml</span><br><span class="line">apiVersion: security.istio.io/v1beta1</span><br><span class="line">kind: AuthorizationPolicy</span><br><span class="line">metadata:</span><br><span class="line">  name: box-nginx</span><br><span class="line">  namespace: rancher</span><br><span class="line">spec:</span><br><span class="line">  action: ALLOW</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx-primary</span><br><span class="line">  rules:</span><br><span class="line">  - from:</span><br><span class="line">    - source:				//包括principals, host主机, IP等等更细致话配置</span><br><span class="line">      principals: ["cluster.local/ns/rancher/sa/box"]	// 指定从namespace:rancher, serviceAccount:box 的服务可以访问标签为app=nginx-primary的服务</span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h3 id="PeerAuthentication"   >
+          <a href="#PeerAuthentication" class="heading-link"><i class="fas fa-link"></i></a>PeerAuthentication</h3>
+      <p>对等授权认证, 三种模式:</p>
+<ul>
+<li>PERMISSIVE-宽容 (default,服务间正常访问)</li>
+<li>STRICT-严格(网格内服务启用mtls)</li>
+<li>DISABLE-取消网格内的mtls</li>
+</ul>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat peer.yaml</span><br><span class="line">apiVersion: security.istio.io/v1beta1</span><br><span class="line">kind: PeerAuthentication</span><br><span class="line">metadata:</span><br><span class="line">  name: rancher-policy</span><br><span class="line">  namespace: rancher</span><br><span class="line">spec:</span><br><span class="line">  mtls:</span><br><span class="line">  mode: STRICT	// 网格内服务必须经过mtls双向握手才能进行通信, 加强网格内服务安全性, 网格外服务是不会访问进来的</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="RequestAuthentication-JWT"   >
+          <a href="#RequestAuthentication-JWT" class="heading-link"><i class="fas fa-link"></i></a>RequestAuthentication JWT</h3>
+      
+        <h2 id="Official-website-demo-bookinfo"   >
+          <a href="#Official-website-demo-bookinfo" class="heading-link"><i class="fas fa-link"></i></a>Official website demo bookinfo</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="traffic_control.PNG"  alt="">
+      </p>
+
+        <h3 id="Gateway-amp-VirtualService"   >
+          <a href="#Gateway-amp-VirtualService" class="heading-link"><i class="fas fa-link"></i></a>Gateway &amp; VirtualService</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: Gateway			# 相当于外部服务要访问网格内服务的第二道大门, 第一道大门是istio默认的ingressgateway网关</span><br><span class="line">metadata:</span><br><span class="line">  name: bookinfo-gateway</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    istio: ingressgateway # use istio default controller</span><br><span class="line">  servers:</span><br><span class="line">  - port:</span><br><span class="line">      number: 80		# 定义一个80端口供别人访问, 并把80端口暴露到网关上面</span><br><span class="line">      name: http</span><br><span class="line">      protocol: HTTP</span><br><span class="line">    hosts:			# "*" 表示访问任何主机的80端口都映射都下面的VirtualService下的destination对应的productpage</span><br><span class="line">    - "*"			# 也指定为"httpbin.example.com", 当访问此网址时去找对应的下面的VirtualService, 但需要做解析，否则浏览器无法访问得到.</span><br><span class="line">---				# 解析方法: linux: 修改/etc/hosts, windows: 修改/Windows/System32/drivers/etc/hosts</span><br><span class="line">					# 添加内容: `Host-Name httpbin.example.com`， 浏览器就可输入http://httpbin.example.com/productpage/200, 然后鼠标右击-&gt;Inspect-&gt;Network-&gt;Headers， 刷新网页即可看到报头</span><br><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: VirtualService</span><br><span class="line">metadata:</span><br><span class="line">  name: bookinfo</span><br><span class="line">spec:					# * 经常会跟Gateway一起使用.</span><br><span class="line">  hosts:				# * 表示VirtualService对整个k8s可寻址的资源如Service,Ingress, 都使用同样的路由规则</span><br><span class="line">  - "*"					# 也指定为"httpbin.example.com", 与上面Gateway的hosts保持一致, 表示VirtualService的路由规则只适用于此流量可路由的域名资源httpbin.example.com.</span><br><span class="line">  gateways:</span><br><span class="line">  - bookinfo-gateway	# 绑定上面Gateway, 从外部如浏览器可以访问如: curl -s http://ingressgateway-Host-IP:NodePortNumber/productpage</span><br><span class="line">  http:					# 访问协议是http的时候才会进一步匹配</span><br><span class="line">  - match:</span><br><span class="line">    - uri:</span><br><span class="line">        exact: /productpage</span><br><span class="line">    - uri:</span><br><span class="line">        prefix: /static</span><br><span class="line">    - uri:</span><br><span class="line">        exact: /login</span><br><span class="line">    - uri:</span><br><span class="line">        exact: /logout</span><br><span class="line">    - uri:</span><br><span class="line">        prefix: /api/v1/products</span><br><span class="line">    route:</span><br><span class="line">    - destination:</span><br><span class="line">        host: productpage	# 匹配上面满足后路由到对应k8s部署的svc名字叫productpage的服务, 通过kubectl get svc -n book-info查看</span><br><span class="line">        port:</span><br><span class="line">          number: 9080		# 路由到服务productpage的9080端口提供的服务</span><br><span class="line">  route:					# 上命没有匹配到默认到productpage service</span><br><span class="line">  - destination:</span><br><span class="line">      host: productpage</span><br><span class="line">      port:</span><br><span class="line">        number: 9080</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>VirtualService</strong></p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: VirtualService</span><br><span class="line">metadata:</span><br><span class="line">  name: reviews</span><br><span class="line">spec:					# 没有绑定gateway, 因此从外部还无法访问</span><br><span class="line">  hosts:</span><br><span class="line">    - reviews</span><br><span class="line">  http:</span><br><span class="line">  - route:</span><br><span class="line">    - destination:</span><br><span class="line">        host: reviews</span><br><span class="line">        subset: v1		# 对应下名DestinationRule reviews中的name: v1</span><br><span class="line">      weight: 80		# 路由权重</span><br><span class="line">    - destination:</span><br><span class="line">        host: reviews</span><br><span class="line">        subset: v1		# 对应下名DestinationRule reviews中的name: v2</span><br><span class="line">      weight: 20</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="DestinationRule"   >
+          <a href="#DestinationRule" class="heading-link"><i class="fas fa-link"></i></a>DestinationRule</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: DestinationRule		# 路由指向由host指定的svc下面通过Label selector包含的特定POD</span><br><span class="line">metadata:</span><br><span class="line">  name: reviews</span><br><span class="line">spec:</span><br><span class="line">  host: reviews			# 对应k8s部署的svc名字叫productpage, kubectl get svc -n book-info</span><br><span class="line">  trafficPolicy:</span><br><span class="line">    loadBalancer:		# 1.负载均衡 2.断路器 3.TLS 等等</span><br><span class="line">      simple: RANDOM</span><br><span class="line">    tls:</span><br><span class="line">      mode: ISTIO_MUTUAL</span><br><span class="line">  subsets:</span><br><span class="line">  - name: v1</span><br><span class="line">    labels:</span><br><span class="line">      version: v1		# 对应pod的Labels标签里有version=v1, 可通过kubectl describe po/reviews-** -n book-info查看Labels.</span><br><span class="line">  - name: v2</span><br><span class="line">    labels:</span><br><span class="line">      version: v2</span><br><span class="line">  - name: v3</span><br><span class="line">    labels:</span><br><span class="line">      version: v3</span><br></pre></td></tr></table></div></figure>
+
+<p>通过网关访问服务:</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -I -HHost:httpbin.example.com http://$INGRESS_HOST:$INGRESS_PORT/productpage/200</span><br><span class="line">上面命令将浏览器访问http://httpbin.example.com/producpage 对应的解析为 http://$INGRESS_HOST:$INGRESS_PORT/productpage/200</span><br><span class="line">这里-H选项是设置主机的HTTP报头为httpbin.example.com</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Dashboard-amp-log"   >
+          <a href="#Dashboard-amp-log" class="heading-link"><i class="fas fa-link"></i></a>Dashboard &amp; log</h2>
+      <p>Official website: <span class="exturl"><a class="exturl__link"   href="https://istio.io/latest/docs/tasks/observability/distributed-tracing/"  target="_blank" rel="noopener">https://istio.io/latest/docs/tasks/observability/distributed-tracing/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h3 id="Dashboard-Overall"   >
+          <a href="#Dashboard-Overall" class="heading-link"><i class="fas fa-link"></i></a>Dashboard Overall</h3>
+      <p>controlz: 日志, 也可用kubectl logs查看不过不够直观<br>envoy<br>grafana<br>jaeger: 查看traces<br>kiali: 服务网格的可视化展示<br>prometheus<br>zipkin: 查看traces</p>
+<p>查询istio提供了哪些dashboard</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard</span></span><br></pre></td></tr></table></div></figure>
+<p>查看或修改指定pod的log</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard controlz istiod-5f47bf5895-lzm6w -n istio-system</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard controlz istiod-5f47bf5895-lzm6w -n istio-system --address=192.168.22.184 // 添加了address监听地址</span></span><br><span class="line">http://localhost:40230</span><br></pre></td></tr></table></div></figure>
+<p>然后浏览器输入 <span class="exturl"><a class="exturl__link"   href="http://localhost:40230"  target="_blank" rel="noopener">http://localhost:40230</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 就可看到log信息</p>
+<p>查看envoy dashboard, 前提是跑业务的pod中部署了envoy proxy</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard envoy prometheus-xxx -n istio-system</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard envoy prometheus-xxx -n istio-system --address=192.168.22.184</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="log"   >
+          <a href="#log" class="heading-link"><i class="fas fa-link"></i></a>log</h3>
+      <p>查看某个pod日志</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl logs po/XXX -n Namespace</span></span><br></pre></td></tr></table></div></figure>
+<p>修改整个istio的日志模式</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl edit cm istio -n istio-system</span></span><br><span class="line">......</span><br><span class="line">data:</span><br><span class="line">  mesh: |-</span><br><span class="line">    accessLogEncoding: TEXT		// 日志默认是TEXT格式输出，可以改为json模式, 再序列话可以很直观查看进出istio envoy的流量的方向, 上下流等.</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="kiali"   >
+          <a href="#kiali" class="heading-link"><i class="fas fa-link"></i></a>kiali</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard kiali</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> curl http://10.239.186.141/productpage; <span class="keyword">done</span>;</span></span><br></pre></td></tr></table></div></figure>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="kiali_1.PNG"  alt="">
+      </p>
+
+        <h3 id="jaeger"   >
+          <a href="#jaeger" class="heading-link"><i class="fas fa-link"></i></a>jaeger</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f samples/addons/jaeger.yaml -n istio-system</span><br><span class="line">istioctl dashboard jaeger</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="zipkin"   >
+          <a href="#zipkin" class="heading-link"><i class="fas fa-link"></i></a>zipkin</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f samples/addons/extras/zipkin.yaml -n istio-system</span><br><span class="line">istioctl dashboard zipkin</span><br></pre></td></tr></table></div></figure>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/micro_service/istio/istio_04_inject/">istio 04 sidecar inject</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.3k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="What-kind-of-resources-can-be-injected"   >
+          <a href="#What-kind-of-resources-can-be-injected" class="heading-link"><i class="fas fa-link"></i></a>What kind of resources can be injected</h2>
+      <p>Job, DaemonSet, ReplicaSet, Pod, Deployment, 被istio sidecar 注入后会进行iptable重新网络初始化等操作</p>
+<p>Service, Secrets, ConfigMap 这三个被istio注入后不会有啥改变</p>
+
+        <h2 id="sidecar-注入步骤实例"   >
+          <a href="#sidecar-注入步骤实例" class="heading-link"><i class="fas fa-link"></i></a>sidecar 注入步骤实例</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> touch jiuxi-deployment.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create ns jiuxi-ns</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f jiuxi-deployment.yaml -n jiuxi-ns</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml -o jiuxi-deployment-inject.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml | kubectl apply -f - -n jiuxi-ns</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="1-源文件部署-no-sidecar"   >
+          <a href="#1-源文件部署-no-sidecar" class="heading-link"><i class="fas fa-link"></i></a>1. 源文件部署, no sidecar:</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ vim jiuxi-deployment.yaml</span><br><span class="line">apiVersion: app/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: jiuxi</span><br><span class="line">  labels:</span><br><span class="line">    app: jiuxi</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: jiuxi</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: jiuxi</span><br><span class="line">    spec</span><br><span class="line">      containers:</span><br><span class="line">      - name: nginx</span><br><span class="line">        image:nginx:1.14-alpine</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br></pre></td></tr></table></div></figure>
+<p>部署:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f jiuxi-deployment.yaml -n jiuxi-ns</span></span><br></pre></td></tr></table></div></figure>
+<p>查看pod提供对外服务的端口号:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubect <span class="built_in">exec</span> -it po/jiuxi-*** -n jiuxi-ns -- netstat -ntlp</span></span><br><span class="line">Active Internete connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address       Foreign Address      State      PID/Program name</span><br><span class="line">tcp     0          0.0.0.0:80             0.0.0.0:*          LISTEN     1/nginx: master pro</span><br></pre></td></tr></table></div></figure>
+<p>可以看到有个master主进程对外提供80端口服务</p>
+
+        <h3 id="2-sidecar注入"   >
+          <a href="#2-sidecar注入" class="heading-link"><i class="fas fa-link"></i></a>2. sidecar注入</h3>
+      <p>是先生成全新的deployment部署pod, 再同时删除原来的deployment和pod资源，从pod的名字哈希后缀可以观察到变化.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml | kubectl apply -f - -n jiuxi-ns</span></span><br></pre></td></tr></table></div></figure>
+<p>可以观察到READY的有2个pod且pod名称hash部分有变化, dump到文件中查看inject后的资源配置信息 </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-deployment.yaml &gt; jiuxi-deployment-inject.yaml</span></span><br></pre></td></tr></table></div></figure>
+<p>sidecar注入后可以观察到pod里有两个运行的容器 <code>nginx</code>, <code>istio-proxy</code>, 还有一个已运行结束的<code>istio-init</code>容器.<br><code>istio-init</code>容器是用来初始化网络命名空间, 使得<code>nginx</code>和<code>istio-proxy</code>处于相同的网络空间中.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns po/jiuxi-* -c nginx -- ifconfig	// 或者将ifcongig替换为route -n(查看路由表)</span></span><br><span class="line">eth0: ......</span><br><span class="line">      inet addr:10.244.10.11......</span><br><span class="line">lo:</span><br><span class="line">    ......</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns po/jiuxi-* -c istio-proxy -- ifconfig // 或者将ifcongig替换为route -n(查看路由表)</span></span><br><span class="line">eth0: ......</span><br><span class="line">      inet addr:10.244.10.11......</span><br><span class="line">lo:</span><br><span class="line">    ......</span><br></pre></td></tr></table></div></figure>
+<p>从以上可以看到<code>nginx</code>和<code>istio-proxy</code>处于相同的网络空间中.<br>sidecar 注入后查看pod提供对外服务的端口号:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubect <span class="built_in">exec</span> -it po/jiuxi-*** -c nginx -n jiuxi-ns -- netstat -ntlp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubect <span class="built_in">exec</span> -it po/jiuxi-*** -c istio-proxy -n jiuxi-ns -- netstat -ntlp</span></span><br><span class="line">Proto Recv-Q Send-Q Local Address       Foreign Address      State      PID/Program name</span><br><span class="line">tcp     0          0.0.0.0:80             0.0.0.0:*          LISTEN     1/nginx: master pro</span><br><span class="line">......//Pod对外服务端口号会多增加5个</span><br></pre></td></tr></table></div></figure>
+<p>部署istio后搭建bookinfo实例, 查看productpage 网络</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> k <span class="built_in">exec</span> -it -n book-info productpage-v1-7df7cb7f86-gjtfz -c istio-proxy -- netstat -ntlp</span></span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 0.0.0.0:15090           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 127.0.0.1:15000         0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 0.0.0.0:15001           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 0.0.0.0:15006           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp        0      0 0.0.0.0:15021           0.0.0.0:*               LISTEN      35/envoy</span><br><span class="line">tcp6       0      0 :::9080                 :::*                    LISTEN      -</span><br><span class="line">tcp6       0      0 :::15020                :::*                    LISTEN      1/pilot-agent</span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="3-istio-iptables"   >
+          <a href="#3-istio-iptables" class="heading-link"><i class="fas fa-link"></i></a>3. istio-iptables</h3>
+      <p>tcp/ip协议栈一般都是由OS内核去实现的,无论是linux, windows, mac. 因为编码时候不会考虑传输层是什么, 怎么封报, 只是在应用层用http协议或调一些SDK或者调用开源包来实现数据转发或者说是报文的封装等.<br>但是真正实现网络层协议的还是在操作系统内核来干这些事情.<br>操作系统内核又一个模块 <code>netfilter</code>, 它有一部分功能就是来制定些网络策略, 如不允许某一个IP或某一个网段的IP或者POD来访问你的主机.<br>我们不太可能直接去操作位于内核的<code>netfilter</code>来制定这些策略和管理.<br>Linux 给我们了一个客户端工具<code>iptables</code>，通过这个工具可以跟OS的<code>netfilter模块</code>进行交互来向它发送指令执行策略制定.<br><code>iptables</code>可以看作一个客户端, <code>netfilter</code>可以看作一个server端.</p>
+<p>istio-init容器在启动后不久就停止运行，改变了容器的网络策略，查看此容器日志: </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl logs -f -n jiuxi-ns jiuxi-*** -c istio-init </span></span><br><span class="line">......</span><br><span class="line">* nat			//nat表增加下面四条链</span><br><span class="line">:PREROUTING ACCEPT [0:0]</span><br><span class="line">:INPUT ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [0:0]</span><br><span class="line">:POSTROUTING ACCEPT [0:0]</span><br><span class="line">:ISTIO_INBOUND - [0:0]</span><br><span class="line">:ISTIO_IN_REDIRECT - [0:0]</span><br><span class="line">:ISTIO_OUTPUT - [0:0]</span><br><span class="line">:ISTIO_REDIRECT - [0:0]</span><br><span class="line">-A PREROUTING -p tcp -j ISTIO_INBOUND</span><br><span class="line">-A OUTPUT -p tcp -j ISTIO_OUTPUT</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 22 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 15090 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 15021 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -m tcp --dport 15020 -j RETURN</span><br><span class="line">-A ISTIO_INBOUND -p tcp -j ISTIO_IN_REDIRECT</span><br><span class="line">-A ISTIO_IN_REDIRECT -p tcp -j REDIRECT --to-ports 15006</span><br><span class="line">-A ISTIO_OUTPUT -s 127.0.0.6/32 -o lo -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT ! -d 127.0.0.1/32 -o lo -m owner --uid-owner 1337 -j ISTIO_IN_REDIRECT</span><br><span class="line">-A ISTIO_OUTPUT -o lo -m owner ! --uid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -m owner --uid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT ! -d 127.0.0.1/32 -o lo -m owner --gid-owner 1337 -j ISTIO_IN_REDIRECT</span><br><span class="line">-A ISTIO_OUTPUT -o lo -m owner ! --gid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -m owner --gid-owner 1337 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -d 127.0.0.1/32 -j RETURN</span><br><span class="line">-A ISTIO_OUTPUT -j ISTIO_REDIRECT</span><br><span class="line">-A ISTIO_REDIRECT -p tcp -j REDIRECT --to-ports 15001	// 从任意地方来的和到任意地方去的流量, 协议是tcp/ip协议, 都会转到15001这个端口</span><br><span class="line">COMMIT</span><br><span class="line"><span class="meta">#</span><span class="bash"> Completed on Thu Aug 13 08:59:39 2020</span></span><br></pre></td></tr></table></div></figure>
+
+<p>查看此pod被调度到哪台机器上</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps | grep -i istio-proxy</span></span><br><span class="line">// 要使用privileged权限</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it --privileged &lt;istio-proxy_container_ID&gt; bash</span></span><br><span class="line">istio-proxy@jiuxi-***:/$</span><br><span class="line">istio-proxy@jiuxi-***:/$ sudo su root</span><br><span class="line">istio-proxy@jiuxi-***:/$ iptables -nvL -t nat	//通过iptables去查nat表里的iptables明细</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_INBOUND ()		// 可以看到nat表增加了4条链</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_IN_REDIRECT ()</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_OUTPUT ()</span><br><span class="line">......</span><br><span class="line">Chain ISTIO_REDIRECT (1 references)		// 从任意地方来的和到任意地方去的流量, 协议是tcp/ip协议, 都会转到15001这个端口</span><br><span class="line"> pkts bytes target    prot  opt  in    out    source     destination</span><br><span class="line"> 0      0   REDIRECT  tcp   --    *     *     0.0.0.0/0   0.0.0.0/0      redir ports 15001</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="4-istio-proxy容器进程pilot-agent-和-envoy"   >
+          <a href="#4-istio-proxy容器进程pilot-agent-和-envoy" class="heading-link"><i class="fas fa-link"></i></a>4. istio-proxy容器进程pilot-agent 和 envoy</h3>
+      <p>下图中的istio-pilot也就是pilot-agent进程.<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="pilot-agent_envoy.PNG"  alt="">
+      <br><strong>pilot-agent作用</strong></p>
+<ol>
+<li>pilot-agent(可以看作pilot的客户端)不停的跟pilot服务端(istiod pod里运行的pilot-discovery进程可以看作是pilot的服务端)进行通讯拿取从api-server获取的最新的资源路由等规则.  </li>
+<li>pilot-agent进程启动并生成envoy进程的启动配置.  </li>
+<li>pilot-agent启动envoy进程.  </li>
+<li>pilot-agent监控并管理envoy的运行情况, 比如envoy出错时负责重启, envoy配置变更后重新加载; 外部流控的一些规则发生变化后, pilot-agent会监听这种变化, 然后将envoy以新的配置重新加载.  </li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns jiuxi-*** -c istio-proxy -- ps -ef</span></span><br><span class="line">UID   PID  PPID  C STIME  TTY    TIME    CMD</span><br><span class="line">                                         /usr/local/bin/pilot-agent proxy</span><br><span class="line">                                         /usr/local/bin/envoy -c /etc/ist</span><br><span class="line">                                         ps -ef</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>envoy作用</strong><br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="ports_used_by_istio.PNG"  alt="">
+      <br>之所以不用nginx而用envoy做sidecar原因是nginx功能啥都有,太重了, envoy更偏轻量级, 更方便使用.  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it -n jiuxi-ns jiuxi-*** -c istio-proxy -- netstat -ntlp</span></span><br></pre></td></tr></table></div></figure>
+<p>可以看到15000端口号只允许本容器的127.0.0.1环回地址访问, 只能供本容器的进程访问.</p>
+
+        <h3 id="用同样的image运行了不同进程解析"   >
+          <a href="#用同样的image运行了不同进程解析" class="heading-link"><i class="fas fa-link"></i></a>用同样的image运行了不同进程解析</h3>
+      <p>istio-init容器和istio-proxy容器都使用相同的image 如: docker.io/istio/proxyv2:1.5.0, 但是istio-init容器运行iptables进程，istio-proxy容器运行pilot-envoy和envoy两个进程，原因如下:  </p>
+<p>当用户同时在kubernetes中的yaml中写了command和args时候自然是可以覆盖DockerFile中ENTRYPOINT的命令行和参数，完整情况如下:  </p>
+<ul>
+<li>如果command 和 args 均没有写，那么用Docker默认的配置.</li>
+<li>如果command写了, 但args没有写，那么Docker默认的配置会被忽略而且仅仅执行.yaml文件的command(不带任何参数的).</li>
+<li>如果command没写, 但args写了，那么Docker默认配置的ENTRYPOINT的命令行会被执行, 但是调用的参数是.yaml中的args.(istio-proxy和istio-init容器都是这样)</li>
+<li>如果command和args都写了, 那么Docker默认的配置被忽略, 使用.yaml的配置</li>
+</ul>
+<ol>
+<li>查看istio/proxyv2:1.5.0 image 原数据</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images | grep -i proxyv2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker inspect &lt;istio/proxyv2:1.5.0_ID&gt;</span></span><br><span class="line">......</span><br><span class="line">"Cmd": null,</span><br><span class="line">......</span><br><span class="line">"Entrypoint":[	//image被运行成容器时候执行的命令</span><br><span class="line">    "usr/local/bin/pilot-agent"</span><br><span class="line">],</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>查看istio-init 容器yaml资源配置</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get po -n jiuxi-ns jiuxi-***</span></span><br><span class="line">......</span><br><span class="line">initContainers:</span><br><span class="line">- args:			// 有command, 因此容器会仅执行此command而且忽略image原数据里的args参数</span><br><span class="line">  - istio-iptables</span><br><span class="line">  - -p</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<p>查看istio-init容器进程</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps -a --no-trunc| grep istio-init</span></span><br><span class="line">......</span><br><span class="line">"/usr/local/bin/pilot-agent istio-iptables -p 15001 -z 15006 -u 1337 -m REDIRECT -i * -x  -b * -d 15090,15021,15020"</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<ol start="3">
+<li>查看 istio-proxy 容器yaml资源配置</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get po -n jiuxi-ns jiuxi-***	//可以在同一个pod资源文件查看istio-proxy和istio-init的yaml配置</span></span><br><span class="line">......</span><br><span class="line">- args:				// 有args但是没有command, 因此用image原数据里的command并用此yaml里的args参数.</span><br><span class="line">  - proxy</span><br><span class="line">  - sidecar</span><br><span class="line">  - domain</span><br><span class="line">  - $(POD_NAMESPACE).svc.cluster.local</span><br><span class="line">  - configPath</span><br><span class="line">  /etc/istio/proxy			// pilot-agent生成envoy配置文件</span><br><span class="line">  - --binaryPath</span><br><span class="line">  - /usr/local/bin/envoy	// pilot-agent启动envoy进程</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<p>查看istio-proxy容器进程</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps --no-trunc| grep istio-proxy</span></span><br><span class="line">......</span><br><span class="line">"/usr/local/bin/pilot-agent proxy sidecar --domain istio-system.svc.cluster.local istio-proxy-prometheus --proxyLogLevel=warning --proxyComponentLogLevel=misc:error --controlPlaneAuthPolicy NONE --trust-domain=cluster.local"</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="sidecar-自动注入"   >
+          <a href="#sidecar-自动注入" class="heading-link"><i class="fas fa-link"></i></a>sidecar 自动注入</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl label ns jiuxi-ns istio-injection=enabled	//添加标签，部署到此namespace空间下的pod自动sidecar注入</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl label ns jiuxi-ns istio-injection-		//取消标签操作</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="sidecar注入到svc等其它资源"   >
+          <a href="#sidecar注入到svc等其它资源" class="heading-link"><i class="fas fa-link"></i></a>sidecar注入到svc等其它资源</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl expose deployment jiuxi -n deployment		// 在deployment资源基础上自动生成svc</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get svc -n jiuxi-ns jiuxi -o yaml &gt; jiuxi-svc.yaml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl kube-inject -f jiuxi-svc.yaml -o jiuxi-svc-inject.yaml //sidecar 注入svc，会发现svc的yaml文件内容并没有变化</span></span><br></pre></td></tr></table></div></figure>
+
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/RHEL8.0%E5%BC%80%E6%9C%BA%E6%80%BB%E6%98%AF%E8%A6%81dhclient%E6%89%8B%E5%8A%A8%E8%8E%B7%E5%8F%96IP/">RHEL8.0开机总是要dhclient手动获取IP</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">140</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>使用#dhclient前提是网线得确保连上且没问题</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">kill</span> -9 dhclient_thread_ID</span></span><br></pre></td></tr></table></div></figure>
+
+<p>解决RHEL8.0开机自动获取IP方法如下:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ifconfig                                                     //查看第一个网卡名称ifcfg-enp0s20f0u4u1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /etc/sysconfig/network-scripts/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls</span></span><br><span class="line">  ifcfg-enp1s0                                                //发现只有一个网卡配置文件，与#ifconfig查看到得网卡名字都不一致</span><br><span class="line"><span class="meta">$</span><span class="bash"> cp ifcfg-enp1s0 ifcfg-enp0s20f0u4u1    //手动copy一个与存在得网卡名相同得网卡配置文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim  ifcfg-enp0s20f0u4u1</span></span><br><span class="line"> ○ 删除UUID那一行</span><br><span class="line"> ○ 修改NAME=ifcfg-enp0s20f0u4u1</span><br><span class="line"> ○ 修改DEVICE=ifcfg-enp0s20f0u4u1</span><br><span class="line"> ○ 修改ONBOOT=yes                              //开机即启动网络连接</span><br></pre></td></tr></table></div></figure>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85CUDA8.0%E5%8F%8Anvidia%E9%A9%B1%E5%8A%A8(%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B)/">Ubuntu下安装CUDA8.0及nvidia驱动(详细教程）</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">866</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>为什么说对的系统呢，这是因为在多次尝试后发现，如果使用ubuntu14安装显卡驱动会出现无法进入系统，一直在循环在登录界面，而ubuntu16则不会出现这个问题，所以说最好升级一下吧，毕竟14有点太老了。</p>
+<p>重要的一点是不要在安装或安装后升级内核，否则cuda无法识别内核而导致安装失败！（如果已经升级并且cuda报错，那么百度或谷歌一下如何降内核吧）</p>
+<p>先安装一些依赖吧，接下来可能用的到</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler</span><br><span class="line">sudo apt-get install --no-install-recommends libboost-all-dev</span><br><span class="line">sudo apt-get install libopenblas-dev liblapack-dev libatlas-base-dev</span><br><span class="line">sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev</span><br><span class="line">sudo apt-get install git cmake build-essential</span><br></pre></td></tr></table></div></figure>
+
+<p>使用如下指令安装你的nvidia驱动（ubntun14会无法进入系统）</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nvidia-367</span><br></pre></td></tr></table></div></figure>
+
+<p>安装好后重启，按super（windows）键，在你的程序中搜索nvidia就可以看到</p>
+<p>表示你已经成功安装显卡驱动</p>
+<ol start="2">
+<li>下载cuda8.0 （这里一定要是cuda8，后面的版本不适应与上诉的NVIDIA驱动）</li>
+</ol>
+<p>从这里下载 <span class="exturl"><a class="exturl__link"   href="https://developer.nvidia.com/cuda-downloads"  target="_blank" rel="noopener">https://developer.nvidia.com/cuda-downloads</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>下载出来的1G多的那个就好，下载好后将文件剪切到你的home下，右击文件，点击属性，打开后如图，选择权限，勾选执行</p>
+<ol start="3">
+<li>安装CUDA8.0</li>
+</ol>
+<p>配置一下环境变量</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br></pre></td></tr></table></div></figure>
+
+<p>加入这两行：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH</span><br><span class="line"></span><br><span class="line">export LD_LIBRARY_PATH=/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></div></figure>
+
+<p>然后，就可以开始安装了</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">sudo sh cuda_8.0.61_375.26_linux.run</span><br></pre></td></tr></table></div></figure>
+
+<p>然后会看到(按照我下面的输入即可）</p>
+<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Do</span> you accept the previously read EULA?</span><br><span class="line"></span><br><span class="line">accept/decline/quit: accept</span><br><span class="line"></span><br><span class="line">Install NVIDIA Accelerated Graphics Driver <span class="keyword">for</span> Linux-x86_64 361.62?</span><br><span class="line"></span><br><span class="line">(y)es/(n)o/(q)uit: n</span><br><span class="line"></span><br><span class="line">Install the CUDA 8.0 Toolkit?</span><br><span class="line"></span><br><span class="line">(y)es/(n)o/(q)uit: y</span><br><span class="line"></span><br><span class="line">Enter Toolkit Location</span><br><span class="line">[<span class="built_in"> default </span>is /usr/local/cuda-8.0 ]: 回车</span><br><span class="line"></span><br><span class="line"><span class="keyword">Do</span> you want <span class="keyword">to</span> install a symbolic link at /usr/local/cuda?</span><br><span class="line">(y)es/(n)o/(q)uit: y</span><br><span class="line"></span><br><span class="line">Install the CUDA 8.0 Samples?</span><br><span class="line"></span><br><span class="line">(y)es/(n)o/(q)uit: y</span><br><span class="line"></span><br><span class="line">Enter CUDA Samples Location</span><br><span class="line">[<span class="built_in"> default </span>is /root ]:回车</span><br></pre></td></tr></table></div></figure>
+
+<p>接下来会出现</p>
+<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Installing the CUDA Toolkit <span class="keyword">in</span> /usr/local/cuda-8.0 …</span><br><span class="line">Installing the CUDA Samples <span class="keyword">in</span> /root …</span><br><span class="line">Copying samples <span class="keyword">to</span> /home/derek/NVIDIA_CUDA-8.0_Samples now…</span><br><span class="line">Finished copying samples.</span><br><span class="line"></span><br><span class="line">= Summary =</span><br><span class="line"></span><br><span class="line">Driver: Installed</span><br><span class="line">Toolkit: Installed <span class="keyword">in</span> /usr/local/cuda-8.0</span><br><span class="line">Samples: Installed <span class="keyword">in</span> /home/derek</span><br><span class="line"></span><br><span class="line">Please make sure that</span><br><span class="line">– PATH includes /usr/local/cuda-8.0/bin</span><br><span class="line">– LD_LIBRARY_PATH includes /usr/local/cuda-8.0/lib64, <span class="keyword">or</span>, <span class="builtin-name">add</span> /usr/local/cuda-8.0/lib64 <span class="keyword">to</span> /etc/ld.so.conf <span class="keyword">and</span> <span class="builtin-name">run</span> ldconfig as root</span><br><span class="line"></span><br><span class="line"><span class="keyword">To</span> uninstall the CUDA Toolkit, <span class="builtin-name">run</span> the uninstall<span class="built_in"> script </span><span class="keyword">in</span> /usr/local/cuda-8.0/bin</span><br><span class="line"></span><br><span class="line">Please see CUDA_Installation_Guide_Linux.pdf <span class="keyword">in</span> /usr/local/cuda-8.0/doc/pdf <span class="keyword">for</span> detailed information on setting up CUDA.</span><br><span class="line"></span><br><span class="line">WARNING: Incomplete installation! This installation did <span class="keyword">not</span> install the CUDA Driver. A driver of version at least 361.00 is required <span class="keyword">for</span> CUDA 8.0 functionality <span class="keyword">to</span> work.</span><br><span class="line"></span><br><span class="line"><span class="keyword">To</span> install the driver using this installer, <span class="builtin-name">run</span> the following command, replacing with the name of this <span class="builtin-name">run</span> filesudo.<span class="builtin-name">run</span> -silent -driver</span><br></pre></td></tr></table></div></figure>
+
+<p>这样就已经安装好了，就是这么简单不要怀疑，只要不出error就可以，如果出现kernel相关错误，那一般是由于内核太高了，cuda不能识别，包括cuda9等等后来的也不能，所以还是想办法降一下内核吧</p>
+<ol start="4">
+<li>编辑配置文件</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bash_profile</span><br></pre></td></tr></table></div></figure>
+
+<p>打开配置文件，加入以下几行</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64:/usr/local/cuda-8.0/extras/CUPTI/lib64"</span><br><span class="line">export CUDA_HOME=/usr/local/cuda-8.0</span><br></pre></td></tr></table></div></figure>
+<p>也可以在.bashrc中配置</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br></pre></td></tr></table></div></figure>
+<p>加入这两行</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/cuda-8.0/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH</span><br><span class="line">source ~/.bashrc</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">现在就可以验证一下cuda是否安装成功咯</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">cd /usr/local/cuda-8.0/samples/1_Utilities/deviceQuery</span><br><span class="line">sudo make</span><br><span class="line">./deviceQuery</span><br></pre></td></tr></table></div></figure>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/U%E7%9B%98%E5%AE%89%E8%A3%85OS/">U盘安装OS</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.3k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="安装启动盘-U-盘"   >
+          <a href="#安装启动盘-U-盘" class="heading-link"><i class="fas fa-link"></i></a>安装启动盘(U 盘)</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br><span class="line">umount /dev/sdb1</span><br><span class="line">mkfs.vfat /dev/sdb -I</span><br><span class="line">sudo dd if=~/Downloads/ubuntu-16.04-desktop-amd64.iso of=/dev/sdb status=progress</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="安装Ubuntu-18-04"   >
+          <a href="#安装Ubuntu-18-04" class="heading-link"><i class="fas fa-link"></i></a>安装Ubuntu_18.04</h2>
+      
+        <h3 id="1-开启root访问权限"   >
+          <a href="#1-开启root访问权限" class="heading-link"><i class="fas fa-link"></i></a>1. 开启root访问权限</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></div></figure>
+<p>输入user用户密码，再设置root密码，下次就可以$ su root 获取root权限了</p>
+
+        <h3 id="Add-new-user"   >
+          <a href="#Add-new-user" class="heading-link"><i class="fas fa-link"></i></a>Add new user</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adduser $USERNAME</span><br><span class="line">passwd $PASSWD</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="2-设置网络"   >
+          <a href="#2-设置网络" class="heading-link"><i class="fas fa-link"></i></a>2. 设置网络</h3>
+      <ul>
+<li>点击屏幕右上角向下三角<ul>
+<li>Wired Connected -&gt; Wired Settings -&gt; Network Proxy -&gt; Manual -&gt; HTTP Proxy等输入child-prc.intel.com, port输入913</li>
+<li>到此可以试着打开浏览器看能不能上网<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi ~/.bashrc 添加如下内容</span></span><br><span class="line">export http_proxy=http://child-prc.intel.com:913</span><br><span class="line">export https_proxy=$http_proxy</span><br><span class="line">export HTTP_PROXY=$http_proxy</span><br><span class="line">export HTTPS_PROXY=$http_proxy</span><br></pre></td></tr></table></div></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc 使得上面添加的内容生效</span><br><span class="line">apt-get update</span><br><span class="line">apt-get upgrade</span><br><span class="line">apt install net-tools		// 到此可以用ifconfig查看ip</span><br><span class="line">apt-get install vim		// 可以用vim命令了</span><br><span class="line">vim ~/.vimrc	// 如果没有则新建.vimrc文件, 添加如下内容</span><br><span class="line">set nu</span><br><span class="line">set tabstop=4</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="3-安装ssh并开启root远程登录"   >
+          <a href="#3-安装ssh并开启root远程登录" class="heading-link"><i class="fas fa-link"></i></a>3. 安装ssh并开启root远程登录</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get install openssh-server</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim /etc/ssh/sshd_config</span></span><br><span class="line">  PermitRootLogin yes		// 去掉PermitRootLogin前面的"#"注释，后面值改为yes, 如果不设置则远程只能登录user用户如ai而不能直接登录root</span><br><span class="line"><span class="meta">$</span><span class="bash"> /etc/init.d/ssh start		// 启动SSH服务</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ps -e | grep sshd			// 查看SSH是否启动成功</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> /etc/init.d/ssh stop		// 关闭SSH服务, 如果先开启服务再设置PermitRootLogin为yes则需要关掉ssh服务再启动ssh服务使其修改生效</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="4-安装build-essential等必要的编译配置运行程序工具如gcc等"   >
+          <a href="#4-安装build-essential等必要的编译配置运行程序工具如gcc等" class="heading-link"><i class="fas fa-link"></i></a>4. 安装build-essential等必要的编译配置运行程序工具如gcc等</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install build-essential	// 该命令将安装一堆新包，包括gcc，g ++和make.</span><br><span class="line">gcc --version		// gcc -v</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="安装curl，会安装后运行可能出现的问题"   >
+          <a href="#安装curl，会安装后运行可能出现的问题" class="heading-link"><i class="fas fa-link"></i></a>安装curl，会安装后运行可能出现的问题</h3>
+      <ul>
+<li><p>安装:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get upgrade</span><br><span class="line">apt-get install curl</span><br><span class="line">curl --version</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>提前设置好系统的proxy如:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=child-prc.intel.com:913</span><br><span class="line">export https_proxy=child-prc.intel.com:913 // https的proxy与上面的http的要一样</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>运行curl可能出现的问题:<br>curl: error while loading shared libraries: libcurl.so.4: cannot open shared object file: No such file or directo</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> find -name <span class="string">"libcurl.so.4"</span> /</span></span><br></pre></td></tr></table></div></figure>
+<p>查看得到库文件在/usr/local/lib/libcurl.so.4<br>解决方法一: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib    //当前终端生效<br>解决方法二: 把export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib添加到 ~/.bashrc, 然后运行source ~/.bashrc使其永久生效</p>
+</li>
+</ul>
+
+        <h3 id="Ubuntu18-04-apt-get卸载软件步骤"   >
+          <a href="#Ubuntu18-04-apt-get卸载软件步骤" class="heading-link"><i class="fas fa-link"></i></a>Ubuntu18.04 apt-get卸载软件步骤</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> whereis curl</span></span><br><span class="line">  curl: /usr/bin/curl /usr/local/curl</span><br><span class="line"><span class="meta">$</span><span class="bash"> apt-get remove ***</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> apt-get autoremove</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> apt-get autoclean(或者clean)</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="Ubuntu18-04-添加镜像源"   >
+          <a href="#Ubuntu18-04-添加镜像源" class="heading-link"><i class="fas fa-link"></i></a>Ubuntu18.04 添加镜像源</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim /etc/apt/sources.list.d/kubernetes.list</span></span><br><span class="line">  deb https://apt.kubernetes.io/ kubernetes-xenial main</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="Modify-hostname"   >
+          <a href="#Modify-hostname" class="heading-link"><i class="fas fa-link"></i></a>Modify hostname</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hostnamectl <span class="built_in">set</span>-hostname <span class="variable">$HOSTNAME</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> reboot</span></span><br></pre></td></tr></table></div></figure>
+
+<p>※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※<br>一: 查询安装路径</p>
+<ol>
+<li><p>dpkg -L 软件名</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -L gedit</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>whereis 软件名</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis gedit</span><br></pre></td></tr></table></div></figure>
+
+</li>
+</ol>
+<p>二: 查询版本</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aptitude show 软件名</span><br><span class="line">dpkg -l 软件名</span><br></pre></td></tr></table></div></figure>
+<p>※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※</p>
+
+        <h3 id="cpupower"   >
+          <a href="#cpupower" class="heading-link"><i class="fas fa-link"></i></a>cpupower</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install linux-tools-common</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install epel-release</span><br><span class="line">yum install cmake</span><br></pre></td></tr></table></div></figure>
+
+<p>※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※</p>
+
+        <h2 id="安装Centos-Minimal"   >
+          <a href="#安装Centos-Minimal" class="heading-link"><i class="fas fa-link"></i></a>安装Centos Minimal</h2>
+      
+        <h3 id="配置网络启动"   >
+          <a href="#配置网络启动" class="heading-link"><i class="fas fa-link"></i></a>配置网络启动</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /etc/sysconfig/network-scripts/ifcfg-ens33</span></span><br><span class="line">ONBOOT=yes			// ONBOOT=no，改为ONBOOT=yes</span><br><span class="line"></span><br><span class="line">//重启网络</span><br><span class="line"><span class="meta">$</span><span class="bash"> ifup &lt;网卡名字如：ens33&gt;		// ifup 网卡名字</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> service network restart	// 重启网络</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="配置yum代理"   >
+          <a href="#配置yum代理" class="heading-link"><i class="fas fa-link"></i></a>配置yum代理</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> proxy=http://Proxy:port &gt;&gt; /etc/yum.conf</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum install vim</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="配置系统proxy"   >
+          <a href="#配置系统proxy" class="heading-link"><i class="fas fa-link"></i></a>配置系统proxy</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim ~/.bashrc</span></span><br><span class="line">export http_proxy=http://Proxy:port</span><br><span class="line">export https_proxy=http://Proxy:port</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="安装网络工具"   >
+          <a href="#安装网络工具" class="heading-link"><i class="fas fa-link"></i></a>安装网络工具</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install net-tools</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="开启远程登陆"   >
+          <a href="#开启远程登陆" class="heading-link"><i class="fas fa-link"></i></a>开启远程登陆</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim /etc/ssh/sshd_config</span></span><br><span class="line">Port 22</span><br><span class="line"><span class="meta">#</span><span class="bash">AddressFamily any</span></span><br><span class="line"><span class="meta">#</span><span class="bash">ListenAddress 0.0.0.0</span></span><br><span class="line"><span class="meta">#</span><span class="bash">ListenAddress ::</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">LoginGraceTime 2m</span></span><br><span class="line">PermitRootLogin yes</span><br><span class="line"><span class="meta">#</span><span class="bash">StrictModes yes</span></span><br><span class="line"><span class="meta">#</span><span class="bash">MaxAuthTries 6</span></span><br><span class="line"><span class="meta">#</span><span class="bash">MaxSessions 10</span></span><br><span class="line"></span><br><span class="line">启动sshd</span><br><span class="line"><span class="meta">$</span><span class="bash"> /bin/systemctl start sshd.service</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="遇到的问题"   >
+          <a href="#遇到的问题" class="heading-link"><i class="fas fa-link"></i></a>遇到的问题</h2>
+      
+        <h3 id="缺少网卡驱动"   >
+          <a href="#缺少网卡驱动" class="heading-link"><i class="fas fa-link"></i></a>缺少网卡驱动</h3>
+      <p>在裸组装机而不是虚拟机上装Centos7之后$ ifconfig发现只有 lo环回网络地址，缺少网卡如”enps3”等<br>解决方法是在网上查找网卡对应的驱动， 然后下载安装(本次没有找到对应网卡版本的驱动但安装后仍然成功查到网址并能正常使用)</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ip addr			//发现只有lo网路地址, 或者还有其它的如virbr0等的虚拟网络地址, 但都不是想要的网络IP</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsmod | grep e1000</span></span><br><span class="line">  e1000e                263116  0</span><br><span class="line">  ptp                    19231  1 e1000e</span><br><span class="line"><span class="meta">$</span><span class="bash"> modprobe e1000e</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lspci -vvv | less</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rmmod e1000e		//移除原来的网卡驱动</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rmmod e1000</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsmod | grep e1000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> lspci				//查看设备，其中有Intel网卡, I219-V为网卡设备号</span></span><br><span class="line">  00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (12) I219-V</span><br><span class="line">根据网卡设备号I219-V在网上查找相应驱动, 并下载解压 e1000e-3.8.4.tar.gz</span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf e1000e-3.8.4.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> e1000e-3.8.4</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> src/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls				//会编译生成内核文件e1000e.ko</span></span><br><span class="line">  e1000e.ko</span><br><span class="line"><span class="meta">$</span><span class="bash"> insmod e1000e.ko	//将内核文件加载进内核</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dmesg</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsmod | grep e1000e</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ifconfig			//再次查看发现有网络IP了</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make install		//设置开机后会自动加载内核网络文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dmidecode -vvv | less		//查看下网卡信息</span></span><br></pre></td></tr></table></div></figure>
+<p>机器运行期间执行过$ yun update, 选择yes, 可能会涉及到内核的升级或改变, 重新开机后会默认选择新添加的内核启动, 登陆后发现没有又没有网卡驱动.<br><strong>第一种解决方法</strong><br>可以在登陆时选择原来的内核启动就可以了.<br><strong>第二种解决方法</strong><br>因为换不同内核, 需要重新安装这个第三方网卡驱动, 重新进入e1000e-3.8.4/src目录$ make clean, $ make, $ make install<br>查看有没有旧的内核驱动, 如果又需要先卸载$ lsmod | grep e1000e, $ rmmod e1000e.ko<br>然后执行$ insmod e1000e.ko, 如果报insmod: ERROR: could not insert module xxxxx.ko: Unknown symbol in module错误可以先忽略直接重启系统选择新的内核启动问题就解决了.  </p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/alias/">alias</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">96</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="alias"   >
+          <a href="#alias" class="heading-link"><i class="fas fa-link"></i></a>alias</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">alias</span></span></span><br><span class="line">alias cp='cp -i'	// -i 表示交互, 覆盖文件时候会提示是否确定要overrite.</span><br><span class="line">......</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">alias</span> cdnet=<span class="string">"cd /etc/sysconfig/network-scripts"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cdnet</span></span><br><span class="line"></span><br><span class="line">//cp命令时候不想提示是否覆盖文件</span><br><span class="line">// 方法一:</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">unalias</span> cp</span></span><br><span class="line">// 方法二: cp前加上"\"表示不用alias的别名 'cp -i', 而 直接用 'cp'</span><br><span class="line"><span class="meta">$</span><span class="bash"> \cp -fv dir1/file1  dir2/file2	//-v表示输出复制命令的过程细节</span></span><br></pre></td></tr></table></div></figure>
+
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/awk_sed_find_grep/">awk, sed, find, grep</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.1k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="grep"   >
+          <a href="#grep" class="heading-link"><i class="fas fa-link"></i></a>grep</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname - a</span><br><span class="line">	查看内核版本</span><br><span class="line">root@Alpha:# uname -a</span><br><span class="line">Linux Alpha 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></div></figure>
+
+<hr>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">grep      grep --help</span><br><span class="line">	-c</span><br><span class="line">	-i    不区分大小写</span><br><span class="line">	-h</span><br><span class="line">	-l</span><br><span class="line">	-n</span><br><span class="line">	-s</span><br><span class="line">	-v</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">grep -n "IndexIVFFlat*" *.py  //查找本目录所有后缀为.py的文件是否包含IndexIVFFlat*内容</span><br><span class="line">grep 'test' aa bb cc</span><br><span class="line">grep -r "exit" ./ --color=auto</span><br><span class="line">grep -r "exit" ./ -h</span><br><span class="line">grep -r "exit" ./ -n    --显示搜索内容在文件中的行号</span><br><span class="line">root@Alpha:~/zhan/system/day4# grep  -r  "exit"  process_work.c   -n</span><br><span class="line">29:             exit(1);</span><br><span class="line">root@Alpha:~/zhan/system/day4#</span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="find"   >
+          <a href="#find" class="heading-link"><i class="fas fa-link"></i></a>find</h2>
+      <p>find     find –help<br>find ./ -name “exit”</p>
+<figure class="highlight elixir"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment"># find ./ -size +2k    --搜索大于2k文件的当前目录文件</span></span><br><span class="line">./</span><br><span class="line">./pthread_attr.o</span><br><span class="line">./pthread_cancel.o</span><br><span class="line">./condition.o</span><br><span class="line">./process_work.o</span><br><span class="line">./rwlock.o</span><br><span class="line">./mutex.o</span><br><span class="line">./pthread_create.o</span><br><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment"># find ./ -size +2k -size 9k    --搜索大于2k小于9k的当前目录文件</span></span><br><span class="line">./pthread_attr.o</span><br><span class="line">./pthread_cancel.o</span><br><span class="line">./pthread_create.o</span><br><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">find ./ -size +<span class="number">200</span> -size <span class="number">-500</span>   --&gt;不加-size参数时候默认单位: <span class="number">512</span>B(扇区大小0.<span class="number">5</span>K)，不指定单位默认按照扇区大小</span><br><span class="line">磁盘最小扇区<span class="number">512</span>B(<span class="number">512</span>字节)</span><br><span class="line">内存最小块<span class="number">4</span>K(<span class="number">4096</span>字节)</span><br><span class="line">内存分配<span class="number">1000</span>B和<span class="number">4096</span>B空间对计算机来讲没什么区别都是以<span class="number">4096</span>大小来做映射</span><br><span class="line"></span><br><span class="line">find  ./ -type f  --默认递归搜索所有第一级到第n级目录中的文件，而不包含目录</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f   --只找当前目录文件，不找子级目录文件</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f -size +<span class="number">2</span>k</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f -size +<span class="number">2</span>k | ls -l  不生效，find不能跟管道<span class="string">"|"</span>一起使用, 如下使用</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f -size +<span class="number">2</span>k -exec ls -l &#123;&#125; \;</span><br><span class="line">	-exec指明要执行<span class="string">"&#123;&#125;"</span>里面的内容，<span class="string">"&#123;&#125;"</span>的内容由ls -l 传参, 执行完要有结束标志分号<span class="string">";"</span>， <span class="string">"\"符号转义字符将分号"</span>;<span class="string">"转义</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="sed"   >
+          <a href="#sed" class="heading-link"><i class="fas fa-link"></i></a>sed</h2>
+      <p>sed  –Stream Editor(流编辑器)<br>早起Unix系统 – ed 编辑器 , 很多sed命令和vi的末行命令是相同的<br>                |       |<br>                      vi      sed</p>
+<p>:/    查找<br>:%/the/this/g    替换文件中的所有the为this</p>
+<p>sed option ‘script’ file1 file2 ……                sed 参数  ‘s/the/this/‘, 待处理文件     —the 替换为 this<br>    sed ‘s/char/int/‘ test.c -i                test.c文件中的char改为int<br>    sed ‘s/char/int/‘ test.c | tee tt.c         test.c文件中的char改为int并另存为tt.c文件<br>sed option -f scriptfile file1 file2 ……         sed 参数  -f ‘脚本文件里写正则等’  待处理文件</p>
+<p>选项含义：<br>–version<br>–help<br>-n, –quiet, –silent                静默输出<br>-i, –in-place                           直接修改源文件<br>-e script                        允许多个脚本指令被执行<br>-f  script-file<br>–file=script-file             从文件中读取脚本指令，对编写自动脚本程序来说很棒<br>-l   N, –line-length=N   该选项指定l指令可以输出的行长度<br>–posix                            禁用GNU sed扩展功能<br>-r，–regexp-extended   在脚本指令中使用扩展正则表达式<br>-s，–separate                 默认情况下，sed将把命令行指定的多个文件名作为一个长的连续的输入流，<br>                                        而GNU sed则允许把他们当做单独的文件，这样如正则表达式则不进行跨文件匹配.<br>-u， –unbuffered           最低限度的缓存输入与输出</p>
+<p>a，    append              追加<br>i，     insert                   插入<br>d，    delete                 删除<br>s，     substitution        替换<br>如：$ sed -i “2a itcast” ./testfile    在testfile文件中第2行后添加”itcast”<br>       $ sed -i “3d” testfile          删除testfile文件中的第三行</p>
+<p>sed程序一行一行读出待处理文件，如果某一行与pattern匹配，则执行相应的action，如果一条命令没有patter而只有action，这个action将作用于待处理文件的每一行， 如”s/the/this/“  “the”就是pattern</p>
+<figure class="highlight ruby"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">$ sed <span class="string">'s/bc/-&amp;-/'</span> testfile</span><br><span class="line"><span class="number">123</span></span><br><span class="line">a-bc-</span><br><span class="line"><span class="number">456</span></span><br><span class="line">pattern2 中的&amp;表示源文件当前行中与pattern1相匹配的字符串</span><br><span class="line"></span><br><span class="line">$ sed <span class="string">'s/\([0-9]\)\([0-9]\)/-\1-~\2~/'</span> testfile</span><br><span class="line">-<span class="number">1</span>-~<span class="number">2</span>~<span class="number">3</span></span><br><span class="line">Abc</span><br><span class="line">-<span class="number">4</span>-~<span class="number">5</span>~<span class="number">6</span></span><br><span class="line">pattern2中的\<span class="number">1</span>表示与pattern1的第一个()括号相匹配的内容，\<span class="number">2</span>表示与pattern1的第二个()括号相匹配的内容弄。</span><br><span class="line">sed默认使用Basic正则表达式规范，如果制定了-r选项则使用Extended规范，那么()括号就不必转移了，</span><br><span class="line">如：sed -r <span class="string">'s/([0-9])([0-9])/-\1-~\2~/'</span> testfile</span><br><span class="line"></span><br><span class="line">	sed <span class="string">'/def/p'</span> out    --- <span class="string">"p"</span>表示打印输出包含echo内容的行</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '/def/p' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	<span class="function"><span class="keyword">def</span></span></span><br><span class="line">	<span class="function"><span class="keyword">def</span>      <span class="title">-</span><span class="title">-</span>由参数<span class="title">p</span>打印输出的</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed -n '/def/p' abc.c   -n 表示静默输出，只输出改变的内容</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span></span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '/def/d' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	ghi</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed  -i 's/def/ddd/' abc.c == sed  -i  '/def/s/def/ddd/' abc.c</span></span><br><span class="line">	abc                                                                                             sed  参数 pattern/action(动作)   目标文件</span><br><span class="line">	ddd                                                                                                                         pattern大多数情况可以省略如替换</span><br><span class="line">	ghi</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '1,1s/def/ddd/' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	<span class="function"><span class="keyword">def</span></span></span><br><span class="line">	ghi</span><br><span class="line">	jkl</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '1,2s/def/ddd/' abc.c   表示1到2行的所有 "def" 替换为 "ddd"</span></span><br><span class="line">	abc</span><br><span class="line">	ddd</span><br><span class="line">	ghi</span><br><span class="line">	jkl</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '1,2s/def/-&amp;-/' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	-<span class="function"><span class="keyword">def</span><span class="title">-</span></span></span><br><span class="line">	ghi</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed -r 's/([a-z])([a-z])/-\1-~\2~/' abc.c == sed -E 's/([a-z])([a-z])/-\1-~\2~/' abc.c</span></span><br><span class="line">	-a-~b~c</span><br><span class="line">	-d-~e~f</span><br><span class="line">	-g-~h~i</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="awk"   >
+          <a href="#awk" class="heading-link"><i class="fas fa-link"></i></a>awk</h2>
+      <p>awk 是开发awk命令的三个人名字的首字母，不是单词缩写，不能读’a wa k’<br>sed是以行为单位处理文件，awk比sed强，不仅以行为单位，还能以列为单位处理文件，awk缺省的行分隔符是换行，缺省的列分隔符是连续的空格和Tab，但是行分隔符和列分隔符都可以自定义</p>
+<pre><code>ps aux | awk &apos;{print $0}&apos;    取全部，相当于ps aux
+ps aux | awk &apos;{print $2}&apos;    按列拆分</code></pre><p><code>查看所有链接本机6443服务端口的客户端IP地址, 地址一致的合并, 然后连接数从高到底排序.</code></p>
+<pre><code>$ netstat -antp | grep :6443 | awk &apos;{print $5}&apos; | awk -F &quot;:&quot; &apos;{print $1}&apos; | sort | uniq -c | sort -r -n
+      4 10.239.4.100    // 表示从10.239.4.100客户端请求访问本机6443服务端口的进程数为4
+      3 10.239.4.80
+      3 10.239.141.194
+      3 10.239.141.145
+      3
+      2 10.40.0.6
+      2 10.239.140.53
+      2 10.239.140.133
+      2 10.109.19.69
+      1 10.40.0.9
+      1 10.40.0.2
+      1 10.40.0.1
+      1 10.109.19.68</code></pre><p>Awk option ‘script’ file1 file2 ……<br>Awk option -f scriptfile file1 file2 ……<br>和sed一样，awk处理的文件既可以由标准输入重定向得到，也可以当命令行参数传入，编辑命令可以直接当命令行参数传入，也可以用-f参数指定一个脚本文件，如果一条awk命令只有actions部分，则actions作用于待处理文件的每一行，编辑命令格式为:<br>/pattern/{actions}        ps aux | awk ‘print $0’  其中awk ‘print $0’即为actions<br>condition{actions}</p>
+<p>如果某种产品的库存量低于75则在行末标注需要订货：<br>$ awk ‘$2 &lt; 75  {printf  “%s\t%s\n”,  $0,  “REORDER”} $2 &gt;= 75  {print $0;}’  testfile<br>                  |                                |                                                 |                  |<br>             pattern                    action                                       pattern        action<br>productA   30   REORDER<br>productB   76<br>productC   55   REORDER</p>
+<pre><code>awk &apos;$2 &lt; 75 {printf &quot;%s %s\n&quot;, $0, &quot;reorder&quot;;} $2 &gt;= 75 {printf &quot;%s\n&quot;, $0;}&apos; testfile</code></pre><p>ProductA 70 reorder<br>ProductB 35 reorder<br>ProductC 75</p>
+<pre><code>ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2 &quot; recorder&quot;;}&apos;
+root@Alpha:~/zhan/test# ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2 &quot; recorder&quot;}&apos;
+32106 recorder
+32146 recorder
+……
+root@Alpha:~/zhan/test#
+ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2}&apos;                           与下面命令等价
+ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {printf(&quot;%s\n&quot;, $2);}&apos;        花括号前的&quot;;&quot;分号去掉也可以
+root@Alpha:~/zhan/test# ps aux|awk &apos; $2 &gt; 30000 &amp;&amp; $2 &lt; 40000 {var = var + 1} END {print var}&apos;
+root@Alpha:~/zhan/test# ps aux|awk &apos; $2 &gt; 30000 &amp;&amp; $2 &lt; 40000 {var = var + 1} END {print var}&apos;
+18
+root@Alpha:~/zhan/test#</code></pre><p>统计文件中的空行</p>
+<figure class="highlight ruby"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ awk <span class="string">'/^ *$/ &#123;x=x+1;&#125; END &#123;print x;&#125;'</span> testfile</span><br><span class="line">         以空格开始，到结束都是空格, <span class="keyword">END</span>代表一直读到文件尾</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#  awk '/^ *$/ &#123;x=x+1;&#125; END &#123;print x;&#125;' testfile</span></span><br><span class="line">	<span class="number">10</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">打印系统中用户账号列表</span><br><span class="line">$ awk <span class="string">'BEGIN &#123;FS=":"&#125; &#123;print $1;&#125;'</span> /etc/passwd   </span><br><span class="line">	awk默认空格为列分隔符，<span class="keyword">BEGIN</span>表示在匹配之前以<span class="string">":"</span>冒号分隔符分割列</span><br><span class="line">$ awk -<span class="symbol">F:</span>  <span class="string">'&#123;print $1&#125;'</span> /etc/passwd   与上面等价</span><br><span class="line">	-<span class="symbol">F:</span>  设置<span class="string">":"</span>冒号为列分隔符， -F相当于awk的option可选参数</span><br><span class="line">	/etc/passwd 文件中把第一列用户名a对应的第二列如<span class="string">"x"</span>删掉，则注销机器用户a下次登录则不需要再输入密码，但是sudo 等仍然需要指定密码，只是图形界面省略了登录输密码步骤</span><br></pre></td></tr></table></div></figure>
+
+
+<hr>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/aws-sdk-cpp%E4%BA%9A%E9%A9%AC%E9%80%8A/">亚马逊aws-sdk-cpp</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">93</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>github: <span class="exturl"><a class="exturl__link"   href="https://github.com/aws/aws-sdk-cpp"  target="_blank" rel="noopener">https://github.com/aws/aws-sdk-cpp</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="Centos-编译执行"   >
+          <a href="#Centos-编译执行" class="heading-link"><i class="fas fa-link"></i></a>Centos 编译执行</h2>
+      <ol>
+<li>更新下curl, 可以参考”curl升级教程”</li>
+<li>更新gcc和g++, 可以参考”Devtoolset 升级gcc到8.3.1”</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/aws/aws-sdk-cpp/archive/1.8.55.tar.gz</span><br><span class="line">tar -zxvf 1.8.55.tar.gz</span><br><span class="line">cd aws-sdk-cpp-1.8.55</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake &lt;path-to-root-of-this-source-code(aws-sdk-cpp-1.8.55的绝对路径)&gt; -DCMAKE_BUILD_TYPE=Debug</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></div></figure>
+
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/10/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/12/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

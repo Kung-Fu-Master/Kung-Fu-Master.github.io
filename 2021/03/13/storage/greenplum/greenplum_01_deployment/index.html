@@ -1,0 +1,494 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Prerequisites        Kubernetes Node Configuration describes the Linux kernel configuration requirements for each Kubernetes node that is used in a Pivotal Greenplum cluster. These">
+<meta property="og:type" content="article">
+<meta property="og:title" content="greenplum 01 deployment on Kubernetes">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/storage/greenplum/greenplum_01_deployment/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Prerequisites        Kubernetes Node Configuration describes the Linux kernel configuration requirements for each Kubernetes node that is used in a Pivotal Greenplum cluster. These">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.904Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="storage">
+<meta name="twitter:card" content="summary"><title>greenplum 01 deployment on Kubernetes | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/storage/greenplum/greenplum_01_deployment/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">greenplum 01 deployment on Kubernetes</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.8k</span></span></div></header><div class="post-body">
+        <h2 id="Prerequisites"   >
+          <a href="#Prerequisites" class="heading-link"><i class="fas fa-link"></i></a>Prerequisites</h2>
+      <ol>
+<li><span class="exturl"><a class="exturl__link"   href="http://greenplum-kubernetes.docs.pivotal.io/2-0/node-requirements.html"  target="_blank" rel="noopener">Kubernetes Node Configuration</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> describes the Linux kernel configuration requirements for each Kubernetes node that is used in a Pivotal Greenplum cluster. These requirements are common to all Pivotal Greenplum deployments, regardless of which Kubernetes environment you use.</li>
+<li>Ensure that any previous Pivotal Greenplum installation has been uninstalled as described in Uninstalling Pivotal Greenplum.</li>
+<li>kubectl configured to refer to a Kubernetes cluster.</li>
+</ol>
+
+        <h2 id="Install-Greenplum-Operator-for-Kubernetes"   >
+          <a href="#Install-Greenplum-Operator-for-Kubernetes" class="heading-link"><i class="fas fa-link"></i></a>Install Greenplum Operator for Kubernetes</h2>
+      <ol>
+<li>Download the Pivotal Greenplum software from <span class="exturl"><a class="exturl__link"   href="https://network.pivotal.io/products/greenplum-for-kubernetes"  target="_blank" rel="noopener">VMware Tanzu Network</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> or skip to step 3 if have greenplum related files. The download file has the name: <code>greenplum-for-kubernetes-&lt;version&gt;.tar.gz.</code></li>
+</ol>
+<ol start="2">
+<li>Go to the directory where you downloaded Greenplum for Kubernetes, and unpack the downloaded software. For example:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/Downloads</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar xzf greenplum-for-kubernetes-*.tar.gz</span></span><br></pre></td></tr></table></div></figure>
+<p>The above command unpacks the distribution into a new directory named <code>greenplum-for-kubernetes-&lt;version&gt;</code>.<br>3. Go into the new greenplum-for-kubernetes-<version> directory:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ./greenplum-for-kubernetes-*</span></span><br></pre></td></tr></table></div></figure>
+<ol start="4">
+<li>Load the Greenplum for Kubernetes Docker image to the local Docker registry:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker load -i ./images/greenplum-for-kubernetes</span></span><br></pre></td></tr></table></div></figure>
+<ol start="5">
+<li>Load the Greenplum Operator Docker image to the Docker registry:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker load -i ./images/greenplum-operator</span></span><br></pre></td></tr></table></div></figure>
+<ol start="6">
+<li>Push the Greenplum docker images to the local container registry. For example:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> IMAGE_REPO=<span class="string">"hci-node01:5000"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> GREENPLUM_IMAGE_NAME=<span class="string">"<span class="variable">$&#123;IMAGE_REPO&#125;</span>/greenplum-for-kubernetes:<span class="variable">$(cat ./images/greenplum-for-kubernetes-tag)</span>"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker tag $(cat ./images/greenplum-for-kubernetes-id) <span class="variable">$&#123;GREENPLUM_IMAGE_NAME&#125;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker push <span class="variable">$&#123;GREENPLUM_IMAGE_NAME&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> OPERATOR_IMAGE_NAME=<span class="string">"<span class="variable">$&#123;IMAGE_REPO&#125;</span>/greenplum-operator:<span class="variable">$(cat ./images/greenplum-operator-tag)</span>"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker tag $(cat ./images/greenplum-operator-id) <span class="variable">$&#123;OPERATOR_IMAGE_NAME&#125;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker push <span class="variable">$&#123;OPERATOR_IMAGE_NAME&#125;</span></span></span><br></pre></td></tr></table></div></figure>
+<ol start="7">
+<li>Create a new YAML file in the workspace subdirectory with two lines to indicate the registry where you pushed the images</li>
+</ol>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt;workspace/operator-values-overrides.yaml</span><br><span class="line">operatorImageRepository: $&#123;IMAGE_REPO&#125;/greenplum-operator</span><br><span class="line">greenplumImageRepository: $&#123;IMAGE_REPO&#125;/greenplum-for-kubernetes</span><br><span class="line">operatorWorkerSelector: &#123;</span><br><span class="line">greenplum-operator: "default"</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></div></figure>
+<ol start="8">
+<li>Use helm to create a new Greenplum Operator release.</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 先给某台机器添加标签来部署greenplum-operator</span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl label node hci-node02  greenplum-operator=default</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create namespace greenplum</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> helm install -n greenplum-operator -f workspace/operator-values-overrides.yaml operator/ --namespace greenplum</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> helm install greenplum-operator operator/</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Create-Local-Persistent-Volumes-for-Greenplum"   >
+          <a href="#Create-Local-Persistent-Volumes-for-Greenplum" class="heading-link"><i class="fas fa-link"></i></a>Create Local Persistent Volumes for Greenplum</h2>
+      <ol>
+<li>Create the directory, partition, or logical volume that you want to use as a Kubernetes local volume.</li>
+</ol>
+<ol start="2">
+<li>Create the StorageClass definition, specifying no-provisioner in order to manually provision local persistent volumes. Using volumeBindingMode: WaitForFirstConsumer is also recommended to delay binding the local PersistenVolume until a pod requires.</li>
+</ol>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ vim gpdb-storage-class.yaml</span><br><span class="line">kind: StorageClass</span><br><span class="line">apiVersion: storage.k8s.io/v1</span><br><span class="line">metadata:</span><br><span class="line">  name: gpdb-storage</span><br><span class="line">provisioner: kubernetes.io/no-provisioner</span><br><span class="line">volumeBindingMode: WaitForFirstConsumer</span><br></pre></td></tr></table></div></figure>
+
+<ol start="3">
+<li>Create a PersistentVolume definition, specifying the local volume and the required NodeAffinity field. For example:</li>
+</ol>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ vim pv-master.yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: greenplum-master-node02</span><br><span class="line">spec:</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 1Gi</span><br><span class="line">  accessModes:</span><br><span class="line">  - ReadWriteOnce</span><br><span class="line">  persistentVolumeReclaimPolicy: Retain</span><br><span class="line">  storageClassName: gpdb-storage</span><br><span class="line">  local:</span><br><span class="line">    path: /mnt/disks/greenplum-master-vol0	// 需要提前在相应机器上创建此目录</span><br><span class="line">  nodeAffinity:</span><br><span class="line">    required:</span><br><span class="line">      nodeSelectorTerms:</span><br><span class="line">      - matchExpressions:</span><br><span class="line">        - key: kubernetes.io/hostname</span><br><span class="line">          operator: In</span><br><span class="line">          values:</span><br><span class="line">          - hci-node02</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: greenplum-master-node02</span><br><span class="line">......重复上面的内容, 改变下local.path, nodeAffinity等在不同node机器上创建多个pv</span><br></pre></td></tr></table></div></figure>
+
+<ol start="4">
+<li><p>Repeat the previous step for each PersistentVolume required for your cluster. Remember that each Greenplum segment host requires a dedicated storage volume.</p>
+</li>
+<li><p>Use kubectl to apply the StorageClass and PersistentVolume configurations that you created.</p>
+</li>
+<li><p>Specify the local storage StorageClass name when you deploy a new Greenplum cluster as below.</p>
+</li>
+</ol>
+
+        <h2 id="Deploy-a-greenplum-cluster"   >
+          <a href="#Deploy-a-greenplum-cluster" class="heading-link"><i class="fas fa-link"></i></a>Deploy a greenplum cluster</h2>
+      <ol>
+<li>Go to the workspace subdirectory where you unpacked the Pivotal Greenplum distribution for Kubernetes:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ./greenplum-for-kubernetes-*/workspace</span></span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>If necessary, create a Kubernetes manifest file to specify the configuration of your Greenplum cluster. A sample file is provided in workspace/my-gp-instance.yaml. my-gp-instance.yaml contains the minimal set of instructions necessary to create a demonstration cluster named “my-greenplum” with a single segment and default storage, memory, and CPU settings:</li>
+</ol>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: "greenplum.pivotal.io/v1"</span><br><span class="line">kind: "GreenplumCluster"</span><br><span class="line">metadata:</span><br><span class="line">  name: my-greenplum</span><br><span class="line">spec:</span><br><span class="line">  masterAndStandby:</span><br><span class="line">    hostBasedAuthentication: |</span><br><span class="line">      # host   all   gpadmin   1.2.3.4/32   trust</span><br><span class="line">      # host   all   gpuser    0.0.0.0/0   md5</span><br><span class="line">    memory: "800Mi"</span><br><span class="line">    cpu: "0.5"</span><br><span class="line">    storageClassName: gpdb-storage</span><br><span class="line">    storage: 1G</span><br><span class="line">    antiAffinity: "yes"</span><br><span class="line">    workerSelector: &#123;&#125;</span><br><span class="line">  segments:</span><br><span class="line">    primarySegmentCount: 2		# Expand the segment to 2</span><br><span class="line">    memory: "800Mi"</span><br><span class="line">    cpu: "0.5"</span><br><span class="line">    storageClassName: gpdb-storage		# Use the specify storageclass</span><br><span class="line">    storage: 10G				# Expand the storage to 10G</span><br><span class="line">    antiAffinity: "yes"</span><br><span class="line">    workerSelector: &#123;&#125;</span><br><span class="line">    mirrors: "yes"</span><br></pre></td></tr></table></div></figure>
+
+<ol start="3">
+<li>Use kubectl apply command and specify your manifest file to send the deployment request to the Greenplum Operator. For example, to use the sample my-gp-instance.yaml file:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f ./my-gp-instance.yaml </span></span><br><span class="line">  greenplumcluster.greenplum.pivotal.io/my-greenplum created</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Deploy-multiple-greenplum-cluster"   >
+          <a href="#Deploy-multiple-greenplum-cluster" class="heading-link"><i class="fas fa-link"></i></a>Deploy multiple greenplum cluster</h2>
+      <ol>
+<li>Create namespaces for greenplum cluster to deploy. Deploy two greenplum cluster instances:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl create namespace gpinstance-1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create namespace gpinstance-2</span></span><br></pre></td></tr></table></div></figure>
+
+<ol start="2">
+<li>Deploy Greenplum cluster into the correspond namespace.</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> workspace</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f ./my-gp-instance.yaml -n gpinstance-1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl apply -f ./my-gp-instance.yaml -n gpinstance-2</span></span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="Test-whether-the-Greenplum-Cluster-deployment-is-successful"   >
+          <a href="#Test-whether-the-Greenplum-Cluster-deployment-is-successful" class="heading-link"><i class="fas fa-link"></i></a>Test whether the Greenplum Cluster deployment is successful</h2>
+      <p>查看greenplum logs</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> k logs po/master-0 -n greenplum</span></span><br><span class="line">......</span><br><span class="line">*******************************</span><br><span class="line">Adding host based authentication to master-0 pg_hba.conf</span><br><span class="line">*******************************</span><br><span class="line">......</span><br><span class="line">*******************************</span><br><span class="line">Running createdb</span><br><span class="line">*******************************</span><br></pre></td></tr></table></div></figure>
+<p>需要等待一段时间才能执行下方操作</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it master-0 -n greenplum -- bash -c <span class="string">"source /opt/gpdb/greenplum_path.sh; psql"</span></span></span><br><span class="line"> psql (8.3.23)</span><br><span class="line"> Type "help" for help.</span><br><span class="line"></span><br><span class="line"> gpadmin=# select * from gp_segment_configuration;</span><br></pre></td></tr></table></div></figure>
+<p>如果报一些错误无法执行可以:</p>
+<ol>
+<li>先进入master-0: kubectl exec -it master-0 -n greenplum – bash, 再查找greenplum_path.sh</li>
+<li>执行<code>$ source /opt/gpdb/greenplum_path.sh</code>, 再 <code>$ exit</code>退出, 然后就可以用以上命令了</li>
+</ol>
+<p>(Enter <code>\q</code> to exit the psql utility.)</p>
+<p><strong>If you are redeploying a cluster that configured to use a standby master, wait until all pods reach the Running status. Then connect to the master-0 pod and execute the gpstart command manually. For example:</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> -it master-0 -n greenplum -- bash -c <span class="string">"source /opt/gpdb/greenplum_path.sh; gpstart"</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Delete-a-greenplum-cluster-and-uninstall-pivotal-greenplum-for-kubernetes"   >
+          <a href="#Delete-a-greenplum-cluster-and-uninstall-pivotal-greenplum-for-kubernetes" class="heading-link"><i class="fas fa-link"></i></a>Delete a greenplum cluster and uninstall pivotal greenplum for kubernetes</h2>
+      
+        <h3 id="Delete-a-greenplum-cluster"   >
+          <a href="#Delete-a-greenplum-cluster" class="heading-link"><i class="fas fa-link"></i></a>Delete a greenplum cluster</h3>
+      <ol>
+<li>Navigate to the workspace directory of the Pivotal Greenplum distribution (or to the location of the Kubernetes manifest that you used to deploy the cluster). For example:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ./greenplum-for-kubernetes-*/workspace</span></span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>Execute the kubectl delete command, specifying the manifest that you used to deploy the cluster. For example:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete -f ./my-gp-instance.yaml --<span class="built_in">wait</span>=<span class="literal">false</span></span></span><br></pre></td></tr></table></div></figure>
+<p><strong>Note:</strong> Use the optional –wait=false flag to return immediately without waiting for the deletion to complete.<br>3. Use kubectl to describe the Greenplum cluster to verify Status.Phase and Events:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe greenplumcluster my-greenplum</span></span><br><span class="line"> [...]</span><br><span class="line"> Status:</span><br><span class="line">   Instance Image:    greenplum-for-kubernetes:latest</span><br><span class="line">   Operator Version:  greenplum-operator:latest</span><br><span class="line">   Phase:             Deleting</span><br><span class="line"> Events:</span><br><span class="line">   Type    Reason                    Age   From               Message</span><br><span class="line">   ----    ------                    ----  ----               -------</span><br><span class="line">   Normal  CreatingGreenplumCluster  3m    greenplumOperator  Creating Greenplum cluster my-greenplum in default</span><br><span class="line">   Normal  CreatedGreenplumCluster   1m    greenplumOperator  Successfully created Greenplum cluster my-greenplum in default</span><br><span class="line">   Normal  DeletingGreenplumCluster  6s    greenplumOperator  Deleting Greenplum cluster my-greenplum in default</span><br></pre></td></tr></table></div></figure>
+<p>If for any reason stopping the Greenplum instance fails, you should see a warning message in the greenplum-operator logs as shown below:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl logs -l app=greenplum-operator</span></span><br><span class="line">[...]</span><br><span class="line">&#123;"level":"INFO","ts":"2020-01-24T19:03:22.874Z","logger":"controllers.GreenplumCluster","msg":"DeletingGreenplumCluster","name":"my-greenplum","namespace":"default"&#125;</span><br><span class="line">&#123;"level":"INFO","ts":"2020-01-24T19:03:23.068Z","logger":"controllers.GreenplumCluster","msg":"initiating shutdown of the greenplum cluster"&#125;</span><br><span class="line">&#123;"level":"INFO","ts":"2020-01-24T19:03:31.971Z","logger":"controllers.GreenplumCluster","msg":"gpstop did not stop cleanly. Please check gpAdminLogs for more info."&#125;</span><br><span class="line">[...]</span><br><span class="line">&#123;"level":"INFO","ts":"2020-01-24T19:03:32.252Z","logger":"controllers.GreenplumCluster","msg":"DeletedGreenplumCluster","name":"my-greenplum","namespace":"default"&#125;</span><br></pre></td></tr></table></div></figure>
+<ol start="4">
+<li>Use kubectl to monitor the progress of terminating Greenplum resources in your cluster. For example, if your cluster deployment was named my-greenplum:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get all -l greenplum-cluster=my-greenplum</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl label nodes hci-node01 greenplum-affinity-greenplum-master-	// 去掉node上关于greenplum的label</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl label nodes hci-node01 greenplum-affinity-greenplum-segment-</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="Delete-greenplum-persistent-volume-claims"   >
+          <a href="#Delete-greenplum-persistent-volume-claims" class="heading-link"><i class="fas fa-link"></i></a>Delete greenplum persistent volume claims</h3>
+      <p><strong>Caution:</strong> If the Persistent Volumes were created using dynamic provisioning, then deleting the PVCs will also delete the associated PVs. In this case, do not delete the PVCs unless you are certain that you no longer need the data.</p>
+<ol>
+<li>Verify that the PVCs are present for your cluster. For example, to show the Persistent Volume Claims created for a cluster named my-greenplum:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pvc -l greenplum-cluster=my-greenplum</span></span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>Use kubectl to delete the PVCs associated with the cluster. For example, to delete all PersistentVolume Claims created for a cluster named my-greenplum:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete pvc -l greenplum-cluster=my-greenplum</span></span><br></pre></td></tr></table></div></figure>
+<ol start="3">
+<li>If the Persistent Volumes were provisioned manually, then deleting the PVCs does not delete the associated PVs. (You can check for the PVs using kubectl get pv.) To delete any remaining Persistent Volumes, execute the command:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl delete pv -l greenplum-cluster=my-greenplum</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="Uninstall-pivotal-greenplum-for-kubernetes"   >
+          <a href="#Uninstall-pivotal-greenplum-for-kubernetes" class="heading-link"><i class="fas fa-link"></i></a>Uninstall pivotal greenplum for kubernetes</h3>
+      <ol>
+<li>Use the helm delete command to delete the greenplum-operator release:</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> helm delete greenplum-operator</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> helm del --purge greenplum-operator;</span></span><br></pre></td></tr></table></div></figure>
+<ol start="2">
+<li>Delete the node label of greenplum operator when deployed on kubernetes</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl label nodes hci-node02 greenplum-operator-</span></span><br></pre></td></tr></table></div></figure>
+<ol start="3">
+<li>Use docker rmi to delete images</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker rmi &lt;ImageName or ImgaeID&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="FAQ"   >
+          <a href="#FAQ" class="heading-link"><i class="fas fa-link"></i></a>FAQ</h2>
+      <p>When uninstall greenplum, encountered this problem: Object is being deleted: customresourcedefinitions.apiextensions.k8s.io “greenplumclusters.greenplum.pivotal.io” already exists.</p>
+<p>solution refer to this:<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes/kubernetes/issues/60538"  target="_blank" rel="noopener">delete crd</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="删除greenplum集群脚本"   >
+          <a href="#删除greenplum集群脚本" class="heading-link"><i class="fas fa-link"></i></a>删除greenplum集群脚本</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">vim clean_greenplum.sh</span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">workspace=workspace</span><br><span class="line">node01=hci-node01</span><br><span class="line">node02=hci-node02</span><br><span class="line">node03=hci-node03</span><br><span class="line">node04=hci-node04</span><br><span class="line">greenplum_operator=hci-node02</span><br><span class="line"></span><br><span class="line">cd greenplum-for-kubernetes-v1.13.0</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> delete greenplum cluster</span></span><br><span class="line">kubectl delete -f $&#123;workspace&#125;/my-gp-instance.yaml</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> delete pvc</span></span><br><span class="line">pvc_results=$(kubectl get pvc -n greenplum | grep greenplum | awk '&#123;print $1&#125;')</span><br><span class="line">pvc_arr=($&#123;pvc_results&#125;)</span><br><span class="line">for ((i=0; i&lt;$&#123;#pvc_arr[*]&#125;; i++ ))</span><br><span class="line">do</span><br><span class="line">kubectl delete pvc $&#123;pvc_arr[i]&#125; -n greenplum</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> delete pv</span></span><br><span class="line">kubectl delete -f $&#123;workspace&#125;/pv-master.yaml</span><br><span class="line">kubectl delete -f $&#123;workspace&#125;/pv-segment.yaml</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> delete sc</span></span><br><span class="line">kubectl delete -f $&#123;workspace&#125;/workspacegpdb-storage-class.yaml</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> delete greenplum operator</span></span><br><span class="line">helm delete greenplum-operator</span><br><span class="line">helm del --purge greenplum-operator;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> delete label on nodes</span></span><br><span class="line">kubectl label nodes $&#123;node01&#125; greenplum-affinity-greenplum-master-</span><br><span class="line">kubectl label nodes $&#123;node01&#125; greenplum-affinity-greenplum-segment-</span><br><span class="line">kubectl label nodes $&#123;node02&#125; greenplum-affinity-greenplum-master-</span><br><span class="line">kubectl label nodes $&#123;node02&#125; greenplum-affinity-greenplum-segment-</span><br><span class="line">kubectl label nodes $&#123;node03&#125; greenplum-affinity-greenplum-master-</span><br><span class="line">kubectl label nodes $&#123;node03&#125; greenplum-affinity-greenplum-segment-</span><br><span class="line">kubectl label nodes $&#123;node04&#125; greenplum-affinity-greenplum-master-</span><br><span class="line">kubectl label nodes $&#123;node04&#125; greenplum-affinity-greenplum-segment-</span><br><span class="line">kubectl label nodes $&#123;greenplum_operator&#125; greenplum-operator-</span><br></pre></td></tr></table></div></figure>
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/storage/greenplum/greenplum_01_deployment/">https://kung-fu-master.github.io/2021/03/13/storage/greenplum/greenplum_01_deployment/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/storage/">storage</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/technologies/security/token_jwt/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Token jwt</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/storage/ceph/ceph_02_deployment/"><span class="paginator-prev__text">Ceph 02 deployment on Kubernetes</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-number">1.</span> <span class="toc-text">
+          Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-Greenplum-Operator-for-Kubernetes"><span class="toc-number">2.</span> <span class="toc-text">
+          Install Greenplum Operator for Kubernetes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Create-Local-Persistent-Volumes-for-Greenplum"><span class="toc-number">3.</span> <span class="toc-text">
+          Create Local Persistent Volumes for Greenplum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy-a-greenplum-cluster"><span class="toc-number">4.</span> <span class="toc-text">
+          Deploy a greenplum cluster</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy-multiple-greenplum-cluster"><span class="toc-number">5.</span> <span class="toc-text">
+          Deploy multiple greenplum cluster</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test-whether-the-Greenplum-Cluster-deployment-is-successful"><span class="toc-number">6.</span> <span class="toc-text">
+          Test whether the Greenplum Cluster deployment is successful</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Delete-a-greenplum-cluster-and-uninstall-pivotal-greenplum-for-kubernetes"><span class="toc-number">7.</span> <span class="toc-text">
+          Delete a greenplum cluster and uninstall pivotal greenplum for kubernetes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Delete-a-greenplum-cluster"><span class="toc-number">7.1.</span> <span class="toc-text">
+          Delete a greenplum cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Delete-greenplum-persistent-volume-claims"><span class="toc-number">7.2.</span> <span class="toc-text">
+          Delete greenplum persistent volume claims</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Uninstall-pivotal-greenplum-for-kubernetes"><span class="toc-number">7.3.</span> <span class="toc-text">
+          Uninstall pivotal greenplum for kubernetes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">8.</span> <span class="toc-text">
+          FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除greenplum集群脚本"><span class="toc-number">9.</span> <span class="toc-text">
+          删除greenplum集群脚本</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

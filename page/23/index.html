@@ -1,0 +1,2798 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://kung-fu-master.github.io/page/23/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/page/23/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/">28 | PV、PVC、StorageClass，这些到底在说啥？</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="PV、PVC、StorageClass，这些到底在说啥？"   >
+          <a href="#PV、PVC、StorageClass，这些到底在说啥？" class="heading-link"><i class="fas fa-link"></i></a>PV、PVC、StorageClass，这些到底在说啥？</h2>
+      <p>在前面的文章中，我重点为你分析了 Kubernetes 的各种编排能力。</p>
+<p>在这些讲解中，你应该已经发现，容器化一个应用比较麻烦的地方，莫过于对其“状态”的管理。而最常见的“状态”，又莫过于存储状态了。</p>
+<p>所以，从今天这篇文章开始，我会通过 <strong>4 篇文章为你剖析 Kubernetes 项目处理容器持久化存储的核心原理</strong>，从而帮助你更好地理解和使用这部分内容。</p>
+<p>首先，我们来回忆一下我在第 19 篇文章《深入理解 StatefulSet（二）：存储状态》中，和你分享 StatefulSet 如何管理存储状态的时候，介绍过的<code>Persistent Volume（PV）和 Persistent Volume Claim（PVC）</code>这套持久化存储体系。</p>
+<p>其中，<strong>PV 描述的，是持久化存储数据卷。</strong>这个 API 对象主要定义的是一个持久化存储在宿主机上的目录，比如一个 NFS 的挂载目录。</p>
+<p>通常情况下，PV 对象是由运维人员事先创建在 Kubernetes 集群里待用的。比如，运维人员可以定义这样一个 NFS 类型的 PV，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.244.1.4
+    path: &quot;/&quot;</code></pre><p>而 <strong>PVC 描述的，则是 Pod 所希望使用的持久化存储的属性。</strong> 比如，Volume 存储的大小、可读写权限等等。</p>
+<p>PVC 对象通常由开发人员创建；或者以 PVC 模板的方式成为 StatefulSet 的一部分，然后由 StatefulSet 控制器负责创建带编号的 PVC。</p>
+<p>比如，开发人员可以声明一个 1 GiB 大小的 PVC，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 1Gi</code></pre><p>而用户创建的 PVC 要真正被容器使用起来，就必须先和某个符合条件的 PV 进行绑定。这里要检查的条件，包括两部分：</p>
+<ul>
+<li>第一个条件，当然是 PV 和 PVC 的 spec 字段。比如，PV 的存储（storage）大小，就必须满足 PVC 的要求。</li>
+<li>而第二个条件，则是 PV 和 PVC 的 storageClassName 字段必须一样。这个机制我会在本篇文章的最后一部分专门介绍。</li>
+</ul>
+<p>在成功地将 PVC 和 PV 进行绑定之后，Pod 就能够像使用 hostPath 等常规类型的 Volume 一样，在自己的 YAML 文件里声明使用这个 PVC 了，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    role: web-frontend
+spec:
+  containers:
+  - name: web
+    image: nginx
+    ports:
+      - name: web
+        containerPort: 80
+    volumeMounts:
+        - name: nfs
+          mountPath: &quot;/usr/share/nginx/html&quot;
+  volumes:
+  - name: nfs
+    persistentVolumeClaim:
+      claimName: nfs</code></pre><p>可以看到，Pod 需要做的，就是在 volumes 字段里声明自己要使用的 PVC 名字。接下来，等这个 Pod 创建之后，kubelet 就会把这个 PVC 所对应的 PV，也就是一个 NFS 类型的 Volume，挂载在这个 Pod 容器内的目录上。</p>
+<p>不难看出，<strong>PVC 和 PV 的设计，其实跟“面向对象”的思想完全一致。</strong></p>
+<p>PVC 可以理解为持久化存储的“接口”，它提供了对某种持久化存储的描述，但不提供具体的实现；而这个持久化存储的实现部分则由 PV 负责完成。</p>
+<p>这样做的好处是，作为应用开发者，我们只需要跟 PVC 这个“接口”打交道，而不必关心具体的实现是 NFS 还是 Ceph。毕竟这些存储相关的知识太专业了，应该交给专业的人去做。</p>
+<p>而在上面的讲述中，<code>其实还有一个比较棘手的情况。</code></p>
+<p>比如，你在创建 Pod 的时候，系统里并没有合适的 PV 跟它定义的 PVC 绑定，也就是说此时容器想要使用的 Volume 不存在。这时候，Pod 的启动就会报错。</p>
+<p>但是，过了一会儿，运维人员也发现了这个情况，所以他赶紧创建了一个对应的 PV。这时候，我们当然希望 Kubernetes 能够再次完成 PVC 和 PV 的绑定操作，从而启动 Pod。</p>
+<p>所以在 Kubernetes 中，实际上存在着一个专门处理持久化存储的控制器，叫作 Volume Controller。这个 Volume Controller 维护着多个控制循环，其中有一个循环，扮演的就是撮合 PV 和 PVC 的“红娘”的角色。它的名字叫作 PersistentVolumeController。</p>
+<p>PersistentVolumeController 会不断地查看当前每一个 PVC，是不是已经处于 Bound（已绑定）状态。如果不是，那它就会遍历所有的、可用的 PV，并尝试将其与这个“单身”的 PVC 进行绑定。这样，Kubernetes 就可以保证用户提交的每一个 PVC，只要有合适的 PV 出现，它就能够很快进入绑定状态，从而结束“单身”之旅。</p>
+<p><strong><code>而所谓将一个 PV 与 PVC 进行“绑定”，其实就是将这个 PV 对象的名字，填在了 PVC 对象的 spec.volumeName 字段上。所以，接下来 Kubernetes 只要获取到这个 PVC 对象，就一定能够找到它所绑定的 PV。</code></strong></p>
+<p>那么，<code>这个 PV 对象，又是如何变成容器里的一个持久化存储的呢？</code></p>
+<p>我在前面讲解容器基础的时候，已经为你详细剖析了容器 Volume 的挂载机制。用一句话总结，<strong>所谓容器的 Volume，其实就是将一个宿主机上的目录，跟一个容器里的目录绑定挂载在了一起</strong>。（你可以借此机会，再回顾一下专栏的第 8 篇文章《白话容器基础（四）：重新认识 Docker 容器》中的相关内容）</p>
+<p><strong>而所谓的“持久化 Volume”，指的就是这个宿主机上的目录，具备“持久性”</strong>。即：<strong><code>这个目录里面的内容，既不会因为容器的删除而被清理掉，也不会跟当前的宿主机绑定。这样，当容器被重启或者在其他节点上重建出来之后，它仍然能够通过挂载这个 Volume，访问到这些内容。</code></strong></p>
+<p>显然，我们前面使用的 hostPath 和 emptyDir 类型的 Volume 并不具备这个特征：它们既有可能被 kubelet 清理掉，也不能被“迁移”到其他节点上。</p>
+<p>所以，大多数情况下，持久化 Volume 的实现，往往依赖于一个远程存储服务，比如：远程文件存储（比如，NFS、GlusterFS）、远程块存储（比如，公有云提供的远程磁盘）等等。</p>
+<p>而 Kubernetes 需要做的工作，就是使用这些存储服务，来为容器准备一个持久化的宿主机目录，以供将来进行绑定挂载时使用。<strong><code>而所谓“持久化”，指的是容器在这个目录里写入的文件，都会保存在远程存储中，从而使得这个目录具备了“持久性”。</code></strong></p>
+<p><strong>这个准备“持久化”宿主机目录的过程，我们可以形象地称为“两阶段处理”</strong>。</p>
+<p>接下来，我通过一个具体的例子为你说明。</p>
+<p>当一个 Pod 调度到一个节点上之后，kubelet 就要负责为这个 Pod 创建它的 Volume 目录。默认情况下，kubelet 为 Volume 创建的目录是如下所示的一个宿主机上的路径：</p>
+<pre><code>/var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;</code></pre><p>接下来，kubelet 要做的操作就取决于你的 Volume 类型了。</p>
+<p>如果你的 Volume 类型是远程块存储，比如 Google Cloud 的 Persistent Disk（GCE 提供的远程磁盘服务），那么 kubelet 就需要先调用 Goolge Cloud 的 API，将它所提供的 Persistent Disk 挂载到 Pod 所在的宿主机上。</p>
+<blockquote>
+<p>备注：你如果不太了解块存储的话，可以直接把它理解为：<strong>一块磁盘。</strong></p>
+</blockquote>
+<p>这相当于执行：</p>
+<pre><code>$ gcloud compute instances attach-disk &lt;虚拟机名字&gt; --disk &lt;远程磁盘名字&gt;</code></pre><p><strong>这一步为虚拟机挂载远程磁盘的操作，对应的正是“两阶段处理”的第一阶段。在 Kubernetes 中，我们把这个阶段称为 Attach。</strong></p>
+<p>Attach 阶段完成后，为了能够使用这个远程磁盘，kubelet 还要进行第二个操作，即：格式化这个磁盘设备，然后将它挂载到宿主机指定的挂载点上。不难理解，这个挂载点，正是我在前面反复提到的 Volume 的宿主机目录。所以，这一步相当于执行：</p>
+<pre><code># 通过lsblk命令获取磁盘设备ID
+$ sudo lsblk
+# 格式化成ext4格式
+$ sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/&lt;磁盘设备ID&gt;
+# 挂载到挂载点
+$ sudo mkdir -p /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;</code></pre><p><strong>这个将磁盘设备格式化并挂载到 Volume 宿主机目录的操作，对应的正是“两阶段处理”的第二个阶段，我们一般称为：Mount。</strong></p>
+<p>Mount 阶段完成后，这个 Volume 的宿主机目录就是一个“持久化”的目录了，容器在它里面写入的内容，会保存在 Google Cloud 的远程磁盘中。</p>
+<p>而如果你的 Volume 类型是远程文件存储（比如 NFS）的话，kubelet 的处理过程就会更简单一些。</p>
+<p>因为在这种情况下，kubelet 可以跳过“第一阶段”（Attach）的操作，这是因为一般来说，远程文件存储并没有一个“存储设备”需要挂载在宿主机上。</p>
+<p>所以，kubelet 会直接从“第二阶段”（Mount）开始准备宿主机上的 Volume 目录。</p>
+<p>在这一步，kubelet 需要作为 client，将远端 NFS 服务器的目录（比如：“/”目录），挂载到 Volume 的宿主机目录上，即相当于执行如下所示的命令：</p>
+<pre><code>$ mount -t nfs &lt;NFS服务器地址&gt;:/ /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt; </code></pre><p>通过这个挂载操作，Volume 的宿主机目录就成为了一个远程 NFS 目录的挂载点，后面你在这个目录里写入的所有文件，都会被保存在远程 NFS 服务器上。所以，我们也就完成了对这个 Volume 宿主机目录的“持久化”。</p>
+<p><strong>到这里，你可能会有疑问，Kubernetes 又是如何定义和区分这两个阶段的呢？</strong></p>
+<p>其实很简单，在具体的 Volume 插件的实现接口上，Kubernetes 分别给这两个阶段提供了两种不同的参数列表：</p>
+<ul>
+<li>对于“第一阶段”（Attach），Kubernetes 提供的可用参数是 nodeName，即宿主机的名字。</li>
+<li>而对于“第二阶段”（Mount），Kubernetes 提供的可用参数是 dir，即 Volume 的宿主机目录。</li>
+</ul>
+<p>所以，作为一个存储插件，你只需要根据自己的需求进行选择和实现即可。在后面关于编写存储插件的文章中，我会对这个过程做深入讲解。</p>
+<p>而经过了“两阶段处理”，我们就得到了一个“持久化”的 Volume 宿主机目录。所以，接下来，kubelet 只要把这个 Volume 目录通过 CRI 里的 Mounts 参数，传递给 Docker，然后就可以为 Pod 里的容器挂载这个“持久化”的 Volume 了。其实，这一步相当于执行了如下所示的命令：</p>
+<pre><code>$ docker run -v /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;:/&lt;容器内的目标目录&gt; 我的镜像 ...</code></pre><p>以上，就是 Kubernetes 处理 PV 的具体原理了。</p>
+<blockquote>
+<p>备注：对应地，在删除一个 PV 的时候，Kubernetes 也需要 Unmount 和 Dettach 两个阶段来处理。这个过程我就不再详细介绍了，执行“反向操作”即可。</p>
+</blockquote>
+<p>实际上，你可能已经发现，这个 PV 的处理流程似乎跟 Pod 以及容器的启动流程没有太多的耦合，只要 kubelet 在向 Docker 发起 CRI 请求之前，确保“持久化”的宿主机目录已经处理完毕即可。</p>
+<p>所以，在 Kubernetes 中，上述<strong>关于 PV 的“两阶段处理”流程，是靠独立于 kubelet 主控制循环（Kubelet Sync Loop）之外的两个控制循环来实现的。</strong></p>
+<p>其中，“第一阶段”的 Attach（以及 Dettach）操作，是由 Volume Controller 负责维护的，这个控制循环的名字叫作： <strong>AttachDetachController</strong>。而它的作用，就是不断地检查每一个 Pod 对应的 PV，和这个 Pod 所在宿主机之间挂载情况。从而决定，是否需要对这个 PV 进行 Attach（或者 Dettach）操作。</p>
+<p>需要注意，作为一个 Kubernetes 内置的控制器，Volume Controller 自然是 kube-controller-manager 的一部分。所以，AttachDetachController 也一定是运行在 Master 节点上的。当然，Attach 操作只需要调用公有云或者具体存储项目的 API，并不需要在具体的宿主机上执行操作，所以这个设计没有任何问题。</p>
+<p>而“第二阶段”的 Mount（以及 Unmount）操作，必须发生在 Pod 对应的宿主机上，所以它必须是 kubelet 组件的一部分。这个控制循环的名字，叫作： <strong>VolumeManagerReconciler</strong>，它运行起来之后，是一个独立于 kubelet 主循环的 Goroutine。</p>
+<p>通过这样将 Volume 的处理同 kubelet 的主循环解耦，Kubernetes 就避免了这些耗时的远程挂载操作拖慢 kubelet 的主控制循环，进而导致 Pod 的创建效率大幅下降的问题。实际上，<strong>kubelet 的一个主要设计原则，就是它的主控制循环绝对不可以被 block</strong>。这个思想，我在后续的讲述容器运行时的时候还会提到。</p>
+<p><code>在了解了 Kubernetes 的 Volume 处理机制之后，我再来为你介绍这个体系里最后一个重要概念：StorageClass。</code></p>
+<p>我在前面介绍 PV 和 PVC 的时候，曾经提到过，PV 这个对象的创建，是由运维人员完成的。但是，在大规模的生产环境里，这其实是一个非常麻烦的工作。</p>
+<p>这是因为，一个大规模的 Kubernetes 集群里很可能有成千上万个 PVC，这就意味着运维人员必须得事先创建出成千上万个 PV。更麻烦的是，随着新的 PVC 不断被提交，运维人员就不得不继续添加新的、能满足条件的 PV，否则新的 Pod 就会因为 PVC 绑定不到 PV 而失败。在实际操作中，这几乎没办法靠人工做到。</p>
+<p>所以，Kubernetes 为我们提供了一套可以自动创建 PV 的机制，即：Dynamic Provisioning。</p>
+<p>相比之下，前面人工管理 PV 的方式就叫作 Static Provisioning。</p>
+<p>Dynamic Provisioning 机制工作的核心，在于一个名叫 StorageClass 的 API 对象。</p>
+<p><strong>而 StorageClass 对象的作用，其实就是创建 PV 的模板。</strong></p>
+<p>具体地说，StorageClass 对象会定义如下两个部分内容：</p>
+<ul>
+<li>第一，PV 的属性。比如，存储类型、Volume 的大小等等。</li>
+<li>第二，创建这种 PV 需要用到的存储插件。比如，Ceph 等等。</li>
+</ul>
+<p>有了这样两个信息之后，Kubernetes 就能够根据用户提交的 PVC，找到一个对应的 StorageClass 了。然后，Kubernetes 就会调用该 StorageClass 声明的存储插件，创建出需要的 PV。</p>
+<p>举个例子，假如我们的 Volume 的类型是 GCE 的 Persistent Disk 的话，运维人员就需要定义一个如下所示的 StorageClass：</p>
+<pre><code>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: block-service
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd</code></pre><p>在这个 YAML 文件里，我们定义了一个名叫 block-service 的 StorageClass。</p>
+<p>这个 StorageClass 的 provisioner 字段的值是：kubernetes.io/gce-pd，这正是 Kubernetes 内置的 GCE PD 存储插件的名字。</p>
+<p>而这个 StorageClass 的 parameters 字段，就是 PV 的参数。比如：上面例子里的 type=pd-ssd，指的是这个 PV 的类型是“SSD 格式的 GCE 远程磁盘”。</p>
+<p>需要注意的是，由于需要使用 GCE Persistent Disk，上面这个例子只有在 GCE 提供的 Kubernetes 服务里才能实践。如果你想使用我们之前部署在本地的 Kubernetes 集群以及 Rook 存储服务的话，你的 StorageClass 需要使用如下所示的 YAML 文件来定义：</p>
+<pre><code>apiVersion: ceph.rook.io/v1beta1
+kind: Pool
+metadata:
+  name: replicapool
+  namespace: rook-ceph
+spec:
+  replicated:
+    size: 3
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: block-service
+provisioner: ceph.rook.io/block
+parameters:
+  pool: replicapool
+  #The value of &quot;clusterNamespace&quot; MUST be the same as the one in which your rook cluster exist
+  clusterNamespace: rook-ceph</code></pre><p>在这个 YAML 文件中，我们定义的还是一个名叫 block-service 的 StorageClass，只不过它声明使的存储插件是由 Rook 项目。</p>
+<p>有了 StorageClass 的 YAML 文件之后，运维人员就可以在 Kubernetes 里创建这个 StorageClass 了：</p>
+<pre><code>$ kubectl create -f sc.yaml</code></pre><p>这时候，作为应用开发者，我们只需要在 PVC 里指定要使用的 StorageClass 名字即可，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: block-service
+  resources:
+    requests:
+      storage: 30Gi</code></pre><p>可以看到，我们在这个 PVC 里添加了一个叫作 storageClassName 的字段，用于指定该 PVC 所要使用的 StorageClass 的名字是：block-service。</p>
+<p>以 Google Cloud 为例。</p>
+<p>当我们通过 kubectl create 创建上述 PVC 对象之后，Kubernetes 就会调用 Google Cloud 的 API，创建出一块 SSD 格式的 Persistent Disk。然后，再使用这个 Persistent Disk 的信息，自动创建出一个对应的 PV 对象。</p>
+<p>我们可以一起来实践一下这个过程（如果使用 Rook 的话下面的流程也是一样的，只不过 Rook 创建出的是 Ceph 类型的 PV）：</p>
+<pre><code>$ kubectl create -f pvc.yaml</code></pre><p>可以看到，我们创建的 PVC 会绑定一个 Kubernetes 自动创建的 PV，如下所示：</p>
+<pre><code>$ kubectl describe pvc claim1
+Name:           claim1
+Namespace:      default
+StorageClass:   block-service
+Status:         Bound
+Volume:         pvc-e5578707-c626-11e6-baf6-08002729a32b
+Labels:         &lt;none&gt;
+Capacity:       30Gi
+Access Modes:   RWO
+No Events.</code></pre><p>而且，通过查看这个自动创建的 PV 的属性，你就可以看到它跟我们在 PVC 里声明的存储的属性是一致的，如下所示：</p>
+<pre><code>$ kubectl describe pv pvc-e5578707-c626-11e6-baf6-08002729a32b
+Name:            pvc-e5578707-c626-11e6-baf6-08002729a32b
+Labels:          &lt;none&gt;
+StorageClass:    block-service
+Status:          Bound
+Claim:           default/claim1
+Reclaim Policy:  Delete
+Access Modes:    RWO
+Capacity:        30Gi
+...
+No events.</code></pre><p>此外，你还可以看到，这个自动创建出来的 PV 的 StorageClass 字段的值，也是 block-service。<strong><code>这是因为，Kubernetes 只会将 StorageClass 相同的 PVC 和 PV 绑定起来。</code></strong></p>
+<p>有了 Dynamic Provisioning 机制，运维人员只需要在 Kubernetes 集群里创建出数量有限的 StorageClass 对象就可以了。这就好比，运维人员在 Kubernetes 集群里创建出了各种各样的 PV 模板。这时候，当开发人员提交了包含 StorageClass 字段的 PVC 之后，Kubernetes 就会根据这个 StorageClass 创建出对应的 PV。</p>
+<blockquote>
+<p><span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/concepts/storage/storage-classes/#provisioner"  target="_blank" rel="noopener">Kubernetes 的官方文档</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>里已经列出了默认支持 Dynamic Provisioning 的内置存储插件。而对于不在文档里的插件，比如 NFS，或者其他非内置存储插件，你其实可以通过<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes-incubator/external-storage"  target="_blank" rel="noopener">kubernetes-incubator/external-storage</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>这个库来自己编写一个外部插件完成这个工作。像我们之前部署的 Rook，已经内置了 external-storage 的实现，所以 Rook 是完全支持 Dynamic Provisioning 特性的。</p>
+</blockquote>
+<p><strong>例子:</strong><br><span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/concepts/storage/storage-classes/#local"  target="_blank" rel="noopener">Local StorageClass</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>: </p>
+<pre><code>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer</code></pre><p>Local volumes do not currently support dynamic provisioning, however a StorageClass should still be created to delay volume binding until Pod scheduling. This is specified by the WaitForFirstConsumer volume binding mode.</p>
+<p>Delaying volume binding allows the scheduler to consider all of a Pod’s scheduling constraints when choosing an appropriate PersistentVolume for a PersistentVolumeClaim.</p>
+<p>需要注意的是，<strong>StorageClass 并不是专门为了 Dynamic Provisioning 而设计的。</strong></p>
+<p>比如，在本篇一开始的例子里，我在 PV 和 PVC 里都声明了 storageClassName=manual。而我的集群里，实际上并没有一个名叫 manual 的 StorageClass 对象。这完全没有问题，这个时候 Kubernetes 进行的是 Static Provisioning，但在做绑定决策的时候，它依然会考虑 PV 和 PVC 的 StorageClass 定义。</p>
+<p>而这么做的好处也很明显：这个 PVC 和 PV 的绑定关系，就完全在我自己的掌控之中。</p>
+<p>这里，你可能会有疑问，我在之前讲解 StatefulSet 存储状态的例子时，好像并没有声明 StorageClass 啊？</p>
+<p>实际上，<strong>如果你的集群已经开启了名叫 DefaultStorageClass 的 Admission Plugin，它就会为 PVC 和 PV 自动添加一个默认的 StorageClass；否则，PVC 的 storageClassName 的值就是“”，这也意味着它只能够跟 storageClassName 也是“”的 PV 进行绑定。</strong></p>
+<p><strong>总结</strong></p>
+<p>在今天的分享中，我为你详细解释了 PVC 和 PV 的设计与实现原理，并为你阐述了 StorageClass 到底是干什么用的。这些概念之间的关系，可以用如下所示的一幅示意图描述：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      </p>
+<p>从图中我们可以看到，在这个体系中：</p>
+<p>PVC 描述的，是 Pod 想要使用的持久化存储的属性，比如存储的大小、读写权限等。</p>
+<p>PV 描述的，则是一个具体的 Volume 的属性，比如 Volume 的类型、挂载目录、远程存储服务器地址等。</p>
+<p>而 StorageClass 的作用，则是充当 PV 的模板。并且，只有同属于一个 StorageClass 的 PV 和 PVC，才可以绑定在一起。</p>
+<p>当然，StorageClass 的另一个重要作用，是指定 PV 的 Provisioner（存储插件）。这时候，如果你的存储插件支持 Dynamic Provisioning 的话，Kubernetes 就可以自动为你创建 PV 了。</p>
+<p>基于上述讲述，为了统一概念和方便叙述，在本专栏中，我以后凡是提到“Volume”，指的就是一个远程存储服务挂载在宿主机上的持久化目录；而“PV”，指的是这个 Volume 在 Kubernetes 里的 API 对象。</p>
+<p>需要注意的是，这套容器持久化存储体系，完全是 Kubernetes 项目自己负责管理的，并不依赖于 docker volume 命令和 Docker 的存储插件。当然，这套体系本身就比 docker volume 命令的诞生时间还要早得多。</p>
+<p><strong>容器持久化存储涉及的概念比较多，试着总结一下整体流程:</strong></p>
+<ol>
+<li>用户提交请求创建pod，Kubernetes发现这个pod声明使用了PVC，那就靠PersistentVolumeController帮它找一个PV配对。</li>
+<li>没有现成的PV，就去找对应的StorageClass，帮它新创建一个PV，然后和PVC完成绑定。</li>
+<li>新创建的PV，还只是一个API 对象，需要经过“两阶段处理”变成宿主机上的“持久化 Volume”才真正有用：<ul>
+<li>第一阶段由运行在master上的AttachDetachController负责，为这个PV完成 Attach 操作，为宿主机挂载远程磁盘；</li>
+<li>第二阶段是运行在每个节点上kubelet组件的内部，把第一步attach的远程磁盘 mount 到宿主机目录。这个控制循环叫VolumeManagerReconciler，运行在独立的Goroutine，不会阻塞kubelet主循环。<br>完成这两步，PV对应的“持久化 Volume”就准备好了，POD可以正常启动，将“持久化 Volume”挂载在容器内指定的路径。</li>
+</ul>
+</li>
+</ol>
+<p><strong>思考题</strong></p>
+<p>在了解了 PV、PVC 的设计和实现原理之后，你是否依然觉得它有“过度设计”的嫌疑？或者，你是否有更加简单、足以解决你 90% 需求的 Volume 的用法？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/30.%E7%BC%96%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AD%98%E5%82%A8%E6%8F%92%E4%BB%B6%EF%BC%9AFlexVolume%E4%B8%8ECSI/">30 | 编写自己的存储插件：FlexVolume与CSI</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.1k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="编写自己的存储插件：FlexVolume与CSI"   >
+          <a href="#编写自己的存储插件：FlexVolume与CSI" class="heading-link"><i class="fas fa-link"></i></a>编写自己的存储插件：FlexVolume与CSI</h2>
+      <p>在上一篇文章中，我为你详细介绍了 Kubernetes 里的持久化存储体系，讲解了 PV 和 PVC 的具体实现原理，并提到了这样的设计实际上是出于对整个存储体系的可扩展性的考虑。</p>
+<p>而在今天这篇文章中，我就和你分享一下如何借助这些机制，来开发自己的存储插件。</p>
+<p>在 Kubernetes 中，存储插件的开发有两种方式：FlexVolume 和 CSI。</p>
+<p>接下来，我就先为你剖析一下 <code>Flexvolume 的原理和使用方法</code>。</p>
+<p>举个例子，现在我们要编写的是一个使用 NFS 实现的 FlexVolume 插件。</p>
+<p>对于一个 FlexVolume 类型的 PV 来说，它的 YAML 文件如下所示：</p>
+<pre><code>apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-flex-nfs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  flexVolume:
+    driver: &quot;k8s/nfs&quot;
+    fsType: &quot;nfs&quot;
+    options:
+      server: &quot;10.10.0.25&quot; # 改成你自己的NFS服务器地址
+      share: &quot;export&quot;</code></pre><p>可以看到，这个 PV 定义的 Volume 类型是 flexVolume。并且，我们指定了这个 Volume 的 driver 叫作 k8s/nfs。这个名字很重要，我后面马上会为你解释它的含义。</p>
+<p>而 Volume 的 options 字段，则是一个自定义字段。也就是说，它的类型，其实是 map[string]string。所以，你可以在这一部分自由地加上你想要定义的参数。</p>
+<p>在我们这个例子里，options 字段指定了 NFS 服务器的地址（server: “10.10.0.25”），以及 NFS 共享目录的名字（share: “export”）。当然，你这里定义的所有参数，后面都会被 FlexVolume 拿到。</p>
+<blockquote>
+<p>备注：你可以使用这个 <span class="exturl"><a class="exturl__link"   href="https://github.com/ehough/docker-nfs-server"  target="_blank" rel="noopener">Docker 镜像</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>轻松地部署一个试验用的 NFS 服务器。</p>
+</blockquote>
+<p>像这样的一个 PV 被创建后，一旦和某个 PVC 绑定起来，这个 FlexVolume 类型的 Volume 就会进入到我们前面讲解过的 Volume 处理流程。</p>
+<p>你应该还记得，这个流程的名字叫作“两阶段处理”，即“Attach 阶段”和“Mount 阶段”。它们的主要作用，是在 Pod 所绑定的宿主机上，完成这个 Volume 目录的持久化过程，比如为虚拟机挂载磁盘（Attach），或者挂载一个 NFS 的共享目录（Mount）。</p>
+<blockquote>
+<p>备注：你可以再回顾一下第 28 篇文章《PV、PVC、StorageClass，这些到底在说啥？》中的相关内容。</p>
+</blockquote>
+<p>而在具体的控制循环中，这两个操作实际上调用的，正是 Kubernetes 的 pkg/volume 目录下的存储插件（Volume Plugin）。在我们这个例子里，就是 pkg/volume/flexvolume 这个目录里的代码。</p>
+<p>当然了，这个目录其实只是 FlexVolume 插件的入口。以“Mount 阶段”为例，在 FlexVolume 目录里，它的处理过程非常简单，如下所示：</p>
+<pre><code>// SetUpAt creates new directory.
+func (f *flexVolumeMounter) SetUpAt(dir string, fsGroup *int64) error {
+  ...
+  call := f.plugin.NewDriverCall(mountCmd)
+
+  // Interface parameters
+  call.Append(dir)
+
+  extraOptions := make(map[string]string)
+
+  // pod metadata
+  extraOptions[optionKeyPodName] = f.podName
+  extraOptions[optionKeyPodNamespace] = f.podNamespace
+
+  ...
+
+  call.AppendSpec(f.spec, f.plugin.host, extraOptions)
+
+  _, err = call.Run()
+
+  ...
+
+  return nil
+}</code></pre><p>上面这个名叫 SetUpAt() 的方法，正是 FlexVolume 插件对“Mount 阶段”的实现位置。而 SetUpAt() 实际上只做了一件事，那就是封装出了一行命令（即：NewDriverCall），由 kubelet 在“Mount 阶段”去执行。</p>
+<p>在我们这个例子中，<strong>kubelet 要通过插件在宿主机上执行的命令，如下所示：</strong></p>
+<pre><code>/usr/libexec/kubernetes/kubelet-plugins/volume/exec/k8s~nfs/nfs mount &lt;mount dir&gt; &lt;json param&gt;</code></pre><p>其中，/usr/libexec/kubernetes/kubelet-plugins/volume/exec/k8s~nfs/nfs 就是插件的可执行文件的路径。这个名叫 nfs 的文件，正是你要编写的插件的实现。它可以是一个二进制文件，也可以是一个脚本。总之，只要能在宿主机上被执行起来即可。</p>
+<p>而且这个路径里的 k8s~nfs 部分，正是这个插件在 Kubernetes 里的名字。它是从 driver=”k8s/nfs”字段解析出来的。</p>
+<p>这个 driver 字段的格式是：vendor/driver。比如，一家存储插件的提供商（vendor）的名字叫作 k8s，提供的存储驱动（driver）是 nfs，那么 Kubernetes 就会使用 k8s~nfs 来作为插件名。</p>
+<p>所以说，<strong>当你编写完了 FlexVolume 的实现之后，一定要把它的可执行文件放在每个节点的插件目录下。</strong></p>
+<p>而紧跟在可执行文件后面的“mount”参数，定义的就是当前的操作。在 FlexVolume 里，这些操作参数的名字是固定的，比如 init、mount、unmount、attach，以及 dettach 等等，分别对应不同的 Volume 处理操作。</p>
+<p>而跟在 mount 参数后面的两个字段：<mount dir>和<json params>，则是 FlexVolume 必须提供给这条命令的两个执行参数。</p>
+<p>其中第一个执行参数<mount dir>，正是 kubelet 调用 SetUpAt() 方法传递来的 dir 的值。它代表的是当前正在处理的 Volume 在宿主机上的目录。在我们的例子里，这个路径如下所示：</p>
+<pre><code>/var/lib/kubelet/pods/&lt;Pod ID&gt;/volumes/k8s~nfs/test</code></pre><p>其中，test 正是我们前面定义的 PV 的名字；而 k8s~nfs，则是插件的名字。可以看到，插件的名字正是从你声明的 driver=”k8s/nfs”字段里解析出来的。</p>
+<p>而第二个执行参数<json params>，则是一个 JSON Map 格式的参数列表。我们在前面 PV 里定义的 options 字段的值，都会被追加在这个参数里。此外，在 SetUpAt() 方法里可以看到，这个参数列表里还包括了 Pod 的名字、Namespace 等元数据（Metadata）。</p>
+<p>在明白了存储插件的调用方式和参数列表之后，<code>这个插件的可执行文件的实现部分</code>就非常容易理解了。</p>
+<p>在这个例子中，我直接编写了一个简单的 shell 脚本来作为插件的实现，它对“Mount 阶段”的处理过程，如下所示：</p>
+<pre><code>domount() {
+ MNTPATH=$1
+
+ NFS_SERVER=$(echo $2 | jq -r &apos;.server&apos;)
+ SHARE=$(echo $2 | jq -r &apos;.share&apos;)
+
+ ...
+
+ mkdir -p ${MNTPATH} &amp;&gt; /dev/null
+
+ mount -t nfs ${NFS_SERVER}:/${SHARE} ${MNTPATH} &amp;&gt; /dev/null
+ if [ $? -ne 0 ]; then
+  err &quot;{ \&quot;status\&quot;: \&quot;Failure\&quot;, \&quot;message\&quot;: \&quot;Failed to mount ${NFS_SERVER}:${SHARE} at ${MNTPATH}\&quot;}&quot;
+  exit 1
+ fi
+ log &apos;{&quot;status&quot;: &quot;Success&quot;}&apos;
+ exit 0
+}</code></pre><p>可以看到，当 kubelet 在宿主机上执行“nfs mount <mount dir> <json params>”的时候，这个名叫 nfs 的脚本，就可以直接从<mount dir>参数里拿到 Volume 在宿主机上的目录，即：MNTPATH=$1。而你在 PV 的 options 字段里定义的 NFS 的服务器地址（options.server）和共享目录名字（options.share），则可以从第二个<json params>参数里解析出来。这里，我们使用了 jq 命令，来进行解析工作。</p>
+<p>有了这三个参数之后，这个脚本最关键的一步，当然就是执行：mount -t nfs ${NFS_SERVER}:/${SHARE} ${MNTPATH} 。这样，一个 NFS 的数据卷就被挂载到了 MNTPATH，也就是 Volume 所在的宿主机目录上，一个持久化的 Volume 目录就处理完了。</p>
+<p>需要注意的是，当这个 mount -t nfs 操作完成后，你必须把一个 JOSN 格式的字符串，比如：{“status”: “Success”}，返回给调用者，也就是 kubelet。这是 kubelet 判断这次调用是否成功的唯一依据。</p>
+<p>综上所述，在“Mount 阶段”，kubelet 的 VolumeManagerReconcile 控制循环里的一次“调谐”操作的执行流程，如下所示：</p>
+<pre><code>kubelet --&gt; pkg/volume/flexvolume.SetUpAt() --&gt; /usr/libexec/kubernetes/kubelet-plugins/volume/exec/k8s~nfs/nfs mount &lt;mount dir&gt; &lt;json param&gt;</code></pre><blockquote>
+<p>备注：这个 NFS 的 FlexVolume 的完整实现，在<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes/examples/blob/master/staging/volumes/flexvolume/nfs"  target="_blank" rel="noopener">这个 GitHub 库</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>里。而你如果想用 Go 语言编写 FlexVolume 的话，我也有一个<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes/frakti/tree/master/pkg/flexvolume"  target="_blank" rel="noopener">很好的例子</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>供你参考。</p>
+</blockquote>
+<p>当然，在前面文章中我也提到过，像 NFS 这样的文件系统存储，并不需要在宿主机上挂载磁盘或者块设备。所以，我们也就不需要实现 attach 和 dettach 操作了。</p>
+<p>不过，<strong>像这样的 FlexVolume 实现方式，虽然简单，但局限性却很大。</strong></p>
+<p>比如，跟 Kubernetes 内置的 NFS 插件类似，这个 NFS FlexVolume 插件，也不能支持 Dynamic Provisioning（即：为每个 PVC 自动创建 PV 和对应的 Volume）。除非你再为它编写一个专门的 External Provisioner。</p>
+<p>再比如，我的插件在执行 mount 操作的时候，可能会生成一些挂载信息。这些信息，在后面执行 unmount 操作的时候会被用到。可是，在上述 FlexVolume 的实现里，你没办法把这些信息保存在一个变量里，等到 unmount 的时候直接使用。</p>
+<p>这个原因也很容易理解：<strong>FlexVolume 每一次对插件可执行文件的调用，都是一次完全独立的操作</strong>。所以，我们只能把这些信息写在一个宿主机上的临时文件里，等到 unmount 的时候再去读取。</p>
+<p>这也是为什么，我们需要有 Container Storage Interface（CSI）这样更完善、更编程友好的插件方式。</p>
+<p>接下来，我就来为你讲解一下开发存储插件的第二种方式 CSI。我们先来看一下<strong><code>CSI 插件体系的设计原理。</code></strong></p>
+<p>其实，通过前面对 FlexVolume 的讲述，你应该可以明白，默认情况下，Kubernetes 里通过存储插件管理容器持久化存储的原理，可以用如下所示的示意图来描述：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      </p>
+<p>可以看到，在上述体系下，无论是 FlexVolume，还是 Kubernetes 内置的其他存储插件，它们实际上担任的角色，仅仅是 Volume 管理中的“Attach 阶段”和“Mount 阶段”的具体执行者。而像 Dynamic Provisioning 这样的功能，就不是存储插件的责任，而是 Kubernetes 本身存储管理功能的一部分。</p>
+<p>相比之下，<strong><code>CSI 插件体系的设计思想，就是把这个 Provision 阶段，以及 Kubernetes 里的一部分存储管理功能，从主干代码里剥离出来，做成了几个单独的组件。</code></strong>这些组件会通过 Watch API 监听 Kubernetes 里与存储相关的事件变化，比如 PVC 的创建，来执行具体的存储管理动作。</p>
+<p>而这些管理动作，比如“Attach 阶段”和“Mount 阶段”的具体操作，实际上就是通过调用 CSI 插件来完成的。</p>
+<p>这种设计思路，我可以用如下所示的一幅示意图来表示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.png"  alt="">
+      </p>
+<p>可以看到，这套存储插件体系多了三个独立的外部组件（External Components），即：Driver Registrar、External Provisioner 和 External Attacher，对应的正是从 Kubernetes 项目里面剥离出来的那部分存储管理功能。</p>
+<p>需要注意的是，External Components 虽然是外部组件，但依然由 Kubernetes 社区来开发和维护。</p>
+<p>而图中最右侧的部分，就是需要我们编写代码来实现的 CSI 插件。一个 CSI 插件只有一个二进制文件，但它会以 gRPC 的方式对外提供三个服务（gRPC Service），分别叫作：CSI Identity、CSI Controller 和 CSI Node。</p>
+<p><strong><code>我先来为你讲解一下这三个 External Components。</code></strong></p>
+<p>其中，<strong>Driver Registrar 组件，负责将插件注册到 kubelet 里面</strong>（这可以类比为，将可执行文件放在插件目录下）。而在具体实现上，Driver Registrar 需要请求 CSI 插件的 Identity 服务来获取插件信息。</p>
+<p>而 <strong>External Provisioner 组件，负责的正是 Provision 阶段。</strong>在具体实现上，External Provisioner 监听（Watch）了 APIServer 里的 PVC 对象。当一个 PVC 被创建时，它就会调用 CSI Controller 的 CreateVolume 方法，为你创建对应 PV。</p>
+<p>此外，如果你使用的存储是公有云提供的磁盘（或者块设备）的话，这一步就需要调用公有云（或者块设备服务）的 API 来创建这个 PV 所描述的磁盘（或者块设备）了。</p>
+<p>不过，由于 CSI 插件是独立于 Kubernetes 之外的，所以在 CSI 的 API 里不会直接使用 Kubernetes 定义的 PV 类型，而是会自己定义一个单独的 Volume 类型。</p>
+<p><strong>为了方便叙述，在本专栏里，我会把 Kubernetes 里的持久化卷类型叫作 PV，把 CSI 里的持久化卷类型叫作 CSI Volume，请你务必区分清楚。</strong></p>
+<p>最后一个 <strong>External Attacher 组件，负责的正是“Attach 阶段”。</strong>在具体实现上，它监听了 APIServer 里 VolumeAttachment 对象的变化。VolumeAttachment 对象是 Kubernetes 确认一个 Volume 可以进入“Attach 阶段”的重要标志，我会在下一篇文章里为你详细讲解。</p>
+<p>一旦出现了 VolumeAttachment 对象，External Attacher 就会调用 CSI Controller 服务的 ControllerPublish 方法，完成它所对应的 Volume 的 Attach 阶段。</p>
+<p>而 Volume 的“Mount 阶段”，并不属于 External Components 的职责。当 kubelet 的 VolumeManagerReconciler 控制循环检查到它需要执行 Mount 操作的时候，会通过 pkg/volume/csi 包，直接调用 CSI Node 服务完成 Volume 的“Mount 阶段”。</p>
+<p>在实际使用 CSI 插件的时候，我们会将这三个 External Components 作为 sidecar 容器和 CSI 插件放置在同一个 Pod 中。由于 External Components 对 CSI 插件的调用非常频繁，所以这种 sidecar 的部署方式非常高效。</p>
+<p>接下来，<strong><code>我再为你讲解一下 CSI 插件的里三个服务：CSI Identity、CSI Controller 和 CSI Node。</code></strong></p>
+<p>其中，<strong>CSI 插件的 CSI Identity 服务，负责对外暴露这个插件本身的信息</strong>，如下所示：</p>
+<pre><code>service Identity {
+  // return the version and name of the plugin
+  rpc GetPluginInfo(GetPluginInfoRequest)
+    returns (GetPluginInfoResponse) {}
+  // reports whether the plugin has the ability of serving the Controller interface
+  rpc GetPluginCapabilities(GetPluginCapabilitiesRequest)
+    returns (GetPluginCapabilitiesResponse) {}
+  // called by the CO just to check whether the plugin is running or not
+  rpc Probe (ProbeRequest)
+    returns (ProbeResponse) {}
+}</code></pre><p>而 <strong>CSI Controller 服务，定义的则是对 CSI Volume（对应 Kubernetes 里的 PV）的管理接口</strong>，比如：创建和删除 CSI Volume、对 CSI Volume 进行 Attach/Dettach（在 CSI 里，这个操作被叫作 Publish/Unpublish），以及对 CSI Volume 进行 Snapshot 等，它们的接口定义如下所示：</p>
+<pre><code>service Controller {
+  // provisions a volume
+  rpc CreateVolume (CreateVolumeRequest)
+    returns (CreateVolumeResponse) {}
+
+  // deletes a previously provisioned volume
+  rpc DeleteVolume (DeleteVolumeRequest)
+    returns (DeleteVolumeResponse) {}
+
+  // make a volume available on some required node
+  rpc ControllerPublishVolume (ControllerPublishVolumeRequest)
+    returns (ControllerPublishVolumeResponse) {}
+
+  // make a volume un-available on some required node
+  rpc ControllerUnpublishVolume (ControllerUnpublishVolumeRequest)
+    returns (ControllerUnpublishVolumeResponse) {}
+
+  ...
+
+  // make a snapshot
+  rpc CreateSnapshot (CreateSnapshotRequest)
+    returns (CreateSnapshotResponse) {}
+
+  // Delete a given snapshot
+  rpc DeleteSnapshot (DeleteSnapshotRequest)
+    returns (DeleteSnapshotResponse) {}
+
+  ...
+}</code></pre><p>不难发现，CSI Controller 服务里定义的这些操作有个共同特点，那就是它们都无需在宿主机上进行，而是属于 Kubernetes 里 Volume Controller 的逻辑，也就是属于 Master 节点的一部分。</p>
+<p>需要注意的是，正如我在前面提到的那样，CSI Controller 服务的实际调用者，并不是 Kubernetes（即：通过 pkg/volume/csi 发起 CSI 请求），而是 External Provisioner 和 External Attacher。这两个 External Components，分别通过监听 PVC 和 VolumeAttachement 对象，来跟 Kubernetes 进行协作。</p>
+<p>而 CSI Volume 需要在宿主机上执行的操作，都定义在了 CSI Node 服务里面，如下所示：</p>
+<pre><code>service Node {
+  // temporarily mount the volume to a staging path
+  rpc NodeStageVolume (NodeStageVolumeRequest)
+    returns (NodeStageVolumeResponse) {}
+
+  // unmount the volume from staging path
+  rpc NodeUnstageVolume (NodeUnstageVolumeRequest)
+    returns (NodeUnstageVolumeResponse) {}
+
+  // mount the volume from staging to target path
+  rpc NodePublishVolume (NodePublishVolumeRequest)
+    returns (NodePublishVolumeResponse) {}
+
+  // unmount the volume from staging path
+  rpc NodeUnpublishVolume (NodeUnpublishVolumeRequest)
+    returns (NodeUnpublishVolumeResponse) {}
+
+  // stats for the volume
+  rpc NodeGetVolumeStats (NodeGetVolumeStatsRequest)
+    returns (NodeGetVolumeStatsResponse) {}
+
+  ...
+
+  // Similar to NodeGetId
+  rpc NodeGetInfo (NodeGetInfoRequest)
+    returns (NodeGetInfoResponse) {}
+}</code></pre><p>需要注意的是，“Mount 阶段”在 CSI Node 里的接口，是由 NodeStageVolume 和 NodePublishVolume 两个接口共同实现的。我会在下一篇文章中，为你详细介绍这个设计的目的和具体的实现方式。</p>
+<p><strong>总结</strong></p>
+<p>在本篇文章里，我为你详细讲解了 FlexVolume 和 CSI 这两种自定义存储插件的工作原理。</p>
+<p>可以看到，相比于 FlexVolume，CSI 的设计思想，把插件的职责从“两阶段处理”，扩展成了 Provision、Attach 和 Mount 三个阶段。其中，Provision 等价于“创建磁盘”，Attach 等价于“挂载磁盘到虚拟机”，Mount 等价于“将该磁盘格式化后，挂载在 Volume 的宿主机目录上”。</p>
+<p>在有了 CSI 插件之后，Kubernetes 本身依然按照我在第 28 篇文章《PV、PVC、StorageClass，这些到底在说啥？》中所讲述的方式工作，唯一区别在于：</p>
+<ul>
+<li><p>当 AttachDetachController 需要进行“Attach”操作时（“Attach 阶段”），它实际上会执行到 pkg/volume/csi 目录中，创建一个 VolumeAttachment 对象，从而触发 External Attacher 调用 CSI Controller 服务的 ControllerPublishVolume 方法。</p>
+</li>
+<li><p>当 VolumeManagerReconciler 需要进行“Mount”操作时（“Mount 阶段”），它实际上也会执行到 pkg/volume/csi 目录中，直接向 CSI Node 服务发起调用 NodePublishVolume 方法的请求。</p>
+</li>
+</ul>
+<p>以上，就是 CSI 插件最基本的工作原理了。</p>
+<p>在下一篇文章里，我会和你一起实践一个 CSI 存储插件的完整实现过程。</p>
+<p><strong>思考题</strong></p>
+<p>假设现在，你的宿主机是阿里云的一台虚拟机，你要实现的容器持久化存储，是基于阿里云提供的云盘。你能准确地描述出，在 Provision、Attach 和 Mount 阶段，CSI 插件都需要做哪些操作吗？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/">29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.4k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="PV、PVC体系是不是多此一举？从本地持久化卷谈起"   >
+          <a href="#PV、PVC体系是不是多此一举？从本地持久化卷谈起" class="heading-link"><i class="fas fa-link"></i></a>PV、PVC体系是不是多此一举？从本地持久化卷谈起</h2>
+      <p>在上一篇文章中，我为你详细讲解了 PV、PVC 持久化存储体系在 Kubernetes 项目中的设计和实现原理。而在文章最后的思考题中，我为你留下了这样一个讨论话题：像 PV、PVC 这样的用法，是不是有“过度设计”的嫌疑？</p>
+<p>比如，我们公司的运维人员可以像往常一样维护一套 NFS 或者 Ceph 服务器，根本不必学习 Kubernetes。而开发人员，则完全可以靠“复制粘贴”的方式，在 Pod 的 YAML 文件里填上 Volumes 字段，而不需要去使用 PV 和 PVC。</p>
+<p>实际上，如果只是为了职责划分，PV、PVC 体系确实不见得比直接在 Pod 里声明 Volumes 字段有什么优势。</p>
+<p>不过，你有没有想过这样一个问题，如果<span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes"  target="_blank" rel="noopener">Kubernetes 内置的 20 种持久化数据卷实现</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，都没办法满足你的容器存储需求时，该怎么办？</p>
+<p>这个情况乍一听起来有点不可思议。但实际上，凡是鼓捣过开源项目的读者应该都有所体会，“不能用”“不好用”“需要定制开发”，这才是落地开源基础设施项目的三大常态。</p>
+<p>而在持久化存储领域，用户呼声最高的定制化需求，莫过于支持“本地”持久化存储了。</p>
+<p>也就是说，用户希望 Kubernetes 能够直接使用宿主机上的本地磁盘目录，而不依赖于远程存储服务，来提供“持久化”的容器 Volume。</p>
+<p>这样做的好处很明显，由于这个 Volume 直接使用的是本地磁盘，尤其是 SSD 盘，它的读写性能相比于大多数远程存储来说，要好得多。这个需求对本地物理服务器部署的私有 Kubernetes 集群来说，非常常见。</p>
+<p>所以，Kubernetes 在 v1.10 之后，就逐渐依靠 PV、PVC 体系实现了这个特性。这个特性的名字叫作：Local Persistent Volume。</p>
+<p>不过，首先需要明确的是，<strong>Local Persistent Volume 并不适用于所有应用</strong>。事实上，它的适用范围非常固定，比如：高优先级的系统应用，需要在多个不同节点上存储数据，并且对 I/O 较为敏感。典型的应用包括：分布式数据存储比如 MongoDB、Cassandra 等，分布式文件系统比如 GlusterFS、Ceph 等，以及需要在本地磁盘上进行大量数据缓存的分布式应用。</p>
+<p>其次，相比于正常的 PV，一旦这些节点宕机且不能恢复时，Local Persistent Volume 的数据就可能丢失。这就要求<strong>使用 Local Persistent Volume 的应用必须具备数据备份和恢复的能力</strong>，允许你把这些数据定时备份在其他位置。</p>
+<p>接下来，我就为你深入讲解一下这个特性。</p>
+<p>不难想象，<code>Local Persistent Volume 的设计，主要面临两个难点。</code></p>
+<p><strong>第一个难点在于</strong>：如何把本地磁盘抽象成 PV。</p>
+<p>可能你会说，Local Persistent Volume，不就等同于 hostPath 加 NodeAffinity 吗？</p>
+<p>比如，一个 Pod 可以声明使用类型为 Local 的 PV，而这个 PV 其实就是一个 hostPath 类型的 Volume。如果这个 hostPath 对应的目录，已经在节点 A 上被事先创建好了。那么，我只需要再给这个 Pod 加上一个 nodeAffinity=nodeA，不就可以使用这个 Volume 了吗？</p>
+<p>事实上，<strong><code>你绝不应该把一个宿主机上的目录当作 PV 使用</code></strong>。这是因为，这种本地目录的存储行为完全不可控，它所在的磁盘随时都可能被应用写满，甚至造成整个宿主机宕机。而且，不同的本地目录之间也缺乏哪怕最基础的 I/O 隔离机制。</p>
+<p>所以，一个 Local Persistent Volume 对应的存储介质，一定是一块额外挂载在宿主机的磁盘或者块设备（“额外”的意思是，它不应该是宿主机根目录所使用的主硬盘）。这个原则，我们可以称为<strong><code>“一个 PV 一块盘”</code></strong>。</p>
+<p><strong>第二个难点在于</strong>：调度器如何保证 Pod 始终能被正确地调度到它所请求的 Local Persistent Volume 所在的节点上呢？</p>
+<p>造成这个问题的原因在于，对于常规的 PV 来说，Kubernetes 都是先调度 Pod 到某个节点上，然后，再通过“两阶段处理”来“持久化”这台机器上的 Volume 目录，进而完成 Volume 目录与容器的绑定挂载。</p>
+<p>可是，对于 Local PV 来说，节点上可供使用的磁盘（或者块设备），必须是运维人员提前准备好的。它们在不同节点上的挂载情况可以完全不同，甚至有的节点可以没这种磁盘。</p>
+<p>所以，这时候，调度器就必须能够知道所有节点与 Local Persistent Volume 对应的磁盘的关联关系，然后根据这个信息来调度 Pod。</p>
+<p>这个原则，我们可以称为<strong>“在调度的时候考虑 Volume 分布”</strong>。在 Kubernetes 的调度器里，有一个叫作 VolumeBindingChecker 的过滤条件专门负责这个事情。在 Kubernetes v1.11 中，这个过滤条件已经默认开启了。</p>
+<p>基于上述讲述，<code>在开始使用 Local Persistent Volume 之前，你首先需要在集群里配置好磁盘或者块设备</code>。在公有云上，这个操作等同于给虚拟机额外挂载一个磁盘，比如 GCE 的 Local SSD 类型的磁盘就是一个典型例子。</p>
+<p>而在我们部署的私有环境中，你有两种办法来完成这个步骤。</p>
+<ul>
+<li><p>第一种，当然就是给你的宿主机挂载并格式化一个可用的本地磁盘，这也是最常规的操作；</p>
+</li>
+<li><p>第二种，对于实验环境，你其实可以在宿主机上挂载几个 RAM Disk（内存盘）来模拟本地磁盘。</p>
+</li>
+</ul>
+<p>接下来，我会使用第二种方法，在我们之前部署的 Kubernetes 集群上进行实践。</p>
+<p><strong>首先</strong>，在名叫 node-1 的宿主机上创建一个挂载点，比如 /mnt/disks；然后，用几个 RAM Disk 来模拟本地磁盘，如下所示：</p>
+<pre><code># 在node-1上执行
+$ mkdir /mnt/disks
+$ for vol in vol1 vol2 vol3; do
+    mkdir /mnt/disks/$vol
+    mount -t tmpfs $vol /mnt/disks/$vol
+done</code></pre><p>需要注意的是，如果你希望其他节点也能支持 Local Persistent Volume 的话，那就需要为它们也执行上述操作，并且确保这些磁盘的名字（vol1、vol2 等）都不重复。</p>
+<p><code>接下来，我们就可以为这些本地磁盘定义对应的 PV 了</code>，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/vol1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - node-1</code></pre><p>可以看到，这个 PV 的定义里：local 字段，指定了它是一个 Local Persistent Volume；而 path 字段，指定的正是这个 PV 对应的本地磁盘的路径，即：/mnt/disks/vol1。</p>
+<p>当然了，这也就意味着如果 Pod 要想使用这个 PV，那它就必须运行在 node-1 上。所以，在这个 PV 的定义里，需要有一个 nodeAffinity 字段指定 node-1 这个节点的名字。这样，调度器在调度 Pod 的时候，就能够知道一个 PV 与节点的对应关系，从而做出正确的选择。<strong>这正是 Kubernetes 实现“在调度的时候就考虑 Volume 分布”的主要方法。</strong></p>
+<p><strong>接下来</strong>，我们就可以使用 kubect create 来创建这个 PV，如下所示：</p>
+<pre><code>$ kubectl create -f local-pv.yaml 
+persistentvolume/example-pv created
+$ kubectl get pv
+NAME         CAPACITY   ACCESS MODES   RECLAIM POLICY  STATUS      CLAIM             STORAGECLASS    REASON    AGE
+example-pv   5Gi        RWO            Delete           Available                     local-storage             16s</code></pre><p>可以看到，这个 PV 创建后，进入了 Available（可用）状态。</p>
+<p>而正如我在上一篇文章里所建议的那样，使用 PV 和 PVC 的最佳实践，是你要创建一个 StorageClass 来描述这个 PV，如下所示：</p>
+<pre><code>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer</code></pre><p>这个 StorageClass 的名字，叫作 local-storage。需要注意的是，在它的 provisioner 字段，我们指定的是 no-provisioner。这是因为 Local Persistent Volume 目前尚不支持 Dynamic Provisioning，所以它没办法在用户创建 PVC 的时候，就自动创建出对应的 PV。也就是说，我们前面创建 PV 的操作，是不可以省略的。</p>
+<p>与此同时，这个 StorageClass 还定义了一个 volumeBindingMode=WaitForFirstConsumer 的属性。它是 Local Persistent Volume 里一个非常重要的特性，即：<strong><code>延迟绑定</code></strong>。</p>
+<p>我们知道，当你提交了 PV 和 PVC 的 YAML 文件之后，Kubernetes 就会根据它们俩的属性，以及它们指定的 StorageClass 来进行绑定。只有绑定成功后，Pod 才能通过声明这个 PVC 来使用对应的 PV。</p>
+<p>可是，如果你使用的是 Local Persistent Volume 的话，就会发现，这个流程根本行不通。</p>
+<p>比如，现在你有一个 Pod，它声明使用的 PVC 叫作 pvc-1。并且，我们规定，这个 Pod 只能运行在 node-2 上。</p>
+<p>而在 Kubernetes 集群中，有两个属性（比如：大小、读写权限）相同的 Local 类型的 PV。</p>
+<p>其中，第一个 PV 的名字叫作 pv-1，它对应的磁盘所在的节点是 node-1。而第二个 PV 的名字叫作 pv-2，它对应的磁盘所在的节点是 node-2。</p>
+<p>假设现在，Kubernetes 的 Volume 控制循环里，首先检查到了 pvc-1 和 pv-1 的属性是匹配的，于是就将它们俩绑定在一起。</p>
+<p>然后，你用 kubectl create 创建了这个 Pod。</p>
+<p>这时候，问题就出现了。</p>
+<p>调度器看到，这个 Pod 所声明的 pvc-1 已经绑定了 pv-1，而 pv-1 所在的节点是 node-1，根据“调度器必须在调度的时候考虑 Volume 分布”的原则，这个 Pod 自然会被调度到 node-1 上。</p>
+<p>可是，我们前面已经规定过，这个 Pod 根本不允许运行在 node-1 上。所以。最后的结果就是，这个 Pod 的调度必然会失败。</p>
+<p><strong>这就是为什么，在使用 Local Persistent Volume 的时候，我们必须想办法推迟这个“绑定”操作。</strong></p>
+<p>那么，具体推迟到什么时候呢？</p>
+<p><strong>答案是：推迟到调度的时候。</strong></p>
+<p>所以说，StorageClass 里的 volumeBindingMode=WaitForFirstConsumer 的含义，就是告诉 Kubernetes 里的 Volume 控制循环（“红娘”）：虽然你已经发现这个 StorageClass 关联的 PVC 与 PV 可以绑定在一起，但请不要现在就执行绑定操作（即：设置 PVC 的 VolumeName 字段）。</p>
+<p>而要等到第一个声明使用该 PVC 的 Pod 出现在调度器之后，调度器再综合考虑所有的调度规则，当然也包括每个 PV 所在的节点位置，来统一决定，这个 Pod 声明的 PVC，到底应该跟哪个 PV 进行绑定。</p>
+<p>这样，在上面的例子里，由于这个 Pod 不允许运行在 pv-1 所在的节点 node-1，所以它的 PVC 最后会跟 pv-2 绑定，并且 Pod 也会被调度到 node-2 上。</p>
+<p>所以，通过这个延迟绑定机制，原本实时发生的 PVC 和 PV 的绑定过程，就被延迟到了 Pod 第一次调度的时候在调度器中进行，从而保证了这个<strong>绑定结果不会影响 Pod 的正常调度。</strong></p>
+<p>当然，在具体实现中，调度器实际上维护了一个与 Volume Controller 类似的控制循环，专门负责为那些声明了“延迟绑定”的 PV 和 PVC 进行绑定工作。</p>
+<p>通过这样的设计，这个额外的绑定操作，并不会拖慢调度器的性能。而当一个 Pod 的 PVC 尚未完成绑定时，调度器也不会等待，而是会直接把这个 Pod 重新放回到待调度队列，等到下一个调度周期再做处理。</p>
+<p>在明白了这个机制之后，我们就可以创建 StorageClass 了，如下所示：</p>
+<pre><code>$ kubectl create -f local-sc.yaml 
+storageclass.storage.k8s.io/local-storage created</code></pre><p><code>接下来，我们只需要定义一个非常普通的 PVC，就可以让 Pod 使用到上面定义好的 Local Persistent Volume 了</code>，如下所示：</p>
+<pre><code>kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: example-local-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: local-storage</code></pre><p>可以看到，这个 PVC 没有任何特别的地方。唯一需要注意的是，它声明的 storageClassName 是 local-storage。所以，将来 Kubernetes 的 Volume Controller 看到这个 PVC 的时候，不会为它进行绑定操作。</p>
+<p>现在，我们来创建这个 PVC：</p>
+<pre><code>$ kubectl create -f local-pvc.yaml 
+persistentvolumeclaim/example-local-claim created
+$ kubectl get pvc
+NAME                  STATUS    VOLUME    CAPACITY   ACCESS MODES   STORAGECLASS    AGE
+example-local-claim   Pending                                       local-storage   7s</code></pre><p>可以看到，尽管这个时候，Kubernetes 里已经存在了一个可以与 PVC 匹配的 PV，但这个 PVC 依然处于 Pending 状态，也就是等待绑定的状态。</p>
+<p><code>然后，我们编写一个 Pod 来声明使用这个 PVC</code>，如下所示：</p>
+<pre><code>kind: Pod
+apiVersion: v1
+metadata:
+  name: example-pv-pod
+spec:
+  volumes:
+    - name: example-pv-storage
+      persistentVolumeClaim:
+       claimName: example-local-claim
+  containers:
+    - name: example-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: &quot;http-server&quot;
+      volumeMounts:
+        - mountPath: &quot;/usr/share/nginx/html&quot;
+          name: example-pv-storage</code></pre><p>这个 Pod 没有任何特别的地方，你只需要注意，它的 volumes 字段声明要使用前面定义的、名叫 example-local-claim 的 PVC 即可。</p>
+<p>而我们一旦使用 kubectl create 创建这个 Pod，就会发现，我们前面定义的 PVC，会立刻变成 Bound 状态，与前面定义的 PV 绑定在了一起，如下所示：</p>
+<pre><code>$ kubectl create -f local-pod.yaml 
+pod/example-pv-pod created
+$ kubectl get pvc
+NAME                  STATUS    VOLUME       CAPACITY   ACCESS MODES   STORAGECLASS    AGE
+example-local-claim   Bound     example-pv   5Gi        RWO            local-storage   6h</code></pre><p>也就是说，在我们创建的 Pod 进入调度器之后，“绑定”操作才开始进行。</p>
+<p>这时候，我们可以尝试在这个 Pod 的 Volume 目录里，创建一个测试文件，比如：</p>
+<pre><code>$ kubectl exec -it example-pv-pod -- /bin/sh
+# cd /usr/share/nginx/html
+# touch test.txt</code></pre><p>然后，登录到 node-1 这台机器上，查看一下它的 /mnt/disks/vol1 目录下的内容，你就可以看到刚刚创建的这个文件：</p>
+<pre><code># 在node-1上
+$ ls /mnt/disks/vol1
+test.txt</code></pre><p>而如果你重新创建这个 Pod 的话，就会发现，我们之前创建的测试文件，依然被保存在这个持久化 Volume 当中：</p>
+<pre><code>$ kubectl delete -f local-pod.yaml 
+$ kubectl create -f local-pod.yaml 
+$ kubectl exec -it example-pv-pod -- /bin/sh
+# ls /usr/share/nginx/html
+# touch test.txt</code></pre><p>这就说明，像 Kubernetes 这样构建出来的、基于本地存储的 Volume，完全可以提供容器持久化存储的功能。所以，像 StatefulSet 这样的有状态编排工具，也完全可以通过声明 Local 类型的 PV 和 PVC，来管理应用的存储状态。</p>
+<p><strong>要注意的是，我们上面手动创建 PV 的方式，即 Static 的 PV 管理方式，在删除 PV 时需要按如下流程执行操作：</strong></p>
+<ol>
+<li>删除使用这个 PV 的 Pod；</li>
+<li>从宿主机移除本地磁盘（比如，umount 它）；</li>
+<li>删除 PVC；</li>
+<li>删除 PV。</li>
+</ol>
+<p>如果不按照这个流程的话，这个 PV 的删除就会失败。</p>
+<p>当然，由于上面这些创建 PV 和删除 PV 的操作比较繁琐，Kubernetes 其实提供了一个 Static Provisioner 来帮助你管理这些 PV。</p>
+<p>比如，我们现在的所有磁盘，都挂载在宿主机的 /mnt/disks 目录下。</p>
+<p>那么，当 Static Provisioner 启动后，它就会通过 DaemonSet，自动检查每个宿主机的 /mnt/disks 目录。然后，调用 Kubernetes API，为这些目录下面的每一个挂载，创建一个对应的 PV 对象出来。这些自动创建的 PV，如下所示：</p>
+<pre><code>$ kubectl get pv
+NAME                CAPACITY    ACCESSMODES   RECLAIMPOLICY   STATUS      CLAIM     STORAGECLASS    REASON    AGE
+local-pv-ce05be60   1024220Ki   RWO           Delete          Available             local-storage             26s
+$ kubectl describe pv local-pv-ce05be60 
+Name:  local-pv-ce05be60
+...
+StorageClass: local-storage
+Status:  Available
+Claim:  
+Reclaim Policy: Delete
+Access Modes: RWO
+Capacity: 1024220Ki
+NodeAffinity:
+  Required Terms:
+      Term 0:  kubernetes.io/hostname in [node-1]
+Message: 
+Source:
+    Type: LocalVolume (a persistent volume backed by local storage on a node)
+    Path: /mnt/disks/vol1</code></pre><p>这个 PV 里的各种定义，比如 StorageClass 的名字、本地磁盘挂载点的位置，都可以通过 provisioner 的<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes-retired/external-storage/tree/master/local-volume/helm"  target="_blank" rel="noopener">配置文件指定</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>。当然，provisioner 也会负责前面提到的 PV 的删除工作。</p>
+<p>而这个 provisioner 本身，其实也是一个我们前面提到过的<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes-incubator/external-storage/tree/master/local-volume"  target="_blank" rel="noopener">External Provisioner</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，它的部署方法，在<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes-retired/external-storage/tree/master/local-volume#option-1-using-the-local-volume-static-provisioner"  target="_blank" rel="noopener">对应的文档里</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>有详细描述。这部分内容，就留给你课后自行探索了。</p>
+<p><strong>总结</strong></p>
+<p>在今天这篇文章中，我为你详细介绍了 Kubernetes 里 Local Persistent Volume 的实现方式。</p>
+<p>可以看到，正是通过 PV 和 PVC，以及 StorageClass 这套存储体系，这个后来新添加的持久化存储方案，对 Kubernetes 已有用户的影响，几乎可以忽略不计。作为用户，你的 Pod 的 YAML 和 PVC 的 YAML，并没有任何特殊的改变，这个特性所有的实现只会影响到 PV 的处理，也就是由运维人员负责的那部分工作。</p>
+<p>而这，正是这套存储体系带来的“解耦”的好处。</p>
+<p>其实，Kubernetes 很多看起来比较“繁琐”的设计（比如“声明式 API”，以及我今天讲解的“PV、PVC 体系”）的主要目的，都是希望为开发者提供更多的“可扩展性”，给使用者带来更多的“稳定性”和“安全感”。这两个能力的高低，是衡量开源基础设施项目水平的重要标准。</p>
+<p><strong>思考题</strong></p>
+<p>正是由于需要使用“延迟绑定”这个特性，Local Persistent Volume 目前还不能支持 Dynamic Provisioning。你是否能说出，为什么“延迟绑定”会跟 Dynamic Provisioning 有冲突呢？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/25.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%BA%8C)%EF%BC%9A%E7%BC%96%E5%86%99%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E5%88%B6%E5%99%A8/">25 | 深入解析声明式API（二）：编写自定义控制器</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.4k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+<p>在上一篇文章中，我和你详细分享了 Kubernetes 中声明式 API 的实现原理，并且通过一个添加 Network 对象的实例，为你讲述了在 Kubernetes 里添加 API 资源的过程。</p>
+<p>在今天的这篇文章中，我就继续和你一起完成剩下一半的工作，即：为 Network 这个自定义 API 对象编写一个自定义控制器（Custom Controller）。</p>
+<p>正如我在上一篇文章结尾处提到的，“声明式 API”并不像“命令式 API”那样有着明显的执行逻辑。这就使得基于声明式 API 的业务功能实现，往往需要通过控制器模式来“监视”API 对象的变化（比如，创建或者删除 Network），然后以此来决定实际要执行的具体工作。</p>
+<p>接下来，我就和你一起通过编写代码来实现这个过程。这个项目和上一篇文章里的代码是同一个项目，你可以从<span class="exturl"><a class="exturl__link"   href="https://github.com/resouer/k8s-controller-custom-resource"  target="_blank" rel="noopener">这个 GitHub 库</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>里找到它们。我在代码里还加上了丰富的注释，你可以随时参考。</p>
+<p>总得来说，编写自定义控制器代码的过程包括：编写 main 函数、编写自定义控制器的定义，以及编写控制器里的业务逻辑三个部分。</p>
+<p>首先，我们来编写这 * 个自定义控制器的 main 函数。</p>
+<p>main 函数的主要工作就是，定义并初始化一个自定义控制器（Custom Controller），然后启动它。这部分代码的主要内容如下所示：</p>
+<pre><code>func main() {
+  ...
+
+  cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
+  ...
+  kubeClient, err := kubernetes.NewForConfig(cfg)
+  ...
+  networkClient, err := clientset.NewForConfig(cfg)
+  ...
+
+  networkInformerFactory := informers.NewSharedInformerFactory(networkClient, ...)
+
+  controller := NewController(kubeClient, networkClient,
+  networkInformerFactory.Samplecrd().V1().Networks())
+
+  go networkInformerFactory.Start(stopCh)
+
+  if err = controller.Run(2, stopCh); err != nil {
+    glog.Fatalf(&quot;Error running controller: %s&quot;, err.Error())
+  }
+}</code></pre><p>可以看到，这个 main 函数主要通过三步完成了初始化并启动一个自定义控制器的工作。</p>
+<p>第一步：main 函数根据我提供的 Master 配置（APIServer 的地址端口和 kubeconfig 的路径），创建一个 Kubernetes 的 client（kubeClient）和 Network 对象的 client（networkClient）。</p>
+<p>但是，如果我没有提供 Master 配置呢？</p>
+<p>这时，main 函数会直接使用一种名叫InClusterConfig的方式来创建这个 client。这个方式，会假设你的自定义控制器是以 Pod 的方式运行在 Kubernetes 集群里的。</p>
+<p>而我在第 15 篇文章《深入解析 Pod 对象（二）：使用进阶》中曾经提到过，Kubernetes 里所有的 Pod 都会以 Volume 的方式自动挂载 Kubernetes 的默认 ServiceAccount。所以，这个控制器就会直接使用默认 ServiceAccount 数据卷里的授权信息，来访问 APIServer。</p>
+<p>第二步：main 函数为 Network 对象创建一个叫作 InformerFactory（即：networkInformerFactory）的工厂，并使用它生成一个 Network 对象的 Informer，传递给控制器。</p>
+<p>第三步：main 函数启动上述的 Informer，然后执行 controller.Run，启动自定义控制器。</p>
+<p>至此，main 函数就结束了。</p>
+<p>看到这，你可能会感到非常困惑：编写自定义控制器的过程难道就这么简单吗？这个 Informer 又是个什么东西呢？</p>
+<p>别着急。</p>
+<p>接下来，我就为你详细解释一下这个自定义控制器的工作原理。</p>
+<p>在 Kubernetes 项目中，一个自定义控制器的工作原理，可以用下面这样一幅流程图来表示（在后面的叙述中，我会用“示意图”来指代它）：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      </p>
+<p>图 1 自定义控制器的工作流程示意图</p>
+<p>我们先从这幅示意图的最左边看起。</p>
+<p>这个控制器要做的第一件事，是从 Kubernetes 的 APIServer 里获取它所关心的对象，也就是我定义的 Network 对象。</p>
+<p>这个操作，依靠的是一个叫作 Informer（可以翻译为：通知器）的代码库完成的。Informer 与 API 对象是一一对应的，所以我传递给自定义控制器的，正是一个 Network 对象的 Informer（Network Informer）。</p>
+<p>不知你是否已经注意到，我在创建这个 Informer 工厂的时候，需要给它传递一个 networkClient。</p>
+<p>事实上，Network Informer 正是使用这个 networkClient，跟 APIServer 建立了连接。不过，真正负责维护这个连接的，则是 Informer 所使用的 Reflector 包。</p>
+<p>更具体地说，Reflector 使用的是一种叫作ListAndWatch的方法，来“获取”并“监听”这些 Network 对象实例的变化。</p>
+<p>在 ListAndWatch 机制下，一旦 APIServer 端有新的 Network 实例被创建、删除或者更新，Reflector 都会收到“事件通知”。这时，该事件及它对应的 API 对象这个组合，就被称为增量（Delta），它会被放进一个 Delta FIFO Queue（即：增量先进先出队列）中。</p>
+<p>而另一方面，Informe 会不断地从这个 Delta FIFO Queue 里读取（Pop）增量。每拿到一个增量，Informer 就会判断这个增量里的事件类型，然后创建或者更新本地对象的缓存。这个缓存，在 Kubernetes 里一般被叫作 Store。</p>
+<p>比如，如果事件类型是 Added（添加对象），那么 Informer 就会通过一个叫作 Indexer 的库把这个增量里的 API 对象保存在本地缓存中，并为它创建索引。相反地，如果增量的事件类型是 Deleted（删除对象），那么 Informer 就会从本地缓存中删除这个对象。</p>
+<p>这个同步本地缓存的工作，是 Informer 的第一个职责，也是它最重要的职责。</p>
+<p>而Informer 的第二个职责，则是根据这些事件的类型，触发事先注册好的 ResourceEventHandler。这些 Handler，需要在创建控制器的时候注册给它对应的 Informer。</p>
+<p>接下来，我们就来编写这个控制器的定义，它的主要内容如下所示：</p>
+<pre><code>func NewController(
+  kubeclientset kubernetes.Interface,
+  networkclientset clientset.Interface,
+  networkInformer informers.NetworkInformer) *Controller {
+  ...
+  controller := &amp;Controller{
+    kubeclientset:    kubeclientset,
+    networkclientset: networkclientset,
+    networksLister:   networkInformer.Lister(),
+    networksSynced:   networkInformer.Informer().HasSynced,
+    workqueue:        workqueue.NewNamedRateLimitingQueue(...,  &quot;Networks&quot;),
+    ...
+  }
+    networkInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+    AddFunc: controller.enqueueNetwork,
+    UpdateFunc: func(old, new interface{}) {
+      oldNetwork := old.(*samplecrdv1.Network)
+      newNetwork := new.(*samplecrdv1.Network)
+      if oldNetwork.ResourceVersion == newNetwork.ResourceVersion {
+        return
+      }
+      controller.enqueueNetwork(new)
+    },
+    DeleteFunc: controller.enqueueNetworkForDelete,
+ return controller
+}</code></pre><p>我前面在 main 函数里创建了两个 client（kubeclientset 和 networkclientset），然后在这段代码里，使用这两个 client 和前面创建的 Informer，初始化了自定义控制器。</p>
+<p>值得注意的是，在这个自定义控制器里，我还设置了一个工作队列（work queue），它正是处于示意图中间位置的 WorkQueue。这个工作队列的作用是，负责同步 Informer 和控制循环之间的数据。</p>
+<blockquote>
+<p>实际上，Kubernetes 项目为我们提供了很多个工作队列的实现，你可以根据需要选择合适的库直接使用。</p>
+</blockquote>
+<p>然后，我为 networkInformer 注册了三个 Handler（AddFunc、UpdateFunc 和 DeleteFunc），分别对应 API 对象的“添加”“更新”和“删除”事件。而具体的处理操作，都是将该事件对应的 API 对象加入到工作队列中。</p>
+<p>需要注意的是，实际入队的并不是 API 对象本身，而是它们的 Key，即：该 API 对象的/。</p>
+<p>而我们后面即将编写的控制循环，则会不断地从这个工作队列里拿到这些 Key，然后开始执行真正的控制逻辑。</p>
+<p>综合上面的讲述，你现在应该就能明白，所谓 Informer，其实就是一个带有本地缓存和索引机制的、可以注册 EventHandler 的 client。它是自定义控制器跟 APIServer 进行数据同步的重要组件。</p>
+<p>更具体地说，Informer 通过一种叫作 ListAndWatch 的方法，把 APIServer 中的 API 对象缓存在了本地，并负责更新和维护这个缓存。</p>
+<p>其中，ListAndWatch 方法的含义是：首先，通过 APIServer 的 LIST API“获取”所有最新版本的 API 对象；然后，再通过 WATCH API 来“监听”所有这些 API 对象的变化。</p>
+<p>而通过监听到的事件变化，Informer 就可以实时地更新本地缓存，并且调用这些事件对应的 EventHandler 了。</p>
+<p>此外，在这个过程中，每经过 resyncPeriod 指定的时间，Informer 维护的本地缓存，都会使用最近一次 LIST 返回的结果强制更新一次，从而保证缓存的有效性。在 Kubernetes 中，这个缓存强制更新的操作就叫作：resync。</p>
+<p>需要注意的是，这个定时 resync 操作，也会触发 Informer 注册的“更新”事件。但此时，这个“更新”事件对应的 Network 对象实际上并没有发生变化，即：新、旧两个 Network 对象的 ResourceVersion 是一样的。在这种情况下，Informer 就不需要对这个更新事件再做进一步的处理了。</p>
+<p>这也是为什么我在上面的 UpdateFunc 方法里，先判断了一下新、旧两个 Network 对象的版本（ResourceVersion）是否发生了变化，然后才开始进行的入队操作。</p>
+<p>以上，就是 Kubernetes 中的 Informer 库的工作原理了。</p>
+<p>接下来，我们就来到了示意图中最后面的控制循环（Control Loop）部分，也正是我在 main 函数最后调用 controller.Run() 启动的“控制循环”。它的主要内容如下所示：</p>
+<pre><code>func (c *Controller) Run(threadiness int, stopCh &lt;-chan struct{}) error {
+ ...
+  if ok := cache.WaitForCacheSync(stopCh, c.networksSynced); !ok {
+    return fmt.Errorf(&quot;failed to wait for caches to sync&quot;)
+  }
+
+  ...
+  for i := 0; i &lt; threadiness; i++ {
+    go wait.Until(c.runWorker, time.Second, stopCh)
+  }
+
+  ...
+  return nil
+}</code></pre><p>可以看到，启动控制循环的逻辑非常简单：</p>
+<ul>
+<li>首先，等待 Informer 完成一次本地缓存的数据同步操作；</li>
+<li>然后，直接通过 goroutine 启动一个（或者并发启动多个）“无限循环”的任务。<br>而这个“无限循环”任务的每一个循环周期，执行的正是我们真正关心的业务逻辑。</li>
+</ul>
+<p>所以接下来，我们就来编写这个自定义控制器的业务逻辑，它的主要内容如下所示：</p>
+<pre><code>func (c *Controller) runWorker() {
+  for c.processNextWorkItem() {
+  }
+}
+
+func (c *Controller) processNextWorkItem() bool {
+  obj, shutdown := c.workqueue.Get()
+
+  ...
+
+  err := func(obj interface{}) error {
+    ...
+    if err := c.syncHandler(key); err != nil {
+     return fmt.Errorf(&quot;error syncing &apos;%s&apos;: %s&quot;, key, err.Error())
+    }
+
+    c.workqueue.Forget(obj)
+    ...
+    return nil
+  }(obj)
+
+  ...
+
+  return true
+}
+
+func (c *Controller) syncHandler(key string) error {
+
+  namespace, name, err := cache.SplitMetaNamespaceKey(key)
+  ...
+
+  network, err := c.networksLister.Networks(namespace).Get(name)
+  if err != nil {
+    if errors.IsNotFound(err) {
+      glog.Warningf(&quot;Network does not exist in local cache: %s/%s, will delete it from Neutron ...&quot;,
+      namespace, name)
+
+      glog.Warningf(&quot;Network: %s/%s does not exist in local cache, will delete it from Neutron ...&quot;,
+    namespace, name)
+
+     // FIX ME: call Neutron API to delete this network by name.
+     //
+     // neutron.Delete(namespace, name)
+
+     return nil
+  }
+    ...
+
+    return err
+  }
+
+  glog.Infof(&quot;[Neutron] Try to process network: %#v ...&quot;, network)
+
+  // FIX ME: Do diff().
+  //
+  // actualNetwork, exists := neutron.Get(namespace, name)
+  //
+  // if !exists {
+  //   neutron.Create(namespace, name)
+  // } else if !reflect.DeepEqual(actualNetwork, network) {
+  //   neutron.Update(namespace, name)
+  // }
+
+  return nil
+}</code></pre><p>可以看到，在这个执行周期里（processNextWorkItem），我们首先从工作队列里出队（workqueue.Get）了一个成员，也就是一个 Key（Network 对象的：namespace/name）。</p>
+<p>然后，在 syncHandler 方法中，我使用这个 Key，尝试从 Informer 维护的缓存中拿到了它所对应的 Network 对象。</p>
+<p>可以看到，在这里，我使用了 networksLister 来尝试获取这个 Key 对应的 Network 对象。这个操作，其实就是在访问本地缓存的索引。实际上，在 Kubernetes 的源码中，你会经常看到控制器从各种 Lister 里获取对象，比如：podLister、nodeLister 等等，它们使用的都是 Informer 和缓存机制。</p>
+<p>而如果控制循环从缓存中拿不到这个对象（即：networkLister 返回了 IsNotFound 错误），那就意味着这个 Network 对象的 Key 是通过前面的“删除”事件添加进工作队列的。所以，尽管队列里有这个 Key，但是对应的 Network 对象已经被删除了。</p>
+<p>这时候，我就需要调用 Neutron 的 API，把这个 Key 对应的 Neutron 网络从真实的集群里删除掉。</p>
+<p>而如果能够获取到对应的 Network 对象，我就可以执行控制器模式里的对比“期望状态”和“实际状态”的逻辑了。</p>
+<p>其中，自定义控制器“千辛万苦”拿到的这个 Network 对象，正是 APIServer 里保存的“期望状态”，即：用户通过 YAML 文件提交到 APIServer 里的信息。当然，在我们的例子里，它已经被 Informer 缓存在了本地。</p>
+<p>那么，“实际状态”又从哪里来呢？</p>
+<p>当然是来自于实际的集群了。</p>
+<p>所以，我们的控制循环需要通过 Neutron API 来查询实际的网络情况。</p>
+<p>比如，我可以先通过 Neutron 来查询这个 Network 对象对应的真实网络是否存在。</p>
+<p>如果不存在，这就是一个典型的“期望状态”与“实际状态”不一致的情形。这时，我就需要使用这个 Network 对象里的信息（比如：CIDR 和 Gateway），调用 Neutron API 来创建真实的网络。<br>如果存在，那么，我就要读取这个真实网络的信息，判断它是否跟 Network 对象里的信息一致，从而决定我是否要通过 Neutron 来更新这个已经存在的真实网络。<br>这样，我就通过对比“期望状态”和“实际状态”的差异，完成了一次调协（Reconcile）的过程。</p>
+<p>至此，一个完整的自定义 API 对象和它所对应的自定义控制器，就编写完毕了。</p>
+<blockquote>
+<p>备注：与 Neutron 相关的业务代码并不是本篇文章的重点，所以我仅仅通过注释里的伪代码为你表述了这部分内容。如果你对这些代码感兴趣的话，可以自行完成。最简单的情况，你可以自己编写一个 Neutron Mock，然后输出对应的操作日志。</p>
+</blockquote>
+<p>接下来，我们就一起来把这个项目运行起来，查看一下它的工作情况。</p>
+<p>你可以自己编译这个项目，也可以直接使用我编译好的二进制文件（samplecrd-controller）。编译并启动这个项目的具体流程如下所示：</p>
+<pre><code># Clone repo
+$ git clone https://github.com/resouer/k8s-controller-custom-resource$ cd k8s-controller-custom-resource
+
+### Skip this part if you don&apos;t want to build
+# Install dependency
+$ go get github.com/tools/godep
+$ godep restore
+# Build
+$ go build -o samplecrd-controller .
+
+$ ./samplecrd-controller -kubeconfig=$HOME/.kube/config -alsologtostderr=true
+I0915 12:50:29.051349   27159 controller.go:84] Setting up event handlers
+I0915 12:50:29.051615   27159 controller.go:113] Starting Network control loop
+I0915 12:50:29.051630   27159 controller.go:116] Waiting for informer caches to sync
+E0915 12:50:29.066745   27159 reflector.go:134] github.com/resouer/k8s-controller-custom-resource/pkg/client/informers/externalversions/factory.go:117: Failed to list *v1.Network: the server could not find the requested resource (get networks.samplecrd.k8s.io)
+...</code></pre><p>你可以看到，自定义控制器被启动后，一开始会报错。</p>
+<p>这是因为，此时 Network 对象的 CRD 还没有被创建出来，所以 Informer 去 APIServer 里“获取”（List）Network 对象时，并不能找到 Network 这个 API 资源类型的定义，即：</p>
+<pre><code>Failed to list *v1.Network: the server could not find the requested resource (get networks.samplecrd.k8s.io)</code></pre><p>所以，接下来我就需要创建 Network 对象的 CRD，这个操作在上一篇文章里已经介绍过了。</p>
+<p>在另一个 shell 窗口里执行：</p>
+<pre><code>$ kubectl apply -f crd/network.yaml</code></pre><p>这时候，你就会看到控制器的日志恢复了正常，控制循环启动成功：</p>
+<pre><code>...
+I0915 12:50:29.051630   27159 controller.go:116] Waiting for informer caches to sync
+...
+I0915 12:52:54.346854   25245 controller.go:121] Starting workers
+I0915 12:52:54.346914   25245 controller.go:127] Started workers</code></pre><p>接下来，我就可以进行 Network 对象的增删改查操作了。</p>
+<p>首先，创建一个 Network 对象：</p>
+<pre><code>$ cat example/example-network.yaml 
+apiVersion: samplecrd.k8s.io/v1
+kind: Network
+metadata:
+  name: example-network
+spec:
+  cidr: &quot;192.168.0.0/16&quot;
+  gateway: &quot;192.168.0.1&quot;
+
+$ kubectl apply -f example/example-network.yaml 
+network.samplecrd.k8s.io/example-network created</code></pre><p>这时候，查看一下控制器的输出：</p>
+<pre><code>...
+I0915 12:50:29.051349   27159 controller.go:84] Setting up event handlers
+I0915 12:50:29.051615   27159 controller.go:113] Starting Network control loop
+I0915 12:50:29.051630   27159 controller.go:116] Waiting for informer caches to sync
+...
+I0915 12:52:54.346854   25245 controller.go:121] Starting workers
+I0915 12:52:54.346914   25245 controller.go:127] Started workers
+I0915 12:53:18.064409   25245 controller.go:229] [Neutron] Try to process network: &amp;v1.Network{TypeMeta:v1.TypeMeta{Kind:&quot;&quot;, APIVersion:&quot;&quot;}, ObjectMeta:v1.ObjectMeta{Name:&quot;example-network&quot;, GenerateName:&quot;&quot;, Namespace:&quot;default&quot;, ... ResourceVersion:&quot;479015&quot;, ... Spec:v1.NetworkSpec{Cidr:&quot;192.168.0.0/16&quot;, Gateway:&quot;192.168.0.1&quot;}} ...
+I0915 12:53:18.064650   25245 controller.go:183] Successfully synced &apos;default/example-network&apos;
+...</code></pre><p>可以看到，我们上面创建 example-network 的操作，触发了 EventHandler 的“添加”事件，从而被放进了工作队列。</p>
+<p>紧接着，控制循环就从队列里拿到了这个对象，并且打印出了正在“处理”这个 Network 对象的日志。</p>
+<p>可以看到，这个 Network 的 ResourceVersion，也就是 API 对象的版本号，是 479015，而它的 Spec 字段的内容，跟我提交的 YAML 文件一摸一样，比如，它的 CIDR 网段是：192.168.0.0/16。</p>
+<p>这时候，我来修改一下这个 YAML 文件的内容，如下所示：</p>
+<pre><code>$ cat example/example-network.yaml 
+apiVersion: samplecrd.k8s.io/v1
+kind: Network
+metadata:
+  name: example-network
+spec:
+  cidr: &quot;192.168.1.0/16&quot;
+  gateway: &quot;192.168.1.1&quot;</code></pre><p>可以看到，我把这个 YAML 文件里的 CIDR 和 Gateway 字段的修改成了 192.168.1.0/16 网段。</p>
+<p>然后，我们执行了 kubectl apply 命令来提交这次更新，如下所示：</p>
+<pre><code>$ kubectl apply -f example/example-network.yaml 
+network.samplecrd.k8s.io/example-network configured</code></pre><p>这时候，我们就可以观察一下控制器的输出：</p>
+<pre><code>...
+I0915 12:53:51.126029   25245 controller.go:229] [Neutron] Try to process network: &amp;v1.Network{TypeMeta:v1.TypeMeta{Kind:&quot;&quot;, APIVersion:&quot;&quot;}, ObjectMeta:v1.ObjectMeta{Name:&quot;example-network&quot;, GenerateName:&quot;&quot;, Namespace:&quot;default&quot;, ...  ResourceVersion:&quot;479062&quot;, ... Spec:v1.NetworkSpec{Cidr:&quot;192.168.1.0/16&quot;, Gateway:&quot;192.168.1.1&quot;}} ...
+I0915 12:53:51.126348   25245 controller.go:183] Successfully synced &apos;default/example-network&apos;</code></pre><p>可以看到，这一次，Informer 注册的“更新”事件被触发，更新后的 Network 对象的 Key 被添加到了工作队列之中。</p>
+<p>所以，接下来控制循环从工作队列里拿到的 Network 对象，与前一个对象是不同的：它的 ResourceVersion 的值变成了 479062；而 Spec 里的字段，则变成了 192.168.1.0/16 网段。</p>
+<p>最后，我再把这个对象删除掉：</p>
+<pre><code>$ kubectl delete -f example/example-network.yaml</code></pre><p>这一次，在控制器的输出里，我们就可以看到，Informer 注册的“删除”事件被触发，并且控制循环“调用”Neutron API“删除”了真实环境里的网络。这个输出如下所示：</p>
+<pre><code>W0915 12:54:09.738464   25245 controller.go:212] Network: default/example-network does not exist in local cache, will delete it from Neutron ...
+I0915 12:54:09.738832   25245 controller.go:215] [Neutron] Deleting network: default/example-network ...
+I0915 12:54:09.738854   25245 controller.go:183] Successfully synced &apos;default/example-network&apos;</code></pre><p>以上，就是编写和使用自定义控制器的全部流程了。</p>
+<p>实际上，这套流程不仅可以用在自定义 API 资源上，也完全可以用在 Kubernetes 原生的默认 API 对象上。</p>
+<p>比如，我们在 main 函数里，除了创建一个 Network Informer 外，还可以初始化一个 Kubernetes 默认 API 对象的 Informer 工厂，比如 Deployment 对象的 Informer。这个具体做法如下所示：</p>
+<pre><code>func main() {
+  ...
+
+  kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
+
+  controller := NewController(kubeClient, exampleClient,
+  kubeInformerFactory.Apps().V1().Deployments(),
+  networkInformerFactory.Samplecrd().V1().Networks())
+
+  go kubeInformerFactory.Start(stopCh)
+  ...
+}</code></pre><p>在这段代码中，我们首先使用 Kubernetes 的 client（kubeClient）创建了一个工厂；</p>
+<p>然后，我用跟 Network 类似的处理方法，生成了一个 Deployment Informer；</p>
+<p>接着，我把 Deployment Informer 传递给了自定义控制器；当然，我也要调用 Start 方法来启动这个 Deployment Informer。</p>
+<p>而有了这个 Deployment Informer 后，这个控制器也就持有了所有 Deployment 对象的信息。接下来，它既可以通过 deploymentInformer.Lister() 来获取 Etcd 里的所有 Deployment 对象，也可以为这个 Deployment Informer 注册具体的 Handler 来。</p>
+<p>更重要的是，这就使得在这个自定义控制器里面，我可以通过对自定义 API 对象和默认 API 对象进行协同，从而实现更加复杂的编排功能。</p>
+<p>比如：用户每创建一个新的 Deployment，这个自定义控制器，就可以为它创建一个对应的 Network 供它使用。</p>
+<p>这些对 Kubernetes API 编程范式的更高级应用，我就留给你在实际的场景中去探索和实践了。</p>
+<p><strong>总结</strong><br>在今天这篇文章中，我为你剖析了 Kubernetes API 编程范式的具体原理，并编写了一个自定义控制器。</p>
+<p>这其中，有如下几个概念和机制，是你一定要理解清楚的：</p>
+<p>所谓的 Informer，就是一个自带缓存和索引机制，可以触发 Handler 的客户端库。这个本地缓存在 Kubernetes 中一般被称为 Store，索引一般被称为 Index。</p>
+<p>Informer 使用了 Reflector 包，它是一个可以通过 ListAndWatch 机制获取并监视 API 对象变化的客户端封装。</p>
+<p>Reflector 和 Informer 之间，用到了一个“增量先进先出队列”进行协同。而 Informer 与你要编写的控制循环之间，则使用了一个工作队列来进行协同。</p>
+<p>在实际应用中，除了控制循环之外的所有代码，实际上都是 Kubernetes 为你自动生成的，即：pkg/client/{informers, listers, clientset}里的内容。</p>
+<p>而这些自动生成的代码，就为我们提供了一个可靠而高效地获取 API 对象“期望状态”的编程库。</p>
+<p>所以，接下来，作为开发者，你就只需要关注如何拿到“实际状态”，然后如何拿它去跟“期望状态”做对比，从而决定接下来要做的业务逻辑即可。</p>
+<p>以上内容，就是 Kubernetes API 编程范式的核心思想。</p>
+<p><strong>思考题</strong><br>请思考一下，为什么 Informer 和你编写的控制循环之间，一定要使用一个工作队列来进行协作呢？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/24.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%B8%80)%EF%BC%9AAPI%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A5%A5%E7%A7%98/">24 | 深入解析声明式API（一）：API对象的奥秘</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.9k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+<p>在上一篇文章中，我为你详细讲解了 Kubernetes 声明式 API 的设计、特点，以及使用方式。</p>
+<p>而在今天这篇文章中，我就来为你讲解一下 Kubernetes 声明式 API 的工作原理，以及如何利用这套 API 机制，在 Kubernetes 里添加自定义的 API 对象。</p>
+<p>你可能一直就很好奇：当我把一个 YAML 文件提交给 Kubernetes 之后，它究竟是如何创建出一个 API 对象的呢？</p>
+<p>这得从声明式 API 的设计谈起了。</p>
+<p>在 Kubernetes 项目中，一个 API 对象在 Etcd 里的完整资源路径，是由：Group（API 组）、Version（API 版本）和 Resource（API 资源类型）三个部分组成的。</p>
+<p>通过这样的结构，整个 Kubernetes 里的所有 API 对象，实际上就可以用如下的树形结构表示出来：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      </p>
+<p>在这幅图中，你可以很清楚地看到Kubernetes 里 API 对象的组织方式，其实是层层递进的。</p>
+<p>比如，现在我要声明要创建一个 CronJob 对象，那么我的 YAML 文件的开始部分会这么写：</p>
+<pre><code>apiVersion: batch/v2alpha1
+kind: CronJob
+...</code></pre><p>在这个 YAML 文件中，“CronJob”就是这个 API 对象的资源类型（Resource），“batch”就是它的组（Group），v2alpha1 就是它的版本（Version）。</p>
+<p>当我们提交了这个 YAML 文件之后，Kubernetes 就会把这个 YAML 文件里描述的内容，转换成 Kubernetes 里的一个 CronJob 对象。</p>
+<p>那么，<code>Kubernetes 是如何对 Resource、Group 和 Version 进行解析，从而在 Kubernetes 项目里找到 CronJob 对象的定义呢？</code></p>
+<p><strong>首先，Kubernetes 会匹配 API 对象的组。</strong></p>
+<p>需要明确的是，对于 Kubernetes 里的核心 API 对象，比如：Pod、Node 等，是不需要 Group 的（即：它们 Group 是“”）。所以，对于这些 API 对象来说，Kubernetes 会直接在 /api 这个层级进行下一步的匹配过程。</p>
+<p>而对于 CronJob 等非核心 API 对象来说，Kubernetes 就必须在 /apis 这个层级里查找它对应的 Group，进而根据“batch”这个 Group 的名字，找到 /apis/batch。</p>
+<p>不难发现，这些 API Group 的分类是以对象功能为依据的，比如 Job 和 CronJob 就都属于“batch” （离线业务）这个 Group。</p>
+<p><strong>然后，Kubernetes 会进一步匹配到 API 对象的版本号。</strong></p>
+<p>对于 CronJob 这个 API 对象来说，Kubernetes 在 batch 这个 Group 下，匹配到的版本号就是 v2alpha1。</p>
+<p>在 Kubernetes 中，同一种 API 对象可以有多个版本，这正是 Kubernetes 进行 API 版本化管理的重要手段。这样，比如在 CronJob 的开发过程中，对于会影响到用户的变更就可以通过升级新版本来处理，从而保证了向后兼容。</p>
+<p><strong>最后，Kubernetes 会匹配 API 对象的资源类型。</strong></p>
+<p>在前面匹配到正确的版本之后，Kubernetes 就知道，我要创建的原来是一个 /apis/batch/v2alpha1 下的 CronJob 对象。</p>
+<p>这时候，<code>APIServer 就可以继续创建这个 CronJob 对象了。</code>为了方便理解，我为你总结了一个如下所示流程图来阐述这个创建过程：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.png"  alt="">
+      </p>
+<p><strong>首先，</strong>当我们发起了创建 CronJob 的 POST 请求之后，我们编写的 YAML 的信息就被提交给了 APIServer。</p>
+<p>而 APIServer 的第一个功能，就是过滤这个请求，并完成一些前置性的工作，比如授权、超时处理、审计等。</p>
+<p><strong>然后，</strong>请求会进入 MUX 和 Routes 流程。如果你编写过 Web Server 的话就会知道，MUX 和 Routes 是 APIServer 完成 URL 和 Handler 绑定的场所。而 APIServer 的 Handler 要做的事情，就是按照我刚刚介绍的匹配过程，找到对应的 CronJob 类型定义。</p>
+<p><strong>接着，</strong>APIServer 最重要的职责就来了：根据这个 CronJob 类型定义，使用用户提交的 YAML 文件里的字段，创建一个 CronJob 对象。</p>
+<p>而在这个过程中，APIServer 会进行一个 Convert 工作，即：把用户提交的 YAML 文件，转换成一个叫作 Super Version 的对象，它正是该 API 资源类型所有版本的字段全集。这样用户提交的不同版本的 YAML 文件，就都可以用这个 Super Version 对象来进行处理了。</p>
+<p><strong>接下来，</strong>APIServer 会先后进行 Admission() 和 Validation() 操作。比如，我在上一篇文章中提到的 Admission Controller 和 Initializer，就都属于 Admission 的内容。</p>
+<p>而 Validation，则负责验证这个对象里的各个字段是否合法。这个被验证过的 API 对象，都保存在了 APIServer 里一个叫作 Registry 的数据结构中。也就是说，只要一个 API 对象的定义能在 Registry 里查到，它就是一个有效的 Kubernetes API 对象。</p>
+<p><strong>最后，</strong>APIServer 会把验证过的 API 对象转换成用户最初提交的版本，进行序列化操作，并调用 Etcd 的 API 把它保存起来。</p>
+<p>由此可见，声明式 API 对于 Kubernetes 来说非常重要。所以，<strong>APIServer 这样一个在其他项目里“平淡无奇”的组件，却成了 Kubernetes 项目的重中之重。</strong>它不仅是 Google Borg 设计思想的集中体现，也是 Kubernetes 项目里唯一一个被 Google 公司和 RedHat 公司双重控制、其他势力根本无法参与其中的组件。</p>
+<p>此外，由于同时要兼顾性能、API 完备性、版本化、向后兼容等很多工程化指标，所以 Kubernetes 团队在 APIServer 项目里大量使用了 Go 语言的代码生成功能，来自动化诸如 Convert、DeepCopy 等与 API 资源相关的操作。这部分自动生成的代码，曾一度占到 Kubernetes 项目总代码的 20%~30%。</p>
+<p>这也是为何，在过去很长一段时间里，在这样一个极其“复杂”的 APIServer 中，添加一个 Kubernetes 风格的 API 资源类型，是一个非常困难的工作。</p>
+<p>不过，在 Kubernetes v1.7 之后，这个工作就变得轻松得多了。这，当然得益于一个全新的 API 插件机制：CRD。</p>
+<p>CRD 的全称是 Custom Resource Definition。顾名思义，它指的就是，允许用户在 Kubernetes 中添加一个跟 Pod、Node 类似的、新的 API 资源类型，即：自定义 API 资源。</p>
+<p>举个例子，<code>我现在要为 Kubernetes 添加一个名叫 Network 的 API 资源类型</code>。</p>
+<p>它的作用是，一旦用户创建一个 Network 对象，那么 Kubernetes 就应该使用这个对象定义的网络参数，调用真实的网络插件，比如 Neutron 项目，为用户创建一个真正的“网络”。这样，将来用户创建的 Pod，就可以声明使用这个“网络”了。</p>
+<p>这个 Network 对象的 YAML 文件，名叫 example-network.yaml，它的内容如下所示：</p>
+<pre><code>apiVersion: samplecrd.k8s.io/v1
+kind: Network
+metadata:
+  name: example-network
+spec:
+  cidr: &quot;192.168.0.0/16&quot;
+  gateway: &quot;192.168.0.1&quot;</code></pre><p>可以看到，我想要描述“网络”的 API 资源类型是 Network；API 组是samplecrd.k8s.io；API 版本是 v1。</p>
+<p>那么，<code>Kubernetes 又该如何知道这个 API（samplecrd.k8s.io/v1/network）的存在呢？</code></p>
+<p>其实，上面的这个 YAML 文件，就是一个具体的“自定义 API 资源”实例，也叫 CR（Custom Resource）。而为了能够让 Kubernetes 认识这个 CR，你就需要让 Kubernetes 明白这个 CR 的宏观定义是什么，也就是 CRD（Custom Resource Definition）。</p>
+<p>这就好比，你想让计算机认识各种兔子的照片，就得先让计算机明白，兔子的普遍定义是什么。比如，兔子“是哺乳动物”“有长耳朵，三瓣嘴”。</p>
+<p>所以，接下来，我就先需编写一个 CRD 的 YAML 文件，它的名字叫作 network.yaml，内容如下所示：</p>
+<pre><code>apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: networks.samplecrd.k8s.io
+spec:
+  group: samplecrd.k8s.io
+  version: v1
+  names:
+    kind: Network
+    plural: networks
+  scope: Namespaced</code></pre><p>可以看到，在这个 CRD 中，我指定了“group: samplecrd.k8s.io”“version: v1”这样的 API 信息，也指定了这个 CR 的资源类型叫作 Network，复数（plural）是 networks。</p>
+<p>然后，我还声明了它的 scope 是 Namespaced，即：我们定义的这个 Network 是一个属于 Namespace 的对象，类似于 Pod。</p>
+<p>这就是一个 Network API 资源类型的 API 部分的宏观定义了。这就等同于告诉了计算机：“兔子是哺乳动物”。所以这时候，Kubernetes 就能够认识和处理所有声明了 API 类型是“samplecrd.k8s.io/v1/network”的 YAML 文件了。</p>
+<p>接下来，我还需要让 Kubernetes“认识”这种 YAML 文件里描述的“网络”部分，比如“cidr”（网段），“gateway”（网关）这些字段的含义。这就相当于我要告诉计算机：“兔子有长耳朵和三瓣嘴”。</p>
+<p>这时候呢，我就需要稍微做些代码工作了。</p>
+<p><strong>首先，我要在 GOPATH 下，创建一个结构如下的项目：</strong></p>
+<blockquote>
+<p>备注：在这里，我并不要求你具有完备的 Go 语言知识体系，但我会假设你已经了解了 Golang 的一些基本知识（比如，知道什么是 GOPATH）。而如果你还不了解的话，可以在涉及到相关内容时，再去查阅一些相关资料。</p>
+</blockquote>
+<pre><code>$ tree $GOPATH/src/github.com/&lt;your-name&gt;/k8s-controller-custom-resource
+.
+├── controller.go
+├── crd
+│   └── network.yaml
+├── example
+│   └── example-network.yaml
+├── main.go
+└── pkg
+    └── apis
+        └── samplecrd
+            ├── register.go
+            └── v1
+                ├── doc.go
+                ├── register.go
+                └── types.go</code></pre><p>其中，pkg/apis/samplecrd 就是 API 组的名字，v1 是版本，而 v1 下面的 types.go 文件里，则定义了 Network 对象的完整描述。我已经把这个项目<span class="exturl"><a class="exturl__link"   href="https://github.com/resouer/k8s-controller-custom-resource"  target="_blank" rel="noopener">上传到了 GitHub 上</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，你可以随时参考。</p>
+<p><strong>然后，我在 pkg/apis/samplecrd 目录下创建了一个 register.go 文件，用来放置后面要用到的全局变量。</strong>这个文件的内容如下所示：</p>
+<pre><code>package samplecrd
+
+const (
+ GroupName = &quot;samplecrd.k8s.io&quot;
+ Version   = &quot;v1&quot;
+)</code></pre><p><strong>接着，我需要在 pkg/apis/samplecrd 目录下添加一个 doc.go 文件（Golang 的文档源文件）</strong>。这个文件里的内容如下所示：</p>
+<pre><code>// +k8s:deepcopy-gen=package
+
+// +groupName=samplecrd.k8s.io
+package v1</code></pre><p>在这个文件中，你会看到 +<tag_name>[=value] 格式的注释，这就是 Kubernetes 进行代码生成要用的 Annotation 风格的注释。</p>
+<p>其中，+k8s:deepcopy-gen=package 意思是，请为整个 v1 包里的所有类型定义自动生成 DeepCopy 方法；而+groupName=samplecrd.k8s.io，则定义了这个包对应的 API 组的名字。</p>
+<p>可以看到，这些定义在 doc.go 文件的注释，起到的是全局的代码生成控制的作用，所以也被称为 Global Tags。</p>
+<p><strong>接下来，我需要添加 types.go 文件。</strong>顾名思义，它的作用就是定义一个 Network 类型到底有哪些字段（比如，spec 字段里的内容）。这个文件的主要内容如下所示：</p>
+<pre><code>package v1
+...
+// +genclient
+// +genclient:noStatus
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// Network describes a Network resource
+type Network struct {
+ // TypeMeta is the metadata for the resource, like kind and apiversion
+ metav1.TypeMeta `json:&quot;,inline&quot;`
+ // ObjectMeta contains the metadata for the particular object, including
+ // things like...
+ //  - name
+ //  - namespace
+ //  - self link
+ //  - labels
+ //  - ... etc ...
+ metav1.ObjectMeta `json:&quot;metadata,omitempty&quot;`
+
+ Spec networkspec `json:&quot;spec&quot;`
+}
+// networkspec is the spec for a Network resource
+type networkspec struct {
+ Cidr    string `json:&quot;cidr&quot;`
+ Gateway string `json:&quot;gateway&quot;`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// NetworkList is a list of Network resources
+type NetworkList struct {
+ metav1.TypeMeta `json:&quot;,inline&quot;`
+ metav1.ListMeta `json:&quot;metadata&quot;`
+
+ Items []Network `json:&quot;items&quot;`
+}</code></pre><p>在上面这部分代码里，你可以看到 Network 类型定义方法跟标准的 Kubernetes 对象一样，都包括了 TypeMeta（API 元数据）和 ObjectMeta（对象元数据）字段。</p>
+<p>而其中的 Spec 字段，就是需要我们自己定义的部分。所以，在 networkspec 里，我定义了 Cidr 和 Gateway 两个字段。其中，每个字段最后面的部分比如json:”cidr”，指的就是这个字段被转换成 JSON 格式之后的名字，也就是 YAML 文件里的字段名字。</p>
+<blockquote>
+<p>如果你不熟悉这个用法的话，可以查阅一下 Golang 的文档。</p>
+</blockquote>
+<p>此外，除了定义 Network 类型，你还需要定义一个 NetworkList 类型，用来描述<strong>一组 Network 对象</strong>应该包括哪些字段。之所以需要这样一个类型，是因为在 Kubernetes 中，获取所有 X 对象的 List() 方法，返回值都是List 类型，而不是 X 类型的数组。这是不一样的。</p>
+<p>同样地，在 Network 和 NetworkList 类型上，也有代码生成注释。</p>
+<p>其中，+genclient 的意思是：请为下面这个 API 资源类型生成对应的 Client 代码（这个 Client，我马上会讲到）。而 +genclient:noStatus 的意思是：这个 API 资源类型定义里，没有 Status 字段。否则，生成的 Client 就会自动带上 UpdateStatus 方法。</p>
+<p>如果你的类型定义包括了 Status 字段的话，就不需要这句 +genclient:noStatus 注释了。比如下面这个例子：</p>
+<pre><code>// +genclient
+
+// Network is a specification for a Network resource
+type Network struct {
+ metav1.TypeMeta   `json:&quot;,inline&quot;`
+ metav1.ObjectMeta `json:&quot;metadata,omitempty&quot;`
+
+ Spec   NetworkSpec   `json:&quot;spec&quot;`
+ Status NetworkStatus `json:&quot;status&quot;`
+}</code></pre><p>需要注意的是，+genclient 只需要写在 Network 类型上，而不用写在 NetworkList 上。因为 NetworkList 只是一个返回值类型，Network 才是“主类型”。</p>
+<p>而由于我在 Global Tags 里已经定义了为所有类型生成 DeepCopy 方法，所以这里就不需要再显式地加上 +k8s:deepcopy-gen=true 了。当然，这也就意味着你可以用 +k8s:deepcopy-gen=false 来阻止为某些类型生成 DeepCopy。</p>
+<p>你可能已经注意到，在这两个类型上面还有一句+k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object的注释。它的意思是，请在生成 DeepCopy 的时候，实现 Kubernetes 提供的 runtime.Object 接口。否则，在某些版本的 Kubernetes 里，你的这个类型定义会出现编译错误。这是一个固定的操作，记住即可。</p>
+<p>不过，你或许会有这样的顾虑：这些代码生成注释这么灵活，我该怎么掌握呢？</p>
+<p>其实，上面我所讲述的内容，已经足以应对 99% 的场景了。当然，如果你对代码生成感兴趣的话，我推荐你阅读<span class="exturl"><a class="exturl__link"   href="https://blog.openshift.com/kubernetes-deep-dive-code-generation-customresources/"  target="_blank" rel="noopener">这篇博客</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，它详细地介绍了 Kubernetes 的代码生成语法。</p>
+<p><strong>最后，我需要再编写的一个 pkg/apis/samplecrd/v1/register.go 文件。</strong></p>
+<p>在前面对 APIServer 工作原理的讲解中，我已经提到，“registry”的作用就是注册一个类型（Type）给 APIServer。其中，Network 资源类型在服务器端的注册的工作，APIServer 会自动帮我们完成。但与之对应的，我们还需要让客户端也能“知道”Network 资源类型的定义。这就需要我们在项目里添加一个 register.go 文件。它最主要的功能，就是定义了如下所示的 addKnownTypes() 方法：</p>
+<pre><code>package v1
+...
+// addKnownTypes adds our types to the API scheme by registering
+// Network and NetworkList
+func addKnownTypes(scheme *runtime.Scheme) error {
+ scheme.AddKnownTypes(
+  SchemeGroupVersion,
+  &amp;Network{},
+  &amp;NetworkList{},
+ )
+
+ // register the type in the scheme
+ metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
+ return nil
+}</code></pre><p>有了这个方法，Kubernetes 就能够在后面生成客户端的时候，“知道”Network 以及 NetworkList 类型的定义了。</p>
+<p>像上面这种register.go 文件里的内容其实是非常固定的，你以后可以直接使用我提供的这部分代码做模板，然后把其中的资源类型、GroupName 和 Version 替换成你自己的定义即可。</p>
+<p>这样，Network 对象的定义工作就全部完成了。可以看到，它其实定义了两部分内容：</p>
+<ul>
+<li>第一部分是，自定义资源类型的 API 描述，包括：组（Group）、版本（Version）、资源类型（Resource）等。这相当于告诉了计算机：兔子是哺乳动物。</li>
+<li>第二部分是，自定义资源类型的对象描述，包括：Spec、Status 等。这相当于告诉了计算机：兔子有长耳朵和三瓣嘴。<br>接下来，<code>我就要使用 Kubernetes 提供的代码生成工具，为上面定义的 Network 资源类型自动生成 clientset、informer 和 lister。</code>其中，clientset 就是操作 Network 对象所需要使用的客户端，而 informer 和 lister 这两个包的主要功能，我会在下一篇文章中重点讲解。</li>
+</ul>
+<p>这个代码生成工具名叫k8s.io/code-generator，使用方法如下所示：</p>
+<pre><code># 代码生成的工作目录，也就是我们的项目路径
+$ ROOT_PACKAGE=&quot;github.com/resouer/k8s-controller-custom-resource&quot;
+# API Group
+$ CUSTOM_RESOURCE_NAME=&quot;samplecrd&quot;
+# API Version
+$ CUSTOM_RESOURCE_VERSION=&quot;v1&quot;
+
+# 安装 k8s.io/code-generator
+$ go get -u k8s.io/code-generator/...
+$ cd $GOPATH/src/k8s.io/code-generator
+
+# 执行代码自动生成，其中 pkg/client 是生成目标目录，pkg/apis 是类型定义目录
+$ ./generate-groups.sh all &quot;$ROOT_PACKAGE/pkg/client&quot; &quot;$ROOT_PACKAGE/pkg/apis&quot; &quot;$CUSTOM_RESOURCE_NAME:$CUSTOM_RESOURCE_VERSION&quot;</code></pre><p>代码生成工作完成之后，我们再查看一下这个项目的目录结构：</p>
+<pre><code>$ tree
+.
+├── controller.go
+├── crd
+│   └── network.yaml
+├── example
+│   └── example-network.yaml
+├── main.go
+└── pkg
+    ├── apis
+    │   └── samplecrd
+    │       ├── constants.go
+    │       └── v1
+    │           ├── doc.go
+    │           ├── register.go
+    │           ├── types.go
+    │           └── zz_generated.deepcopy.go
+    └── client
+        ├── clientset
+        ├── informers
+        └── listers</code></pre><p>其中，pkg/apis/samplecrd/v1 下面的 zz_generated.deepcopy.go 文件，就是自动生成的 DeepCopy 代码文件。</p>
+<p>而整个 client 目录，以及下面的三个包（clientset、informers、 listers），都是 Kubernetes 为 Network 类型生成的客户端库，这些库会在后面编写自定义控制器的时候用到。</p>
+<p>可以看到，到目前为止的这些工作，其实并不要求你写多少代码，主要考验的是“复制、粘贴、替换”这样的“基本功”。</p>
+<p>而有了这些内容，现在你就可以<code>在 Kubernetes 集群里创建一个 Network 类型的 API 对象了</code>。我们不妨一起来实验一下。</p>
+<p><strong>首先，</strong>使用 network.yaml 文件，在 Kubernetes 中创建 Network 对象的 CRD（Custom Resource Definition）：</p>
+<pre><code>$ kubectl apply -f crd/network.yaml
+customresourcedefinition.apiextensions.k8s.io/networks.samplecrd.k8s.io created</code></pre><p>这个操作，就告诉了 Kubernetes，我现在要添加一个自定义的 API 对象。而这个对象的 API 信息，正是 network.yaml 里定义的内容。我们可以通过 kubectl get 命令，查看这个 CRD：</p>
+<pre><code>$ kubectl get crd
+NAME                        CREATED AT
+networks.samplecrd.k8s.io   2018-09-15T10:57:12Z</code></pre><p><strong>然后，</strong>我们就可以创建一个 Network 对象了，这里用到的是 example-network.yaml：</p>
+<pre><code>$ kubectl apply -f example/example-network.yaml 
+network.samplecrd.k8s.io/example-network created</code></pre><p>通过这个操作，你就在 Kubernetes 集群里创建了一个 Network 对象。它的 API 资源路径是samplecrd.k8s.io/v1/networks。</p>
+<p>这时候，你就可以通过 kubectl get 命令，查看到新创建的 Network 对象：</p>
+<pre><code>$ kubectl get network
+NAME              AGE
+example-network   8s</code></pre><p>你还可以通过 kubectl describe 命令，看到这个 Network 对象的细节：</p>
+<pre><code>$ kubectl describe network example-network
+Name:         example-network
+Namespace:    default
+Labels:       &lt;none&gt;
+...API Version:  samplecrd.k8s.io/v1
+Kind:         Network
+Metadata:
+  ...
+  Generation:          1
+  Resource Version:    468239
+  ...
+Spec:
+  Cidr:     192.168.0.0/16
+  Gateway:  192.168.0.1</code></pre><p>当然 ，你也可以编写更多的 YAML 文件来创建更多的 Network 对象，这和创建 Pod、Deployment 的操作，没有任何区别。</p>
+<p><strong>总结</strong><br>在今天这篇文章中，我为你详细解析了 Kubernetes 声明式 API 的工作原理，讲解了如何遵循声明式 API 的设计，为 Kubernetes 添加一个名叫 Network 的 API 资源类型。从而达到了通过标准的 kubectl create 和 get 操作，来管理自定义 API 对象的目的。</p>
+<p>不过，创建出这样一个自定义 API 对象，我们只是完成了 Kubernetes 声明式 API 的一半工作。</p>
+<p>接下来的另一半工作是：为这个 API 对象编写一个自定义控制器（Custom Controller）。这样， Kubernetes 才能根据 Network API 对象的“增、删、改”操作，在真实环境中做出相应的响应。比如，“创建、删除、修改”真正的 Neutron 网络。</p>
+<p>而这，正是 Network 这个 API 对象所关注的“业务逻辑”。</p>
+<p>这个业务逻辑的实现过程，以及它所使用的 Kubernetes API 编程库的工作原理，就是我要在下一篇文章中讲解的主要内容。</p>
+<p><strong>思考题</strong><br>在了解了 CRD 的定义方法之后，你是否已经在考虑使用 CRD（或者已经使用了 CRD）来描述现实中的某种实体了呢？能否分享一下你的思路？（举个例子：某技术团队使用 CRD 描述了“宿主机”，然后用 Kubernetes 部署了 Kubernetes）</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/18.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%80)%EF%BC%9A%E6%8B%93%E6%89%91%E7%8A%B6%E6%80%81/">18 | 深入理解StatefulSet（一）：拓扑状态</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+<p>在上一篇文章中，我在结尾处讨论到了 Deployment 实际上并不足以覆盖所有的应用编排问题。</p>
+<p>造成这个问题的根本原因，在于 Deployment 对应用做了一个简单化假设。</p>
+<p>它认为，一个应用的所有 Pod，是完全一样的。所以，它们互相之间没有顺序，也无所谓运行在哪台宿主机上。需要的时候，Deployment 就可以通过 Pod 模板创建新的 Pod；不需要的时候，Deployment 就可以“杀掉”任意一个 Pod。</p>
+<p>但是，在实际的场景中，并不是所有的应用都可以满足这样的要求。</p>
+<p>尤其是分布式应用，它的多个实例之间，往往有依赖关系，比如：主从关系、主备关系。</p>
+<p>还有就是数据存储类应用，它的多个实例，往往都会在本地磁盘上保存一份数据。而这些实例一旦被杀掉，即便重建出来，实例与数据之间的对应关系也已经丢失，从而导致应用失败。</p>
+<p>所以，这种实例之间有不对等关系，以及实例对外部数据有依赖关系的应用，就被称为<strong><code>“有状态应用”（Stateful Application）。</code></strong></p>
+<p>容器技术诞生后，大家很快发现，它用来封装“无状态应用”（Stateless Application），尤其是 Web 服务，非常好用。但是，一旦你想要用容器运行“有状态应用”，其困难程度就会直线上升。而且，这个问题解决起来，单纯依靠容器技术本身已经无能为力，这也就导致了很长一段时间内，“有状态应用”几乎成了容器技术圈子的“忌讳”，大家一听到这个词，就纷纷摇头。</p>
+<p>不过，Kubernetes 项目还是成为了“第一个吃螃蟹的人”。</p>
+<p>得益于“控制器模式”的设计思想，Kubernetes 项目很早就在 Deployment 的基础上，扩展出了对“有状态应用”的初步支持。这个编排功能，就是：StatefulSet。</p>
+<p>StatefulSet 的设计其实非常容易理解。它把真实世界里的应用状态，抽象为了两种情况：</p>
+<ol>
+<li>拓扑状态。这种情况意味着，应用的多个实例之间不是完全对等的关系。这些应用实例，必须按照某些顺序启动，比如应用的主节点 A 要先于从节点 B 启动。而如果你把 A 和 B 两个 Pod 删除掉，它们再次被创建出来时也必须严格按照这个顺序才行。并且，新创建出来的 Pod，必须和原来 Pod 的网络标识一样，这样原先的访问者才能使用同样的方法，访问到这个新 Pod。</li>
+<li>存储状态。这种情况意味着，应用的多个实例分别绑定了不同的存储数据。对于这些应用实例来说，Pod A 第一次读取到的数据，和隔了十分钟之后再次读取到的数据，应该是同一份，哪怕在此期间 Pod A 被重新创建过。这种情况最典型的例子，就是一个数据库应用的多个存储实例。</li>
+</ol>
+<p>所以，<strong>StatefulSet 的核心功能，就是通过某种方式记录这些状态，然后在 Pod 被重新创建时，能够为新 Pod 恢复这些状态。</strong><br><strong>(StatefulSet的核心功能，能通过某种方式记录应用的拓扑状态和存储状态，在Pod重新创建时，为新Pod恢复这些状态。)</strong></p>
+<p>在开始讲述 StatefulSet 的工作原理之前，我就必须先为你讲解一个 <code>Kubernetes 项目中非常实用的概念：Headless Service。</code></p>
+<p>我在和你一起讨论 Kubernetes 架构的时候就曾介绍过，Service 是 Kubernetes 项目中用来将一组 Pod 暴露给外界访问的一种机制。比如，一个 Deployment 有 3 个 Pod，那么我就可以定义一个 Service。然后，用户只要能访问到这个 Service，它就能访问到某个具体的 Pod。</p>
+<p>那么，这个 Service 又是如何被访问的呢？</p>
+<p>** * 第一种方式，是以 Service 的 VIP（Virtual IP，即：虚拟 IP）方式。<strong>比如：当我访问 10.0.23.1 这个 Service 的 IP 地址时，10.0.23.1 其实就是一个 VIP，它会把请求转发到该 Service 所代理的某一个 Pod 上。这里的具体原理，我会在后续的 Service 章节中进行详细介绍。<br>** * 第二种方式，就是以 Service 的 DNS 方式(只能在容器的网络里面，在宿主机里面是不行的)。</strong>比如：这时候，只要我访问“my-svc.my-namespace.svc.cluster.local”这条 DNS 记录，就可以访问到名叫 my-svc 的 Service 所代理的某一个 Pod。</p>
+<p>而在第二种 Service DNS 的方式下，具体还可以分为两种处理方法：</p>
+<p>第一种处理方法，是 Normal Service。这种情况下，你访问“my-svc.my-namespace.svc.cluster.local”解析到的，正是 my-svc 这个 Service 的 VIP，后面的流程就跟 VIP 方式一致了。</p>
+<p>而第二种处理方法，正是 Headless Service。这种情况下，你访问“my-svc.my-namespace.svc.cluster.local”解析到的，直接就是 my-svc 代理的某一个 Pod 的 IP 地址。可以看到，<strong>这里的区别在于，Headless Service 不需要分配一个 VIP，而是可以直接以 DNS 记录的方式解析出被代理 Pod 的 IP 地址。</strong></p>
+<p>那么，这样的设计又有什么作用呢？</p>
+<p>想要回答这个问题，我们需要从 Headless Service 的定义方式看起。</p>
+<p>下面是一个标准的 Headless Service 对应的 YAML 文件：</p>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx</code></pre><p>可以看到，所谓的 Headless Service，其实仍是一个标准 Service 的 YAML 文件。只不过，它的 clusterIP 字段的值是：None，即：这个 Service，没有一个 VIP 作为“头”。这也就是 Headless 的含义。所以，这个 Service 被创建后并不会被分配一个 VIP，而是会以 DNS 记录的方式暴露出它所代理的 Pod。</p>
+<p>而它所代理的 Pod，依然是采用我在前面第 12 篇文章《牛刀小试：我的第一个容器化应用》中提到的 Label Selector 机制选择出来的，即：所有携带了 app=nginx 标签的 Pod，都会被这个 Service 代理起来。</p>
+<p>然后关键来了。</p>
+<p>当你按照这样的方式创建了一个 Headless Service 之后，它所代理的所有 Pod 的 IP 地址，都会被绑定一个这样格式的 DNS 记录，如下所示：</p>
+<pre><code>&lt;pod-name&gt;.&lt;svc-name&gt;.&lt;namespace&gt;.svc.cluster.local</code></pre><p>这个 DNS 记录，正是 Kubernetes 项目为 Pod 分配的唯一的“可解析身份”（Resolvable Identity）。</p>
+<p>有了这个“可解析身份”，只要你知道了一个 Pod 的名字，以及它对应的 Service 的名字，你就可以非常确定地通过这条 DNS 记录访问到 Pod 的 IP 地址。</p>
+<p>那么，<code>StatefulSet 又是如何使用这个 DNS 记录来维持 Pod 的拓扑状态的呢？</code></p>
+<p>为了回答这个问题，现在我们就来编写一个 StatefulSet 的 YAML 文件，如下所示：</p>
+<pre><code>apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: &quot;nginx&quot;
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.9.1
+        ports:
+        - containerPort: 80
+          name: web</code></pre><p>这个 YAML 文件，和我们在前面文章中用到的 nginx-deployment 的唯一区别，就是多了一个 serviceName=nginx 字段。</p>
+<p>这个字段的作用，就是告诉 StatefulSet 控制器，在执行控制循环（Control Loop）的时候，请使用 nginx 这个 Headless Service 来保证 Pod 的“可解析身份”。</p>
+<p>所以，当你通过 kubectl create 创建了上面这个 Service 和 StatefulSet 之后，就会看到如下两个对象：</p>
+<pre><code>$ kubectl create -f svc.yaml
+$ kubectl get service nginx
+NAME      TYPE         CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+nginx     ClusterIP    None         &lt;none&gt;        80/TCP    10s
+
+$ kubectl create -f statefulset.yaml
+$ kubectl get statefulset web
+NAME      DESIRED   CURRENT   AGE
+web       2         1         19s</code></pre><p>这时候，如果你手比较快的话，还可以通过 kubectl 的 -w 参数，即：Watch 功能，实时查看 StatefulSet 创建两个有状态实例的过程：</p>
+<blockquote>
+<p>备注：如果手不够快的话，Pod 很快就创建完了。不过，你依然可以通过这个 StatefulSet 的 Events 看到这些信息。</p>
+</blockquote>
+<pre><code>$ kubectl get pods -w -l app=nginx
+NAME      READY     STATUS    RESTARTS   AGE
+web-0     0/1       Pending   0          0s
+web-0     0/1       Pending   0         0s
+web-0     0/1       ContainerCreating   0         0s
+web-0     1/1       Running   0         19s
+web-1     0/1       Pending   0         0s
+web-1     0/1       Pending   0         0s
+web-1     0/1       ContainerCreating   0         0s
+web-1     1/1       Running   0         20s</code></pre><p>通过上面这个 Pod 的创建过程，我们不难看到，StatefulSet 给它所管理的所有 Pod 的名字，进行了编号，编号规则是：-。</p>
+<p>而且这些编号都是从 0 开始累加，与 StatefulSet 的每个 Pod 实例一一对应，绝不重复。</p>
+<p>更重要的是，这些 Pod 的创建，也是严格按照编号顺序进行的。比如，在 web-0 进入到 Running 状态、并且细分状态（Conditions）成为 Ready 之前，web-1 会一直处于 Pending 状态。</p>
+<blockquote>
+<p>备注：Ready 状态再一次提醒了我们，为 Pod 设置 livenessProbe 和 readinessProbe 的重要性。</p>
+</blockquote>
+<p>当这两个 Pod 都进入了 Running 状态之后，你就可以查看到它们各自唯一的“网络身份”了。</p>
+<p>我们使用 kubectl exec 命令进入到容器中查看它们的 hostname：</p>
+<pre><code>$ kubectl exec web-0 -- sh -c &apos;hostname&apos;
+web-0
+$ kubectl exec web-1 -- sh -c &apos;hostname&apos;
+web-1</code></pre><p>可以看到，这两个 Pod 的 hostname 与 Pod 名字是一致的，都被分配了对应的编号。接下来，我们再试着以 DNS 的方式，访问一下这个 Headless Service：</p>
+<pre><code>$ kubectl run -i --tty --image busybox dns-test --restart=Never --rm /bin/sh </code></pre><p>通过这条命令，我们<strong>启动了一个一次性的 Pod，因为<code>--rm</code> 意味着 Pod 退出后就会被删除掉</strong>。然后，在这个 Pod 的容器里面，我们尝试用 nslookup 命令，解析一下 Pod 对应的 Headless Service：</p>
+<pre><code>$ kubectl run -i --tty --image busybox dns-test --restart=Never --rm /bin/sh
+$ nslookup web-0.nginx
+Server:    10.0.0.10
+Address 1: 10.0.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      web-0.nginx
+Address 1: 10.244.1.7
+
+$ nslookup web-1.nginx
+Server:    10.0.0.10
+Address 1: 10.0.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      web-1.nginx
+Address 1: 10.244.2.7</code></pre><p>从 nslookup 命令的输出结果中，我们可以看到，在访问 web-0.nginx 的时候，最后解析到的，正是 web-0 这个 Pod 的 IP 地址；而当访问 web-1.nginx 的时候，解析到的则是 web-1 的 IP 地址。</p>
+<p>这时候，如果你在另外一个 Terminal 里把这两个“有状态应用”的 Pod 删掉：</p>
+<pre><code>$ kubectl delete pod -l app=nginx
+pod &quot;web-0&quot; deleted
+pod &quot;web-1&quot; deleted</code></pre><p>然后，再在当前 Terminal 里 Watch 一下这两个 Pod 的状态变化，就会发现一个有趣的现象：</p>
+<pre><code>$ kubectl get pod -w -l app=nginx
+NAME      READY     STATUS              RESTARTS   AGE
+web-0     0/1       ContainerCreating   0          0s
+NAME      READY     STATUS    RESTARTS   AGE
+web-0     1/1       Running   0          2s
+web-1     0/1       Pending   0         0s
+web-1     0/1       ContainerCreating   0         0s
+web-1     1/1       Running   0         32s</code></pre><p>可以看到，当我们把这两个 Pod 删除之后，Kubernetes 会按照原先编号的顺序，创建出了两个新的 Pod。并且，Kubernetes 依然为它们分配了与原来相同的“网络身份”：web-0.nginx 和 web-1.nginx。</p>
+<p>通过这种严格的对应规则，StatefulSet 就保证了 Pod 网络标识的稳定性。</p>
+<p>比如，如果 web-0 是一个需要先启动的主节点，web-1 是一个后启动的从节点，那么只要这个 StatefulSet 不被删除，你访问 web-0.nginx 时始终都会落在主节点上，访问 web-1.nginx 时，则始终都会落在从节点上，这个关系绝对不会发生任何变化。</p>
+<p>所以，如果我们再用 nslookup 命令，查看一下这个新 Pod 对应的 Headless Service 的话：</p>
+<pre><code>$ kubectl run -i --tty --image busybox dns-test --restart=Never --rm /bin/sh 
+$ nslookup web-0.nginx
+Server:    10.0.0.10
+Address 1: 10.0.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      web-0.nginx
+Address 1: 10.244.1.8
+
+$ nslookup web-1.nginx
+Server:    10.0.0.10
+Address 1: 10.0.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      web-1.nginx
+Address 1: 10.244.2.8</code></pre><p>我们可以看到，在这个 StatefulSet 中，这两个新 Pod 的“网络标识”（比如：web-0.nginx 和 web-1.nginx），再次解析到了正确的 IP 地址（比如：web-0 Pod 的 IP 地址 10.244.1.8）。</p>
+<p>通过这种方法，<strong>Kubernetes 就成功地将 Pod 的拓扑状态（比如：哪个节点先启动，哪个节点后启动），按照 Pod 的“名字 + 编号”的方式固定了下来。</strong> 此外，Kubernetes 还为每一个 Pod 提供了一个固定并且唯一的访问入口，即：这个 Pod 对应的 DNS 记录。</p>
+<p>这些状态，在 StatefulSet 的整个生命周期里都会保持不变，绝不会因为对应 Pod 的删除或者重新创建而失效。</p>
+<p>不过，相信你也已经注意到了，尽管 web-0.nginx 这条记录本身不会变，但它解析到的 Pod 的 IP 地址，并不是固定的。这就意味着，对于“有状态应用”实例的访问，你必须使用 DNS 记录或者 hostname 的方式，而绝不应该直接访问这些 Pod 的 IP 地址。</p>
+<p><strong>总结</strong><br>在今天这篇文章中，我首先和你分享了 StatefulSet 的基本概念，解释了什么是应用的“状态”。</p>
+<p>紧接着 ，我为你分析了 StatefulSet 如何保证应用实例之间“拓扑状态”的稳定性。</p>
+<p>如果用一句话来总结的话，你可以这么理解这个过程：</p>
+<blockquote>
+<p>StatefulSet 这个控制器的主要作用之一，就是使用 Pod 模板创建 Pod 的时候，对它们进行编号，并且按照编号顺序逐一完成创建工作。而当 StatefulSet 的“控制循环”发现 Pod 的“实际状态”与“期望状态”不一致，需要新建或者删除 Pod 进行“调谐”的时候，它会严格按照这些 Pod 编号的顺序，逐一完成这些操作。</p>
+</blockquote>
+<p>所以，StatefulSet 其实可以认为是对 Deployment 的改良。</p>
+<p>与此同时，通过 Headless Service 的方式，StatefulSet 为每个 Pod 创建了一个固定并且稳定的 DNS 记录，来作为它的访问入口。</p>
+<p>实际上，在部署“有状态应用”的时候，应用的每个实例拥有唯一并且稳定的“网络标识”，是一个非常重要的假设。</p>
+<p>在下一篇文章中，我将会继续为你剖析 StatefulSet 如何处理存储状态。</p>
+<p><strong>思考题</strong><br>你曾经运维过哪些有拓扑状态的应用呢（比如：主从、主主、主备、一主多从等结构）？你觉得这些应用实例之间的拓扑关系，能否借助这种为 Pod 实例编号的方式表达出来呢？如果不能，你觉得 Kubernetes 还应该为你提供哪些支持来管理这个拓扑状态呢？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/19.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%BA%8C)%EF%BC%9A%E5%AD%98%E5%82%A8%E7%8A%B6%E6%80%81/">19 | 深入理解StatefulSet（二）：存储状态</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.6k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+<p>在上一篇文章中，我和你分享了 StatefulSet 如何保证应用实例的拓扑状态，在 Pod 删除和再创建的过程中保持稳定。</p>
+<p>而在今天这篇文章中，我将继续为你解读 StatefulSet 对存储状态的管理机制。这个机制，主要使用的是一个叫作 Persistent Volume Claim 的功能。</p>
+<p>在前面介绍 Pod 的时候，我曾提到过，要在一个 Pod 里声明 Volume，只要在 Pod 里加上 spec.volumes 字段即可。然后，你就可以在这个字段里定义一个具体类型的 Volume 了，比如：hostPath。</p>
+<p>可是，你有没有想过这样一个场景：如果你并不知道有哪些 Volume 类型可以用，要怎么办呢？</p>
+<p>更具体地说，作为一个应用开发者，我可能对持久化存储项目（比如 Ceph、GlusterFS 等）一窍不通，也不知道公司的 Kubernetes 集群里到底是怎么搭建出来的，我也自然不会编写它们对应的 Volume 定义文件。</p>
+<p>所谓“术业有专攻”，这些关于 Volume 的管理和远程持久化存储的知识，不仅超越了开发者的知识储备，还会有暴露公司基础设施秘密的风险。</p>
+<p>比如，下面这个例子，就是一个声明了 Ceph RBD 类型 Volume 的 Pod：</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: rbd
+spec:
+  containers:
+    - image: kubernetes/pause
+      name: rbd-rw
+      volumeMounts:
+      - name: rbdpd
+        mountPath: /mnt/rbd
+  volumes:
+    - name: rbdpd
+      rbd:
+        monitors:
+        - &apos;10.16.154.78:6789&apos;
+        - &apos;10.16.154.82:6789&apos;
+        - &apos;10.16.154.83:6789&apos;
+        pool: kube
+        image: foo
+        fsType: ext4
+        readOnly: true
+        user: admin
+        keyring: /etc/ceph/keyring
+        imageformat: &quot;2&quot;
+        imagefeatures: &quot;layering&quot;</code></pre><p>其一，如果不懂得 Ceph RBD 的使用方法，那么这个 Pod 里 Volumes 字段，你十有八九也完全看不懂。其二，这个 Ceph RBD 对应的存储服务器的地址、用户名、授权文件的位置，也都被轻易地暴露给了全公司的所有开发人员，这是一个典型的信息被“过度暴露”的例子。</p>
+<p>这也是为什么，在后来的演化中，<strong>Kubernetes 项目引入了一组叫作 Persistent Volume Claim（PVC）和 Persistent Volume（PV）的 API 对象，大大降低了用户声明和使用持久化 Volume 的门槛。</strong></p>
+<p>举个例子，有了 PVC 之后，一个开发人员想要使用一个 Volume，只需要简单的两步即可。</p>
+<p>第一步：定义一个 PVC，声明想要的 Volume 的属性：</p>
+<pre><code>kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pv-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi</code></pre><p>可以看到，在这个 PVC 对象里，不需要任何关于 Volume 细节的字段，只有描述性的属性和定义。比如，storage: 1Gi，表示我想要的 Volume 大小至少是 1 GiB；accessModes: ReadWriteOnce，表示这个 Volume 的挂载方式是可读写，并且只能被挂载在一个节点上而非被多个节点共享。</p>
+<blockquote>
+<p>备注：关于哪种类型的 Volume 支持哪种类型的 AccessMode，你可以查看 Kubernetes 项目官方文档中的详细列表。</p>
+</blockquote>
+<p>第二步：在应用的 Pod 中，声明使用这个 PVC：</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-pod
+spec:
+  containers:
+    - name: pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: &quot;http-server&quot;
+      volumeMounts:
+        - mountPath: &quot;/usr/share/nginx/html&quot;
+          name: pv-storage
+  volumes:
+    - name: pv-storage
+      persistentVolumeClaim:
+        claimName: pv-claim</code></pre><p>可以看到，在这个 Pod 的 Volumes 定义中，我们只需要声明它的类型是 persistentVolumeClaim，然后指定 PVC 的名字，而完全不必关心 Volume 本身的定义。</p>
+<p>这时候，只要我们创建这个 PVC 对象，Kubernetes 就会自动为它绑定一个符合条件的 Volume。可是，这些符合条件的 Volume 又是从哪里来的呢？</p>
+<p>答案是，它们来自于由运维人员维护的 PV（Persistent Volume）对象。接下来，我们一起看一个常见的 PV 对象的 YAML 文件：</p>
+<pre><code>kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 10Gi
+  rbd:
+    monitors:
+    - &apos;10.16.154.78:6789&apos;
+    - &apos;10.16.154.82:6789&apos;
+    - &apos;10.16.154.83:6789&apos;
+    pool: kube
+    image: foo
+    fsType: ext4
+    readOnly: true
+    user: admin
+    keyring: /etc/ceph/keyring
+    imageformat: &quot;2&quot;
+    imagefeatures: &quot;layering&quot;</code></pre><p>可以看到，这个 PV 对象的 spec.rbd 字段，正是我们前面介绍过的 Ceph RBD Volume 的详细定义。而且，它还声明了这个 PV 的容量是 10 GiB。这样，Kubernetes 就会为我们刚刚创建的 PVC 对象绑定这个 PV。</p>
+<p>所以，<strong><code>Kubernetes 中 PVC 和 PV 的设计，实际上类似于“接口”和“实现”的思想。开发者只要知道并会使用“接口”，即：PVC；而运维人员则负责给“接口”绑定具体的实现，即：PV。</code></strong></p>
+<p>这种解耦，就避免了因为向开发者暴露过多的存储系统细节而带来的隐患。此外，这种职责的分离，往往也意味着出现事故时可以更容易定位问题和明确责任，从而避免“扯皮”现象的出现。</p>
+<p>而 PVC、PV 的设计，也使得 StatefulSet 对存储状态的管理成为了可能。我们还是以上一篇文章中用到的 StatefulSet 为例（你也可以借此再回顾一下《深入理解 StatefulSet（一）：拓扑状态》中的相关内容）：</p>
+<pre><code>apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: &quot;nginx&quot;
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.9.1
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi</code></pre><p>这次，我们为这个 StatefulSet 额外添加了一个 volumeClaimTemplates 字段。从名字就可以看出来，它跟 Deployment 里 Pod 模板（PodTemplate）的作用类似。也就是说，凡是被这个 StatefulSet 管理的 Pod，都会声明一个对应的 PVC；而这个 PVC 的定义，就来自于 volumeClaimTemplates 这个模板字段。更重要的是，这个 PVC 的名字，会被分配一个与这个 Pod 完全一致的编号。</p>
+<p>这个自动创建的 PVC，与 PV 绑定成功后，就会进入 Bound 状态，这就意味着这个 Pod 可以挂载并使用这个 PV 了。</p>
+<p>如果你还是不太理解 PVC 的话，可以先记住这样一个结论：PVC 其实就是一种特殊的 Volume。只不过一个 PVC 具体是什么类型的 Volume，要在跟某个 PV 绑定之后才知道。关于 PV、PVC 更详细的知识，我会在容器存储部分做进一步解读。</p>
+<p>当然，PVC 与 PV 的绑定得以实现的前提是，运维人员已经在系统里创建好了符合条件的 PV（比如，我们在前面用到的 pv-volume）；或者，你的 Kubernetes 集群运行在公有云上，这样 Kubernetes 就会通过 Dynamic Provisioning 的方式，自动为你创建与 PVC 匹配的 PV。</p>
+<p>所以，我们在使用 kubectl create 创建了 StatefulSet 之后，就会看到 Kubernetes 集群里出现了两个 PVC：</p>
+<pre><code>$ kubectl create -f statefulset.yaml
+$ kubectl get pvc -l app=nginx
+NAME        STATUS    VOLUME                                     CAPACITY   ACCESSMODES   AGE
+www-web-0   Bound     pvc-15c268c7-b507-11e6-932f-42010a800002   1Gi        RWO           48s
+www-web-1   Bound     pvc-15c79307-b507-11e6-932f-42010a800002   1Gi        RWO           48s</code></pre><p>可以看到，这些 PVC，都以“&lt;PVC 名字 &gt;-&lt;StatefulSet 名字 &gt;-&lt; 编号 &gt;”的方式命名，并且处于 Bound 状态。</p>
+<p>我们前面已经讲到过，这个 StatefulSet 创建出来的所有 Pod，都会声明使用编号的 PVC。比如，在名叫 web-0 的 Pod 的 volumes 字段，它会声明使用名叫 www-web-0 的 PVC，从而挂载到这个 PVC 所绑定的 PV。</p>
+<p>所以，我们就可以使用如下所示的指令，在 Pod 的 Volume 目录里写入一个文件，来验证一下上述 Volume 的分配情况：</p>
+<pre><code>$ for i in 0 1; do kubectl exec web-$i -- sh -c &apos;echo hello $(hostname) &gt; /usr/share/nginx/html/index.html&apos;; done</code></pre><p>如上所示，通过 kubectl exec 指令，我们在每个 Pod 的 Volume 目录里，写入了一个 index.html 文件。这个文件的内容，正是 Pod 的 hostname。比如，我们在 web-0 的 index.html 里写入的内容就是 “hello web-0”。</p>
+<p>此时，如果你在这个 Pod 容器里访问“<span class="exturl"><a class="exturl__link"   href="http://localhost”，你实际访问到的就是"  target="_blank" rel="noopener">http://localhost”，你实际访问到的就是</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> Pod 里 Nginx 服务器进程，而它会为你返回 /usr/share/nginx/html/index.html 里的内容。这个操作的执行方法如下所示：</p>
+<pre><code>$ for i in 0 1; do kubectl exec -it web-$i -- curl localhost; done
+hello web-0
+hello web-1</code></pre><p>现在，关键来了。</p>
+<p>如果你使用 kubectl delete 命令删除这两个 Pod，这些 Volume 里的文件会不会丢失呢？</p>
+<pre><code>$ kubectl delete pod -l app=nginx
+pod &quot;web-0&quot; deleted
+pod &quot;web-1&quot; deleted</code></pre><p>可以看到，正如我们前面介绍过的，在被删除之后，这两个 Pod 会被按照编号的顺序被重新创建出来。而这时候，如果你在新创建的容器里通过访问“<span class="exturl"><a class="exturl__link"   href="http://localhost”的方式去访问"  target="_blank" rel="noopener">http://localhost”的方式去访问</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> web-0 里的 Nginx 服务：</p>
+<pre><code># 在被重新创建出来的 Pod 容器里访问 http://localhost
+$ kubectl exec -it web-0 -- curl localhost
+hello web-0</code></pre><p>就会发现，这个请求依然会返回：hello web-0。也就是说，原先与名叫 web-0 的 Pod 绑定的 PV，在这个 Pod 被重新创建之后，依然同新的名叫 web-0 的 Pod 绑定在了一起。对于 Pod web-1 来说，也是完全一样的情况。</p>
+<p>这是怎么做到的呢？</p>
+<p>其实，我和你分析一下 StatefulSet 控制器恢复这个 Pod 的过程，你就可以很容易理解了。</p>
+<p>首先，当你把一个 Pod，比如 web-0，删除之后，这个 Pod 对应的 PVC 和 PV，并不会被删除，而这个 Volume 里已经写入的数据，也依然会保存在远程存储服务里（比如，我们在这个例子里用到的 Ceph 服务器）。</p>
+<p>此时，StatefulSet 控制器发现，一个名叫 web-0 的 Pod 消失了。所以，控制器就会重新创建一个新的、名字还是叫作 web-0 的 Pod 来，“纠正”这个不一致的情况。</p>
+<p>需要注意的是，在这个新的 Pod 对象的定义里，它声明使用的 PVC 的名字，还是叫作：www-web-0。这个 PVC 的定义，还是来自于 PVC 模板（volumeClaimTemplates），这是 StatefulSet 创建 Pod 的标准流程。</p>
+<p>所以，在这个新的 web-0 Pod 被创建出来之后，Kubernetes 为它查找名叫 www-web-0 的 PVC 时，就会直接找到旧 Pod 遗留下来的同名的 PVC，进而找到跟这个 PVC 绑定在一起的 PV。</p>
+<p>这样，新的 Pod 就可以挂载到旧 Pod 对应的那个 Volume，并且获取到保存在 Volume 里的数据。</p>
+<p>通过这种方式，Kubernetes 的 StatefulSet 就实现了对应用存储状态的管理。</p>
+<p>看到这里，你是不是已经大致理解了 StatefulSet 的工作原理呢？现在，我再为你详细梳理一下吧。</p>
+<p><strong>首先，StatefulSet 的控制器直接管理的是 Pod。</strong> 这是因为，StatefulSet 里的不同 Pod 实例，不再像 ReplicaSet 中那样都是完全一样的，而是有了细微区别的。比如，每个 Pod 的 hostname、名字等都是不同的、携带了编号的。而 StatefulSet 区分这些实例的方式，就是通过在 Pod 的名字里加上事先约定好的编号。</p>
+<p><strong>其次，Kubernetes 通过 Headless Service，为这些有编号的 Pod，在 DNS 服务器中生成带有同样编号的 DNS 记录。</strong>只要 StatefulSet 能够保证这些 Pod 名字里的编号不变，那么 Service 里类似于 web-0.nginx.default.svc.cluster.local 这样的 DNS 记录也就不会变，而这条记录解析出来的 Pod 的 IP 地址，则会随着后端 Pod 的删除和再创建而自动更新。这当然是 Service 机制本身的能力，不需要 StatefulSet 操心。</p>
+<p><strong>最后，StatefulSet 还为每一个 Pod 分配并创建一个同样编号的 PVC。</strong>这样，Kubernetes 就可以通过 Persistent Volume 机制为这个 PVC 绑定上对应的 PV，从而保证了每一个 Pod 都拥有一个独立的 Volume。</p>
+<p>在这种情况下，即使 Pod 被删除，它所对应的 PVC 和 PV 依然会保留下来。所以当这个 Pod 被重新创建出来之后，Kubernetes 会为它找到同样编号的 PVC，挂载这个 PVC 对应的 Volume，从而获取到以前保存在 Volume 里的数据。</p>
+<p>这么一看，原本非常复杂的 StatefulSet，是不是也很容易理解了呢？</p>
+<p><strong>总结</strong><br>在今天这篇文章中，我为你详细介绍了 StatefulSet 处理存储状态的方法。然后，以此为基础，我为你梳理了 StatefulSet 控制器的工作原理。</p>
+<p>从这些讲述中，我们不难看出 StatefulSet 的设计思想：StatefulSet 其实就是一种特殊的 Deployment，而其独特之处在于，它的每个 Pod 都被编号了。而且，这个编号会体现在 Pod 的名字和 hostname 等标识信息上，这不仅代表了 Pod 的创建顺序，也是 Pod 的重要网络标识（即：在整个集群里唯一的、可被的访问身份）。<br><strong><code>(1、StatefulSet是一种特殊的Deployment 2、他的每个Pod都被编号 3、编号体现在Pod的名字和hostname等标识信息上，代表了Pod的创建顺序，也是Pod的重要网络标识)</code></strong></p>
+<p>有了这个编号后，StatefulSet 就使用 Kubernetes 里的两个标准功能：Headless Service 和 PV/PVC，实现了对 Pod 的拓扑状态和存储状态的维护。</p>
+<p>实际上，在下一篇文章的“有状态应用”实践环节，以及后续的讲解中，你就会逐渐意识到，StatefulSet 可以说是 Kubernetes 中作业编排的“集大成者”。</p>
+<p>因为，几乎每一种 Kubernetes 的编排功能，都可以在编写 StatefulSet 的 YAML 文件时被用到。</p>
+<p><strong>思考题</strong><br>在实际场景中，有一些分布式应用的集群是这么工作的：当一个新节点加入到集群时，或者老节点被迁移后重建时，这个节点可以从主节点或者其他从节点那里同步到自己所需要的数据。</p>
+<p>在这种情况下，你认为是否还有必要将这个节点 Pod 与它的 PV 进行一对一绑定呢？（提示：这个问题的答案根据不同的项目是不同的。关键在于，重建后的节点进行数据恢复和同步的时候，是不是一定需要原先它写在本地磁盘里的数据）</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/20.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%89)%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/">17 | 经典PaaS的记忆：作业副本与水平扩展</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">7.2k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+<p>在前面的两篇文章中，我详细讲解了 StatefulSet 的工作原理，以及处理拓扑状态和存储状态的方法。而在今天这篇文章中，我将通过一个实际的例子，再次为你深入解读一下部署一个 StatefulSet 的完整流程。</p>
+<p>今天我选择的实例是部署一个 MySQL 集群，这也是 Kubernetes 官方文档里的一个经典案例。但是，很多工程师都曾向我吐槽说这个例子“完全看不懂”。</p>
+<p>其实，这样的吐槽也可以理解：相比于 Etcd、Cassandra 等“原生”就考虑了分布式需求的项目，MySQL 以及很多其他的数据库项目，在分布式集群的搭建上并不友好，甚至有点“原始”。</p>
+<p>所以，这次我就直接选择了这个具有挑战性的例子，和你分享如何使用 StatefulSet 将它的集群搭建过程“容器化”。</p>
+<blockquote>
+<p>备注：在开始实践之前，请确保我们之前一起部署的那个 Kubernetes 集群还是可用的，并且网络插件和存储插件都能正常运行。具体的做法，请参考第 11 篇文章《从 0 到 1：搭建一个完整的 Kubernetes 集群》的内容。</p>
+</blockquote>
+<p>首先，用自然语言来描述一下我们想要部署的“有状态应用”。</p>
+<ol>
+<li>是一个“主从复制”（Maser-Slave Replication）的 MySQL 集群；</li>
+<li>有 1 个主节点（Master）；</li>
+<li>有多个从节点（Slave）；</li>
+<li>从节点需要能水平扩展；</li>
+<li>所有的写操作，只能在主节点上执行；</li>
+<li>读操作可以在所有节点上执行。</li>
+</ol>
+<p>这就是一个非常典型的主从模式的 MySQL 集群了。我们可以把上面描述的“有状态应用”的需求，通过一张图来表示。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.png"  alt="">
+      </p>
+<p>在常规环境里，部署这样一个主从模式的 MySQL 集群的主要难点在于：如何让从节点能够拥有主节点的数据，即：如何配置主（Master）从（Slave）节点的复制与同步。</p>
+<p>所以，在安装好 MySQL 的 Master 节点之后，你需要做的第一步工作，就是<strong>通过 XtraBackup 将 Master 节点的数据备份到指定目录。</strong></p>
+<blockquote>
+<p>备注：XtraBackup 是业界主要使用的开源 MySQL 备份和恢复工具。</p>
+</blockquote>
+<p>这一步会自动在目标目录里生成一个备份信息文件，名叫：xtrabackup_binlog_info。这个文件一般会包含如下两个信息：</p>
+<pre><code>$ cat xtrabackup_binlog_info
+TheMaster-bin.000001     481</code></pre><p>这两个信息会在接下来配置 Slave 节点的时候用到。</p>
+<p>第二步：配置 Slave 节点。Slave 节点在第一次启动前，需要先把 Master 节点的备份数据，连同备份信息文件，一起拷贝到自己的数据目录（/var/lib/mysql）下。然后，我们执行这样一句 SQL：</p>
+<pre><code>TheSlave|mysql&gt; CHANGE MASTER TO
+                MASTER_HOST=&apos;$masterip&apos;,
+                MASTER_USER=&apos;xxx&apos;,
+                MASTER_PASSWORD=&apos;xxx&apos;,
+                MASTER_LOG_FILE=&apos;TheMaster-bin.000001&apos;,
+                MASTER_LOG_POS=481;</code></pre><p>其中，MASTER_LOG_FILE 和 MASTER_LOG_POS，就是该备份对应的二进制日志（Binary Log）文件的名称和开始的位置（偏移量），也正是 xtrabackup_binlog_info 文件里的那两部分内容（即：TheMaster-bin.000001 和 481）。</p>
+<p>第三步，启动 Slave 节点。在这一步，我们需要执行这样一句 SQL：</p>
+<pre><code>TheSlave|mysql&gt; START SLAVE;</code></pre><p>这样，Slave 节点就启动了。它会使用备份信息文件中的二进制日志文件和偏移量，与主节点进行数据同步。</p>
+<p>第四步，在这个集群中添加更多的 Slave 节点。</p>
+<p>需要注意的是，新添加的 Slave 节点的备份数据，来自于已经存在的 Slave 节点。</p>
+<p>所以，在这一步，我们需要将 Slave 节点的数据备份在指定目录。而这个备份操作会自动生成另一种备份信息文件，名叫：xtrabackup_slave_info。同样地，这个文件也包含了 MASTER_LOG_FILE 和 MASTER_LOG_POS 两个字段。</p>
+<p>然后，我们就可以执行跟前面一样的“CHANGE MASTER TO”和“START SLAVE” 指令，来初始化并启动这个新的 Slave 节点了。</p>
+<p>通过上面的叙述，我们不难看到，将部署 MySQL 集群的流程迁移到 Kubernetes 项目上，需要能够“容器化”地解决下面的“三座大山”：</p>
+<ol>
+<li>Master 节点和 Slave 节点需要有不同的配置文件（即：不同的 my.cnf）；</li>
+<li>Master 节点和 Salve 节点需要能够传输备份信息文件；</li>
+<li>在 Slave 节点第一次启动之前，需要执行一些初始化 SQL 操作；</li>
+</ol>
+<p>而由于 MySQL 本身同时拥有拓扑状态（主从节点的区别）和存储状态（MySQL 保存在本地的数据），我们自然要通过 StatefulSet 来解决这“三座大山”的问题。</p>
+<p>其中，<strong>“第一座大山：Master 节点和 Slave 节点需要有不同的配置文件”</strong>，很容易处理：我们只需要给主从节点分别准备两份不同的 MySQL 配置文件，然后根据 Pod 的序号（Index）挂载进去即可。</p>
+<p>正如我在前面文章中介绍过的，这样的配置文件信息，应该保存在 ConfigMap 里供 Pod 使用。它的定义如下所示：</p>
+<pre><code>apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+data:
+  master.cnf: |
+    # 主节点 MySQL 的配置文件
+    [mysqld]
+    log-bin
+  slave.cnf: |
+    # 从节点 MySQL 的配置文件
+    [mysqld]
+    super-read-only</code></pre><p>在这里，我们定义了 master.cnf 和 slave.cnf 两个 MySQL 的配置文件。</p>
+<ul>
+<li>master.cnf 开启了 log-bin，即：使用二进制日志文件的方式进行主从复制，这是一个标准的设置。</li>
+<li>slave.cnf 的开启了 super-read-only，代表的是从节点会拒绝除了主节点的数据同步操作之外的所有写操作，即：它对用户是只读的。<br>而上述 ConfigMap 定义里的 data 部分，是 Key-Value 格式的。比如，master.cnf 就是这份配置数据的 Key，而“|”后面的内容，就是这份配置数据的 Value。这份数据将来挂载进 Master 节点对应的 Pod 后，就会在 Volume 目录里生成一个叫作 master.cnf 的文件。</li>
+</ul>
+<blockquote>
+<p>备注：如果你对 ConfigMap 的用法感到陌生的话，可以稍微复习一下第 15 篇文章《深入解析 Pod 对象（二）：使用进阶》中，我讲解 Secret 对象部分的内容。因为，ConfigMap 跟 Secret，无论是使用方法还是实现原理，几乎都是一样的。</p>
+</blockquote>
+<p>接下来，我们需要创建两个 Service 来供 StatefulSet 以及用户使用。这两个 Service 的定义如下所示：</p>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  clusterIP: None
+  selector:
+    app: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-read
+  labels:
+    app: mysql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  selector:
+    app: mysql</code></pre><p>可以看到，这两个 Service 都代理了所有携带 app=mysql 标签的 Pod，也就是所有的 MySQL Pod。端口映射都是用 Service 的 3306 端口对应 Pod 的 3306 端口。</p>
+<p>不同的是，第一个名叫“mysql”的 Service 是一个 Headless Service（即：clusterIP= None）。所以它的作用，是通过为 Pod 分配 DNS 记录来固定它的拓扑状态，比如“mysql-0.mysql”和“mysql-1.mysql”这样的 DNS 名字。其中，编号为 0 的节点就是我们的主节点。</p>
+<p>而第二个名叫“mysql-read”的 Service，则是一个常规的 Service。</p>
+<p>并且我们规定，所有用户的读请求，都必须访问第二个 Service 被自动分配的 DNS 记录，即：“mysql-read”（当然，也可以访问这个 Service 的 VIP）。这样，读请求就可以被转发到任意一个 MySQL 的主节点或者从节点上。</p>
+<blockquote>
+<p>备注：Kubernetes 中的所有 Service、Pod 对象，都会被自动分配同名的 DNS 记录。具体细节，我会在后面 Service 部分做重点讲解。</p>
+</blockquote>
+<p>而所有用户的写请求，则必须直接以 DNS 记录的方式访问到 MySQL 的主节点，也就是：“mysql-0.mysql“这条 DNS 记录。</p>
+<p>接下来，我们再一起解决“第二座大山：Master 节点和 Salve 节点需要能够传输备份文件”的问题。</p>
+<p><strong>翻越这座大山的思路，我比较推荐的做法是：先搭建框架，再完善细节。其中，Pod 部分如何定义，是完善细节时的重点。</strong></p>
+<p>所以首先，我们先为 StatefulSet 对象规划一个大致的框架，如下图所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.png"  alt="">
+      </p>
+<p>在这一步，我们可以先为 StatefulSet 定义一些通用的字段。</p>
+<p>比如：selector 表示，这个 StatefulSet 要管理的 Pod 必须携带 app=mysql 标签；它声明要使用的 Headless Service 的名字是：mysql。</p>
+<p>这个 StatefulSet 的 replicas 值是 3，表示它定义的 MySQL 集群有三个节点：一个 Master 节点，两个 Slave 节点。</p>
+<p>可以看到，StatefulSet 管理的“有状态应用”的多个实例，也都是通过同一份 Pod 模板创建出来的，使用的是同一个 Docker 镜像。这也就意味着：如果你的应用要求不同节点的镜像不一样，那就不能再使用 StatefulSet 了。对于这种情况，应该考虑我后面会讲解到的 Operator。</p>
+<p>除了这些基本的字段外，作为一个有存储状态的 MySQL 集群，StatefulSet 还需要管理存储状态。所以，我们需要通过 volumeClaimTemplate（PVC 模板）来为每个 Pod 定义 PVC。比如，这个 PVC 模板的 resources.requests.strorage 指定了存储的大小为 10 GiB；ReadWriteOnce 指定了该存储的属性为可读写，并且一个 PV 只允许挂载在一个宿主机上。将来，这个 PV 对应的的 Volume 就会充当 MySQL Pod 的存储数据目录。</p>
+<p>然后，我们来重点设计一下这个 StatefulSet 的 Pod 模板，也就是 template 字段。</p>
+<p>由于 StatefulSet 管理的 Pod 都来自于同一个镜像，这就要求我们在编写 Pod 时，一定要保持清醒，用“人格分裂”的方式进行思考：</p>
+<ol>
+<li>如果这个 Pod 是 Master 节点，我们要怎么做；</li>
+<li>如果这个 Pod 是 Slave 节点，我们又要怎么做。</li>
+</ol>
+<p>想清楚这两个问题，我们就可以按照 Pod 的启动过程来一步步定义它们了。</p>
+<p><strong>第一步：从 ConfigMap 中，获取 MySQL 的 Pod 对应的配置文件。</strong></p>
+<p>为此，我们需要进行一个初始化操作，根据节点的角色是 Master 还是 Slave 节点，为 Pod 分配对应的配置文件。此外，MySQL 还要求集群里的每个节点都有一个唯一的 ID 文件，名叫 server-id.cnf。</p>
+<p>而根据我们已经掌握的 Pod 知识，这些初始化操作显然适合通过 InitContainer 来完成。所以，我们首先定义了一个 InitContainer，如下所示：</p>
+<pre><code>...
+# template.spec
+initContainers:
+- name: init-mysql
+  image: mysql:5.7
+  command:
+  - bash
+  - &quot;-c&quot;
+  - |
+    set -ex
+    # 从 Pod 的序号，生成 server-id
+    [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+    ordinal=${BASH_REMATCH[1]}
+    echo [mysqld] &gt; /mnt/conf.d/server-id.cnf
+    # 由于 server-id=0 有特殊含义，我们给 ID 加一个 100 来避开它
+    echo server-id=$((100 + $ordinal)) &gt;&gt; /mnt/conf.d/server-id.cnf
+    # 如果 Pod 序号是 0，说明它是 Master 节点，从 ConfigMap 里把 Master 的配置文件拷贝到 /mnt/conf.d/ 目录；
+    # 否则，拷贝 Slave 的配置文件
+    if [[ $ordinal -eq 0 ]]; then
+      cp /mnt/config-map/master.cnf /mnt/conf.d/
+    else
+      cp /mnt/config-map/slave.cnf /mnt/conf.d/
+    fi
+  volumeMounts:
+  - name: conf
+    mountPath: /mnt/conf.d
+  - name: config-map
+    mountPath: /mnt/config-map</code></pre><p>在这个名叫 init-mysql 的 InitContainer 的配置中，它从 Pod 的 hostname 里，读取到了 Pod 的序号，以此作为 MySQL 节点的 server-id。</p>
+<p>然后，init-mysql 通过这个序号，判断当前 Pod 到底是 Master 节点（即：序号为 0）还是 Slave 节点（即：序号不为 0），从而把对应的配置文件从 /mnt/config-map 目录拷贝到 /mnt/conf.d/ 目录下。</p>
+<p>其中，文件拷贝的源目录 /mnt/config-map，正是 ConfigMap 在这个 Pod 的 Volume，如下所示：</p>
+<pre><code>...
+# template.spec
+volumes:
+- name: conf
+  emptyDir: {}
+- name: config-map
+  configMap:
+    name: mysql</code></pre><p>通过这个定义，init-mysql 在声明了挂载 config-map 这个 Volume 之后，ConfigMap 里保存的内容，就会以文件的方式出现在它的 /mnt/config-map 目录当中。</p>
+<p>而文件拷贝的目标目录，即容器里的 /mnt/conf.d/ 目录，对应的则是一个名叫 conf 的、emptyDir 类型的 Volume。基于 Pod Volume 共享的原理，当 InitContainer 复制完配置文件退出后，后面启动的 MySQL 容器只需要直接声明挂载这个名叫 conf 的 Volume，它所需要的.cnf 配置文件已经出现在里面了。这跟我们之前介绍的 Tomcat 和 WAR 包的处理方法是完全一样的。</p>
+<p><strong>第二步：在 Slave Pod 启动前，从 Master 或者其他 Slave Pod 里拷贝数据库数据到自己的目录下。</strong></p>
+<p>为了实现这个操作，我们就需要再定义第二个 InitContainer，如下所示：</p>
+<pre><code>...
+# template.spec.initContainers
+- name: clone-mysql
+  image: gcr.io/google-samples/xtrabackup:1.0
+  command:
+  - bash
+  - &quot;-c&quot;
+  - |
+    set -ex
+    # 拷贝操作只需要在第一次启动时进行，所以如果数据已经存在，跳过
+    [[ -d /var/lib/mysql/mysql ]] &amp;&amp; exit 0
+    # Master 节点 (序号为 0) 不需要做这个操作
+    [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+    ordinal=${BASH_REMATCH[1]}
+    [[ $ordinal -eq 0 ]] &amp;&amp; exit 0
+    # 使用 ncat 指令，远程地从前一个节点拷贝数据到本地
+    ncat --recv-only mysql-$(($ordinal-1)).mysql 3307 | xbstream -x -C /var/lib/mysql
+    # 执行 --prepare，这样拷贝来的数据就可以用作恢复了
+    xtrabackup --prepare --target-dir=/var/lib/mysql
+  volumeMounts:
+  - name: data
+    mountPath: /var/lib/mysql
+    subPath: mysql
+  - name: conf
+    mountPath: /etc/mysql/conf.d</code></pre><p>在这个名叫 clone-mysql 的 InitContainer 里，我们使用的是 xtrabackup 镜像（它里面安装了 xtrabackup 工具）。</p>
+<p>而在它的启动命令里，我们首先做了一个判断。即：当初始化所需的数据（/var/lib/mysql/mysql 目录）已经存在，或者当前 Pod 是 Master 节点的时候，不需要做拷贝操作。</p>
+<p>接下来，clone-mysql 会使用 Linux 自带的 ncat 指令，向 DNS 记录为“mysql-&lt; 当前序号减一 &gt;.mysql”的 Pod，也就是当前 Pod 的前一个 Pod，发起数据传输请求，并且直接用 xbstream 指令将收到的备份数据保存在 /var/lib/mysql 目录下。</p>
+<blockquote>
+<p>备注：3307 是一个特殊端口，运行着一个专门负责备份 MySQL 数据的辅助进程。我们后面马上会讲到它。</p>
+</blockquote>
+<p>当然，这一步你可以随意选择用自己喜欢的方法来传输数据。比如，用 scp 或者 rsync，都没问题。</p>
+<p>你可能已经注意到，这个容器里的 /var/lib/mysql 目录，实际上正是一个名为 data 的 PVC，即：我们在前面声明的持久化存储。</p>
+<p>这就可以保证，哪怕宿主机宕机了，我们数据库的数据也不会丢失。更重要的是，由于 Pod Volume 是被 Pod 里的容器共享的，所以后面启动的 MySQL 容器，就可以把这个 Volume 挂载到自己的 /var/lib/mysql 目录下，直接使用里面的备份数据进行恢复操作。</p>
+<p>不过，clone-mysql 容器还要对 /var/lib/mysql 目录，执行一句 xtrabackup –prepare 操作，目的是让拷贝来的数据进入一致性状态，这样，这些数据才能被用作数据恢复。</p>
+<p>至此，我们就通过 InitContainer 完成了对“主、从节点间备份文件传输”操作的处理过程，也就是翻越了“第二座大山”。</p>
+<p>接下来，我们可以开始定义 MySQL 容器, 启动 MySQL 服务了。由于 StatefulSet 里的所有 Pod 都来自用同一个 Pod 模板，所以我们还要“人格分裂”地去思考：这个 MySQL 容器的启动命令，在 Master 和 Slave 两种情况下有什么不同。</p>
+<p>有了 Docker 镜像，在 Pod 里声明一个 Master 角色的 MySQL 容器并不是什么困难的事情：直接执行 MySQL 启动命令即可。</p>
+<p>但是，如果这个 Pod 是一个第一次启动的 Slave 节点，在执行 MySQL 启动命令之前，它就需要使用前面 InitContainer 拷贝来的备份数据进行初始化。</p>
+<p>可是，别忘了，容器是一个单进程模型。</p>
+<p>所以，一个 Slave 角色的 MySQL 容器启动之前，谁能负责给它执行初始化的 SQL 语句呢？</p>
+<p>这就是我们需要解决的“第三座大山”的问题，即：如何在 Slave 节点的 MySQL 容器第一次启动之前，执行初始化 SQL。</p>
+<p>你可能已经想到了，我们可以为这个 MySQL 容器额外定义一个 sidecar 容器，来完成这个操作，它的定义如下所示：</p>
+<pre><code>...
+# template.spec.containers
+- name: xtrabackup
+  image: gcr.io/google-samples/xtrabackup:1.0
+  ports:
+  - name: xtrabackup
+    containerPort: 3307
+  command:
+  - bash
+  - &quot;-c&quot;
+  - |
+    set -ex
+    cd /var/lib/mysql
+
+    # 从备份信息文件里读取 MASTER_LOG_FILEM 和 MASTER_LOG_POS 这两个字段的值，用来拼装集群初始化 SQL
+    if [[ -f xtrabackup_slave_info ]]; then
+      # 如果 xtrabackup_slave_info 文件存在，说明这个备份数据来自于另一个 Slave 节点。这种情况下，XtraBackup 工具在备份的时候，就已经在这个文件里自动生成了 &quot;CHANGE MASTER TO&quot; SQL 语句。所以，我们只需要把这个文件重命名为 change_master_to.sql.in，后面直接使用即可
+      mv xtrabackup_slave_info change_master_to.sql.in
+      # 所以，也就用不着 xtrabackup_binlog_info 了
+      rm -f xtrabackup_binlog_info
+    elif [[ -f xtrabackup_binlog_info ]]; then
+      # 如果只存在 xtrabackup_binlog_inf 文件，那说明备份来自于 Master 节点，我们就需要解析这个备份信息文件，读取所需的两个字段的值
+      [[ `cat xtrabackup_binlog_info` =~ ^(.*?)[[:space:]]+(.*?)$ ]] || exit 1
+      rm xtrabackup_binlog_info
+      # 把两个字段的值拼装成 SQL，写入 change_master_to.sql.in 文件
+      echo &quot;CHANGE MASTER TO MASTER_LOG_FILE=&apos;${BASH_REMATCH[1]}&apos;,\
+            MASTER_LOG_POS=${BASH_REMATCH[2]}&quot; &gt; change_master_to.sql.in
+    fi
+
+    # 如果 change_master_to.sql.in，就意味着需要做集群初始化工作
+    if [[ -f change_master_to.sql.in ]]; then
+      # 但一定要先等 MySQL 容器启动之后才能进行下一步连接 MySQL 的操作
+      echo &quot;Waiting for mysqld to be ready (accepting connections)&quot;
+      until mysql -h 127.0.0.1 -e &quot;SELECT 1&quot;; do sleep 1; done
+
+      echo &quot;Initializing replication from clone position&quot;
+      # 将文件 change_master_to.sql.in 改个名字，防止这个 Container 重启的时候，因为又找到了 change_master_to.sql.in，从而重复执行一遍这个初始化流程
+      mv change_master_to.sql.in change_master_to.sql.orig
+      # 使用 change_master_to.sql.orig 的内容，也是就是前面拼装的 SQL，组成一个完整的初始化和启动 Slave 的 SQL 语句
+      mysql -h 127.0.0.1 &lt;&lt;EOF
+    $(&lt;change_master_to.sql.orig),
+      MASTER_HOST=&apos;mysql-0.mysql&apos;,
+      MASTER_USER=&apos;root&apos;,
+      MASTER_PASSWORD=&apos;&apos;,
+      MASTER_CONNECT_RETRY=10;
+    START SLAVE;
+    EOF
+    fi
+
+    # 使用 ncat 监听 3307 端口。它的作用是，在收到传输请求的时候，直接执行 &quot;xtrabackup --backup&quot; 命令，备份 MySQL 的数据并发送给请求者
+    exec ncat --listen --keep-open --send-only --max-conns=1 3307 -c \
+      &quot;xtrabackup --backup --slave-info --stream=xbstream --host=127.0.0.1 --user=root&quot;
+  volumeMounts:
+  - name: data
+    mountPath: /var/lib/mysql
+    subPath: mysql
+  - name: conf
+    mountPath: /etc/mysql/conf.d</code></pre><p>可以看到，在这个名叫 xtrabackup 的 sidecar 容器的启动命令里，其实实现了两部分工作。</p>
+<p>第一部分工作，当然是 MySQL 节点的初始化工作。这个初始化需要使用的 SQL，是 sidecar 容器拼装出来、保存在一个名为 change_master_to.sql.in 的文件里的，具体过程如下所示：</p>
+<p>sidecar 容器首先会判断当前 Pod 的 /var/lib/mysql 目录下，是否有 xtrabackup_slave_info 这个备份信息文件。</p>
+<p>如果有，则说明这个目录下的备份数据是由一个 Slave 节点生成的。这种情况下，XtraBackup 工具在备份的时候，就已经在这个文件里自动生成了 “CHANGE MASTER TO” SQL 语句。所以，我们只需要把这个文件重命名为 change_master_to.sql.in，后面直接使用即可。<br>如果没有 xtrabackup_slave_info 文件、但是存在 xtrabackup_binlog_info 文件，那就说明备份数据来自于 Master 节点。这种情况下，sidecar 容器就需要解析这个备份信息文件，读取 MASTER_LOG_FILE 和 MASTER_LOG_POS 这两个字段的值，用它们拼装出初始化 SQL 语句，然后把这句 SQL 写入到 change_master_to.sql.in 文件中。<br>接下来，sidecar 容器就可以执行初始化了。从上面的叙述中可以看到，只要这个 change_master_to.sql.in 文件存在，那就说明接下来需要进行集群初始化操作。</p>
+<p>所以，这时候，sidecar 容器只需要读取并执行 change_master_to.sql.in 里面的“CHANGE MASTER TO”指令，再执行一句 START SLAVE 命令，一个 Slave 节点就被成功启动了。</p>
+<blockquote>
+<p>需要注意的是：Pod 里的容器并没有先后顺序，所以在执行初始化 SQL 之前，必须先执行一句 SQL（select 1）来检查一下 MySQL 服务是否已经可用。</p>
+</blockquote>
+<p>当然，上述这些初始化操作完成后，我们还要删除掉前面用到的这些备份信息文件。否则，下次这个容器重启时，就会发现这些文件存在，所以又会重新执行一次数据恢复和集群初始化的操作，这是不对的。</p>
+<p>同理，change_master_to.sql.in 在使用后也要被重命名，以免容器重启时因为发现这个文件存在又执行一遍初始化。</p>
+<p>在完成 MySQL 节点的初始化后，这个 sidecar 容器的第二个工作，则是启动一个数据传输服务。</p>
+<p>具体做法是：sidecar 容器会使用 ncat 命令启动一个工作在 3307 端口上的网络发送服务。一旦收到数据传输请求时，sidecar 容器就会调用 xtrabackup –backup 指令备份当前 MySQL 的数据，然后把这些备份数据返回给请求者。这就是为什么我们在 InitContainer 里定义数据拷贝的时候，访问的是“上一个 MySQL 节点”的 3307 端口。</p>
+<p>值得一提的是，由于 sidecar 容器和 MySQL 容器同处于一个 Pod 里，所以它是直接通过 Localhost 来访问和备份 MySQL 容器里的数据的，非常方便。</p>
+<p>同样地，我在这里举例用的只是一种备份方法而已，你完全可以选择其他自己喜欢的方案。比如，你可以使用 innobackupex 命令做数据备份和准备，它的使用方法几乎与本文的备份方法一样。</p>
+<p>至此，我们也就翻越了“第三座大山”，完成了 Slave 节点第一次启动前的初始化工作。</p>
+<p>扳倒了这“三座大山”后，我们终于可以定义 Pod 里的主角，MySQL 容器了。有了前面这些定义和初始化工作，MySQL 容器本身的定义就非常简单了，如下所示：</p>
+<pre><code>...
+# template.spec
+containers:
+- name: mysql
+  image: mysql:5.7
+  env:
+  - name: MYSQL_ALLOW_EMPTY_PASSWORD
+    value: &quot;1&quot;
+  ports:
+  - name: mysql
+    containerPort: 3306
+  volumeMounts:
+  - name: data
+    mountPath: /var/lib/mysql
+    subPath: mysql
+  - name: conf
+    mountPath: /etc/mysql/conf.d
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  livenessProbe:
+    exec:
+      command: [&quot;mysqladmin&quot;, &quot;ping&quot;]
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+  readinessProbe:
+    exec:
+      # 通过 TCP 连接的方式进行健康检查
+      command: [&quot;mysql&quot;, &quot;-h&quot;, &quot;127.0.0.1&quot;, &quot;-e&quot;, &quot;SELECT 1&quot;]
+    initialDelaySeconds: 5
+    periodSeconds: 2
+    timeoutSeconds: 1</code></pre><p>在这个容器的定义里，我们使用了一个标准的 MySQL 5.7 的官方镜像。它的数据目录是 /var/lib/mysql，配置文件目录是 /etc/mysql/conf.d。</p>
+<p>这时候，你应该能够明白，如果 MySQL 容器是 Slave 节点的话，它的数据目录里的数据，就来自于 InitContainer 从其他节点里拷贝而来的备份。它的配置文件目录 /etc/mysql/conf.d 里的内容，则来自于 ConfigMap 对应的 Volume。而它的初始化工作，则是由同一个 Pod 里的 sidecar 容器完成的。这些操作，正是我刚刚为你讲述的大部分内容。</p>
+<p>另外，我们为它定义了一个 livenessProbe，通过 mysqladmin ping 命令来检查它是否健康；还定义了一个 readinessProbe，通过查询 SQL（select 1）来检查 MySQL 服务是否可用。当然，凡是 readinessProbe 检查失败的 MySQL Pod，都会从 Service 里被摘除掉。</p>
+<p>至此，一个完整的主从复制模式的 MySQL 集群就定义完了。</p>
+<p>现在，我们就可以使用 kubectl 命令，尝试运行一下这个 StatefulSet 了。</p>
+<p>首先，我们需要在 Kubernetes 集群里创建满足条件的 PV。如果你使用的是我们在第 11 篇文章《从 0 到 1：搭建一个完整的 Kubernetes 集群》里部署的 Kubernetes 集群的话，你可以按照如下方式使用存储插件 Rook：</p>
+<pre><code>$ kubectl create -f rook-storage.yaml
+$ cat rook-storage.yaml
+apiVersion: ceph.rook.io/v1beta1
+kind: Pool
+metadata:
+  name: replicapool
+  namespace: rook-ceph
+spec:
+  replicated:
+    size: 3
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: rook-ceph-block
+provisioner: ceph.rook.io/block
+parameters:
+  pool: replicapool
+  clusterNamespace: rook-ceph</code></pre><p>在这里，我用到了 StorageClass 来完成这个操作。它的作用，是自动地为集群里存在的每一个 PVC，调用存储插件（Rook）创建对应的 PV，从而省去了我们手动创建 PV 的机械劳动。我在后续讲解容器存储的时候，会再详细介绍这个机制。</p>
+<pre><code>备注：在使用 Rook 的情况下，mysql-statefulset.yaml 里的 volumeClaimTemplates 字段需要加上声明 storageClassName=rook-ceph-block，才能使用到这个 Rook 提供的持久化存储。</code></pre><p>然后，我们就可以创建这个 StatefulSet 了，如下所示：</p>
+<pre><code>$ kubectl create -f mysql-statefulset.yaml
+$ kubectl get pod -l app=mysql
+NAME      READY     STATUS    RESTARTS   AGE
+mysql-0   2/2       Running   0          2m
+mysql-1   2/2       Running   0          1m
+mysql-2   2/2       Running   0          1m</code></pre><p>可以看到，StatefulSet 启动成功后，会有三个 Pod 运行。</p>
+<p>接下来，我们可以尝试向这个 MySQL 集群发起请求，执行一些 SQL 操作来验证它是否正常：</p>
+<pre><code>$ kubectl run mysql-client --image=mysql:5.7 -i --rm --restart=Never --\
+  mysql -h mysql-0.mysql &lt;&lt;EOF
+CREATE DATABASE test;
+CREATE TABLE test.messages (message VARCHAR(250));
+INSERT INTO test.messages VALUES (&apos;hello&apos;);
+EOF</code></pre><p>如上所示，我们通过启动一个容器，使用 MySQL client 执行了创建数据库和表、以及插入数据的操作。需要注意的是，我们连接的 MySQL 的地址必须是 mysql-0.mysql（即：Master 节点的 DNS 记录）。因为，只有 Master 节点才能处理写操作。</p>
+<p>而通过连接 mysql-read 这个 Service，我们就可以用 SQL 进行读操作，如下所示：</p>
+<pre><code>$ kubectl run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never --\
+ mysql -h mysql-read -e &quot;SELECT * FROM test.messages&quot;
+Waiting for pod default/mysql-client to be running, status is Pending, pod ready: false
++---------+
+| message |
++---------+
+| hello   |
++---------+
+pod &quot;mysql-client&quot; deleted</code></pre><p>在有了 StatefulSet 以后，你就可以像 Deployment 那样，非常方便地扩展这个 MySQL 集群，比如：</p>
+<pre><code>$ kubectl scale statefulset mysql  --replicas=5</code></pre><p>这时候，你就会发现新的 Slave Pod mysql-3 和 mysql-4 被自动创建了出来。</p>
+<p>而如果你像如下所示的这样，直接连接 mysql-3.mysql，即 mysql-3 这个 Pod 的 DNS 名字来进行查询操作：</p>
+<pre><code>$ kubectl run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never --\
+  mysql -h mysql-3.mysql -e &quot;SELECT * FROM test.messages&quot;
+Waiting for pod default/mysql-client to be running, status is Pending, pod ready: false
++---------+
+| message |
++---------+
+| hello   |
++---------+
+pod &quot;mysql-client&quot; deleted</code></pre><p>就会看到，从 StatefulSet 为我们新创建的 mysql-3 上，同样可以读取到之前插入的记录。也就是说，我们的数据备份和恢复，都是有效的。</p>
+<p><strong>总结</strong><br>在今天这篇文章中，我以 MySQL 集群为例，和你详细分享了一个实际的 StatefulSet 的编写过程。这个 YAML 文件的链接在这里，希望你能多花一些时间认真消化。</p>
+<p>在这个过程中，有以下几个关键点（坑）特别值得你注意和体会。</p>
+<ol>
+<li>“人格分裂”：在解决需求的过程中，一定要记得思考，该 Pod 在扮演不同角色时的不同操作。</li>
+<li>“阅后即焚”：很多“有状态应用”的节点，只是在第一次启动的时候才需要做额外处理。所以，在编写 YAML 文件时，你一定要考虑“容器重启”的情况，不要让这一次的操作干扰到下一次的容器启动。</li>
+<li>“容器之间平等无序”：除非是 InitContainer，否则一个 Pod 里的多个容器之间，是完全平等的。所以，你精心设计的 sidecar，绝不能对容器的顺序做出假设，否则就需要进行前置检查。</li>
+</ol>
+<p>最后，相信你也已经能够理解，StatefulSet 其实是一种特殊的 Deployment，只不过这个“Deployment”的每个 Pod 实例的名字里，都携带了一个唯一并且固定的编号。这个编号的顺序，固定了 Pod 的拓扑关系；这个编号对应的 DNS 记录，固定了 Pod 的访问方式；这个编号对应的 PV，绑定了 Pod 与持久化存储的关系。所以，当 Pod 被删除重建时，这些“状态”都会保持不变。</p>
+<p>而一旦你的应用没办法通过上述方式进行状态的管理，那就代表了 StatefulSet 已经不能解决它的部署问题了。这时候，我后面讲到的 Operator，可能才是一个更好的选择。</p>
+<p><strong>思考题</strong><br>如果我们现在的需求是：所有的读请求，只由 Slave 节点处理；所有的写请求，只由 Master 节点处理。那么，你需要在今天这篇文章的基础上再做哪些改动呢？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/21.%E5%AE%B9%E5%99%A8%E5%8C%96%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9ADaemonSet/">21 | 容器化守护进程的意义：DaemonSet</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+<p>在上一篇文章中，我和你详细分享了使用 StatefulSet 编排“有状态应用”的过程。从中不难看出，StatefulSet 其实就是对现有典型运维业务的容器化抽象。也就是说，你一定有方法在不使用 Kubernetes、甚至不使用容器的情况下，自己 DIY 一个类似的方案出来。但是，一旦涉及到升级、版本管理等更工程化的能力，Kubernetes 的好处，才会更加凸现。</p>
+<p>比如，如何对 StatefulSet 进行“滚动更新”（rolling update）？</p>
+<p>很简单。你只要修改 StatefulSet 的 Pod 模板，就会自动触发“滚动更新”:</p>
+<pre><code>$ kubectl patch statefulset mysql --type=&apos;json&apos; -p=&apos;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/image&quot;, &quot;value&quot;:&quot;mysql:5.7.23&quot;}]&apos;
+statefulset.apps/mysql patched</code></pre><p>在这里，我使用了 <strong><code>kubectl patch</code> 命令。它的意思是，以“补丁”的方式（JSON 格式的）修改一个 API 对象的指定字段</strong>，也就是我在后面指定的“spec/template/spec/containers/0/image”。</p>
+<p>这样，StatefulSet Controller 就会按照与 Pod 编号相反的顺序，从最后一个 Pod 开始，逐一更新这个 StatefulSet 管理的每个 Pod。而如果更新发生了错误，这次“滚动更新”就会停止。此外，StatefulSet 的“滚动更新”还允许我们进行更精细的控制，比如金丝雀发布（Canary Deploy）或者灰度发布，这意味着应用的多个实例中被指定的一部分不会被更新到最新的版本。</p>
+<p>这个字段，正是 StatefulSet 的 spec.updateStrategy.rollingUpdate 的 partition 字段。</p>
+<p>比如，现在我将前面这个 StatefulSet 的 partition 字段设置为 2：</p>
+<pre><code>$ kubectl patch statefulset mysql -p &apos;{&quot;spec&quot;:{&quot;updateStrategy&quot;:{&quot;type&quot;:&quot;RollingUpdate&quot;,&quot;rollingUpdate&quot;:{&quot;partition&quot;:2}}}}&apos;
+statefulset.apps/mysql patched</code></pre><p>其中，kubectl patch 命令后面的参数（JSON 格式的），就是 partition 字段在 API 对象里的路径。所以，上述操作等同于直接使用 kubectl edit 命令，打开这个对象，把 partition 字段修改为 2。</p>
+<p>这样，我就指定了当 Pod 模板发生变化的时候，比如 MySQL 镜像更新到 5.7.23，那么只有序号大于或者等于 2 的 Pod 会被更新到这个版本。并且，如果你删除或者重启了序号小于 2 的 Pod，等它再次启动后，也会保持原先的 5.7.2 版本，绝不会被升级到 5.7.23 版本。</p>
+<p>StatefulSet 可以说是 Kubernetes 项目中最为复杂的编排对象，希望你课后能认真消化，动手实践一下这个例子。</p>
+<p>而在今天这篇文章中，我会为你重点讲解一个相对轻松的知识点：DaemonSet。</p>
+<p>顾名思义，DaemonSet 的主要作用，是让你在 Kubernetes 集群里，运行一个 Daemon Pod。 所以，这个 Pod 有如下三个特征：</p>
+<ol>
+<li>这个 Pod 运行在 Kubernetes 集群里的每一个节点（Node）上；</li>
+<li>每个节点上只有一个这样的 Pod 实例；</li>
+<li>当有新的节点加入 Kubernetes 集群后，该 Pod 会自动地在新节点上被创建出来；而当旧节点被删除后，它上面的 Pod 也相应地会被回收掉。</li>
+</ol>
+<p>这个机制听起来很简单，但 Daemon Pod 的意义确实是非常重要的。我随便给你列举几个例子：</p>
+<ol>
+<li>各种网络插件的 Agent 组件，都必须运行在每一个节点上，用来处理这个节点上的容器网络；</li>
+<li>各种存储插件的 Agent 组件，也必须运行在每一个节点上，用来在这个节点上挂载远程存储目录，操作容器的 Volume 目录；</li>
+<li>各种监控组件和日志组件，也必须运行在每一个节点上，负责这个节点上的监控信息和日志搜集。</li>
+</ol>
+<p>更重要的是，跟其他编排对象不一样，DaemonSet 开始运行的时机，很多时候比整个 Kubernetes 集群出现的时机都要早。</p>
+<p>这个乍一听起来可能有点儿奇怪。但其实你来想一下：如果这个 DaemonSet 正是一个网络插件的 Agent 组件呢？</p>
+<p>这个时候，整个 Kubernetes 集群里还没有可用的容器网络，所有 Worker 节点的状态都是 NotReady（NetworkReady=false）。这种情况下，普通的 Pod 肯定不能运行在这个集群上。所以，这也就意味着 DaemonSet 的设计，必须要有某种“过人之处”才行。</p>
+<p>为了弄清楚 DaemonSet 的工作原理，我们还是按照老规矩，先从它的 API 对象的定义说起。</p>
+<pre><code>apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-elasticsearch
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logging
+spec:
+  selector:
+    matchLabels:
+      name: fluentd-elasticsearch
+  template:
+    metadata:
+      labels:
+        name: fluentd-elasticsearch
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: fluentd-elasticsearch
+        image: k8s.gcr.io/fluentd-elasticsearch:1.20
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers</code></pre><p>这个 DaemonSet，管理的是一个 fluentd-elasticsearch 镜像的 Pod。这个镜像的功能非常实用：通过 fluentd 将 Docker 容器里的日志转发到 ElasticSearch 中。</p>
+<p>可以看到，DaemonSet 跟 Deployment 其实非常相似，只不过是没有 replicas 字段；它也使用 selector 选择管理所有携带了 name=fluentd-elasticsearch 标签的 Pod。</p>
+<p>而这些 Pod 的模板，也是用 template 字段定义的。在这个字段中，我们定义了一个使用 fluentd-elasticsearch:1.20 镜像的容器，而且这个容器挂载了两个 hostPath 类型的 Volume，分别对应宿主机的 /var/log 目录和 /var/lib/docker/containers 目录。</p>
+<p>显然，fluentd 启动之后，它会从这两个目录里搜集日志信息，并转发给 ElasticSearch 保存。这样，我们通过 ElasticSearch 就可以很方便地检索这些日志了。</p>
+<p>需要注意的是，Docker 容器里应用的日志，默认会保存在宿主机的 <code>/var/lib/docker/containers/&lt;容器 ID&gt;/&lt;容器 ID&gt;-json.log</code> 文件里，所以这个目录正是 fluentd 的搜集目标。</p>
+<p>那么，<strong>DaemonSet 又是如何保证每个 Node 上有且只有一个被管理的 Pod 呢？</strong></p>
+<p>显然，这是一个典型的“控制器模型”能够处理的问题。</p>
+<p>DaemonSet Controller，首先从 Etcd 里获取所有的 Node 列表，然后遍历所有的 Node。这时，它就可以很容易地去检查，当前这个 Node 上是不是有一个携带了 name=fluentd-elasticsearch 标签的 Pod 在运行。</p>
+<p>而检查的结果，可能有这么三种情况：</p>
+<ol>
+<li>没有这种 Pod，那么就意味着要在这个 Node 上创建这样一个 Pod；</li>
+<li>有这种 Pod，但是数量大于 1，那就说明要把多余的 Pod 从这个 Node 上删除掉；</li>
+<li>正好只有一个这种 Pod，那说明这个节点是正常的。</li>
+</ol>
+<p>其中，删除节点（Node）上多余的 Pod 非常简单，直接调用 Kubernetes API 就可以了。</p>
+<p>但是，如何在指定的 Node 上创建新 Pod 呢？</p>
+<p>如果你已经熟悉了 Pod API 对象的话，那一定可以立刻说出答案：用 nodeSelector，选择 Node 的名字即可。</p>
+<pre><code>nodeSelector:
+    name: &lt;Node 名字 &gt;</code></pre><p>没错。</p>
+<p>不过，在 Kubernetes 项目里，<strong>nodeSelector 其实已经是一个将要被废弃的字段了</strong>。因为，现在有了一个新的、功能更完善的字段可以代替它，即：nodeAffinity。我来举个例子：</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: with-node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: metadata.name
+            operator: In
+            values:
+            - node-geektime</code></pre><p>在这个 Pod 里，我声明了一个 spec.affinity 字段，然后定义了一个 nodeAffinity。其中，spec.affinity 字段，是 Pod 里跟调度相关的一个字段。关于它的完整内容，我会在讲解调度策略的时候再详细阐述。</p>
+<p>而在这里，我定义的 nodeAffinity 的含义是：</p>
+<ol>
+<li>requiredDuringSchedulingIgnoredDuringExecution：它的意思是说，这个 nodeAffinity 必须在每次调度的时候予以考虑。同时，这也意味着你可以设置在某些情况下不考虑这个 nodeAffinity；</li>
+<li>这个 Pod，将来只允许运行在“metadata.name”是“node-geektime”的节点上。</li>
+</ol>
+<p>在这里，你应该注意到 nodeAffinity 的定义，可以支持更加丰富的语法，比如 operator: In（即：部分匹配；如果你定义 operator: Equal，就是完全匹配），这也正是 nodeAffinity 会取代 nodeSelector 的原因之一。</p>
+<blockquote>
+<p>备注：其实在大多数时候，这些 Operator 语义没啥用处。所以说，在学习开源项目的时候，一定要学会抓住“主线”。不要顾此失彼。</p>
+</blockquote>
+<p>所以，<strong>我们的 DaemonSet Controller 会在创建 Pod 的时候，自动在这个 Pod 的 API 对象里，加上这样一个 nodeAffinity 定义</strong>。其中，需要绑定的节点名字，正是当前正在遍历的这个 Node。</p>
+<p>当然，DaemonSet 并不需要修改用户提交的 YAML 文件里的 Pod 模板，而是在向 Kubernetes 发起请求之前，直接修改根据模板生成的 Pod 对象。这个思路，也正是我在前面讲解 Pod 对象时介绍过的。</p>
+<p>此外，DaemonSet 还会给这个 Pod 自动加上另外一个与调度相关的字段，叫作 tolerations。这个字段意味着这个 Pod，会“容忍”（Toleration）某些 Node 的“污点”（Taint）。</p>
+<p>而 DaemonSet 自动加上的 tolerations 字段，格式如下所示：</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: with-toleration
+spec:
+  tolerations:
+  - key: node.kubernetes.io/unschedulable
+    operator: Exists
+    effect: NoSchedule</code></pre><p>这个 Toleration 的含义是：“容忍”所有被标记为 unschedulable“污点”的 Node；“容忍”的效果是允许调度。</p>
+<blockquote>
+<p>备注：关于如何给一个 Node 标记上“污点”，以及这里具体的语法定义，我会在后面介绍调度器的时候做详细介绍。这里，你可以简单地把“污点”理解为一种特殊的 Label。</p>
+</blockquote>
+<p>而在正常情况下，被标记了 unschedulable“污点”的 Node，是不会有任何 Pod 被调度上去的（effect: NoSchedule）。可是，DaemonSet 自动地给被管理的 Pod 加上了这个特殊的 Toleration，就使得这些 Pod 可以忽略这个限制，继而保证每个节点上都会被调度一个 Pod。当然，如果这个节点有故障的话，这个 Pod 可能会启动失败，而 DaemonSet 则会始终尝试下去，直到 Pod 启动成功。</p>
+<p>这时，你应该可以猜到，我在前面介绍到的DaemonSet 的“过人之处”，其实就是依靠 Toleration 实现的。</p>
+<p>假如当前 DaemonSet 管理的，是一个网络插件的 Agent Pod，那么你就必须在这个 DaemonSet 的 YAML 文件里，给它的 Pod 模板加上一个能够“容忍”node.kubernetes.io/network-unavailable“污点”的 Toleration。正如下面这个例子所示：</p>
+<pre><code>...
+template:
+    metadata:
+      labels:
+        name: network-plugin-agent
+    spec:
+      tolerations:
+      - key: node.kubernetes.io/network-unavailable
+        operator: Exists
+        effect: NoSchedule</code></pre><p>在 Kubernetes 项目中，当一个节点的网络插件尚未安装时，这个节点就会被自动加上名为node.kubernetes.io/network-unavailable的“污点”。</p>
+<p><strong>而通过这样一个 Toleration，调度器在调度这个 Pod 的时候，就会忽略当前节点上的“污点”，从而成功地将网络插件的 Agent 组件调度到这台机器上启动起来。</strong></p>
+<p>这种机制，正是我们在部署 Kubernetes 集群的时候，能够先部署 Kubernetes 本身、再部署网络插件的根本原因：因为当时我们所创建的 Weave 的 YAML，实际上就是一个 DaemonSet。</p>
+<blockquote>
+<p>这里，你也可以再回顾一下第 11 篇文章《从 0 到 1：搭建一个完整的 Kubernetes 集群》中的相关内容。</p>
+</blockquote>
+<p>至此，通过上面这些内容，你应该能够明白，DaemonSet 其实是一个非常简单的控制器。在它的控制循环中，只需要遍历所有节点，然后根据节点上是否有被管理 Pod 的情况，来决定是否要创建或者删除一个 Pod。</p>
+<p>只不过，在创建每个 Pod 的时候，DaemonSet 会自动给这个 Pod 加上一个 nodeAffinity，从而保证这个 Pod 只会在指定节点上启动。同时，它还会自动给这个 Pod 加上一个 Toleration，从而忽略节点的 unschedulable“污点”。</p>
+<p>当然，<strong>你也可以在 Pod 模板里加上更多种类的 Toleration，从而利用 DaemonSet 实现自己的目的</strong>。比如，在这个 fluentd-elasticsearch DaemonSet 里，我就给它加上了这样的 Toleration：</p>
+<pre><code>tolerations:
+- key: node-role.kubernetes.io/master
+  effect: NoSchedule</code></pre><p>这是因为在默认情况下，Kubernetes 集群不允许用户在 Master 节点部署 Pod。因为，Master 节点默认携带了一个叫作node-role.kubernetes.io/master的“污点”。所以，为了能在 Master 节点上部署 DaemonSet 的 Pod，我就必须让这个 Pod“容忍”这个“污点”。</p>
+<p>在理解了 DaemonSet 的工作原理之后，接下来我就通过一个具体的实践来帮你更深入地掌握 DaemonSet 的使用方法。</p>
+<blockquote>
+<p>备注：需要注意的是，在 Kubernetes v1.11 之前，由于调度器尚不完善，DaemonSet 是由 DaemonSet Controller 自行调度的，即它会直接设置 Pod 的 spec.nodename 字段，这样就可以跳过调度器了。但是，这样的做法很快就会被废除，所以在这里我也不推荐你再花时间学习这个流程了。</p>
+</blockquote>
+<p>首先，创建这个 DaemonSet 对象：</p>
+<pre><code>$ kubectl create -f fluentd-elasticsearch.yaml</code></pre><p>需要注意的是，在 DaemonSet 上，我们一般都应该加上 resources 字段，来限制它的 CPU 和内存使用，防止它占用过多的宿主机资源。</p>
+<p>而创建成功后，你就能看到，如果有 N 个节点，就会有 N 个 fluentd-elasticsearch Pod 在运行。比如在我们的例子里，会有两个 Pod，如下所示：</p>
+<pre><code>$ kubectl get pod -n kube-system -l name=fluentd-elasticsearch
+NAME                          READY     STATUS    RESTARTS   AGE
+fluentd-elasticsearch-dqfv9   1/1       Running   0          53m
+fluentd-elasticsearch-pf9z5   1/1       Running   0          53m</code></pre><p>而如果你此时通过 kubectl get 查看一下 Kubernetes 集群里的 DaemonSet 对象：</p>
+<pre><code>$ kubectl get ds -n kube-system fluentd-elasticsearch
+NAME                    DESIRED   CURRENT   READY     UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+fluentd-elasticsearch   2         2         2         2            2           &lt;none&gt;          1h</code></pre><blockquote>
+<p>备注：Kubernetes 里比较长的 API 对象都有短名字，比如 DaemonSet 对应的是 ds，Deployment 对应的是 deploy。</p>
+</blockquote>
+<p>就会发现 DaemonSet 和 Deployment 一样，也有 DESIRED、CURRENT 等多个状态字段。这也就意味着，DaemonSet 可以像 Deployment 那样，进行版本管理。这个版本，可以使用 kubectl rollout history 看到：</p>
+<pre><code>$ kubectl rollout history daemonset fluentd-elasticsearch -n kube-system
+daemonsets &quot;fluentd-elasticsearch&quot;
+REVISION  CHANGE-CAUSE
+1         &lt;none&gt;</code></pre><p>接下来，我们来把这个 DaemonSet 的容器镜像版本到 v2.2.0：</p>
+<pre><code>$ kubectl set image ds/fluentd-elasticsearch fluentd-elasticsearch=k8s.gcr.io/fluentd-elasticsearch:v2.2.0 --record -n=kube-system</code></pre><p>这个 kubectl set image 命令里，第一个 fluentd-elasticsearch 是 DaemonSet 的名字，第二个 fluentd-elasticsearch 是容器的名字。</p>
+<p>这时候，我们可以使用 kubectl rollout status 命令看到这个“滚动更新”的过程，如下所示：</p>
+<pre><code>$ kubectl rollout status ds/fluentd-elasticsearch -n kube-system
+Waiting for daemon set &quot;fluentd-elasticsearch&quot; rollout to finish: 0 out of 2 new pods have been updated...
+Waiting for daemon set &quot;fluentd-elasticsearch&quot; rollout to finish: 0 out of 2 new pods have been updated...
+Waiting for daemon set &quot;fluentd-elasticsearch&quot; rollout to finish: 1 of 2 updated pods are available...
+daemon set &quot;fluentd-elasticsearch&quot; successfully rolled out</code></pre><p>注意，由于这一次我在升级命令后面加上了<code>--record</code> 参数，所以这次升级使用到的指令就会自动出现在 DaemonSet 的 rollout history 里面，如下所示：</p>
+<pre><code>$ kubectl rollout history daemonset fluentd-elasticsearch -n kube-system
+daemonsets &quot;fluentd-elasticsearch&quot;
+REVISION  CHANGE-CAUSE
+1         &lt;none&gt;
+2         kubectl set image ds/fluentd-elasticsearch fluentd-elasticsearch=k8s.gcr.io/fluentd-elasticsearch:v2.2.0 --namespace=kube-system --record=true</code></pre><p>有了版本号，你也就可以像 Deployment 一样，将 DaemonSet 回滚到某个指定的历史版本了。</p>
+<p>而我在前面的文章中讲解 Deployment 对象的时候，曾经提到过，Deployment 管理这些版本，靠的是“一个版本对应一个 ReplicaSet 对象”。可是，DaemonSet 控制器操作的直接就是 Pod，不可能有 ReplicaSet 这样的对象参与其中。那么，它的这些版本又是如何维护的呢？</p>
+<p>所谓，一切皆对象！</p>
+<p>在 Kubernetes 项目中，任何你觉得需要记录下来的状态，都可以被用 API 对象的方式实现。当然，“版本”也不例外。</p>
+<p>Kubernetes v1.7 之后添加了一个 API 对象，名叫ControllerRevision，专门用来记录某种 Controller 对象的版本。比如，你可以通过如下命令查看 fluentd-elasticsearch 对应的 ControllerRevision：</p>
+<pre><code>$ kubectl get controllerrevision -n kube-system -l name=fluentd-elasticsearch
+NAME                               CONTROLLER                             REVISION   AGE
+fluentd-elasticsearch-64dc6799c9   daemonset.apps/fluentd-elasticsearch   2          1h</code></pre><p>而如果你使用 kubectl describe 查看这个 ControllerRevision 对象：</p>
+<pre><code>$ kubectl describe controllerrevision fluentd-elasticsearch-64dc6799c9 -n kube-system
+Name:         fluentd-elasticsearch-64dc6799c9
+Namespace:    kube-system
+Labels:       controller-revision-hash=2087235575
+              name=fluentd-elasticsearch
+Annotations:  deprecated.daemonset.template.generation=2
+              kubernetes.io/change-cause=kubectl set image ds/fluentd-elasticsearch fluentd-elasticsearch=k8s.gcr.io/fluentd-elasticsearch:v2.2.0 --record=true --namespace=kube-system
+API Version:  apps/v1
+Data:
+  Spec:
+    Template:
+      $ Patch:  replace
+      Metadata:
+        Creation Timestamp:  &lt;nil&gt;
+        Labels:
+          Name:  fluentd-elasticsearch
+      Spec:
+        Containers:
+          Image:              k8s.gcr.io/fluentd-elasticsearch:v2.2.0
+          Image Pull Policy:  IfNotPresent
+          Name:               fluentd-elasticsearch
+...
+Revision:                  2
+Events:                    &lt;none&gt;</code></pre><p>就会看到，这个 ControllerRevision 对象，实际上是在 Data 字段保存了该版本对应的完整的 DaemonSet 的 API 对象。并且，在 Annotation 字段保存了创建这个对象所使用的 kubectl 命令。</p>
+<p>接下来，我们可以尝试将这个 DaemonSet 回滚到 Revision=1 时的状态：</p>
+<pre><code>$ kubectl rollout undo daemonset fluentd-elasticsearch --to-revision=1 -n kube-system
+daemonset.extensions/fluentd-elasticsearch rolled back</code></pre><p>这个 kubectl rollout undo 操作，实际上相当于读取到了 Revision=1 的 ControllerRevision 对象保存的 Data 字段。而这个 Data 字段里保存的信息，就是 Revision=1 时这个 DaemonSet 的完整 API 对象。</p>
+<p>所以，现在 DaemonSet Controller 就可以使用这个历史 API 对象，对现有的 DaemonSet 做一次 PATCH 操作（等价于执行一次 kubectl apply -f “旧的 DaemonSet 对象”），从而把这个 DaemonSet“更新”到一个旧版本。</p>
+<p>这也是为什么，在执行完这次回滚完成后，你会发现，DaemonSet 的 Revision 并不会从 Revision=2 退回到 1，而是会增加成 Revision=3。这是因为，一个新的 ControllerRevision 被创建了出来。</p>
+<p><strong>总结</strong><br>在今天这篇文章中，我首先简单介绍了 StatefulSet 的“滚动更新”，然后重点讲解了本专栏的第三个重要编排对象：DaemonSet。</p>
+<p>相比于 Deployment，DaemonSet 只管理 Pod 对象，然后通过 nodeAffinity 和 Toleration 这两个调度器的小功能，保证了每个节点上有且只有一个 Pod。这个控制器的实现原理简单易懂，希望你能够快速掌握。</p>
+<p>与此同时，DaemonSet 使用 ControllerRevision，来保存和管理自己对应的“版本”。这种“面向 API 对象”的设计思路，大大简化了控制器本身的逻辑，也正是 Kubernetes 项目“声明式 API”的优势所在。</p>
+<p>而且，相信聪明的你此时已经想到了，StatefulSet 也是直接控制 Pod 对象的，那么它是不是也在使用 ControllerRevision 进行版本管理呢？</p>
+<p>没错。在 Kubernetes 项目里，ControllerRevision 其实是一个通用的版本管理对象。这样，Kubernetes 项目就巧妙地避免了每种控制器都要维护一套冗余的代码和逻辑的问题。</p>
+<p><strong>思考题</strong><br>我在文中提到，在 Kubernetes v1.11 之前，DaemonSet 所管理的 Pod 的调度过程，实际上都是由 DaemonSet Controller 自己而不是由调度器完成的。你能说出这其中有哪些原因吗？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/22.%E6%92%AC%E5%8A%A8%E7%A6%BB%E7%BA%BF%E4%B8%9A%E5%8A%A1%EF%BC%9AJob%E4%B8%8ECronJob/">22 | 撬动离线业务：Job与CronJob</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.4k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+<p>在前面的几篇文章中，我和你详细分享了 Deployment、StatefulSet，以及 DaemonSet 这三个编排概念。你有没有发现它们的共同之处呢？</p>
+<p>实际上，它们主要编排的对象，都是“在线业务”，即：Long Running Task（长作业）。比如，我在前面举例时常用的 Nginx、Tomcat，以及 MySQL 等等。这些应用一旦运行起来，除非出错或者停止，它的容器进程会一直保持在 Running 状态。</p>
+<p>但是，有一类作业显然不满足这样的条件，这就是“离线业务”，或者叫作 Batch Job（计算业务）。这种业务在计算完成后就直接退出了，而此时如果你依然用 Deployment 来管理这种业务的话，就会发现 Pod 会在计算结束后退出，然后被 Deployment Controller 不断地重启；而像“滚动更新”这样的编排功能，更无从谈起了。</p>
+<p>所以，早在 Borg 项目中，Google 就已经对作业进行了分类处理，提出了 LRS（Long Running Service）和 Batch Jobs 两种作业形态，对它们进行“分别管理”和“混合调度”。<br><strong>(1、LRS（Long Running Service）:Deployment、StatefulSet、DaemonSet; 2、Batch Jobs: Job，CronJob)</strong></p>
+<p>不过，在 2015 年 Borg 论文刚刚发布的时候，Kubernetes 项目并不支持对 Batch Job 的管理。直到 v1.4 版本之后，社区才逐步设计出了一个用来描述离线业务的 API 对象，它的名字就是：Job。</p>
+<p>Job API 对象的定义非常简单，我来举个例子，如下所示：</p>
+<pre><code>apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: resouer/ubuntu-bc 
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo &apos;scale=10000; 4*a(1)&apos; | bc -l &quot;]
+      restartPolicy: Never
+  backoffLimit: 4</code></pre><p>此时，相信你对 Kubernetes 的 API 对象已经不再陌生了。在这个 Job 的 YAML 文件里，你肯定一眼就会看到一位“老熟人”：Pod 模板，即 spec.template 字段。</p>
+<p>在这个 Pod 模板中，我定义了一个 Ubuntu 镜像的容器（准确地说，是一个安装了 bc 命令的 Ubuntu 镜像），它运行的程序是：</p>
+<pre><code>echo &quot;scale=10000; 4*a(1)&quot; | bc -l </code></pre><p>其中，bc 命令是 Linux 里的“计算器”；-l 表示，我现在要使用标准数学库；而 a(1)，则是调用数学库中的 arctangent 函数，计算 atan(1)。这是什么意思呢？</p>
+<p>中学知识告诉我们：tan(π/4) = 1。所以，4*atan(1)正好就是π，也就是 3.1415926…。</p>
+<blockquote>
+<p>备注：如果你不熟悉这个知识也不必担心，我也是在查阅资料后才知道的。</p>
+</blockquote>
+<p>所以，这其实就是一个计算π值的容器。而通过 scale=10000，我指定了输出的小数点后的位数是 10000。在我的计算机上，这个计算大概用时 1 分 54 秒。</p>
+<p>但是，跟其他控制器不同的是，Job 对象并不要求你定义一个 spec.selector 来描述要控制哪些 Pod。具体原因，我马上会讲解到。</p>
+<p>现在，我们就可以创建这个 Job 了：</p>
+<pre><code>$ kubectl create -f job.yaml</code></pre><p>在成功创建后，我们来查看一下这个 Job 对象，如下所示：</p>
+<pre><code>$ kubectl describe jobs/pi
+Name:             pi
+Namespace:        default
+Selector:         controller-uid=c2db599a-2c9d-11e6-b324-0209dc45a495
+Labels:           controller-uid=c2db599a-2c9d-11e6-b324-0209dc45a495
+                  job-name=pi
+Annotations:      &lt;none&gt;
+Parallelism:      1
+Completions:      1
+..
+Pods Statuses:    0 Running / 1 Succeeded / 0 Failed
+Pod Template:
+  Labels:       controller-uid=c2db599a-2c9d-11e6-b324-0209dc45a495
+                job-name=pi
+  Containers:
+   ...
+  Volumes:              &lt;none&gt;
+Events:
+  FirstSeen    LastSeen    Count    From            SubobjectPath    Type        Reason            Message
+  ---------    --------    -----    ----            -------------    --------    ------            -------
+  1m           1m          1        {job-controller }                Normal      SuccessfulCreate  Created pod: pi-rq5rl</code></pre><p>可以看到，这个 Job 对象在创建后，它的 Pod 模板，被自动加上了一个 controller-uid=&lt; 一个随机字符串 &gt; 这样的 Label。而这个 Job 对象本身，则被自动加上了这个 Label 对应的 Selector，从而 保证了 Job 与它所管理的 Pod 之间的匹配关系。</p>
+<p>而 Job Controller 之所以要使用这种携带了 UID 的 Label，就是为了避免不同 Job 对象所管理的 Pod 发生重合。需要注意的是，这种自动生成的 Label 对用户来说并不友好，所以不太适合推广到 Deployment 等长作业编排对象上。</p>
+<p>接下来，我们可以看到这个 Job 创建的 Pod 进入了 Running 状态，这意味着它正在计算 Pi 的值。</p>
+<pre><code>$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+pi-rq5rl                            1/1       Running   0          10s</code></pre><p>而几分钟后计算结束，这个 Pod 就会进入 Completed 状态：</p>
+<pre><code>$ kubectl get pods
+NAME                                READY     STATUS      RESTARTS   AGE
+pi-rq5rl                            0/1       Completed   0          4m</code></pre><p>这也是我们需要在 Pod 模板中定义 restartPolicy=Never 的原因：离线计算的 Pod 永远都不应该被重启，否则它们会再重新计算一遍。</p>
+<blockquote>
+<p>事实上，restartPolicy 在 Job 对象里只允许被设置为 Never 和 OnFailure；而在 Deployment 对象里，restartPolicy 则只允许被设置为 Always。</p>
+</blockquote>
+<p>此时，我们通过 kubectl logs 查看一下这个 Pod 的日志，就可以看到计算得到的 Pi 值已经被打印了出来：</p>
+<pre><code>$ kubectl logs pi-rq5rl
+3.141592653589793238462643383279...</code></pre><p>这时候，你一定会想到这样一个问题，如果这个离线作业失败了要怎么办？</p>
+<p>比如，我们在这个例子中定义了 restartPolicy=Never，那么离线作业失败后 Job Controller 就会不断地尝试创建一个新 Pod，如下所示：</p>
+<pre><code>$ kubectl get pods
+NAME                                READY     STATUS              RESTARTS   AGE
+pi-55h89                            0/1       ContainerCreating   0          2s
+pi-tqbcz                            0/1       Error               0          5s</code></pre><p>可以看到，这时候会不断地有新 Pod 被创建出来。</p>
+<p>当然，这个尝试肯定不能无限进行下去。所以，我们就在 Job 对象的 spec.backoffLimit 字段里定义了重试次数为 4（即，backoffLimit=4），而这个字段的默认值是 6。</p>
+<p>需要注意的是，Job Controller 重新创建 Pod 的间隔是呈指数增加的，即下一次重新创建 Pod 的动作会分别发生在 10 s、20 s、40 s …后。</p>
+<p>而如果你定义的 <strong>restartPolicy=OnFailure，那么离线作业失败后，Job Controller 就不会去尝试创建新的 Pod。但是，它会不断地尝试重启 Pod 里的容器</strong>。这也正好对应了 restartPolicy 的含义（你也可以借此机会再回顾一下第 15 篇文章《深入解析 Pod 对象（二）：使用进阶》中的相关内容）。</p>
+<p>如前所述，当一个 Job 的 Pod 运行结束后，它会进入 Completed 状态。但是，如果这个 Pod 因为某种原因一直不肯结束呢？</p>
+<p>在 Job 的 API 对象里，有一个 spec.activeDeadlineSeconds 字段可以设置最长运行时间，比如：</p>
+<pre><code>spec:
+ backoffLimit: 5
+ activeDeadlineSeconds: 100</code></pre><p>一旦运行超过了 100 s，这个 Job 的所有 Pod 都会被终止。并且，你可以在 Pod 的状态里看到终止的原因是 reason: DeadlineExceeded。</p>
+<p>以上，就是一个 Job API 对象最主要的概念和用法了。不过，离线业务之所以被称为 Batch Job，当然是因为它们可以以“Batch”，也就是并行的方式去运行。</p>
+<p>接下来，我就来为你讲解一下Job Controller 对并行作业的控制方法。</p>
+<p>在 Job 对象中，负责并行控制的参数有两个：</p>
+<ol>
+<li>spec.parallelism，它定义的是一个 Job 在任意时间最多可以启动多少个 Pod 同时运行；</li>
+<li>spec.completions，它定义的是 Job 至少要完成的 Pod 数目，即 Job 的最小完成数。</li>
+</ol>
+<p>这两个参数听起来有点儿抽象，所以我准备了一个例子来帮助你理解。</p>
+<p>现在，我在之前计算 Pi 值的 Job 里，添加这两个参数：</p>
+<pre><code>apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  parallelism: 2
+  completions: 4
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: resouer/ubuntu-bc
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo &apos;scale=5000; 4*a(1)&apos; | bc -l &quot;]
+      restartPolicy: Never
+  backoffLimit: 4</code></pre><p>这样，我们就指定了这个 Job 最大的并行数是 2，而最小的完成数是 4。</p>
+<p>接下来，我们来创建这个 Job 对象：</p>
+<pre><code>$ kubectl create -f job.yaml</code></pre><p>可以看到，这个 Job 其实也维护了两个状态字段，即 DESIRED 和 SUCCESSFUL，如下所示：</p>
+<pre><code>$ kubectl get job
+NAME      DESIRED   SUCCESSFUL   AGE
+pi        4         0            3s</code></pre><p>其中，DESIRED 的值，正是 completions 定义的最小完成数。</p>
+<p>然后，我们可以看到，这个 Job 首先创建了两个并行运行的 Pod 来计算 Pi：</p>
+<pre><code>$ kubectl get pods
+NAME       READY     STATUS    RESTARTS   AGE
+pi-5mt88   1/1       Running   0          6s
+pi-gmcq5   1/1       Running   0          6s</code></pre><p>而在 40 s 后，这两个 Pod 相继完成计算。</p>
+<p>这时我们可以看到，每当有一个 Pod 完成计算进入 Completed 状态时，就会有一个新的 Pod 被自动创建出来，并且快速地从 Pending 状态进入到 ContainerCreating 状态：</p>
+<pre><code>$ kubectl get pods
+NAME       READY     STATUS    RESTARTS   AGE
+pi-gmcq5   0/1       Completed   0         40s
+pi-84ww8   0/1       Pending   0         0s
+pi-5mt88   0/1       Completed   0         41s
+pi-62rbt   0/1       Pending   0         0s
+
+$ kubectl get pods
+NAME       READY     STATUS    RESTARTS   AGE
+pi-gmcq5   0/1       Completed   0         40s
+pi-84ww8   0/1       ContainerCreating   0         0s
+pi-5mt88   0/1       Completed   0         41s
+pi-62rbt   0/1       ContainerCreating   0         0s</code></pre><p>紧接着，Job Controller 第二次创建出来的两个并行的 Pod 也进入了 Running 状态：</p>
+<pre><code>$ kubectl get pods 
+NAME       READY     STATUS      RESTARTS   AGE
+pi-5mt88   0/1       Completed   0          54s
+pi-62rbt   1/1       Running     0          13s
+pi-84ww8   1/1       Running     0          14s
+pi-gmcq5   0/1       Completed   0          54s</code></pre><p>最终，后面创建的这两个 Pod 也完成了计算，进入了 Completed 状态。</p>
+<p>这时，由于所有的 Pod 均已经成功退出，这个 Job 也就执行完了，所以你会看到它的 SUCCESSFUL 字段的值变成了 4：</p>
+<pre><code>$ kubectl get pods 
+NAME       READY     STATUS      RESTARTS   AGE
+pi-5mt88   0/1       Completed   0          5m
+pi-62rbt   0/1       Completed   0          4m
+pi-84ww8   0/1       Completed   0          4m
+pi-gmcq5   0/1       Completed   0          5m
+
+$ kubectl get job
+NAME      DESIRED   SUCCESSFUL   AGE
+pi        4         4            5m</code></pre><p>通过上述 Job 的 DESIRED 和 SUCCESSFUL 字段的关系，我们就可以很容易地理解<code>Job Controller 的工作原理了</code>。</p>
+<p>首先，Job Controller 控制的对象，直接就是 Pod。</p>
+<p>其次，Job Controller 在控制循环中进行的调谐（Reconcile）操作，是根据实际在 Running 状态 Pod 的数目、已经成功退出的 Pod 的数目，以及 parallelism、completions 参数的值共同计算出在这个周期里，应该创建或者删除的 Pod 数目，然后调用 Kubernetes API 来执行这个操作。</p>
+<p>以创建 Pod 为例。在上面计算 Pi 值的这个例子中，当 Job 一开始创建出来时，实际处于 Running 状态的 Pod 数目 =0，已经成功退出的 Pod 数目 =0，而用户定义的 completions，也就是最终用户需要的 Pod 数目 =4。</p>
+<p>所以，在这个时刻，需要创建的 Pod 数目 = 最终需要的 Pod 数目 - 实际在 Running 状态 Pod 数目 - 已经成功退出的 Pod 数目 = 4 - 0 - 0= 4。也就是说，Job Controller 需要创建 4 个 Pod 来纠正这个不一致状态。</p>
+<p>可是，我们又定义了这个 Job 的 parallelism=2。也就是说，我们规定了每次并发创建的 Pod 个数不能超过 2 个。所以，Job Controller 会对前面的计算结果做一个修正，修正后的期望创建的 Pod 数目应该是：2 个。</p>
+<p>这时候，Job Controller 就会并发地向 kube-apiserver 发起两个创建 Pod 的请求。</p>
+<p>类似地，如果在这次调谐周期里，Job Controller 发现实际在 Running 状态的 Pod 数目，比 parallelism 还大，那么它就会删除一些 Pod，使两者相等。</p>
+<p>综上所述，Job Controller 实际上控制了，作业执行的并行度，以及总共需要完成的任务数这两个重要参数。而在实际使用时，你需要根据作业的特性，来决定并行度（parallelism）和任务数（completions）的合理取值。</p>
+<p>接下来，我再和你分享三种常用的、使用 Job 对象的方法。</p>
+<p>第一种用法，也是最简单粗暴的用法：外部管理器 +Job 模板。</p>
+<p>这种模式的特定用法是：把 Job 的 YAML 文件定义为一个“模板”，然后用一个外部工具控制这些“模板”来生成 Job。这时，Job 的定义方式如下所示：</p>
+<pre><code>apiVersion: batch/v1
+kind: Job
+metadata:
+  name: process-item-$ITEM
+  labels:
+    jobgroup: jobexample
+spec:
+  template:
+    metadata:
+      name: jobexample
+      labels:
+        jobgroup: jobexample
+    spec:
+      containers:
+      - name: c
+        image: busybox
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo Processing item $ITEM &amp;&amp; sleep 5&quot;]
+      restartPolicy: Never</code></pre><p>可以看到，我们在这个 Job 的 YAML 里，定义了 $ITEM 这样的“变量”。</p>
+<p>所以，在控制这种 Job 时，我们只要注意如下两个方面即可：</p>
+<ol>
+<li>创建 Job 时，替换掉 $ITEM 这样的变量；</li>
+<li>所有来自于同一个模板的 Job，都有一个 jobgroup: jobexample 标签，也就是说这一组 Job 使用这样一个相同的标识。</li>
+</ol>
+<p>而做到第一点非常简单。比如，你可以通过这样一句 shell 把 $ITEM 替换掉：</p>
+<pre><code>$ mkdir ./jobs
+$ for i in apple banana cherry
+do
+  cat job-tmpl.yaml | sed &quot;s/\$ITEM/$i/&quot; &gt; ./jobs/job-$i.yaml
+done</code></pre><p>这样，一组来自于同一个模板的不同 Job 的 yaml 就生成了。接下来，你就可以通过一句 kubectl create 指令创建这些 Job 了：</p>
+<pre><code>$ kubectl create -f ./jobs
+$ kubectl get pods -l jobgroup=jobexample
+NAME                        READY     STATUS      RESTARTS   AGE
+process-item-apple-kixwv    0/1       Completed   0          4m
+process-item-banana-wrsf7   0/1       Completed   0          4m
+process-item-cherry-dnfu9   0/1       Completed   0          4m</code></pre><p>这个模式看起来虽然很“傻”，但却是 Kubernetes 社区里使用 Job 的一个很普遍的模式。</p>
+<p>原因很简单：大多数用户在需要管理 Batch Job 的时候，都已经有了一套自己的方案，需要做的往往就是集成工作。这时候，Kubernetes 项目对这些方案来说最有价值的，就是 Job 这个 API 对象。所以，你只需要编写一个外部工具（等同于我们这里的 for 循环）来管理这些 Job 即可。</p>
+<p>这种模式最典型的应用，就是 TensorFlow 社区的 KubeFlow 项目。</p>
+<p>很容易理解，在这种模式下使用 Job 对象，completions 和 parallelism 这两个字段都应该使用默认值 1，而不应该由我们自行设置。而作业 Pod 的并行控制，应该完全交由外部工具来进行管理（比如，KubeFlow）。</p>
+<p>第二种用法：拥有固定任务数目的并行 Job。</p>
+<p>这种模式下，我只关心最后是否有指定数目（spec.completions）个任务成功退出。至于执行时的并行度是多少，我并不关心。</p>
+<p>比如，我们这个计算 Pi 值的例子，就是这样一个典型的、拥有固定任务数目（completions=4）的应用场景。 它的 parallelism 值是 2；或者，你可以干脆不指定 parallelism，直接使用默认的并行度（即：1）。</p>
+<p>此外，你还可以使用一个工作队列（Work Queue）进行任务分发。这时，Job 的 YAML 文件定义如下所示：</p>
+<pre><code>apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-wq-1
+spec:
+  completions: 8
+  parallelism: 2
+  template:
+    metadata:
+      name: job-wq-1
+    spec:
+      containers:
+      - name: c
+        image: myrepo/job-wq-1
+        env:
+        - name: BROKER_URL
+          value: amqp://guest:guest@rabbitmq-service:5672
+        - name: QUEUE
+          value: job1
+      restartPolicy: OnFailure</code></pre><p>我们可以看到，它的 completions 的值是：8，这意味着我们总共要处理的任务数目是 8 个。也就是说，总共会有 8 个任务会被逐一放入工作队列里（你可以运行一个外部小程序作为生产者，来提交任务）。</p>
+<p>在这个实例中，我选择充当工作队列的是一个运行在 Kubernetes 里的 RabbitMQ。所以，我们需要在 Pod 模板里定义 BROKER_URL，来作为消费者。</p>
+<p>所以，一旦你用 kubectl create 创建了这个 Job，它就会以并发度为 2 的方式，每两个 Pod 一组，创建出 8 个 Pod。每个 Pod 都会去连接 BROKER_URL，从 RabbitMQ 里读取任务，然后各自进行处理。这个 Pod 里的执行逻辑，我们可以用这样一段伪代码来表示：</p>
+<pre><code>/* job-wq-1 的伪代码 */
+queue := newQueue($BROKER_URL, $QUEUE)
+task := queue.Pop()
+process(task)
+exit</code></pre><p>可以看到，每个 Pod 只需要将任务信息读取出来，处理完成，然后退出即可。而作为用户，我只关心最终一共有 8 个计算任务启动并且退出，只要这个目标达到，我就认为整个 Job 处理完成了。所以说，这种用法，对应的就是“任务总数固定”的场景。</p>
+<p>第三种用法，也是很常用的一个用法：指定并行度（parallelism），但不设置固定的 completions 的值。</p>
+<p>此时，你就必须自己想办法，来决定什么时候启动新 Pod，什么时候 Job 才算执行完成。在这种情况下，任务的总数是未知的，所以你不仅需要一个工作队列来负责任务分发，还需要能够判断工作队列已经为空（即：所有的工作已经结束了）。</p>
+<p>这时候，Job 的定义基本上没变化，只不过是不再需要定义 completions 的值了而已：</p>
+<pre><code>apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-wq-2
+spec:
+  parallelism: 2
+  template:
+    metadata:
+      name: job-wq-2
+    spec:
+      containers:
+      - name: c
+        image: gcr.io/myproject/job-wq-2
+        env:
+        - name: BROKER_URL
+          value: amqp://guest:guest@rabbitmq-service:5672
+        - name: QUEUE
+          value: job2
+      restartPolicy: OnFailure</code></pre><p>而对应的 Pod 的逻辑会稍微复杂一些，我可以用这样一段伪代码来描述：</p>
+<pre><code>/* job-wq-2 的伪代码 */
+for !queue.IsEmpty($BROKER_URL, $QUEUE) {
+  task := queue.Pop()
+  process(task)
+}
+print(&quot;Queue empty, exiting&quot;)
+exit</code></pre><p>由于任务数目的总数不固定，所以每一个 Pod 必须能够知道，自己什么时候可以退出。比如，在这个例子中，我简单地以“队列为空”，作为任务全部完成的标志。所以说，这种用法，对应的是“任务总数不固定”的场景。</p>
+<p>不过，在实际的应用中，你需要处理的条件往往会非常复杂。比如，任务完成后的输出、每个任务 Pod 之间是不是有资源的竞争和协同等等。</p>
+<p>所以，在今天这篇文章中，我就不再展开 Job 的用法了。因为，在实际场景里，要么干脆就用第一种用法来自己管理作业；要么，这些任务 Pod 之间的关系就不那么“单纯”，甚至还是“有状态应用”（比如，任务的输入 / 输出是在持久化数据卷里）。在这种情况下，我在后面要重点讲解的 Operator，加上 Job 对象一起，可能才能更好的满足实际离线任务的编排需求。</p>
+<p>最后，我再来和你分享一个非常有用的 Job 对象，叫作：<code>CronJob</code>。</p>
+<p>顾名思义，CronJob 描述的，正是定时任务。它的 API 对象，如下所示：</p>
+<pre><code>apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: &quot;*/1 * * * *&quot;
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure</code></pre><p>在这个 YAML 文件中，最重要的关键词就是jobTemplate。看到它，你一定恍然大悟，原来 CronJob 是一个 Job 对象的控制器（Controller）！</p>
+<p>没错，<strong><code>CronJob 与 Job 的关系，正如同 Deployment 与 Pod 的关系一样。CronJob 是一个专门用来管理 Job 对象的控制器</code></strong>。只不过，它创建和删除 Job 的依据，是 schedule 字段定义的、一个标准的<span class="exturl"><a class="exturl__link"   href="https://en.wikipedia.org/wiki/Cron"  target="_blank" rel="noopener">Unix Cron</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>格式的表达式。</p>
+<p>比如，”*/1 * * * *”。</p>
+<p>这个 Cron 表达式里 */1 中的 * 表示从 0 开始，/ 表示“每”，1 表示偏移量。所以，它的意思就是：从 0 开始，每 1 个时间单位执行一次。</p>
+<p>那么，时间单位又是什么呢？</p>
+<p>Cron 表达式中的五个部分分别代表：分钟、小时、日、月、星期。</p>
+<p>所以，上面这句 Cron 表达式的意思是：从当前开始，每分钟执行一次。</p>
+<p>而这里要执行的内容，就是 jobTemplate 定义的 Job 了。</p>
+<p>所以，这个 CronJob 对象在创建 1 分钟后，就会有一个 Job 产生了，如下所示：</p>
+<pre><code>$ kubectl create -f ./cronjob.yaml
+cronjob &quot;hello&quot; created
+
+# 一分钟后
+$ kubectl get jobs
+NAME               DESIRED   SUCCESSFUL   AGE
+hello-4111706356   1         1         2s</code></pre><p>此时，CronJob 对象会记录下这次 Job 执行的时间：</p>
+<pre><code>$ kubectl get cronjob hello
+NAME      SCHEDULE      SUSPEND   ACTIVE    LAST-SCHEDULE
+hello     */1 * * * *   False     0         Thu, 6 Sep 2018 14:34:00 -070</code></pre><p>需要注意的是，由于定时任务的特殊性，很可能某个 Job 还没有执行完，另外一个新 Job 就产生了。这时候，你可以通过 spec.concurrencyPolicy 字段来定义具体的处理策略。比如：</p>
+<ol>
+<li>concurrencyPolicy=Allow，这也是默认情况，这意味着这些 Job 可以同时存在；</li>
+<li>concurrencyPolicy=Forbid，这意味着不会创建新的 Pod，该创建周期被跳过；</li>
+<li>concurrencyPolicy=Replace，这意味着新产生的 Job 会替换旧的、没有执行完的 Job。</li>
+</ol>
+<p>而如果某一次 Job 创建失败，这次创建就会被标记为“miss”。当在指定的时间窗口内，miss 的数目达到 100 时，那么 CronJob 会停止再创建这个 Job。</p>
+<p>这个时间窗口，可以由 spec.startingDeadlineSeconds 字段指定。比如 startingDeadlineSeconds=200，意味着在过去 200 s 里，如果 miss 的数目达到了 100 次，那么这个 Job 就不会被创建执行了。</p>
+<p><strong>总结</strong><br>在今天这篇文章中，我主要和你分享了 Job 这个离线业务的编排方法，讲解了 completions 和 parallelism 字段的含义，以及 Job Controller 的执行原理。</p>
+<p>紧接着，我通过实例和你分享了 Job 对象三种常见的使用方法。但是，根据我在社区和生产环境中的经验，大多数情况下用户还是更倾向于自己控制 Job 对象。所以，相比于这些固定的“模式”，掌握 Job 的 API 对象，和它各个字段的准确含义会更加重要。</p>
+<p>最后，我还介绍了一种 Job 的控制器，叫作：CronJob。这也印证了我在前面的分享中所说的：用一个对象控制另一个对象，是 Kubernetes 编排的精髓所在。</p>
+<p><strong>思考题</strong><br>根据 Job 控制器的工作原理，如果你定义的 parallelism 比 completions 还大的话，比如：</p>
+<pre><code>parallelism: 4
+completions: 2</code></pre><p>那么，这个 Job 最开始创建的时候，会同时启动几个 Pod 呢？原因是什么？</p>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/22/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/24/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

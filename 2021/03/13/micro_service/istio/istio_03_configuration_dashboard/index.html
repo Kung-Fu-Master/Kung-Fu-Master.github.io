@@ -1,0 +1,438 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Architecture        新的 Mixer 模型使用 Envoy 中的扩展来提供更多功能。Istio 社区正在领导 Envoy 的 WebAssembly（Wasm）运行时的实现，Wasm 让我们可以使用超过 20 种的语言来开发模块化、沙盒化的扩展。可以在代理继续提供流量的同时动态加载、重载扩展通过 preview 配置文件安装 Istio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Istio 03 configuration &amp; dashboard">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Architecture        新的 Mixer 模型使用 Envoy 中的扩展来提供更多功能。Istio 社区正在领导 Envoy 的 WebAssembly（Wasm）运行时的实现，Wasm 让我们可以使用超过 20 种的语言来开发模块化、沙盒化的扩展。可以在代理继续提供流量的同时动态加载、重载扩展通过 preview 配置文件安装 Istio">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/istio_arch_19.JPG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/istio_arch_20.JPG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/security_policy.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/traffic_control.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/kiali_1.PNG">
+<meta property="article:published_time" content="2021-03-13T05:00:42.857Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.857Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="istio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/istio_arch_19.JPG"><title>Istio 03 configuration &amp; dashboard | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Istio 03 configuration &amp; dashboard</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.6k</span></span></div></header><div class="post-body">
+        <h2 id="Architecture"   >
+          <a href="#Architecture" class="heading-link"><i class="fas fa-link"></i></a>Architecture</h2>
+      <blockquote>
+<p>新的 Mixer 模型使用 Envoy 中的扩展来提供更多功能。Istio 社区正在领导 Envoy 的 WebAssembly（Wasm）运行时的实现，Wasm 让我们可以使用超过 20 种的语言来开发模块化、沙盒化的扩展。可以在代理继续提供流量的同时动态加载、重载扩展<br>通过 preview 配置文件安装 Istio 1.5 不会再安装 Mixer<br>如果有需要，您可以保持安装并启用 Mixer。最终，Mixer 将成为 Istio 单独的发行组件，成为 istio-ecosystem 的一部分<br>简化其余控制平面的 deployment。为此，我们将几个控制平面组件合并为一个组件：Istiod。该二进制文件包括 Pilot、Citadel、Galley 和 Sidecar 注入器的功能。这种方法从许多方面改善了 Istio 的安装和管理，降低了安装和配置的复杂性、维护工作量以及问题诊断时间，同时提高了响应速度。 关于 Istiod 的更多内容请查看 <span class="exturl"><a class="exturl__link"   href="https://blog.christianposta.com/microservices/istio-as-an-example-of-when-not-to-do-microservices/"  target="_blank" rel="noopener">Christian Posta 的这篇博客</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.<br>Istiod 作为 1.5 中所有配置文件的默认配置<br>从图片来看，我们正在从这里：<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="istio_arch_19.JPG"  alt="">
+      <br>迁移到这里：<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="istio_arch_20.JPG"  alt="">
+      <br>2020 年，我们将继续专注于普及，实现默认 零配置 的目标，该默认设置不需要您更改应用程序的任何配置即可使用 Istio 的大多数功能。</p>
+</blockquote>
+
+        <h2 id="Security-Policy"   >
+          <a href="#Security-Policy" class="heading-link"><i class="fas fa-link"></i></a>Security Policy</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="security_policy.PNG"  alt="">
+      </p>
+
+        <h3 id="AuthorizationPolicy"   >
+          <a href="#AuthorizationPolicy" class="heading-link"><i class="fas fa-link"></i></a>AuthorizationPolicy</h3>
+      <p>授权认证, 精细化管理网格内的服务可以被哪些服务访问</p>
+<ul>
+<li>From-来源: 指定从哪里来的服务可以访问此由Label Selector指定的服务</li>
+<li>To-操作: 能访问到哪些路径,如使用get方法, Path路径等</li>
+<li>When- 条件: 当满足某条件的时候可以访问服务</li>
+</ul>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ cat mtls-auth.yaml</span><br><span class="line">apiVersion: security.istio.io/v1beta1</span><br><span class="line">kind: AuthorizationPolicy</span><br><span class="line">metadata:</span><br><span class="line">  name: box-nginx</span><br><span class="line">  namespace: rancher</span><br><span class="line">spec:</span><br><span class="line">  action: ALLOW</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx-primary</span><br><span class="line">  rules:</span><br><span class="line">  - from:</span><br><span class="line">    - source:				//包括principals, host主机, IP等等更细致话配置</span><br><span class="line">      principals: ["cluster.local/ns/rancher/sa/box"]	// 指定从namespace:rancher, serviceAccount:box 的服务可以访问标签为app=nginx-primary的服务</span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h3 id="PeerAuthentication"   >
+          <a href="#PeerAuthentication" class="heading-link"><i class="fas fa-link"></i></a>PeerAuthentication</h3>
+      <p>对等授权认证, 三种模式:</p>
+<ul>
+<li>PERMISSIVE-宽容 (default,服务间正常访问)</li>
+<li>STRICT-严格(网格内服务启用mtls)</li>
+<li>DISABLE-取消网格内的mtls</li>
+</ul>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat peer.yaml</span><br><span class="line">apiVersion: security.istio.io/v1beta1</span><br><span class="line">kind: PeerAuthentication</span><br><span class="line">metadata:</span><br><span class="line">  name: rancher-policy</span><br><span class="line">  namespace: rancher</span><br><span class="line">spec:</span><br><span class="line">  mtls:</span><br><span class="line">  mode: STRICT	// 网格内服务必须经过mtls双向握手才能进行通信, 加强网格内服务安全性, 网格外服务是不会访问进来的</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="RequestAuthentication-JWT"   >
+          <a href="#RequestAuthentication-JWT" class="heading-link"><i class="fas fa-link"></i></a>RequestAuthentication JWT</h3>
+      
+        <h2 id="Official-website-demo-bookinfo"   >
+          <a href="#Official-website-demo-bookinfo" class="heading-link"><i class="fas fa-link"></i></a>Official website demo bookinfo</h2>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="traffic_control.PNG"  alt="">
+      </p>
+
+        <h3 id="Gateway-amp-VirtualService"   >
+          <a href="#Gateway-amp-VirtualService" class="heading-link"><i class="fas fa-link"></i></a>Gateway &amp; VirtualService</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: Gateway			# 相当于外部服务要访问网格内服务的第二道大门, 第一道大门是istio默认的ingressgateway网关</span><br><span class="line">metadata:</span><br><span class="line">  name: bookinfo-gateway</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    istio: ingressgateway # use istio default controller</span><br><span class="line">  servers:</span><br><span class="line">  - port:</span><br><span class="line">      number: 80		# 定义一个80端口供别人访问, 并把80端口暴露到网关上面</span><br><span class="line">      name: http</span><br><span class="line">      protocol: HTTP</span><br><span class="line">    hosts:			# "*" 表示访问任何主机的80端口都映射都下面的VirtualService下的destination对应的productpage</span><br><span class="line">    - "*"			# 也指定为"httpbin.example.com", 当访问此网址时去找对应的下面的VirtualService, 但需要做解析，否则浏览器无法访问得到.</span><br><span class="line">---				# 解析方法: linux: 修改/etc/hosts, windows: 修改/Windows/System32/drivers/etc/hosts</span><br><span class="line">					# 添加内容: `Host-Name httpbin.example.com`， 浏览器就可输入http://httpbin.example.com/productpage/200, 然后鼠标右击-&gt;Inspect-&gt;Network-&gt;Headers， 刷新网页即可看到报头</span><br><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: VirtualService</span><br><span class="line">metadata:</span><br><span class="line">  name: bookinfo</span><br><span class="line">spec:					# * 经常会跟Gateway一起使用.</span><br><span class="line">  hosts:				# * 表示VirtualService对整个k8s可寻址的资源如Service,Ingress, 都使用同样的路由规则</span><br><span class="line">  - "*"					# 也指定为"httpbin.example.com", 与上面Gateway的hosts保持一致, 表示VirtualService的路由规则只适用于此流量可路由的域名资源httpbin.example.com.</span><br><span class="line">  gateways:</span><br><span class="line">  - bookinfo-gateway	# 绑定上面Gateway, 从外部如浏览器可以访问如: curl -s http://ingressgateway-Host-IP:NodePortNumber/productpage</span><br><span class="line">  http:					# 访问协议是http的时候才会进一步匹配</span><br><span class="line">  - match:</span><br><span class="line">    - uri:</span><br><span class="line">        exact: /productpage</span><br><span class="line">    - uri:</span><br><span class="line">        prefix: /static</span><br><span class="line">    - uri:</span><br><span class="line">        exact: /login</span><br><span class="line">    - uri:</span><br><span class="line">        exact: /logout</span><br><span class="line">    - uri:</span><br><span class="line">        prefix: /api/v1/products</span><br><span class="line">    route:</span><br><span class="line">    - destination:</span><br><span class="line">        host: productpage	# 匹配上面满足后路由到对应k8s部署的svc名字叫productpage的服务, 通过kubectl get svc -n book-info查看</span><br><span class="line">        port:</span><br><span class="line">          number: 9080		# 路由到服务productpage的9080端口提供的服务</span><br><span class="line">  route:					# 上命没有匹配到默认到productpage service</span><br><span class="line">  - destination:</span><br><span class="line">      host: productpage</span><br><span class="line">      port:</span><br><span class="line">        number: 9080</span><br></pre></td></tr></table></div></figure>
+
+<p><strong>VirtualService</strong></p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: VirtualService</span><br><span class="line">metadata:</span><br><span class="line">  name: reviews</span><br><span class="line">spec:					# 没有绑定gateway, 因此从外部还无法访问</span><br><span class="line">  hosts:</span><br><span class="line">    - reviews</span><br><span class="line">  http:</span><br><span class="line">  - route:</span><br><span class="line">    - destination:</span><br><span class="line">        host: reviews</span><br><span class="line">        subset: v1		# 对应下名DestinationRule reviews中的name: v1</span><br><span class="line">      weight: 80		# 路由权重</span><br><span class="line">    - destination:</span><br><span class="line">        host: reviews</span><br><span class="line">        subset: v1		# 对应下名DestinationRule reviews中的name: v2</span><br><span class="line">      weight: 20</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="DestinationRule"   >
+          <a href="#DestinationRule" class="heading-link"><i class="fas fa-link"></i></a>DestinationRule</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: DestinationRule		# 路由指向由host指定的svc下面通过Label selector包含的特定POD</span><br><span class="line">metadata:</span><br><span class="line">  name: reviews</span><br><span class="line">spec:</span><br><span class="line">  host: reviews			# 对应k8s部署的svc名字叫productpage, kubectl get svc -n book-info</span><br><span class="line">  trafficPolicy:</span><br><span class="line">    loadBalancer:		# 1.负载均衡 2.断路器 3.TLS 等等</span><br><span class="line">      simple: RANDOM</span><br><span class="line">    tls:</span><br><span class="line">      mode: ISTIO_MUTUAL</span><br><span class="line">  subsets:</span><br><span class="line">  - name: v1</span><br><span class="line">    labels:</span><br><span class="line">      version: v1		# 对应pod的Labels标签里有version=v1, 可通过kubectl describe po/reviews-** -n book-info查看Labels.</span><br><span class="line">  - name: v2</span><br><span class="line">    labels:</span><br><span class="line">      version: v2</span><br><span class="line">  - name: v3</span><br><span class="line">    labels:</span><br><span class="line">      version: v3</span><br></pre></td></tr></table></div></figure>
+
+<p>通过网关访问服务:</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -I -HHost:httpbin.example.com http://$INGRESS_HOST:$INGRESS_PORT/productpage/200</span><br><span class="line">上面命令将浏览器访问http://httpbin.example.com/producpage 对应的解析为 http://$INGRESS_HOST:$INGRESS_PORT/productpage/200</span><br><span class="line">这里-H选项是设置主机的HTTP报头为httpbin.example.com</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Dashboard-amp-log"   >
+          <a href="#Dashboard-amp-log" class="heading-link"><i class="fas fa-link"></i></a>Dashboard &amp; log</h2>
+      <p>Official website: <span class="exturl"><a class="exturl__link"   href="https://istio.io/latest/docs/tasks/observability/distributed-tracing/"  target="_blank" rel="noopener">https://istio.io/latest/docs/tasks/observability/distributed-tracing/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h3 id="Dashboard-Overall"   >
+          <a href="#Dashboard-Overall" class="heading-link"><i class="fas fa-link"></i></a>Dashboard Overall</h3>
+      <p>controlz: 日志, 也可用kubectl logs查看不过不够直观<br>envoy<br>grafana<br>jaeger: 查看traces<br>kiali: 服务网格的可视化展示<br>prometheus<br>zipkin: 查看traces</p>
+<p>查询istio提供了哪些dashboard</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard</span></span><br></pre></td></tr></table></div></figure>
+<p>查看或修改指定pod的log</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard controlz istiod-5f47bf5895-lzm6w -n istio-system</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard controlz istiod-5f47bf5895-lzm6w -n istio-system --address=192.168.22.184 // 添加了address监听地址</span></span><br><span class="line">http://localhost:40230</span><br></pre></td></tr></table></div></figure>
+<p>然后浏览器输入 <span class="exturl"><a class="exturl__link"   href="http://localhost:40230"  target="_blank" rel="noopener">http://localhost:40230</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 就可看到log信息</p>
+<p>查看envoy dashboard, 前提是跑业务的pod中部署了envoy proxy</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard envoy prometheus-xxx -n istio-system</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard envoy prometheus-xxx -n istio-system --address=192.168.22.184</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="log"   >
+          <a href="#log" class="heading-link"><i class="fas fa-link"></i></a>log</h3>
+      <p>查看某个pod日志</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl logs po/XXX -n Namespace</span></span><br></pre></td></tr></table></div></figure>
+<p>修改整个istio的日志模式</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl edit cm istio -n istio-system</span></span><br><span class="line">......</span><br><span class="line">data:</span><br><span class="line">  mesh: |-</span><br><span class="line">    accessLogEncoding: TEXT		// 日志默认是TEXT格式输出，可以改为json模式, 再序列话可以很直观查看进出istio envoy的流量的方向, 上下流等.</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="kiali"   >
+          <a href="#kiali" class="heading-link"><i class="fas fa-link"></i></a>kiali</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> istioctl dashboard kiali</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> curl http://10.239.186.141/productpage; <span class="keyword">done</span>;</span></span><br></pre></td></tr></table></div></figure>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="kiali_1.PNG"  alt="">
+      </p>
+
+        <h3 id="jaeger"   >
+          <a href="#jaeger" class="heading-link"><i class="fas fa-link"></i></a>jaeger</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f samples/addons/jaeger.yaml -n istio-system</span><br><span class="line">istioctl dashboard jaeger</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="zipkin"   >
+          <a href="#zipkin" class="heading-link"><i class="fas fa-link"></i></a>zipkin</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f samples/addons/extras/zipkin.yaml -n istio-system</span><br><span class="line">istioctl dashboard zipkin</span><br></pre></td></tr></table></div></figure>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/">https://kung-fu-master.github.io/2021/03/13/micro_service/istio/istio_03_configuration_dashboard/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/istio/">istio</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/micro_service/istio/istio_02_installation_upgrade/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Istio 02 Installation and upgrade</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/micro_service/istio/istio_04_inject/"><span class="paginator-prev__text">istio 04 sidecar inject</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Architecture"><span class="toc-number">1.</span> <span class="toc-text">
+          Architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Security-Policy"><span class="toc-number">2.</span> <span class="toc-text">
+          Security Policy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AuthorizationPolicy"><span class="toc-number">2.1.</span> <span class="toc-text">
+          AuthorizationPolicy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PeerAuthentication"><span class="toc-number">2.2.</span> <span class="toc-text">
+          PeerAuthentication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RequestAuthentication-JWT"><span class="toc-number">2.3.</span> <span class="toc-text">
+          RequestAuthentication JWT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Official-website-demo-bookinfo"><span class="toc-number">3.</span> <span class="toc-text">
+          Official website demo bookinfo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gateway-amp-VirtualService"><span class="toc-number">3.1.</span> <span class="toc-text">
+          Gateway &amp; VirtualService</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DestinationRule"><span class="toc-number">3.2.</span> <span class="toc-text">
+          DestinationRule</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dashboard-amp-log"><span class="toc-number">4.</span> <span class="toc-text">
+          Dashboard &amp; log</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dashboard-Overall"><span class="toc-number">4.1.</span> <span class="toc-text">
+          Dashboard Overall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#log"><span class="toc-number">4.2.</span> <span class="toc-text">
+          log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kiali"><span class="toc-number">4.3.</span> <span class="toc-text">
+          kiali</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jaeger"><span class="toc-number">4.4.</span> <span class="toc-text">
+          jaeger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zipkin"><span class="toc-number">4.5.</span> <span class="toc-text">
+          zipkin</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="volumes        我们可能希望新的容器可以在之前容器结束的位置继续运行，比如在物理机上重启进程。 可能不需要（或者不想要）整个文件系统被持久化， 但又希望能保存实际数据的目录在 pod 启动时创建卷， 并在删除 pod 时销毁卷. 在容器重新启动期间， 卷的内容将保持不变， 在重新启动容器之后， 新容器可以识别前一个容器写入卷的所有文件。 另外，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05 Kubernetes volumes">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/05_kubernetes_volume/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="volumes        我们可能希望新的容器可以在之前容器结束的位置继续运行，比如在物理机上重启进程。 可能不需要（或者不想要）整个文件系统被持久化， 但又希望能保存实际数据的目录在 pod 启动时创建卷， 并在删除 pod 时销毁卷. 在容器重新启动期间， 卷的内容将保持不变， 在重新启动容器之后， 新容器可以识别前一个容器写入卷的所有文件。 另外，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/05_kubernetes_volume/PV_PVC.PNG">
+<meta property="article:published_time" content="2021-03-13T05:00:42.872Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.872Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/05_kubernetes_volume/PV_PVC.PNG"><title>05 Kubernetes volumes | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/05_kubernetes_volume/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">05 Kubernetes volumes</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.3k</span></span></div></header><div class="post-body">
+        <h2 id="volumes"   >
+          <a href="#volumes" class="heading-link"><i class="fas fa-link"></i></a>volumes</h2>
+      <blockquote>
+<p>我们可能希望新的容器可以在之前容器结束的位置继续运行，比如在物理机上重启进程。 可能不需要（或者不想要）整个文件系统被持久化， 但又希望能保存实际数据的目录<br>在 pod 启动时创建卷， 并在删除 pod 时销毁卷. 在容器重新启动期间， 卷的内容将保持不变， 在重新启动容器之后， 新容器可以识别前一个容器写入卷的所有文件。 另外，如果一个 pod 包含多个容器， 那这个卷可以同时被所有的容器使用</p>
+</blockquote>
+<p>Kubernetes 的卷是 pod 的一个组成部分， 因此像容器一样在 pod 的规范中就定义了。<br>它们不是独立的 Kubernetes 对象， 也不能单独创建或删除。<br>pod 中的所有容器都可以使用卷， 但必须先将它挂载在每个需要访问它的容器中。 在每个容器中， 都可以在其文件系统的任意位置挂载卷<br>卷类型</p>
+<ul>
+<li>emptyDir 用于存储临时数据的简单空目录</li>
+<li>gitRepo 通过检出Git仓库的内容来初始化的卷</li>
+<li>hostPath 用于将目录从工作节点的文件系统挂载到pod中</li>
+<li>configMap、secret、downwardAPI 用于将 Kubemetes 部分资源和集群信息公开给 pod 的特殊类型的卷<br>……</li>
+</ul>
+<p>fortune-pod.yaml</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: fortune</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - image: luksa/fortune</span><br><span class="line">    name: html-generator</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - name: html</span><br><span class="line">      mountPath: /var/htdocs</span><br><span class="line">  - image: nginx:alpine</span><br><span class="line">    name: web-server</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - name: html</span><br><span class="line">      mountPath: /usr/share/nginx/html</span><br><span class="line">      readOnly: true</span><br><span class="line">    ports:</span><br><span class="line">    - containerPort: 80</span><br><span class="line">      protocol: TCP</span><br><span class="line">  volumes:</span><br><span class="line">  - name: html</span><br><span class="line">    emptyDir: &#123;&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>作为卷来使用的 emptyDir 是在承载 pod 的工作节点的实际磁盘上创建的，因此其性能取决于节点的磁盘类型。<br>也可以通知 Kubemetes 在 tmfs 文件系统(存在内存而非硬盘)上创建 emptyDir. 因此，将 emptyDir 的 medium 设置为Memory</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">- name: html</span><br><span class="line">  emptyDir</span><br><span class="line">    medium: Memory</span><br></pre></td></tr></table></div></figure>
+<p>创建pod</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl create -f fortune-pod.yaml</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kuberctl port-forward fortune 8080:80</span></span><br><span class="line">Forwarding from 127.0.0.1:8080 -&gt; 80</span><br><span class="line">Forwarding from [::1]:8080 -&gt; 80</span><br><span class="line">Handling connection for 8080</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+
+<p>查看 pod 描述</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe po/fortune</span></span><br><span class="line">......</span><br><span class="line">Containers:</span><br><span class="line">html-generator:</span><br><span class="line">......</span><br><span class="line">  Mounts:</span><br><span class="line">    /var/htdocs from html (rw)</span><br><span class="line">    /var/run/secrets/kubernetes.io/serviceaccount from default-token-b79jt (ro)</span><br><span class="line">......</span><br><span class="line">Volumes:</span><br><span class="line">  html:</span><br><span class="line">    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)</span><br><span class="line">    Medium:     Memory</span><br><span class="line">    SizeLimit:  &lt;unset&gt;</span><br><span class="line">  default-token-b79jt:</span><br><span class="line">    Type:        Secret (a volume populated by a Secret)</span><br><span class="line">    SecretName:  default-token-b79jt</span><br><span class="line">    Optional:    false</span><br><span class="line">......</span><br></pre></td></tr></table></div></figure>
+<p>测试访问两种方式:</p>
+<ul>
+<li><p>第一种浏览器访问:<br>浏览器输入 <span class="exturl"><a class="exturl__link"   href="http://127.0.0.1:8080"  target="_blank" rel="noopener">http://127.0.0.1:8080</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 或 <span class="exturl"><a class="exturl__link"   href="http://localhost:8080"  target="_blank" rel="noopener">http://localhost:8080</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>即可看到每过10s按F5刷新一次HTML页面内容都不一样</p>
+</li>
+<li><p>第二种 curl 或 wget 访问<br>不去掉公司的proxy访问命令里加上 noproxy</p>
+</li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl http://127.0.0.1:8080 --noproxy <span class="string">"*"</span>	// <span class="string">"*"</span> 对所有路径的访问都不经过配置的proxy</span></span><br></pre></td></tr></table></div></figure>
+<p>也可以去掉公司的proxy, 需要先执行 $ export http_proxy= 把公司的proxy去掉<br>再执行如下命令即可访问</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -s http://127.0.0.1:8080</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -s http://localhost:8080</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget http://127.0.0.1:8080</span></span><br></pre></td></tr></table></div></figure>
+
+<p>开启两个终端进入这两个container，每过10s分别运行如下各自container里的cat html命令，发现HTML内容不断变化但两个容器的html内容一样<br>如果打开浏览器，发现浏览器输出跟这两个container里相应路径下html的内容都是一样同步变化的</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> po/fortune -c web-server -it -- sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat /usr/share/nginx/html/index.html</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl <span class="built_in">exec</span> po/fortune -c html-generator -it -- sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat /var/htdocs/index.html</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="gitRepo-卷"   >
+          <a href="#gitRepo-卷" class="heading-link"><i class="fas fa-link"></i></a>gitRepo 卷</h2>
+      <blockquote>
+<p>gitRepo 容器就像 emptyDir 卷一样， 基本上是一个专用目录， 专门用于包含卷的容器并单独使用。 当 pod 被删除时， 卷及其内容被删除。 然而， 其他类型的卷并不创建新目录， 而是将现有的外部目录挂载到 pod 的容器文件系统中.<br>使用对应私有 Git repo 的 gitRepo 卷， 其实不可行。 Kubemetes 开发入员的共识是保待 gitRepo 卷的简单性， 而不添加任何通过 SSH 协议克隆私有存储库的支待， 因为这需要向 gitRepo 卷添加额外的配置选项。如果想要将私有的 Git repo 克隆到容器中， 则应该使用 gitsync sidecar 或类似的方法， 而不是使用 gitRepo 卷.</p>
+</blockquote>
+
+        <h2 id="hostPath-卷"   >
+          <a href="#hostPath-卷" class="heading-link"><i class="fas fa-link"></i></a>hostPath 卷</h2>
+      <blockquote>
+<p>hostPath 卷指向节点文件系统上的特定文件或目录,在同一个节点上运行并在其 hostPath 卷中使用相同路径的 pod 可以看到相同的文件.<br>持久性存储, 因为gitRepo 和 emptyDir 卷的内容都会在 pod 被删除时被删除， 而 hostPath 卷的内容则 不会被删除.<br>如果删除了一个pod, 并且下一个 pod 使用了指向主机上相同路径的hostPath 卷， 则新 pod 将会发现上一个 pod 留下的数据， 但前提是必须将其调度到与第一个 pod 相同的节点上.<br>不应该使用hostPath 卷作为存储数据库数据的目录. 因为卷的内容存储在特定节点的文件系统中, 当数据库 pod 被重新安排在另一个节点时， 会找不到数据, 这会使 pod 对预定规划的节点很敏感<br>请记住仅当需要在节点上读取或写入系统文件时才使用 hos七Path, 切勿使用它们来持久化跨 pod的数据.</p>
+</blockquote>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pods -n kube-system</span></span><br><span class="line">NAME                                  READY   STATUS    RESTARTS   AGE</span><br><span class="line">......</span><br><span class="line">kube-apiserver-master-node            1/1     Running   5          2d20h</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe po/kube-apiserver-master-node -n kube-system</span></span><br><span class="line">......</span><br><span class="line">Containers:</span><br><span class="line">  kube-apiserver:</span><br><span class="line">  ......</span><br><span class="line">  Mounts:</span><br><span class="line">    /etc/kubernetes/pki from k8s-certs (ro)</span><br><span class="line">    /etc/pki from etc-pki (ro)</span><br><span class="line">    /etc/ssl/certs from ca-certs (ro)</span><br><span class="line">......</span><br><span class="line">Volumes:</span><br><span class="line">  ca-certs:</span><br><span class="line">    Type:          HostPath (bare host directory volume)</span><br><span class="line">    Path:          /etc/ssl/certs</span><br><span class="line">    HostPathType:  DirectoryOrCreate</span><br><span class="line">  etc-pki:</span><br><span class="line">    Type:          HostPath (bare host directory volume)</span><br><span class="line">    Path:          /etc/pki</span><br><span class="line">    HostPathType:  DirectoryOrCreate</span><br><span class="line">  k8s-certs:</span><br><span class="line">    Type:          HostPath (bare host directory volume)</span><br><span class="line">    Path:          /etc/kubernetes/pki</span><br><span class="line">    HostPathType:  DirectoryOrCreate</span><br></pre></td></tr></table></div></figure>
+<p>Pod使用三个HostPath卷来访问宿主主机的/etc/ssl/certs, /etc/pki, /etc/kubernetes/pki三个目录.</p>
+
+        <h2 id="PV-amp-PVC-amp-storageclass-sc"   >
+          <a href="#PV-amp-PVC-amp-storageclass-sc" class="heading-link"><i class="fas fa-link"></i></a>PV &amp; PVC &amp; storageclass(sc)</h2>
+      <blockquote>
+<p>在 Kubemetes 集群中为了使应用能够正常请求存储资源， 同时避免处理基础设施细节， 引入了两个新的资源， 分别是待久卷和持久卷声明. 这名字可能有点误导，因为正如在前面看到的， 甚至常规的 Kubemetes 卷 也可以用来存储持久性数据<br>在 pod 中使用 PersistentVolume (持久卷， 简称 PV) 要比使用常规的 pod 卷复杂一些<br>研发人员无须向他们的 pod 中添加特定技术的卷， 而是由集群管理员设置底层存储， 然后通过 Kubernetes API 服务器创建持久卷并注册。 在创建持久卷时， 管理员可以指定其大小和所支持的访问模式.<br>当集群用户需要在其 pod 中使用持久化存储时， 他们首先创建持久卷声明(PersistentVolumeClaim, 简称 PVC) 清单， 指定所需要的最低容量要求和访问模式，然后用户将待久卷声明清单提交给 Kubernetes API 服务器， Kubernetes 将找到可匹配的待久卷并将其绑定到持久卷声明<br>持久卷声明可以当作 pod 中的一个卷来使用， 其他用户不能使用相同的持久卷，除非先通过删除持久卷声明绑定来释放.<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="PV_PVC.PNG"  alt="">
+      </p>
+</blockquote>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pv</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pvc -n default</span></span><br><span class="line">NAME             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE</span><br><span class="line">mysql-pv-claim   Bound    pvc-522c119b-a968-4a86-ae6c-521b64b775ee   20Gi       RWO            rook-ceph-block   5d2h</span><br><span class="line">wp-pv-claim      Bound    pvc-4b83da7a-4552-4806-9f68-af96d4a56d96   20Gi       RWO            rook-ceph-block   5d2h</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl get sc	// storageclass的简写(sc)</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+        <h2 id="Additional"   >
+          <a href="#Additional" class="heading-link"><i class="fas fa-link"></i></a>Additional:</h2>
+      
+        <h2 id="CephFS-example"   >
+          <a href="#CephFS-example" class="heading-link"><i class="fas fa-link"></i></a>CephFS example</h2>
+      <p>创建CephFS</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: ceph.rook.io/v1</span><br><span class="line">kind: CephFilesystem</span><br><span class="line">metadata:</span><br><span class="line">  name: myfs</span><br><span class="line">  namespace: rook-ceph</span><br><span class="line">spec:</span><br><span class="line">  metadataPool:</span><br><span class="line">    replicated:</span><br><span class="line">      size: 3</span><br><span class="line">  dataPools:</span><br><span class="line">    - replicated:</span><br><span class="line">        size: 3</span><br><span class="line">  preservePoolsOnDelete: true</span><br><span class="line">  metadataServer:</span><br><span class="line">    activeCount: 1</span><br><span class="line">    activeStandby: true</span><br></pre></td></tr></table></div></figure>
+
+<p>创建sc(StorageClass), sc是不需要提前创建好PV, 而是根据PVC需求动态创建PV.</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: storage.k8s.io/v1</span><br><span class="line">kind: StorageClass</span><br><span class="line">metadata:</span><br><span class="line">  name: rook-cephfs</span><br><span class="line"># Change "rook-ceph" provisioner prefix to match the operator namespace if needed</span><br><span class="line">provisioner: rook-ceph.cephfs.csi.ceph.com</span><br><span class="line">  parameters:</span><br><span class="line">  # clusterID is the namespace where operator is deployed.</span><br><span class="line">  clusterID: rook-ceph</span><br><span class="line">  </span><br><span class="line">  # CephFS filesystem name into which the volume shall be created</span><br><span class="line">  fsName: myfs</span><br><span class="line">  </span><br><span class="line">  # Ceph pool into which the volume shall be created</span><br><span class="line">  # Required for provisionVolume: "true"</span><br><span class="line">  pool: myfs-data0</span><br><span class="line">  </span><br><span class="line">  # Root path of an existing CephFS volume</span><br><span class="line">  # Required for provisionVolume: "false"</span><br><span class="line">  # rootPath: /absolute/path</span><br><span class="line">  </span><br><span class="line">  # The secrets contain Ceph admin credentials. These are generated automatically by the operator</span><br><span class="line">  # in the same namespace as the cluster.</span><br><span class="line">  csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner</span><br><span class="line">  csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph</span><br><span class="line">  csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node</span><br><span class="line">  csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph</span><br><span class="line">  </span><br><span class="line">reclaimPolicy: Delete</span><br></pre></td></tr></table></div></figure>
+
+<p>创建PVC和deployment</p>
+<blockquote>
+<p>PV 是K8S全局资源<br>PVC 是指定在某个Namespace下的K8S资源, 如果PVC访问属性为ReadWriteMany， 多个不同Pod挂载此相同的PVC到容器指定目录, 该目录将共享文件<br>多个不同Pod挂载不同的PVC到容器指定目录，则文件不能共享</p>
+</blockquote>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  name: my-pvc</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  accessModes:				// PV 具有的访问部署属性， PVC绑定后也应具有的访问部署属性(可读,可写,多机部署)</span><br><span class="line">  - ReadWriteMany</span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      storage: 1Gi</span><br><span class="line">  storageClassName: rook-cephfs</span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: my-test</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  labels:</span><br><span class="line">    app: my-test</span><br><span class="line">    kubernetes.io/cluster-service: "true"</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: my-test</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: my-test</span><br><span class="line">        kubernetes.io/cluster-service: "true"</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: my-test</span><br><span class="line">        image: registry:2</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        resources:</span><br><span class="line">          limits:</span><br><span class="line">            cpu: 100m</span><br><span class="line">            memory: 100Mi</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: my-volume</span><br><span class="line">          mountPath: /var/lib/myVolume</span><br><span class="line">      volumes:</span><br><span class="line">      - name: my-volume</span><br><span class="line">         persistentVolumeClaim:</span><br><span class="line">           claimName: my-pvc			// 绑定上面的PVC</span><br><span class="line">           readOnly: false</span><br><span class="line">       affinity:</span><br><span class="line">         podAffinity:</span><br><span class="line">           requiredDuringSchedulingIgnoredDuringExecution:</span><br><span class="line">               - labelSelector:</span><br><span class="line">                   matchExpressions:</span><br><span class="line">                   - key: app</span><br><span class="line">                     operator: In</span><br><span class="line">                     values:</span><br><span class="line">                     - helm</span><br><span class="line">                 topologyKey: kubernetes.io/hostname</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/05_kubernetes_volume/">https://kung-fu-master.github.io/2021/03/13/micro_service/kubernetes/05_kubernetes_volume/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/kubernetes/">kubernetes</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/micro_service/kubernetes/01_kubernetes%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%E5%92%8C%E9%85%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">01 Kubernetes安装方式和配置条件</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/micro_service/kubernetes/04_kubernetes_service/"><span class="paginator-prev__text">04 Kubernetes service</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#volumes"><span class="toc-number">1.</span> <span class="toc-text">
+          volumes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitRepo-卷"><span class="toc-number">2.</span> <span class="toc-text">
+          gitRepo 卷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hostPath-卷"><span class="toc-number">3.</span> <span class="toc-text">
+          hostPath 卷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PV-amp-PVC-amp-storageclass-sc"><span class="toc-number">4.</span> <span class="toc-text">
+          PV &amp; PVC &amp; storageclass(sc)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Additional"><span class="toc-number">5.</span> <span class="toc-text">
+          Additional:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CephFS-example"><span class="toc-number">6.</span> <span class="toc-text">
+          CephFS example</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://kung-fu-master.github.io/page/13/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary"><title>Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/page/13/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/expect%E6%89%A7%E8%A1%8C%E4%B8%8E%E7%BB%88%E7%AB%AF%E7%9A%84%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C/">expect 执行与终端的交互操作</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">991</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="expect用法介绍"   >
+          <a href="#expect用法介绍" class="heading-link"><i class="fas fa-link"></i></a>expect用法介绍</h2>
+      
+        <h3 id="安装expect"   >
+          <a href="#安装expect" class="heading-link"><i class="fas fa-link"></i></a>安装expect</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install expect</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="1-定义脚本执行的shell"   >
+          <a href="#1-定义脚本执行的shell" class="heading-link"><i class="fas fa-link"></i></a>1.定义脚本执行的shell</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim expect_shell.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/expect</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="2-设置超时时间"   >
+          <a href="#2-设置超时时间" class="heading-link"><i class="fas fa-link"></i></a>2.设置超时时间</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set timeout 30</span><br></pre></td></tr></table></div></figure>
+<p>单位是秒, 如果设为timeout -1 意为永远不超时.</p>
+
+        <h3 id="3-spawn"   >
+          <a href="#3-spawn" class="heading-link"><i class="fas fa-link"></i></a>3.spawn</h3>
+      <p>spawn是进入expect环境后才能执行的内部命令, 不能直接在默认的shell环境中进行执行<br>主要功能: 传递交互指令.</p>
+
+        <h3 id="4-expect"   >
+          <a href="#4-expect" class="heading-link"><i class="fas fa-link"></i></a>4.expect</h3>
+      <p>这里的expect是expect的内部命令<br>主要功能是判断输出结果是否包含某项字符串, 没有则立即返回, 负责就等待一段时间后返回, 等待时间通过timeout进行设置.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">expect &#123; "yes/no" &#123; send "yes\r"&#125; &#125;</span><br><span class="line">expect "*#"			// 表示匹配所有, 不管进程输出什么都能匹配成功.</span><br><span class="line">expect "eof"		// 退出expect会话spawn进程, 重新退到shell上来</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="5-send"   >
+          <a href="#5-send" class="heading-link"><i class="fas fa-link"></i></a>5.send</h3>
+      <p>执行交互动作, 将交互要执行的动作进行输入给交互指令<br>命令字符串结尾加上回车”\r”</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">send "exit\r"		//退出远程终端</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="6-interact"   >
+          <a href="#6-interact" class="heading-link"><i class="fas fa-link"></i></a>6.interact</h3>
+      <p>执行完成后爆出交互状态, 把控制权交给控制台, 如果不加这一项, 交互完成会自动退出.</p>
+
+        <h3 id="7-exp-continue"   >
+          <a href="#7-exp-continue" class="heading-link"><i class="fas fa-link"></i></a>7.exp_continue</h3>
+      <p>继续执行接下来的交互操作</p>
+
+        <h3 id="8-argc-argv"   >
+          <a href="#8-argc-argv" class="heading-link"><i class="fas fa-link"></i></a>8.$argc, $argv</h3>
+      <p>expect脚本接受从终端bash传递过来的参数, 可以用 <code>[lindex $argv n]</code> 获得, n从0开始, 分别表示第一个,第二个,第三个…参数.<br>$argc 表示传递参数总个数.</p>
+
+        <h2 id="实例1"   >
+          <a href="#实例1" class="heading-link"><i class="fas fa-link"></i></a>实例1</h2>
+      <p>脚本后缀名最好用 <code>.exp</code>, 这样写脚本时候容易排错.<br>touch expect_shell.exp</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/expect</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install expect    // 安装expect</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> spawn     // 开启一个会话, 也就是开启一个进程</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> expect    // 匹配进程执行后终端输出的信息中包含的字符串</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">set</span> timeout 30    // 设置超时时间, 单位是秒, 如果设为timeout -1 意味永不超时</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> exp_continue:     // 如果没有匹配成功, 继续向下匹配, 如字符串中不含有<span class="string">"yes/no"</span>, 则继续向下匹配比如是否含有<span class="string">"password"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> send      // 向终端输入信息</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> interact  // 留在会话进程中等待进行下一步操作</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Open a session</span></span><br><span class="line">spawn ssh root@10.239.131.206</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Match the string contained <span class="keyword">in</span> the received message</span></span><br><span class="line">expect &#123;</span><br><span class="line">    "yes/no" &#123; send "yes\r"; exp_continue &#125; # 花括号'&#123;','&#125;'和里面内容间要有空格</span><br><span class="line">    "password" &#123; send "123456\r" &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> After the above match is successful, <span class="built_in">continue</span> to perform the interactive operation</span></span><br><span class="line"></span><br><span class="line">expect "*#"</span><br><span class="line">send "rm -rf /mnt/minio_data1\r"</span><br><span class="line">send "mkdir /mnt/minio_data2\r"</span><br><span class="line"><span class="meta">#</span><span class="bash">expect <span class="string">"*#"</span></span></span><br><span class="line">send "exit\r"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">exit</span> expect process, <span class="built_in">exit</span> spawn session</span></span><br><span class="line">expect "eof"</span><br></pre></td></tr></table></div></figure>
+<p>执行: </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> chmod a+x expect_shell.exp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./expect_shell.exp</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="实例2"   >
+          <a href="#实例2" class="heading-link"><i class="fas fa-link"></i></a>实例2</h2>
+      <p>touch bash_shell.sh</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">username=root</span><br><span class="line">password=123456</span><br><span class="line">node01=10.239.131.206</span><br><span class="line"></span><br><span class="line">expect &lt;&lt;-EOF</span><br><span class="line">spawn ssh $username@$node01</span><br><span class="line">expect &#123;</span><br><span class="line">    "yes/no" &#123; send "yes\r"; exp_continue &#125;</span><br><span class="line">    "password" &#123; send "$&#123;password&#125;\r"; exp_continue &#125;</span><br><span class="line">    "Last login" &#123; send "\r" &#125;		# 设置免密登陆后不需要输入密码, 输出字符串含有"Last login"</span><br><span class="line">&#125;</span><br><span class="line">expect "*#"</span><br><span class="line">send "mkdir /mnt/test3 -p \r"</span><br><span class="line">expect "*#"</span><br><span class="line">send "exit\r"</span><br><span class="line">expect "eof"</span><br><span class="line">EOF</span><br></pre></td></tr></table></div></figure>
+
+<p>执行：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> chmod a+x bash_shell.sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./bash_shell.sh</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="实例3-解析命令行参数"   >
+          <a href="#实例3-解析命令行参数" class="heading-link"><i class="fas fa-link"></i></a>实例3, 解析命令行参数</h2>
+      <p>touch mkdir_node_minio.sh<br>登陆选择的机器上创建文件夹后再退出</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">usecase: ./bash_shell_commands.sh -u &lt;username&gt; -p &lt;<span class="built_in">pwd</span>&gt;  --node01 &lt;node01-ip&gt; --node02 &lt;node02-ip&gt; --node03 &lt;node03-ip&gt; --node04=&lt;node04-ip&gt;</span></span><br><span class="line">ARGS=`getopt -o u:p: --long username:,password:,node01_ip:,node02_ip:,node03_ip:,node04_ip:: -n 'mkdir_node_minio.sh' -- "$@"`</span><br><span class="line">if [ $? != 0 ]; then</span><br><span class="line">    echo "Terminating..."</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line">eval set -- "$&#123;ARGS&#125;"</span><br><span class="line">echo $&#123;ARGS&#125;</span><br><span class="line"></span><br><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    case "$1" in</span><br><span class="line">        -u|--username)</span><br><span class="line">            username=$2</span><br><span class="line">            shift 2 ;;</span><br><span class="line">        -p|--password)</span><br><span class="line">            password=$2</span><br><span class="line">            shift 2 ;;</span><br><span class="line">        --node01_ip)</span><br><span class="line">            node01_ip=$2</span><br><span class="line">            nodes+=($&#123;node01_ip&#125;)</span><br><span class="line">            shift 2 ;;</span><br><span class="line">        --node02_ip)</span><br><span class="line">            node02_ip=$2</span><br><span class="line">            nodes+=($&#123;node02_ip&#125;)</span><br><span class="line">            shift 2 ;;</span><br><span class="line">        --node03_ip)</span><br><span class="line">            node03_ip=$2</span><br><span class="line">            nodes+=($&#123;node03_ip&#125;)</span><br><span class="line">            shift 2 ;;</span><br><span class="line">        --node04_ip)</span><br><span class="line">            case "$2" in</span><br><span class="line">                "")</span><br><span class="line">                    shift 2 ;;</span><br><span class="line">                *)</span><br><span class="line">                    node04_ip=$2</span><br><span class="line">                    nodes+=($&#123;node04_ip&#125;)</span><br><span class="line">                    shift 2 ;;</span><br><span class="line">            esac</span><br><span class="line">            ;;</span><br><span class="line">        --)</span><br><span class="line">            shift</span><br><span class="line">            break ;;</span><br><span class="line">        *)</span><br><span class="line">            echo "Error!"</span><br><span class="line">            exit 1 ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for node in $&#123;nodes[*]&#125;</span><br><span class="line">do</span><br><span class="line">expect &lt;&lt;-EOF</span><br><span class="line">spawn ssh $username@$&#123;node&#125;</span><br><span class="line">expect &#123;</span><br><span class="line">    "yes/no" &#123; send "yes\r"; exp_continue &#125;	# 如果匹配不到会卡顿一会继续往下执行, 因此一定要事先知道每一步终端会输出哪些信息</span><br><span class="line">    "password" &#123; send "$&#123;password&#125;\r"; exp_continue &#125;</span><br><span class="line">    "Last login" &#123; send "\r" &#125;		# 设置免密登陆后不需要输入密码, 输出字符串含有"Last login"</span><br><span class="line">&#125;</span><br><span class="line">expect "*#"</span><br><span class="line">send "rm -rf /mnt/minio_data_1 \r"</span><br><span class="line">send "mkdir -p /mnt/minio_data_1 \r"</span><br><span class="line">expect "*#"</span><br><span class="line">send "exit\r"</span><br><span class="line">expect "eof"</span><br><span class="line">EOF</span><br><span class="line">done</span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/fdisk%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA_mount/">fdisk磁盘分区 mount操作</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="查看分区"   >
+          <a href="#查看分区" class="heading-link"><i class="fas fa-link"></i></a>查看分区</h2>
+      <p>查看磁盘格式类型, UUID, 挂载点</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lsblk -f</span></span><br><span class="line"> NAME            FSTYPE      LABEL UUID                                   MOUNTPOINT</span><br><span class="line"> sda</span><br><span class="line"> ├─sda1          xfs               eadc654f-b75a-4d81-8e17-910031209006   /var/lib/kubelet/pods/0ef567bf-3636-455b-a585-6a9d8ab1b2dd/volumes/kubernetes.io~local-volume/local-pv-f</span><br><span class="line"> ├─sda2          xfs               47f36b35-c3fd-4374-86d6-0e56bb72eb02   /mnt/disks/47f36b35-c3fd-4374-86d6-0e56bb72eb02</span><br><span class="line"> ├─sda3          xfs               fea5b28a-8ac4-4736-9487-42517fd242de   /var/lib/kubelet/pods/e447c269-bbfd-4d59-9e01-432f14b75b26/volumes/kubernetes.io~local-volume/local-pv-3</span><br><span class="line"> ├─sda4          xfs               516c6d3c-c639-4092-82b6-0a82d09edff3   /var/lib/kubelet/pods/794961eb-3eb7-4cc2-b252-8d39d496b298/volumes/kubernetes.io~local-volume/local-pv-b</span><br><span class="line"> └─sda5          xfs               a7b1ca2d-5d08-411e-83e5-9fff59d554be   /mnt/disks/a7b1ca2d-5d08-411e-83e5-9fff59d554be</span><br><span class="line"> sdb             LVM2_member       OvpWBO-5AmD-7b4H-Plsn-twvB-k2oC-A5Aaca</span><br><span class="line"> └─ceph--7ee2d5aa--c451--44d1--8ff8--0d6394d5fb48-osd--data--9ca735f4--03c4--4f1d--89d8--bcd78778ce6c</span><br><span class="line"> </span><br><span class="line"> sdc             LVM2_member       3x1Vwv-POeH-igqu-yuRn-ex2l-oDp3-9FaFPi</span><br><span class="line"> └─ceph--c0d1ccc4--5130--4697--b9a2--e9c58cbc5f7b-osd--data--91d305f7--cfc5--4ca1--b787--35fefcc6f938</span><br><span class="line"> </span><br><span class="line"> nvme0n1</span><br><span class="line"> ├─nvme0n1p1     vfat              3E80-8EF9                              /boot/efi</span><br><span class="line"> ├─nvme0n1p2     xfs               d4e9a380-5394-47ff-8682-9f3ec689060c   /boot</span><br><span class="line"> └─nvme0n1p3     LVM2_member       2JVUdy-83cp-vH1n-LLAV-vMwZ-twiw-bhBNDH</span><br><span class="line">   ├─centos-root xfs               51083aeb-a167-4fe9-aced-fa14c2a18953   /</span><br><span class="line">   ├─centos-swap swap              ebcd1018-d259-4d2c-bfd0-46abdc143201</span><br><span class="line">   └─centos-home xfs               ada9d310-ffee-4b08-9350-3e222614c11b   /home</span><br></pre></td></tr></table></div></figure>
+
+<p>查看磁盘大小等信息</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lsblk</span></span><br><span class="line"> NAME                                    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sda                                       8:0    0   1.8T  0 disk</span><br><span class="line"> ├─sda1                                    8:1    0    10G  0 part /var/lib/kubelet/pods/0ef567bf-3636-455b-a585-6a9d8ab1b2dd/volumes/kubernetes.io~local-volume/local-pv-f902c4d0</span><br><span class="line"> ├─sda2                                    8:2    0    10G  0 part /mnt/disks/47f36b35-c3fd-4374-86d6-0e56bb72eb02</span><br><span class="line"> ├─sda3                                    8:3    0    30G  0 part /var/lib/kubelet/pods/e447c269-bbfd-4d59-9e01-432f14b75b26/volumes/kubernetes.io~local-volume/local-pv-3f8c242c</span><br><span class="line"> ├─sda4                                    8:4    0   200G  0 part /var/lib/kubelet/pods/794961eb-3eb7-4cc2-b252-8d39d496b298/volumes/kubernetes.io~local-volume/local-pv-bcf24291</span><br><span class="line"> └─sda5                                    8:5    0   500G  0 part /mnt/disks/a7b1ca2d-5d08-411e-83e5-9fff59d554be</span><br><span class="line"> sdb                                       8:16   0   1.8T  0 disk</span><br><span class="line"> └─ceph--7ee2d5aa--c451--44d1--8ff8--0d6394d5fb48-osd--data--9ca735f4--03c4--4f1d--89d8--bcd78778ce6c</span><br><span class="line">                                         253:3    0   1.8T  0 lvm</span><br><span class="line"> sdc                                       8:32   0   1.8T  0 disk</span><br><span class="line"> └─ceph--c0d1ccc4--5130--4697--b9a2--e9c58cbc5f7b-osd--data--91d305f7--cfc5--4ca1--b787--35fefcc6f938</span><br><span class="line">                                         253:4    0   1.8T  0 lvm</span><br><span class="line"> nvme0n1                                 259:0    0   477G  0 disk</span><br><span class="line"> ├─nvme0n1p1                             259:1    0   200M  0 part /boot/efi</span><br><span class="line"> ├─nvme0n1p2                             259:2    0     1G  0 part /boot</span><br><span class="line"> └─nvme0n1p3                             259:3    0 475.8G  0 part</span><br><span class="line">   ├─centos-root                         253:0    0    50G  0 lvm  /</span><br><span class="line">   ├─centos-swap                         253:1    0     4G  0 lvm</span><br><span class="line">   └─centos-home                         253:2    0 421.8G  0 lvm  /home</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="执行分区"   >
+          <a href="#执行分区" class="heading-link"><i class="fas fa-link"></i></a>执行分区</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> fdisk /dev/sda</span></span><br><span class="line"> WARNING: fdisk GPT support is currently new, and therefore in an experimental phase. Use at your own discretion.</span><br><span class="line"> Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"> </span><br><span class="line"> Changes will remain in memory only, until you decide to write them.</span><br><span class="line"> Be careful before using the write command.</span><br><span class="line"> </span><br><span class="line"> Command (m for help): `p`</span><br><span class="line"> </span><br><span class="line"> Disk /dev/sda: 1920.4 GB, 1920383410176 bytes, 3750748848 sectors</span><br><span class="line"> Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line"> Sector size (logical/physical): 512 bytes / 4096 bytes</span><br><span class="line"> I/O size (minimum/optimal): 4096 bytes / 4096 bytes</span><br><span class="line"> Disk label type: gpt</span><br><span class="line"> Disk identifier: 6427BFAE-2D0B-4DBB-91E7-80D20C8A1DA7</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash">         Start          End    Size  Type            Name</span></span><br><span class="line">  1         4096     20971519     10G  Microsoft basic primary</span><br><span class="line">  2     20971520     41943039     10G  Microsoft basic primary</span><br><span class="line">  3     41943040    104857599     30G  Microsoft basic primary</span><br><span class="line">  4    104857600    524287999    200G  Microsoft basic primary</span><br><span class="line">  5    524288000   1572863999    500G  Microsoft basic primary</span><br><span class="line"> </span><br><span class="line"> Command (m for help): `n`</span><br><span class="line"> Partition number (6-128, default 6):</span><br><span class="line"> First sector (34-3750748814, default 1572864000):</span><br><span class="line"> Last sector, +sectors or +size&#123;K,M,G,T,P&#125; (1572864000-3750748814, default 3750748814): `+10G`</span><br><span class="line"> Created partition 6</span><br><span class="line"> </span><br><span class="line"> Command (m for help): `p`</span><br><span class="line"> </span><br><span class="line"> Disk /dev/sda: 1920.4 GB, 1920383410176 bytes, 3750748848 sectors</span><br><span class="line"> Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line"> Sector size (logical/physical): 512 bytes / 4096 bytes</span><br><span class="line"> I/O size (minimum/optimal): 4096 bytes / 4096 bytes</span><br><span class="line"> Disk label type: gpt</span><br><span class="line"> Disk identifier: 6427BFAE-2D0B-4DBB-91E7-80D20C8A1DA7</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash">         Start          End    Size  Type            Name</span></span><br><span class="line">  1         4096     20971519     10G  Microsoft basic primary</span><br><span class="line">  2     20971520     41943039     10G  Microsoft basic primary</span><br><span class="line">  3     41943040    104857599     30G  Microsoft basic primary</span><br><span class="line">  4    104857600    524287999    200G  Microsoft basic primary</span><br><span class="line">  5    524288000   1572863999    500G  Microsoft basic primary</span><br><span class="line">  6   1572864000   1593835519     10G  Linux filesyste</span><br><span class="line"> </span><br><span class="line"> Command (m for help): `w`</span><br><span class="line"> The partition table has been altered!</span><br><span class="line"> </span><br><span class="line"> Calling ioctl() to re-read partition table.</span><br><span class="line"> </span><br><span class="line"> WARNING: Re-reading the partition table failed with error 16: Device or resource busy.</span><br><span class="line"> The kernel still uses the old table. The new table will be used at</span><br><span class="line"> the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line"> Syncing disks.</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="不重启机器-Kernel重新加载磁盘table"   >
+          <a href="#不重启机器-Kernel重新加载磁盘table" class="heading-link"><i class="fas fa-link"></i></a>不重启机器,Kernel重新加载磁盘table</h2>
+      <p>查看磁盘文件</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls /dev/sda*</span></span><br><span class="line"> /dev/sda  /dev/sda1  /dev/sda2  /dev/sda3  /dev/sda4  /dev/sda5 	// 没有sda6磁盘</span><br></pre></td></tr></table></div></figure>
+
+<p>进行Kernel sync disks</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> partprobe /dev/sda</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> lsblk -f</span></span><br><span class="line"> NAME            FSTYPE      LABEL UUID                                   MOUNTPOINT</span><br><span class="line"> sda</span><br><span class="line"> ├─sda1          xfs               eadc654f-b75a-4d81-8e17-910031209006   /var/lib/kubelet/pods/0ef567bf-3636-455b-a585-6a9d8ab1b2dd/volumes/kubernetes.io~local-volume/local-pv-f</span><br><span class="line"> ......</span><br><span class="line"> └─sda6</span><br><span class="line"> sdb             LVM2_member       OvpWBO-5AmD-7b4H-Plsn-twvB-k2oC-A5Aaca</span><br><span class="line"> └─ceph--7ee2d5aa--c451--44d1--8ff8--0d6394d5fb48-osd--data--9ca735f4--03c4--4f1d--89d8--bcd78778ce6c</span><br><span class="line"> </span><br><span class="line"> sdc             LVM2_member       3x1Vwv-POeH-igqu-yuRn-ex2l-oDp3-9FaFPi</span><br><span class="line"> └─ceph--c0d1ccc4--5130--4697--b9a2--e9c58cbc5f7b-osd--data--91d305f7--cfc5--4ca1--b787--35fefcc6f938</span><br><span class="line"> ......</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="删除分区"   >
+          <a href="#删除分区" class="heading-link"><i class="fas fa-link"></i></a>删除分区</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> fdisk /dev/sda</span></span><br><span class="line"> m 		// 查看命令</span><br><span class="line"> d 		// 删除分区</span><br><span class="line"> 6 		// 选择要删除的partition</span><br><span class="line"> w 		// 输入 w  保存，这个时候分区以及删除了</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="格式化分区"   >
+          <a href="#格式化分区" class="heading-link"><i class="fas fa-link"></i></a>格式化分区</h2>
+      <p>在设备上格式化成指定格式的文件系统；  centos 7以后的版本默认使用xfs格式； 也可以指定 ext3\4格式</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkfs.ext4 /dev/sdb1</span></span><br><span class="line">  mke2fs 1.42.9 (28-Dec-2013)</span><br><span class="line">          Using EXT2FS Library version 1.42.9</span><br></pre></td></tr></table></div></figure>
+<ul>
+<li>fs：指定建立文件系统时的参数；</li>
+<li>-t&lt;文件系统类型&gt;：指定要建立何种文件系统；</li>
+<li>-v：显示版本信息与详细的使用方法；</li>
+<li>-V：显示简要的使用方法；</li>
+<li>-c：在制做档案系统前，检查该partition是否有坏轨。</li>
+</ul>
+<p>格式为xfs,所以使用mkfs.xfs命令。<strong><code>如果已有其他文件系统创建在此分区，必须加上&quot;-f&quot;参数来覆盖它</code></strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.xfs -f  -i size=512 -l size=128m,lazy-count=1 -d agcount=64 /dev/xvda3</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>-i size=512 : 默认的值是256KB，当内容小于这个值时，写到inode中，超过这个值时，写到block中。</li>
+<li>-l size=128m :默认值的是10m，修改这个参数成128m，可以显著的提高xfs文件系统删除文件的速度，当然还有其它，如拷贝文件的速度。</li>
+<li>-l lazy-count=1: 值可以是0或者1；默认值是0;在一些配置上显著提高性能；</li>
+<li>-d agcount=4 : 默认值是根据容量自动设置的。可以设置成1/2/4/16等等，这个参数可以调节对CPU的占用率，值越小，占用率越低；因为我的硬盘为2T的大硬盘，所以设置64；<br><strong>Use Case:</strong></li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkfs.xfs -f /dev/sda6        格式化sda6磁盘</span></span><br><span class="line"> mkfs.xfs -f /dev/sda6</span><br><span class="line"> meta-data=/dev/sda6              isize=512    agcount=4, agsize=655360 blks</span><br><span class="line">          =                       sectsz=4096  attr=2, projid32bit=1</span><br><span class="line">          =                       crc=1        finobt=0, sparse=0</span><br><span class="line"> data     =                       bsize=4096   blocks=2621440, imaxpct=25</span><br><span class="line">          =                       sunit=0      swidth=0 blks</span><br><span class="line"> naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line"> log      =internal log           bsize=4096   blocks=2560, version=2</span><br><span class="line">          =                       sectsz=4096  sunit=1 blks, lazy-count=1</span><br><span class="line"> realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line"><span class="meta">$</span><span class="bash"> lsblk</span></span><br><span class="line"> NAME                                    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT</span><br><span class="line"> sda                                       8:0    0   1.8T  0 disk</span><br><span class="line"> ├─sda1                                    8:1    0    10G  0 part /var/lib/kubelet/pods/0ef567bf-3636-455b-a585-6a9d8ab1b2dd/volumes/kubernetes.io~local-volume/local-pv-f902c4d0</span><br><span class="line"> ......</span><br><span class="line"> └─sda6                                    8:6    0    10G  0 part</span><br><span class="line"><span class="meta">$</span><span class="bash"> lsblk -f</span></span><br><span class="line"> NAME            FSTYPE      LABEL UUID                                   MOUNTPOINT</span><br><span class="line"> sda</span><br><span class="line"> ├─sda1          xfs               eadc654f-b75a-4d81-8e17-910031209006   /var/lib/kubelet/pods/0ef567bf-3636-455b-a585-6a9d8ab1b2dd/volumes/kubernetes.io~local-volume/local-pv-f</span><br><span class="line"> ......</span><br><span class="line"> └─sda6          xfs               8c653ffc-4b28-47d1-9e7f-32f8d969757a</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="挂载分区"   >
+          <a href="#挂载分区" class="heading-link"><i class="fas fa-link"></i></a>挂载分区</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir /d1 </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mount /dev/sda6 /d1</span></span><br></pre></td></tr></table></div></figure>
+
+<p><strong>设置开机自动挂载新建分区</strong></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim /etc/fstab</span></span><br><span class="line"><span class="meta"> #</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> /etc/fstab</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> Created by anaconda on Fri Apr  3 16:29:28 2020</span></span><br><span class="line"><span class="meta"> #</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> Accessible filesystems, by reference, are maintained under <span class="string">'/dev/disk'</span></span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) <span class="keyword">for</span> more info</span></span><br><span class="line"><span class="meta"> #</span></span><br><span class="line"> /dev/mapper/centos-root /                       xfs     defaults        0 0</span><br><span class="line"> /dev/mapper/centos-home /home                   xfs     defaults        0 0</span><br><span class="line"> UUID=eadc654f-b75a-4d81-8e17-910031209006 /mnt/disks/eadc654f-b75a-4d81-8e17-910031209006 xfs defaults 0 2</span><br><span class="line"> UUID=47f36b35-c3fd-4374-86d6-0e56bb72eb02 /mnt/disks/47f36b35-c3fd-4374-86d6-0e56bb72eb02 xfs defaults 0 2</span><br><span class="line"> UUID=fea5b28a-8ac4-4736-9487-42517fd242de /mnt/disks/fea5b28a-8ac4-4736-9487-42517fd242de xfs defaults 0 2</span><br><span class="line"> UUID=516c6d3c-c639-4092-82b6-0a82d09edff3 /mnt/disks/516c6d3c-c639-4092-82b6-0a82d09edff3 xfs defaults 0 2</span><br><span class="line"> UUID=a7b1ca2d-5d08-411e-83e5-9fff59d554be /mnt/disks/a7b1ca2d-5d08-411e-83e5-9fff59d554be xfs defaults 0 2</span><br><span class="line"> UUID=8c653ffc-4b28-47d1-9e7f-32f8d969757a /mnt/disks/My-Directory xfs default 0 2</span><br></pre></td></tr></table></div></figure>
+
+<p>/etc/fstab文件负责配置Linux开机时自动挂载的分区</p>
+<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">第一列可以是实际分区名，也可以是实际分区的卷标（Lable）</span><br><span class="line">第二列是挂载点,挂载点必须为当前已经存在的目录</span><br><span class="line">第三列为此分区的文件系统类型</span><br><span class="line">第四列是挂载的选项，用于设置挂载的参数</span><br><span class="line">* auto: 系统自动挂载，fstab默认就是这个选项</span><br><span class="line">* defaults: rw, suid, dev, exec, auto, nouser, <span class="keyword">and</span> async.</span><br><span class="line">* noauto 开机不自动挂载</span><br><span class="line">* nouser 只有超级用户可以挂载</span><br><span class="line">* ro 按只读权限挂载</span><br><span class="line">* rw 按可读可写权限挂载</span><br><span class="line">*<span class="built_in"> user </span>任何用户都可以挂载</span><br><span class="line">请注意光驱和软驱只有在装有介质时才可以进行挂载，因此它是noauto</span><br><span class="line">第五列是dump备份设置,当其值设置为1时，将允许dump备份程序备份；设置为0时，忽略备份操作；</span><br><span class="line">第六列是fsck磁盘检查设置,其值是一个顺序。当其值为0时，永远不检查；而 / 根目录分区永远都为1。其它分区从2开始，数字越小越先检查，如果两个分区的数字相同，则同时检查。</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="卸载分区"   >
+          <a href="#卸载分区" class="heading-link"><i class="fas fa-link"></i></a>卸载分区</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> umount /dev/sda6</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/gdb/">gdb</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">693</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="gdb实例"   >
+          <a href="#gdb实例" class="heading-link"><i class="fas fa-link"></i></a>gdb实例</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c a.c b.c -o app -g</span><br></pre></td></tr></table></div></figure>
+<ul>
+<li>-g:会保留函数名和变量名</li>
+</ul>
+<p>例如一个程序名为prog 参数为 -l a -C abc</p>
+<p>则，运行gcc/g++ -g  prog.c/cpp -o prog</p>
+<p>就可以用gdb调试程序prog</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb prog</span><br></pre></td></tr></table></div></figure>
+
+<p>进入gdb调试界面<br>输入参数命令set args 后面加上程序所要用的参数，注意，不再带有程序名，直接加参数，如：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set args -l a -C abc</span><br></pre></td></tr></table></div></figure>
+<p>回车后输入</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r</span><br></pre></td></tr></table></div></figure>
+
+<p>即可开始调试</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(gdb) start	 开始运行程序，只运行main函数里的第一行.</span><br><span class="line">(gdb) run		运行程序直到断点或程序末尾</span><br><span class="line">(gdb) c		继续运行程序</span><br><span class="line">(gdb) n		运行一行代码</span><br><span class="line">(gdb) s		进入函数内部运行</span><br><span class="line">(gdb) show listsize	默认显示10行源代码</span><br><span class="line">(gdb) set listsize=20	设置默认显示20行源代码</span><br><span class="line">(gdb) l 30	显示源代码第30行附近上下文</span><br><span class="line">(gdb) l functionname	显示函数名的源代码</span><br><span class="line">(gdb) l insert_sort.c:15	显示源代码所引用的insert_sort.c代码文件中第15行上下文</span><br><span class="line">(gdb) l insert_sort.c:functioname	显示源代码所引用的insert_sort.c代码文件中的function函数的代码</span><br><span class="line">(gdb) l main.c:main</span><br></pre></td></tr></table></div></figure>
+<p>gdb中的中文注释会乱码</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">(gdb) b 行号	添加断点，//注释和"&#123;", "&#125;"等都是无效注释</span><br><span class="line">(gdb) b 函数名</span><br><span class="line">(gdb) b 文件名:行号</span><br><span class="line">(gdb) b 文件名：函数名</span><br><span class="line">(gdb) i(info) b	查看设置过的所有断点</span><br><span class="line">Num: 断点编号</span><br><span class="line">Enb: enable 断点现在是否可用，y就是可用, n无效程序跑起来不会停到这个断点</span><br><span class="line">Address: 断点在内存中的位置</span><br><span class="line">What: 如in functionname at main.c:12</span><br><span class="line">        在某个function-&gt;main.c文件-&gt;第12行</span><br><span class="line"></span><br><span class="line">(gdb) i(info) display	查看display的变量行号</span><br><span class="line">Num Enb Expression</span><br><span class="line">1        y      i</span><br><span class="line">2        y      array[i]</span><br><span class="line"></span><br><span class="line">(gdb) d 编号	删除断点编号</span><br><span class="line">如：d 1;  d 2 3;  d 4-5</span><br><span class="line">(gdb) dis 行号	设置指定断点无效，Enb为n</span><br><span class="line">(gdb) ena 行号	设置指定断点有效，Enb为y</span><br></pre></td></tr></table></div></figure>
+<p>设置条件断点</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(gdb) b 行号 if i == 10	在第num行打断点，当i == 10候停下来</span><br><span class="line">……</span><br><span class="line">9    for(int i = 0; i &lt; 20; i++)</span><br><span class="line">10      printf("XXX");</span><br><span class="line">……</span><br></pre></td></tr></table></div></figure>
+<p>查看变量</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(gdb) p i	查看i变量的值</span><br><span class="line">(gdb) ptype i	查看变量类型</span><br><span class="line">(gdb) ptype array	type = int</span><br><span class="line">    type = int[31]</span><br><span class="line">(gdb) display array[i]	设置变量的自动显示</span><br><span class="line">(gdb) display i	每循环到断点处就输出array[i]的值</span><br><span class="line">(gdb) undisplay Num	Nub为i display看到的Enm值，取消变量的自动显示</span><br></pre></td></tr></table></div></figure>
+<p>设置变量</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(gdb) set var 变量名=值	设置变量值</span><br></pre></td></tr></table></div></figure>
+<p>跳出循环和退出</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(gdb) until	跳出for循环，此循环执行完就退出，循环里的断点去掉或设置无效</span><br><span class="line">(gdb) finish	跳出函数，函数里的断点去掉或设置无效</span><br><span class="line">(gdb) q	退出gdb调试</span><br></pre></td></tr></table></div></figure>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/getopt_getopts_%E8%A7%A3%E6%9E%90%E5%91%BD%E4%BB%A4%E9%95%BF%E5%8F%82%E6%95%B0/">getopt,getopts解析命令行长参数</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.5k</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="getopt与getopts比较"   >
+          <a href="#getopt与getopts比较" class="heading-link"><i class="fas fa-link"></i></a>getopt与getopts比较</h2>
+      <p>getopt 与 getopts 都是 Bash 中用来获取与分析命令行参数的工具，常用在 Shell 脚本中被用来分析脚本参数。</p>
+<p>两者的比较</p>
+<p>（1）getopts 是 Shell 内建命令，getopt 是一个独立外部工具</p>
+<p>（2）getopts 使用语法简单，getopt 使用语法较复杂, getopts选项参数的格式必须是-d val，而不能是中间没有空格的-dval。</p>
+<p>（3）getopts 不支持长参数（如：–option ），getopt 支持</p>
+<p>（4）getopts 不会重排所有参数的顺序，getopt 会重排参数顺序（这里的区别下面会说明）</p>
+<p>（5）getopts 出现的目的是为了代替 getopt 较快捷的执行参数分析工作</p>
+
+        <h2 id="getopts"   >
+          <a href="#getopts" class="heading-link"><i class="fas fa-link"></i></a>getopts</h2>
+      <ul>
+<li>${OPTARG}, 用来取当前选项的值</li>
+<li>${OPTIND}, 代表当前选项在参数列表中的位移</li>
+<li>shift, 把选项参数抹去<br>getopts在处理参数的时候，处理一个开关型选项，OPTIND加1，处理一个带值的选项参数，OPTIND则会加2.<br>${OPTIND} - 1对整个参数列表进行左移操作，最左边的参数就丢失了.<br>1.选项参数的格式必须是-d val，而不能是中间没有空格的-dval。<br>2.所有选项参数必须写在其它参数的前面，因为getopts是从命令行前面开始处理，遇到非-开头的参数，或者选项参数结束标记–就中止了，如果中间遇到非选项的命令行参数，后面的选项参数就都取不到了。<br>3.不支持长选项， 也就是–debug之类的选项</li>
+</ul>
+
+        <h3 id="实例1"   >
+          <a href="#实例1" class="heading-link"><i class="fas fa-link"></i></a>实例1</h3>
+      <p>touch bash.sh</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo 初始 OPTIND: $OPTIND</span><br><span class="line">while getopts "a:b:c" arg #选项后面的冒号表示该选项需要参数</span><br><span class="line">do</span><br><span class="line">    case $arg in</span><br><span class="line">        a)</span><br><span class="line">            echo "a's arg:$OPTARG" #参数存在$OPTARG中</span><br><span class="line">            ;;</span><br><span class="line">        b)</span><br><span class="line">            echo "b's arg:$OPTARG"</span><br><span class="line">            ;;</span><br><span class="line">        c)</span><br><span class="line">            echo "c's arg:$OPTARG"</span><br><span class="line">            ;;</span><br><span class="line">        ?)  #当有不认识的选项的时候arg为?</span><br><span class="line">            echo "unkonw argument"</span><br><span class="line">            exit 1</span><br><span class="line">        ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line">echo 处理完参数后的 OPTIND：$OPTIND</span><br><span class="line">echo 移除已处理参数个数：$((OPTIND-1))</span><br><span class="line">shift $((OPTIND-1))</span><br><span class="line">echo 参数索引位置：$OPTIND</span><br><span class="line">echo 准备处理余下的参数：</span><br><span class="line">echo "Other Params: $@"</span><br></pre></td></tr></table></div></figure>
+
+<p>执行并输出:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./bash.sh -a 1 -b 2 -c 3  <span class="built_in">test</span> -oo xx -<span class="built_in">test</span></span></span><br><span class="line">初始 OPTIND: 1</span><br><span class="line">a's arg:1</span><br><span class="line">b's arg:2</span><br><span class="line">c's arg:</span><br><span class="line">处理完参数后的 OPTIND：6</span><br><span class="line">移除已处理参数个数：5</span><br><span class="line">参数索引位置：6</span><br><span class="line">准备处理余下的参数：</span><br><span class="line">Other Params: 3 test -oo xx -test</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="getopt"   >
+          <a href="#getopt" class="heading-link"><i class="fas fa-link"></i></a>getopt</h2>
+      <p>在getopt的较老版本中，存在一些bug，不大好用，在后来的版本中解决了这些问题，我们称之为getopt增强版。通过-T选项，我们可以检查当前的getopt是否为增强版，返回值为4，则表明是增强版的.  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> getopt -T</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $?</span></span><br><span class="line">  4</span><br><span class="line"><span class="meta">$</span><span class="bash"> getopt -V</span></span><br><span class="line">  getopt from util-linux 2.23.2</span><br></pre></td></tr></table></div></figure>
+
+<p>$1 和 ${1}的效果是一样的, 但是不用花括号的话，$10 会被认为是 $1 和一个字符 0.  </p>
+<ul>
+<li>-o 表示短选项，两个冒号表示该选项有一个可选参数，可选参数必须紧贴选项<br>如-carg 而不能是-c arg</li>
+<li>–long表示长选项</li>
+<li>“$@”把每个参数作为一个字符串返回，可以使用for循环来遍历<ul>
+<li>./bash.sh a b c d<br>   a<br>   b<br>   c<br>   d</li>
+</ul>
+</li>
+<li>$* 将所有参数当做一个整体来引用<ul>
+<li>./bash.sh a b c d<br>   a b c d</li>
+</ul>
+</li>
+<li>$# 表示参数的个数。</li>
+<li>$? 最近一个执行的命令的退出状态。</li>
+<li>$_ 上一个命令的最后一个参数。使用快捷键 ESC+. 也是这个效果</li>
+<li>-n:出错时的信息</li>
+<li>– ：举一个例子比较好理解：我们要创建一个名字为 “-f”的目录你会怎么办？mkdir -f #不成功，因为-f会被mkdir当作选项来解析，这时就可以使用, mkdir – -f 这样-f就不会被作为选项。  </li>
+</ul>
+
+        <h3 id="实例1-1"   >
+          <a href="#实例1-1" class="heading-link"><i class="fas fa-link"></i></a>实例1</h3>
+      <p>touch get_opt.sh</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo $@</span><br><span class="line"><span class="meta">#</span><span class="bash">-o或--options选项后面接可接受的短选项，如ab:c::，表示可接受的短选项为-a -b -c，其中-a选项不接参数，-b选项后必须接参数，-c选项的参数为可选的</span></span><br><span class="line"><span class="meta">#</span><span class="bash">-o表示短选项，两个冒号表示该选项有一个可选参数，可选参数必须紧贴选项, 如-carg 而不能是-c arg</span></span><br><span class="line"><span class="meta">#</span><span class="bash">-l或--long选项后面接可接受的长选项，用逗号分开，冒号的意义同短选项。</span></span><br><span class="line"><span class="meta">#</span><span class="bash">-n选项后接选项解析错误时提示的脚本名字</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Note that we use `<span class="string">"<span class="variable">$@</span>"</span><span class="string">' to let each command-line parameter expand to a separate word. The quotes around `$@'</span> are essential!</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> We need TEMP as the `<span class="built_in">eval</span> <span class="built_in">set</span> --<span class="string">' would nuke the return value of getopt.</span></span></span><br><span class="line">ARGS=`getopt -o ab:c:: --long along,blong:,clong:: -n 'get_opt.sh' -- "$@"`</span><br><span class="line">if [ $? != 0 ]; then</span><br><span class="line">    echo "Terminating..."</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo $ARGS</span><br><span class="line"><span class="meta">#</span><span class="bash">将规范化后的命令行参数分配至位置参数（<span class="variable">$1</span>,<span class="variable">$2</span>,...)</span></span><br><span class="line">eval set -- "$&#123;ARGS&#125;"</span><br><span class="line"></span><br><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    case "$1" in    # 每次循环匹配下面参数后就会删除(左移)参数, 因此每次都是匹配$1位置的变量</span><br><span class="line">        -a|--along)</span><br><span class="line">            echo "Option a";</span><br><span class="line">            shift   # 参数左移一位, 相当于删除一位参数变量</span><br><span class="line">            ;;</span><br><span class="line">        -b|--blong)</span><br><span class="line">            echo "Option b, argument $2";</span><br><span class="line">            shift 2 # 参数左移两位, 相当于删除参数变量和变量后面的值</span><br><span class="line">            ;;</span><br><span class="line">        -c|--clong)</span><br><span class="line">            case "$2" in    # 匹配变量后面的值</span><br><span class="line">                "")         # 变量值为空</span><br><span class="line">                    echo "Option c, no argument";</span><br><span class="line">                    shift 2</span><br><span class="line">                    ;;</span><br><span class="line">                *)          # 变量值为任意值, 不要加引号或双引号</span><br><span class="line">                    echo "Option c, argument $2";</span><br><span class="line">                    shift 2;</span><br><span class="line">                    ;;</span><br><span class="line">            esac</span><br><span class="line">            ;;</span><br><span class="line">        --)         # 在上面的eval命令会在命令行中加上--参数</span><br><span class="line">            shift</span><br><span class="line">            break</span><br><span class="line">            ;;</span><br><span class="line">        *)			# 变量值为任意值, 不要加引号或双引号</span><br><span class="line">            echo "Internal error!"</span><br><span class="line">            exit 1</span><br><span class="line">            ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">处理剩余的参数</span></span><br><span class="line">for arg in $@</span><br><span class="line">do</span><br><span class="line">    echo "processing $arg"</span><br><span class="line">done</span><br></pre></td></tr></table></div></figure>
+
+<p>执行:<br><strong>Note: 对于用<code>::</code>来声明的可选参数</strong></p>
+<ul>
+<li>短参数如-c必须紧挨后面参数值,如-c456而不是-c 456.`  </li>
+<li>长参数如–clong后面必须加<code>=</code>, 否则参数值会判断为空, 如<code>--clong=456</code>, 如果写成–clong 456那么解析时候–clong后面参数为空</li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> chmod +x get_opt.sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./get_opt.sh -b 123 -a -c456 file1 file2</span></span><br><span class="line">-b 123 -a -c456 file1 file2</span><br><span class="line">-b '123' -a -c '456' -- 'file1' 'file2'</span><br><span class="line">Option b, argument 123</span><br><span class="line">Option a</span><br><span class="line">Option c, argument 456</span><br><span class="line">processing file1</span><br><span class="line">processing file2</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./get_opt.sh --blong 123 -a --clong=456 file1 file2</span></span><br><span class="line">--blong 123 -a --clong=456 file1 file2</span><br><span class="line">--blong '123' -a --clong '456' -- 'file1' 'file2'</span><br><span class="line">Option b, argument 123</span><br><span class="line">Option a</span><br><span class="line">Option c, argument 456</span><br><span class="line">processing file1</span><br><span class="line">processing file2</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./get_opt.sh -c -a file1 file2</span></span><br><span class="line">-c -a file1 file2</span><br><span class="line">-c '' -a -- 'file1' 'file2'</span><br><span class="line">Option c, no argument</span><br><span class="line">Option a</span><br><span class="line">processing file1</span><br><span class="line">processing file2</span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/helm/">helm安装</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">419</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="Helm简介"   >
+          <a href="#Helm简介" class="heading-link"><i class="fas fa-link"></i></a>Helm简介</h2>
+      <p>Reference Link:</p>
+<p><span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/lori/p/12653024.html"  target="_blank" rel="noopener">https://www.cnblogs.com/lori/p/12653024.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://www.cnblogs.com/bigberg/p/13925981.html"  target="_blank" rel="noopener">https://www.cnblogs.com/bigberg/p/13925981.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>Helm 是一个由 CNCF 孵化和管理的项目, 用于对需要在Kubernetes上部署的复杂应用进行定义, 安装和更新.  </p>
+<p>在3.0版本之前, Helm 由 <strong>HelmClient</strong> 和 <strong>TillerServer</strong> 两个组件完成.</p>
+<p><strong><code>在helm3之前的版本里，它由客户端helm和服务端tiller组成，而 helm3.0之后它去掉了tiller，而直接与k8s通讯</code></strong>，可以说在部署上更简单了，目前自己测试项目中是部署2.x版本的helm.</p>
+<p><strong>HelmClient</strong> 是一个客户端.<br><strong>TillerServer</strong> 负责客户端指令和 Kubernetes 集群之间的交互, 根据 Chart 定义, 生成和管理各种 Kubernetes 的资源对象.  </p>
+
+        <h2 id="Helm-3-0-安装"   >
+          <a href="#Helm-3-0-安装" class="heading-link"><i class="fas fa-link"></i></a>Helm 3.0+ 安装</h2>
+      <p><span class="exturl"><a class="exturl__link"   href="https://helm.sh/docs/intro/install/"  target="_blank" rel="noopener">Helm offical installation tutorial</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>Manually download and install the Helm release version: <span class="exturl"><a class="exturl__link"   href="https://github.com/helm/helm/releases"  target="_blank" rel="noopener">release</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O https://get.helm.sh/helm-v3.3.1-linux-amd64.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf helm-v3.3.1-linux-amd64.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mv linux-amd64/helm /usr/<span class="built_in">local</span>/bin/helm</span></span><br></pre></td></tr></table></div></figure>
+
+<p>From there, you should be able to run the client and add the stable repo: <code>helm help</code></p>
+
+        <h3 id="命令补全"   >
+          <a href="#命令补全" class="heading-link"><i class="fas fa-link"></i></a>命令补全</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> vim ~/.bashrc</span></span><br><span class="line">source &lt;(helm completion bash)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">source</span> ~/.bashrc</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Helm-2-0-安装"   >
+          <a href="#Helm-2-0-安装" class="heading-link"><i class="fas fa-link"></i></a>Helm 2.0+ 安装</h2>
+      
+        <h3 id="Helm安装"   >
+          <a href="#Helm安装" class="heading-link"><i class="fas fa-link"></i></a>Helm安装</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -O https://get.helm.sh/helm-v2.16.5-linux-amd64.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf helm-v2.16.5-linux-amd64.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mv linux-amd64/helm /usr/<span class="built_in">local</span>/bin/helm</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="Tiller-Server-安装"   >
+          <a href="#Tiller-Server-安装" class="heading-link"><i class="fas fa-link"></i></a>Tiller Server 安装</h3>
+      <p>Reference Link: <span class="exturl"><a class="exturl__link"   href="https://github.com/fnproject/fn-helm/issues/21"  target="_blank" rel="noopener">https://github.com/fnproject/fn-helm/issues/21</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>Tiller Server 安装推荐使用helm init命令进行.  </p>
+<p>这一命令会在kubectl当前context指定集群内的 kube-system 命名空间创建一个 Deployment 和一个 Service, 运行TillerServer服务.  </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl create serviceaccount --namespace kube-system tiller</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller</span></span><br><span class="line">// 安装tiller</span><br><span class="line"><span class="meta">$</span><span class="bash"> helm init --service-account tiller --skip-refresh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl patch deploy --namespace kube-system tiller-deploy -p <span class="string">'&#123;"spec":&#123;"template":&#123;"spec":&#123;"serviceAccount":"tiller"&#125;&#125;&#125;&#125;'</span></span></span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/history/">Linux中禁用命令历史记录</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">55</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="关闭history记录功能"   >
+          <a href="#关闭history记录功能" class="heading-link"><i class="fas fa-link"></i></a>关闭history记录功能</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">set</span> +o <span class="built_in">history</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="打开history记录功能"   >
+          <a href="#打开history记录功能" class="heading-link"><i class="fas fa-link"></i></a>打开history记录功能</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">set</span> -o <span class="built_in">history</span></span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="清空记录"   >
+          <a href="#清空记录" class="heading-link"><i class="fas fa-link"></i></a>清空记录</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">history</span> -c 记录被清空，重新登录后恢复。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rm -f <span class="variable">$HOME</span>/.bash_history 删除记录文件，清空历史。</span></span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/java%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD/">java安装与卸载</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">566</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="Centos7-yum-安装java"   >
+          <a href="#Centos7-yum-安装java" class="heading-link"><i class="fas fa-link"></i></a>Centos7 yum 安装java</h2></div><div class="post-readmore"><a class="post-readmore__link" href="/2021/03/13/linux/java%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD/"><span class="post-readmore__text">阅读全文</span><span class="post-readmore__icon"><i class="fas fa-long-arrow-alt-right"></i></span></a></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/jq_json%E8%A7%A3%E6%9E%90%E5%B7%A5%E5%85%B7/">jq json解析工具</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">48</span></span></div></header><div class="post-body"><div class="post-excerpt"><h2 id="jq"   >
+          <a href="#jq" class="heading-link"><i class="fas fa-link"></i></a>jq</h2>
+      <p>reference:<br><span class="exturl"><a class="exturl__link"   href="https://stedolan.github.io/jq/download/"  target="_blank" rel="noopener">https://stedolan.github.io/jq/download/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://blog.csdn.net/qq_38423105/article/details/89786736"  target="_blank" rel="noopener">https://blog.csdn.net/qq_38423105/article/details/89786736</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p></div><div class="post-readmore"><a class="post-readmore__link" href="/2021/03/13/linux/jq_json%E8%A7%A3%E6%9E%90%E5%B7%A5%E5%85%B7/"><span class="post-readmore__text">阅读全文</span><span class="post-readmore__icon"><i class="fas fa-long-arrow-alt-right"></i></span></a></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/linux%E5%88%B6%E4%BD%9CU%E7%9B%98%E5%90%AF%E5%8A%A8%E7%9B%98/">linux制作U盘启动盘</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">164</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="1-找到U盘"   >
+          <a href="#1-找到U盘" class="heading-link"><i class="fas fa-link"></i></a>1. 找到U盘:</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br></pre></td></tr></table></div></figure>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="fdisk.png"  alt="">
+      </p>
+
+        <h2 id="2-卸载U盘"   >
+          <a href="#2-卸载U盘" class="heading-link"><i class="fas fa-link"></i></a>2. 卸载U盘:</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo umount /dev/sdb1</span><br></pre></td></tr></table></div></figure>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="umount.png"  alt="">
+      </p>
+
+        <h2 id="3-格式化U盘"   >
+          <a href="#3-格式化U盘" class="heading-link"><i class="fas fa-link"></i></a>3. 格式化U盘:</h2>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkfs.vfat /dev/sdb -I</span><br></pre></td></tr></table></div></figure>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="mkfs.png"  alt="">
+      </p>
+<p>##4. 制作启动盘:</p>
+<p>dd时候，of=跟上U盘的根，如sdc是U盘，分出的还有一个区(卷)sdc1, 那么of=/dev/sdc而不是sdc1</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dd if=~/Downloads/ubuntu-16.04-desktop-amd64.iso of=/dev/sdb status=progress</span><br></pre></td></tr></table></div></figure>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="dd.png"  alt="">
+      </p>
+<p>小技巧, 加上status=progress 可以看到进度</p>
+<p>制作完成后发现32GB的U盘空间只有几百M，可以用如下命令清空U盘<br>但是原来的U盘文件全部删除</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. # dd if=/dev/zero of=/dev/$&#123;USB&#125;</span><br><span class="line">注:</span><br><span class="line">(1).# 为 root</span><br><span class="line">(2).$&#123;USB&#125; = 你的USB</span><br><span class="line">2. 格式化U盘</span><br><span class="line">mkfs.vfat /dev/sdb -I</span><br></pre></td></tr></table></div></figure></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/links/Learning_links/">Learning Links</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">272</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="目前接触到的各种Learn视频网站"   >
+          <a href="#目前接触到的各种Learn视频网站" class="heading-link"><i class="fas fa-link"></i></a>目前接触到的各种Learn视频网站</h2>
+      <p>CSDN学院: <span class="exturl"><a class="exturl__link"   href="https://edu.csdn.net/"  target="_blank" rel="noopener">https://edu.csdn.net/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>黑马程序员: <span class="exturl"><a class="exturl__link"   href="http://www.itheima.com/"  target="_blank" rel="noopener">http://www.itheima.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> or <span class="exturl"><a class="exturl__link"   href="http://yun.itheima.com/?pc&amp;hm"  target="_blank" rel="noopener">http://yun.itheima.com/?pc&amp;hm</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  //提供很多免费课程<br>传智播客: <span class="exturl"><a class="exturl__link"   href="http://www.itcast.cn/"  target="_blank" rel="noopener">http://www.itcast.cn/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>php中文网: <span class="exturl"><a class="exturl__link"   href="https://www.php.cn/"  target="_blank" rel="noopener">https://www.php.cn/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  提供很多免费课程<br>慕课网: <span class="exturl"><a class="exturl__link"   href="https://www.imooc.com/"  target="_blank" rel="noopener">https://www.imooc.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  </p>
+
+        <h2 id="博客or文档Learn"   >
+          <a href="#博客or文档Learn" class="heading-link"><i class="fas fa-link"></i></a>博客or文档Learn</h2>
+      <p>w3school在线教程: <span class="exturl"><a class="exturl__link"   href="https://www.w3school.com.cn/"  target="_blank" rel="noopener">https://www.w3school.com.cn/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>在线编写测试HTML代码: <span class="exturl"><a class="exturl__link"   href="https://www.w3school.com.cn/tiy/t.asp?f=html_div_test"  target="_blank" rel="noopener">https://www.w3school.com.cn/tiy/t.asp?f=html_div_test</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>C语言中文网: <span class="exturl"><a class="exturl__link"   href="http://c.biancheng.net/"  target="_blank" rel="noopener">http://c.biancheng.net/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>菜鸟教程: <span class="exturl"><a class="exturl__link"   href="https://www.runoob.com/"  target="_blank" rel="noopener">https://www.runoob.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  </p>
+
+        <h2 id="MDN"   >
+          <a href="#MDN" class="heading-link"><i class="fas fa-link"></i></a>MDN</h2>
+      <p><span class="exturl"><a class="exturl__link"   href="https://developer.mozilla.org/zh-CN/"  target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  </p>
+
+        <h2 id="Web前端"   >
+          <a href="#Web前端" class="heading-link"><i class="fas fa-link"></i></a>Web前端</h2>
+      
+        <h3 id="NodeJS"   >
+          <a href="#NodeJS" class="heading-link"><i class="fas fa-link"></i></a>NodeJS</h3>
+      <p>网址: <span class="exturl"><a class="exturl__link"   href="https://nodejs.org"  target="_blank" rel="noopener">https://nodejs.org</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>中文网址:<span class="exturl"><a class="exturl__link"   href="http://nodejs.cn/"  target="_blank" rel="noopener">http://nodejs.cn/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>npm说明文档网址(查各种node_modules源码和使用说明): <span class="exturl"><a class="exturl__link"   href="https://www.npmjs.com/"  target="_blank" rel="noopener">https://www.npmjs.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>模拟 NodeJS 单线程但又是异步执行情况的网址: <span class="exturl"><a class="exturl__link"   href="http://latentflip.com/loupe/"  target="_blank" rel="noopener">http://latentflip.com/loupe/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  </p>
+
+        <h3 id="AngularJS"   >
+          <a href="#AngularJS" class="heading-link"><i class="fas fa-link"></i></a>AngularJS</h3>
+      <p>chrome 浏览器打开: <span class="exturl"><a class="exturl__link"   href="https://angularjs.org/"  target="_blank" rel="noopener">https://angularjs.org/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 网站下载免解压或压缩版<br>Gihub: <span class="exturl"><a class="exturl__link"   href="https://github.com/angular/angular.js/releases"  target="_blank" rel="noopener">https://github.com/angular/angular.js/releases</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  </p>
+
+        <h2 id="需要加别人QQ获取资源"   >
+          <a href="#需要加别人QQ获取资源" class="heading-link"><i class="fas fa-link"></i></a>需要加别人QQ获取资源</h2>
+      <p><span class="exturl"><a class="exturl__link"   href="http://www.itjcw123.cn/"  target="_blank" rel="noopener">http://www.itjcw123.cn/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="http://19r9qt.coding-pages.com/categories/"  target="_blank" rel="noopener">http://19r9qt.coding-pages.com/categories/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>  </p>
+
+        <h2 id="免费在线作图-实时协作"   >
+          <a href="#免费在线作图-实时协作" class="heading-link"><i class="fas fa-link"></i></a>免费在线作图, 实时协作</h2>
+      <p>Xmind官网地址： <span class="exturl"><a class="exturl__link"   href="https://www.xmind.cn"  target="_blank" rel="noopener">https://www.xmind.cn</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>ProcessOn在线作图地址：<span class="exturl"><a class="exturl__link"   href="https://www.processon.com"  target="_blank" rel="noopener">https://www.processon.com</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/12/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/14/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>

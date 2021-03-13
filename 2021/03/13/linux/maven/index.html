@@ -1,0 +1,482 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="Centos7 maven 安装       安装maven前提是安装有jdk, yum安装maven时候会自动安装JDK. 12345678910(optional)&#x2F;&#x2F; 多出来这两步是因为原来机器kernel版本台老, 原生的yum库安装maven自带JDK也比较老, 所以clean再cache, 然后安装mavenyum clean all(optio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maven">
+<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Centos7 maven 安装       安装maven前提是安装有jdk, yum安装maven时候会自动安装JDK. 12345678910(optional)&#x2F;&#x2F; 多出来这两步是因为原来机器kernel版本台老, 原生的yum库安装maven自带JDK也比较老, 所以clean再cache, 然后安装mavenyum clean all(optio">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/1.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/2.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/3.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/4.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/5.PNG">
+<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/6.PNG">
+<meta property="article:published_time" content="2021-03-13T05:00:42.857Z">
+<meta property="article:modified_time" content="2021-03-13T05:00:42.857Z">
+<meta property="article:author" content="Kung-Fu-Master">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/linux/maven/1.PNG"><title>maven | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/linux/maven/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">maven</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.7k</span></span></div></header><div class="post-body">
+        <h2 id="Centos7-maven-安装"   >
+          <a href="#Centos7-maven-安装" class="heading-link"><i class="fas fa-link"></i></a>Centos7 maven 安装</h2>
+      <p>安装maven前提是安装有jdk, yum安装maven时候会自动安装JDK.</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(optional)// 多出来这两步是因为原来机器kernel版本台老, 原生的yum库安装maven自带JDK也比较老, 所以clean再cache, 然后安装maven</span><br><span class="line">yum clean all</span><br><span class="line">(optional)</span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line">wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo</span><br><span class="line">yum -y install apache-maven</span><br><span class="line"></span><br><span class="line">// 查找包路径</span><br><span class="line">rpm -qa|grep apache-maven</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="配置阿里云镜像仓库"   >
+          <a href="#配置阿里云镜像仓库" class="heading-link"><i class="fas fa-link"></i></a>配置阿里云镜像仓库</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/maven/settings.xml</span><br><span class="line">// 定位到mirrors节点下添加下面配置</span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus-aliyun<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Nexus aliyun<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="配置proxy"   >
+          <a href="#配置proxy" class="heading-link"><i class="fas fa-link"></i></a>配置proxy</h3>
+      <figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/maven/settings.xml</span><br><span class="line">    <span class="tag">&lt;<span class="name">proxy</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">id</span>&gt;</span>my-proxy1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">active</span>&gt;</span>true<span class="tag">&lt;/<span class="name">active</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">protocol</span>&gt;</span>http<span class="tag">&lt;/<span class="name">protocol</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">host</span>&gt;</span>child-prc.intel.com<span class="tag">&lt;/<span class="name">host</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">port</span>&gt;</span>913<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">proxy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">proxy</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">id</span>&gt;</span>my-proxy2<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">active</span>&gt;</span>true<span class="tag">&lt;/<span class="name">active</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">protocol</span>&gt;</span>https<span class="tag">&lt;/<span class="name">protocol</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">host</span>&gt;</span>child-prc.intel.com<span class="tag">&lt;/<span class="name">host</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">port</span>&gt;</span>913<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">proxy</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="配置本地仓库"   >
+          <a href="#配置本地仓库" class="heading-link"><i class="fas fa-link"></i></a>配置本地仓库</h3>
+      <p>yum安装完maven后默认的本地仓库地址:</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /root/.m2/repository</span><br></pre></td></tr></table></div></figure>
+
+<p>配置新的本地仓库:</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/maven/settings.xml</span><br><span class="line">// 定位到这个节点进行编写</span><br><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>/home/maven/repo<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="指定JDK版本"   >
+          <a href="#指定JDK版本" class="heading-link"><i class="fas fa-link"></i></a>指定JDK版本</h3>
+      <p>配置创建项目的版本默认为 JDK8</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/maven/settings.xml</span><br><span class="line">  <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span>    </span><br><span class="line">         <span class="tag">&lt;<span class="name">id</span>&gt;</span>jdk-1.8<span class="tag">&lt;/<span class="name">id</span>&gt;</span>    </span><br><span class="line">         <span class="tag">&lt;<span class="name">activation</span>&gt;</span>    </span><br><span class="line">           <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span>    </span><br><span class="line">           <span class="tag">&lt;<span class="name">jdk</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">jdk</span>&gt;</span>    </span><br><span class="line">         <span class="tag">&lt;/<span class="name">activation</span>&gt;</span>    </span><br><span class="line">           <span class="tag">&lt;<span class="name">properties</span>&gt;</span>    </span><br><span class="line">             <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span>    </span><br><span class="line">             <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span>    </span><br><span class="line">             <span class="tag">&lt;<span class="name">maven.compiler.compilerVersion</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.compilerVersion</span>&gt;</span>    </span><br><span class="line">           <span class="tag">&lt;/<span class="name">properties</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="optional-设置tomcat用户名和密码"   >
+          <a href="#optional-设置tomcat用户名和密码" class="heading-link"><i class="fas fa-link"></i></a>(optional)设置tomcat用户名和密码</h3>
+      <p>如果tomcat安装时候或安装后tomcat的配置文件没有设置用户名和密码此处可忽略</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>tomcat8<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="测试maven"   >
+          <a href="#测试maven" class="heading-link"><i class="fas fa-link"></i></a>测试maven</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 查看maven版本</span><br><span class="line">mvn -v</span><br><span class="line"></span><br><span class="line">// 自动到配置的Ali的Maven中央仓库下载缺省的或者Maven中央仓库更新的各种配置文件和类库（jar包)到Maven配置的本地仓库`/home/maven/repo`中</span><br><span class="line">mvn help:system</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="VScode远程连接Centos-搭建maven项目简单步骤"   >
+          <a href="#VScode远程连接Centos-搭建maven项目简单步骤" class="heading-link"><i class="fas fa-link"></i></a>VScode远程连接Centos, 搭建maven项目简单步骤</h2>
+      <p>首先需要安装一些VScode扩展插件</p>
+<ul>
+<li>maven for java</li>
+<li>language support for java</li>
+<li>debugger for java</li>
+<li>java test runner:junit</li>
+<li>java extension pack</li>
+</ul>
+<ol>
+<li><p><code>Ctrl+shift+p</code>, 搜索<code>maven</code>, 选择<code>Maven:Create Maven Project</code><br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.PNG"  alt="">
+      </p>
+</li>
+<li><p>选择<code>archetype-quickstart-jdk8</code><br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.PNG"  alt="">
+      </p>
+</li>
+<li><p>选择最新的<code>2.0</code><br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="3.PNG"  alt="">
+      </p>
+</li>
+<li><p>选择文件夹来创建项目</p>
+</li>
+<li><p>输入相关参数</p>
+<ul>
+<li>groupid: 公司或组织的域名倒序+当前项目名称, 会跟源代码文件中第一行package指定的一致.</li>
+<li>artifactId： 当前项目的模块名称, 会在根目录创建此模块名称的文件夹, 所有创建的项目文件都在这个文件夹下.</li>
+<li>version： 版本, 可以默认直接enter键</li>
+</ul>
+</li>
+<li><p>可以发现在项目目录下多出了如下两个文件</p>
+</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /&lt;Project path&gt;/</span><br><span class="line">pom.xml src/</span><br></pre></td></tr></table></div></figure>
+
+<ol start="7">
+<li>编译, 测试</li>
+</ol>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 1. 编译, 会在项目目录下生成一个target/文件夹</span><br><span class="line">mvn compile</span><br><span class="line">ls </span><br><span class="line">pom.xml  src/  target/</span><br><span class="line"></span><br><span class="line">// 2. 编写单元测试代码, 测试源码函数.</span><br><span class="line">mvn test</span><br><span class="line"></span><br><span class="line">// 3. 执行, 执行的文件名字一定要是`&lt;groupId-name&gt;.&lt;class-name&gt;`</span><br><span class="line">mvn exec:java -Dexec.mainClass="cloud.App"</span><br><span class="line"></span><br><span class="line">// 4. 清理, 删除target文件夹</span><br><span class="line">mvn clean</span><br></pre></td></tr></table></div></figure>
+
+<p>中途可能会出错遇到一些问题, 具体查看下面的Problems.</p>
+
+        <h2 id="下载指定jar包"   >
+          <a href="#下载指定jar包" class="heading-link"><i class="fas fa-link"></i></a>下载指定jar包</h2>
+      <p>在 Maven 官网上查找，可以很方便地查询到自己需要的 jar文件 和 pom引用.<br>Maven 官网 地址如下：<br><span class="exturl"><a class="exturl__link"   href="https://mvnrepository.com/"  target="_blank" rel="noopener">https://mvnrepository.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="VScode给maven项目添加单元测试-unit-test"   >
+          <a href="#VScode给maven项目添加单元测试-unit-test" class="heading-link"><i class="fas fa-link"></i></a>VScode给maven项目添加单元测试(unit test)</h2>
+      <p>要明白一点的是单元测试要测试的是函数方法, 利用单元测试工具junit不用手动调用main函数去调用要测试的方法, junit会自动执行要测试的方法.<br>因此在单元测试中不会手写main函数.</p>
+<p><strong><code>junit单元测试, 对测试方法顺序是乱序的, 某个方法要先执行可以加上@BeforeAll, 且方法声明为static, @Test方法不能加static.</code></strong><br>junit5+版本更新后的参考文档: <span class="exturl"><a class="exturl__link"   href="https://developer.ibm.com/zh/tutorials/j-introducing-junit5-part1-jupiter-api/"  target="_blank" rel="noopener">https://developer.ibm.com/zh/tutorials/j-introducing-junit5-part1-jupiter-api/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="4.PNG"  alt="">
+      <br>VScode写的函数方法等存储在hce/src/main/java/下的calculate/和hello/两个文件夹下<br>VScode写的单元测试方法存储在hce/src/test/java/下的calculate/和hello/两个文件夹下, 注意文件夹名和上述同名, 不写成同命要手动改写引入源码包路径.</p>
+<p>pom.xml:(junit和junit.jupiter区别没有比较过, 可以在(maven包官网)[<span class="exturl"><a class="exturl__link"   href="https://mvnrepository.com/]搜索junit查看"  target="_blank" rel="noopener">https://mvnrepository.com/]搜索junit查看</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>, 这里是用junit.jupiter)</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">junit.version</span>&gt;</span>5.6.0<span class="tag">&lt;/<span class="name">junit.version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">......</span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.jupiter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-jupiter-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;junit.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.jupiter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-jupiter-engine<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;junit.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<p>Calculate.java</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> calculate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello world!</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Calculate</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Calculate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> firstNumber, <span class="keyword">int</span> secondNumber)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> firstNumber + secondNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">multiply</span><span class="params">(<span class="keyword">int</span> multiplicand, <span class="keyword">int</span> multiplier)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> multiplicand * multiplier;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>Hello.java</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello world.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">initMessage</span><span class="params">(String initInfo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> initInfo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * say Something.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">saySomething</span><span class="params">(String initInfo, String msg)</span> </span>&#123;</span><br><span class="line">        String message = initInfo + <span class="string">" "</span> + msg;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * say nothing.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">sayNothing</span><span class="params">(String nomsg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>TestCalculate.java</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> calculate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertEquals;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Unit test for simple App.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestCalculate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add_TwoPlusTwo_ReturnsFour</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Arrange</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> expected = <span class="number">4</span>;</span><br><span class="line">        <span class="comment">// Act</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> actual = Calculate.add(<span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line">        <span class="comment">// Assert</span></span><br><span class="line">        assertEquals(expected, actual);</span><br><span class="line">        System.out.println(<span class="string">"add successfully!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">multiply_FourTimesTwo_ReturnsEight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Arrange</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> expected = <span class="number">8</span>;</span><br><span class="line">        <span class="comment">// Act</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> actual = Calculate.multiply(<span class="number">4</span>, <span class="number">2</span>);</span><br><span class="line">        <span class="comment">// Assert</span></span><br><span class="line">        assertEquals(expected, actual);</span><br><span class="line">        System.out.println(<span class="string">"multiply successfully!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>TestHello.java</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.BeforeAll;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertEquals;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertNotNull;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertNull;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Unit test for simple App.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHello</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String initInfo;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@BeofreAll</span> 单元测试, 方法必须为static静态方法.</span></span><br><span class="line"><span class="comment">     * 被注解的（静态）方法将在当前类中的所有 <span class="doctag">@Test</span> 方法前执行一次。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@BeforeAll</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testInitMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        initInfo = Hello.initMessage(<span class="string">"Hello"</span>);</span><br><span class="line">        assertNotNull(initInfo);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Test</span> 单元测试, 方法不能加static.</span></span><br><span class="line"><span class="comment">     * 各个<span class="doctag">@Test</span>方法间执行顺序为乱序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSaySomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String info = <span class="keyword">null</span>;</span><br><span class="line">        info = Hello.saySomething(initInfo, <span class="string">"World!"</span>);</span><br><span class="line">        assertNotNull(info);</span><br><span class="line">        System.out.println(info);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSayNothing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String info = <span class="keyword">null</span>;</span><br><span class="line">        info = Hello.sayNothing(<span class="string">"Hello World!"</span>);</span><br><span class="line">        assertNull(info);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertEquals(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        System.out.println(<span class="string">"test something else successfully!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>打开终端, 到hce项目根目录, 依次执行<code>mvn compile</code>编译<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="5.PNG"  alt="">
+      </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@hci-node01 hce]# mvn compile</span><br><span class="line">[INFO] Scanning for projects...</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building hce 1.0-SNAPSHOT</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-enforcer-plugin:3.0.0-M3:enforce (default) @ hce ---</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-checkstyle-plugin:3.1.0:check (checkstyle) @ hce ---</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- jacoco-maven-plugin:0.8.4:prepare-agent (pre-unit-test) @ hce ---</span><br><span class="line">[INFO] argLine set to -javaagent:/home/maven/repo/org/jacoco/org.jacoco.agent/0.8.4/org.jacoco.agent-0.8.4-runtime.jar=destfile=/home/zhan/download/storage/minIO/client/java/hce/target/jacoco.exec</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hce ---</span><br><span class="line">[INFO] Using 'UTF-8' encoding to copy filtered resources.</span><br><span class="line">[INFO] skip non existing resourceDirectory /home/zhan/download/storage/minIO/client/java/hce/src/main/resources</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ hce ---</span><br><span class="line">[INFO] Nothing to compile - all classes are up to date</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 1.354 s</span><br><span class="line">[INFO] Finished at: 2020-09-24T17:42:25+08:00</span><br><span class="line">[INFO] Final Memory: 28M/1570M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[root@hci-node01 hce]#</span><br></pre></td></tr></table></div></figure>
+
+<p>再执行<code>mvn test</code>进行单元测试.<br>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="6.PNG"  alt="">
+      </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">[root@hci-node01 hce]# mvn test</span><br><span class="line">[INFO] Scanning for projects...</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building hce 1.0-SNAPSHOT</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-enforcer-plugin:3.0.0-M3:enforce (default) @ hce ---</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-checkstyle-plugin:3.1.0:check (checkstyle) @ hce ---</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- jacoco-maven-plugin:0.8.4:prepare-agent (pre-unit-test) @ hce ---</span><br><span class="line">[INFO] argLine set to -javaagent:/home/maven/repo/org/jacoco/org.jacoco.agent/0.8.4/org.jacoco.agent-0.8.4-runtime.jar=destfile=/home/zhan/download/storage/minIO/client/java/hce/target/jacoco.exec</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hce ---</span><br><span class="line">[INFO] Using 'UTF-8' encoding to copy filtered resources.</span><br><span class="line">[INFO] skip non existing resourceDirectory /home/zhan/download/storage/minIO/client/java/hce/src/main/resources</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ hce ---</span><br><span class="line">[INFO] Nothing to compile - all classes are up to date</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ hce ---</span><br><span class="line">[INFO] Using 'UTF-8' encoding to copy filtered resources.</span><br><span class="line">[INFO] skip non existing resourceDirectory /home/zhan/download/storage/minIO/client/java/hce/src/test/resources</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ hce ---</span><br><span class="line">[INFO] Changes detected - recompiling the module!</span><br><span class="line">[INFO] Compiling 2 source files to /home/zhan/download/storage/minIO/client/java/hce/target/test-classes</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-surefire-plugin:3.0.0-M4:test (default-test) @ hce ---</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] -------------------------------------------------------</span><br><span class="line">[INFO]  T E S T S</span><br><span class="line">[INFO] -------------------------------------------------------</span><br><span class="line">[INFO] Running hello.TestHello</span><br><span class="line">test something else successfully!</span><br><span class="line">Hello World!</span><br><span class="line">[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.039 s - in hello.TestHello</span><br><span class="line">[INFO] Running calculate.TestCalculate</span><br><span class="line">multiply successfully!</span><br><span class="line">add successfully!</span><br><span class="line">[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in calculate.TestCalculate</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] Results:</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- jacoco-maven-plugin:0.8.4:report (post-unit-test) @ hce ---</span><br><span class="line">[INFO] Loading execution data file /home/zhan/download/storage/minIO/client/java/hce/target/jacoco.exec</span><br><span class="line">[INFO] Analyzed bundle 'hce' with 2 classes</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- jacoco-maven-plugin:0.8.4:check (check-unit-test) @ hce ---</span><br><span class="line">[INFO] Loading execution data file /home/zhan/download/storage/minIO/client/java/hce/target/jacoco.exec</span><br><span class="line">[INFO] Analyzed bundle 'hce' with 2 classes</span><br><span class="line">[INFO] All coverage checks have been met.</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 2.964 s</span><br><span class="line">[INFO] Finished at: 2020-09-24T17:43:04+08:00</span><br><span class="line">[INFO] Final Memory: 39M/1581M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[root@hci-node01 hce]#</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="Problems"   >
+          <a href="#Problems" class="heading-link"><i class="fas fa-link"></i></a>Problems</h2>
+      
+        <h3 id="问题1-Maven-Version"   >
+          <a href="#问题1-Maven-Version" class="heading-link"><i class="fas fa-link"></i></a>问题1: Maven Version</h3>
+      <p>Detected Maven Version: 3.5.2 is not in the allowed range 3.6.3.<br>原因是如linux系统装的maven版本是3.5.2, 用VScode新建maven项目时候自动生成的pom.xml添加maven版本号为3.6.3, 因此可以修改pom.xml里的maven版本, 改为机器安装的maven版本就可以了.<br>修改相应错误产生的包中的pox.xml文件的 requireMavenVersion, 改为所需的3.5.2</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rules</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">requireMavenVersion</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">requireMavenVersion</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">rules</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fail</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fail</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="问题2：No-compiler"   >
+          <a href="#问题2：No-compiler" class="heading-link"><i class="fas fa-link"></i></a>问题2：No compiler</h3>
+      <p>Maven编报错：No compiler is provided in this environment. Perhaps you are running on a JRE rather a JDK?  </p>
+<p><strong>第一步:</strong> 参看上面的<strong>指定JDK版本</strong>确定是否在安装maven时候, 把jdk配置进maven的配置文件/etc/maven/setting.xml文件里</p>
+<p><strong>第二步:</strong> 查看pox.xml文件中的compiler和linux系统中<code>java -v</code>和<code>javac -v</code>版本是否一致.</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="问题3-ImportOrder"   >
+          <a href="#问题3-ImportOrder" class="heading-link"><i class="fas fa-link"></i></a>问题3: ImportOrder</h3>
+      <p>java导入包编译时候出错报ImportOrder: Wrong order for ‘io.minio.errors.MinioException’ import<br>原因是checkstyle对java import包的顺序有要求<br><strong>方法一:</strong> 修改pom.xml直接禁用:</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-checkstyle-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<p><strong>方法二:</strong> 根据checkstyle定义, 修改导入包顺序<br>checkstyle导入包顺序定义官网：<span class="exturl"><a class="exturl__link"   href="https://checkstyle.sourceforge.io/config_imports.html#ImportOrder"  target="_blank" rel="noopener">ImportOrder</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>记住要按字典顺序排序导入这一条: ensures that imports within each group are in lexicographic order</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/linux/maven/">https://kung-fu-master.github.io/2021/03/13/linux/maven/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/linux/linux%E7%BB%99grub%E6%B7%BB%E5%8A%A0%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">linux给grub添加内核启动参数</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/linux/nc_netstat_tee/"><span class="paginator-prev__text">nc, netstat, tee</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Centos7-maven-安装"><span class="toc-number">1.</span> <span class="toc-text">
+          Centos7 maven 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置阿里云镜像仓库"><span class="toc-number">1.1.</span> <span class="toc-text">
+          配置阿里云镜像仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置proxy"><span class="toc-number">1.2.</span> <span class="toc-text">
+          配置proxy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置本地仓库"><span class="toc-number">1.3.</span> <span class="toc-text">
+          配置本地仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定JDK版本"><span class="toc-number">1.4.</span> <span class="toc-text">
+          指定JDK版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#optional-设置tomcat用户名和密码"><span class="toc-number">1.5.</span> <span class="toc-text">
+          (optional)设置tomcat用户名和密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试maven"><span class="toc-number">1.6.</span> <span class="toc-text">
+          测试maven</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VScode远程连接Centos-搭建maven项目简单步骤"><span class="toc-number">2.</span> <span class="toc-text">
+          VScode远程连接Centos, 搭建maven项目简单步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载指定jar包"><span class="toc-number">3.</span> <span class="toc-text">
+          下载指定jar包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VScode给maven项目添加单元测试-unit-test"><span class="toc-number">4.</span> <span class="toc-text">
+          VScode给maven项目添加单元测试(unit test)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Problems"><span class="toc-number">5.</span> <span class="toc-text">
+          Problems</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题1-Maven-Version"><span class="toc-number">5.1.</span> <span class="toc-text">
+          问题1: Maven Version</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题2：No-compiler"><span class="toc-number">5.2.</span> <span class="toc-text">
+          问题2：No compiler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题3-ImportOrder"><span class="toc-number">5.3.</span> <span class="toc-text">
+          问题3: ImportOrder</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
