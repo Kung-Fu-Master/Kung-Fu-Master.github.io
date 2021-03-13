@@ -28,7 +28,353 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/">28 | PV、PVC、StorageClass，这些到底在说啥？</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/">27 | 聪明的微创新：Operator工作原理解读</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">6.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="1.jpg"  alt="">
+      </p>
+
+        <h2 id="聪明的微创新之-Operator-工作原理解读。"   >
+          <a href="#聪明的微创新之-Operator-工作原理解读。" class="heading-link"><i class="fas fa-link"></i></a>聪明的微创新之 Operator 工作原理解读。</h2>
+      <p>在前面的几篇文章中，我已经和你分享了 Kubernetes 项目中的大部分编排对象（比如 Deployment、StatefulSet、DaemonSet，以及 Job），也介绍了“有状态应用”的管理方法，还阐述了为 Kubernetes 添加自定义 API 对象和编写自定义控制器的原理和流程。</p>
+<p>可能你已经感觉到，在 Kubernetes 中，管理“有状态应用”是一个比较复杂的过程，尤其是编写 Pod 模板的时候，总有一种“在 YAML 文件里编程序”的感觉，让人很不舒服。</p>
+<p>而在 Kubernetes 生态中，还有一个相对更加灵活和编程友好的管理“有状态应用”的解决方案，它就是：Operator。</p>
+<p>接下来，我就以 Etcd Operator 为例，来为你讲解一下 Operator 的工作原理和编写方法。</p>
+<p>Etcd Operator 的使用方法非常简单，只需要两步即可完成：</p>
+<p><strong>第一步，将这个 Operator 的代码 Clone 到本地：</strong></p>
+<pre><code>$ git clone https://github.com/coreos/etcd-operator</code></pre><p><strong>第二步，将这个 Etcd Operator 部署在 Kubernetes 集群里。</strong></p>
+<p>不过，在部署 Etcd Operator 的 Pod 之前，你需要先执行这样一个脚本：</p>
+<pre><code>$ example/rbac/create_role.sh</code></pre><p>不用我多说你也能够明白：这个脚本的作用，就是为 Etcd Operator 创建 RBAC 规则。这是因为，Etcd Operator 需要访问 Kubernetes 的 APIServer 来创建对象。</p>
+<p>更具体地说，上述脚本为 Etcd Operator 定义了如下所示的权限：</p>
+<ol>
+<li>对 Pod、Service、PVC、Deployment、Secret 等 API 对象，有所有权限；</li>
+<li>对 CRD 对象，有所有权限；</li>
+<li>对属于 etcd.database.coreos.com 这个 API Group 的 CR（Custom Resource）对象，有所有权限。</li>
+</ol>
+<p>而 Etcd Operator 本身，其实就是一个 Deployment，它的 YAML 文件如下所示：</p>
+<pre><code>apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: etcd-operator
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: etcd-operator
+    spec:
+      containers:
+      - name: etcd-operator
+        image: quay.io/coreos/etcd-operator:v0.9.2
+        command:
+        - etcd-operator
+        env:
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+...</code></pre><p>所以，我们就可以使用上述的 YAML 文件来创建 Etcd Operator，如下所示：</p>
+<pre><code>$ kubectl create -f example/deployment.yaml</code></pre><p>而一旦 Etcd Operator 的 Pod 进入了 Running 状态，你就会发现，有一个 CRD 被自动创建了出来，如下所示：</p>
+<pre><code>$ kubectl get pods
+NAME                              READY     STATUS      RESTARTS   AGE
+etcd-operator-649dbdb5cb-bzfzp    1/1       Running     0          20s
+
+$ kubectl get crd
+NAME                                    CREATED AT
+etcdclusters.etcd.database.coreos.com   2018-09-18T11:42:55Z</code></pre><p>这个 CRD 名叫etcdclusters.etcd.database.coreos.com 。你可以通过 kubectl describe 命令看到它的细节，如下所示：</p>
+<pre><code>$ kubectl describe crd  etcdclusters.etcd.database.coreos.com
+...
+Group:   etcd.database.coreos.com
+  Names:
+    Kind:       EtcdCluster
+    List Kind:  EtcdClusterList
+    Plural:     etcdclusters
+    Short Names:
+      etcd
+    Singular:  etcdcluster
+  Scope:       Namespaced
+  Version:     v1beta2
+
+...</code></pre><p>可以看到，这个 CRD 相当于告诉了 Kubernetes：接下来，如果有 API 组（Group）是etcd.database.coreos.com、API 资源类型（Kind）是“EtcdCluster”的 YAML 文件被提交上来，你可一定要认识啊。</p>
+<p>所以说，通过上述两步操作，你实际上是在 Kubernetes 里添加了一个名叫 EtcdCluster 的自定义资源类型。而 Etcd Operator 本身，就是这个自定义资源类型对应的自定义控制器。</p>
+<p>而当 Etcd Operator 部署好之后，接下来在这个 Kubernetes 里创建一个 Etcd 集群的工作就非常简单了。你只需要编写一个 EtcdCluster 的 YAML 文件，然后把它提交给 Kubernetes 即可，如下所示：</p>
+<pre><code>$ kubectl apply -f example/example-etcd-cluster.yaml</code></pre><p>这个 example-etcd-cluster.yaml 文件里描述的，是一个 3 个节点的 Etcd 集群。我们可以看到它被提交给 Kubernetes 之后，就会有三个 Etcd 的 Pod 运行起来，如下所示：</p>
+<pre><code>$ kubectl get pods
+NAME                            READY     STATUS    RESTARTS   AGE
+example-etcd-cluster-dp8nqtjznc   1/1       Running     0          1m
+example-etcd-cluster-mbzlg6sd56   1/1       Running     0          2m
+example-etcd-cluster-v6v6s6stxd   1/1       Running     0          2m</code></pre><p>那么，<code>究竟发生了什么，让创建一个 Etcd 集群的工作如此简单呢？</code></p>
+<p>我们当然还是得从这个 example-etcd-cluster.yaml 文件开始说起。</p>
+<p>不难想到，这个文件里定义的，正是 EtcdCluster 这个 CRD 的一个具体实例，也就是一个 Custom Resource（CR）。而它的内容非常简单，如下所示：</p>
+<pre><code>apiVersion: &quot;etcd.database.coreos.com/v1beta2&quot;
+kind: &quot;EtcdCluster&quot;
+metadata:
+  name: &quot;example-etcd-cluster&quot;
+spec:
+  size: 3
+  version: &quot;3.2.13&quot;</code></pre><p>可以看到，EtcdCluster 的 spec 字段非常简单。其中，size=3 指定了它所描述的 Etcd 集群的节点个数。而 version=“3.2.13”，则指定了 Etcd 的版本，仅此而已。</p>
+<p>而真正把这样一个 Etcd 集群创建出来的逻辑，就是 Etcd Operator 要实现的主要工作了。</p>
+<p>看到这里，相信你应该已经对 Operator 有了一个初步的认知：</p>
+<p><strong>Operator 的工作原理，实际上是利用了 Kubernetes 的自定义 API 资源（CRD），来描述我们想要部署的“有状态应用”；然后在自定义控制器里，根据自定义 API 对象的变化，来完成具体的部署和运维工作。</strong></p>
+<p>所以，编写一个 Etcd Operator，与我们前面编写一个自定义控制器的过程，没什么不同。</p>
+<p>不过，考虑到你可能还不太清楚<code>Etcd 集群的组建方式</code>，我在这里先简单介绍一下这部分知识。</p>
+<p><strong>Etcd Operator 部署 Etcd 集群，采用的是静态集群（Static）的方式。</strong></p>
+<p>静态集群的好处是，它不必依赖于一个额外的服务发现机制来组建集群，非常适合本地容器化部署。而它的难点，则在于你必须在部署的时候，就规划好这个集群的拓扑结构，并且能够知道这些节点固定的 IP 地址。比如下面这个例子：</p>
+<pre><code>$ etcd --name infra0 --initial-advertise-peer-urls http://10.0.1.10:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+...
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new
+
+$ etcd --name infra1 --initial-advertise-peer-urls http://10.0.1.11:2380 \
+  --listen-peer-urls http://10.0.1.11:2380 \
+...
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new
+
+$ etcd --name infra2 --initial-advertise-peer-urls http://10.0.1.12:2380 \
+  --listen-peer-urls http://10.0.1.12:2380 \
+...
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new</code></pre><p>在这个例子中，我启动了三个 Etcd 进程，组成了一个三节点的 Etcd 集群。</p>
+<p>其中，这些节点启动参数里的–initial-cluster 参数，非常值得你关注。它的含义，正是<strong>当前节点启动时集群的拓扑结构。说得更详细一点，就是当前这个节点启动时，需要跟哪些节点通信来组成集群。</strong></p>
+<p>举个例子，我们可以看一下上述 infra2 节点的–initial-cluster 的值，如下所示：</p>
+<pre><code>...
+--initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \</code></pre><p>可以看到，–initial-cluster 参数是由“&lt; 节点名字 &gt;=&lt; 节点地址 &gt;”格式组成的一个数组。而上面这个配置的意思就是，当 infra2 节点启动之后，这个 Etcd 集群里就会有 infra0、infra1 和 infra2 三个节点。</p>
+<p>同时，这些 Etcd 节点，需要通过 2380 端口进行通信以便组成集群，这也正是上述配置中–listen-peer-urls 字段的含义。</p>
+<p>此外，一个 Etcd 集群还需要用–initial-cluster-token 字段，来声明一个该集群独一无二的 Token 名字。</p>
+<p>像上述这样为每一个 Ectd 节点配置好它对应的启动参数之后把它们启动起来，一个 Etcd 集群就可以自动组建起来了。</p>
+<p>而我们要编写的 Etcd Operator，就是要把上述过程自动化。这其实等同于：用代码来生成每个 Etcd 节点 Pod 的启动命令，然后把它们启动起来。</p>
+<p>接下来，我们一起来实践一下这个流程。</p>
+<p>当然，在编写自定义控制器之前，我们首先需要完成 EtcdCluster 这个 CRD 的定义，它对应的 types.go 文件的主要内容，如下所示：</p>
+<pre><code>// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type EtcdCluster struct {
+  metav1.TypeMeta   `json:&quot;,inline&quot;`
+  metav1.ObjectMeta `json:&quot;metadata,omitempty&quot;`
+  Spec              ClusterSpec   `json:&quot;spec&quot;`
+  Status            ClusterStatus `json:&quot;status&quot;`
+}
+type ClusterSpec struct {
+ // Size is the expected size of the etcd cluster.
+ // The etcd-operator will eventually make the size of the running
+ // cluster equal to the expected size.
+ // The vaild range of the size is from 1 to 7.
+ Size int `json:&quot;size&quot;`
+ ... 
+}</code></pre><p>可以看到，EtcdCluster 是一个有 Status 字段的 CRD。在这里，我们可以不必关心 ClusterSpec 里的其他字段，只关注 Size（即：Etcd 集群的大小）字段即可。</p>
+<p>Size 字段的存在，就意味着将来如果我们想要调整集群大小的话，应该直接修改 YAML 文件里 size 的值，并执行 kubectl apply -f。</p>
+<p>这样，Operator 就会帮我们完成 Etcd 节点的增删操作。这种“scale”能力，也是 Etcd Operator 自动化运维 Etcd 集群需要实现的主要功能。</p>
+<p>而为了能够支持这个功能，我们就不再像前面那样在–initial-cluster 参数里把拓扑结构固定死。</p>
+<p>所以，Etcd Operator 的实现，虽然选择的也是静态集群，但这个集群具体的组建过程，是逐个节点动态添加的方式，即：</p>
+<p><strong>首先，Etcd Operator 会创建一个“种子节点”；</strong></p>
+<p><strong>然后，Etcd Operator 会不断创建新的 Etcd 节点，然后将它们逐一加入到这个集群当中，直到集群的节点数等于 size。</strong></p>
+<p>这就意味着，在生成不同角色的 Etcd Pod 时，Operator 需要能够区分种子节点与普通节点。</p>
+<p>而这两种节点的不同之处，就在于一个名叫–initial-cluster-state 的启动参数：</p>
+<ul>
+<li>当这个参数值设为 new 时，就代表了该节点是种子节点。而我们前面提到过，种子节点还必须通过–initial-cluster-token 声明一个独一无二的 Token。</li>
+<li>而如果这个参数值设为 existing，那就是说明这个节点是一个普通节点，Etcd Operator 需要把它加入到已有集群里。</li>
+</ul>
+<p>那么接下来的问题就是，每个 Etcd 节点的–initial-cluster 字段的值又是怎么生成的呢？</p>
+<p>由于这个方案要求种子节点先启动，所以对于种子节点 infra0 来说，它启动后的集群只有它自己，即：<code>–initial-cluster=infra0=http://10.0.1.10:2380</code>.</p>
+<p>而对于接下来要加入的节点，比如 infra1 来说，它启动后的集群就有两个节点了，所以它的–initial-cluster 参数的值应该是：<code>infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380</code>.</p>
+<p>其他节点，都以此类推。</p>
+<p>现在，你就应该能在脑海中构思出上述三节点 Etcd 集群的部署过程了。</p>
+<p>首先，只要用户提交 YAML 文件时声明创建一个 EtcdCluster 对象（一个 Etcd 集群），那么 Etcd Operator 都应该先创建一个单节点的种子集群（Seed Member），并启动这个种子节点。</p>
+<p>以 infra0 节点为例，它的 IP 地址是 10.0.1.10，那么 Etcd Operator 生成的种子节点的启动命令，如下所示：</p>
+<pre><code>$ etcd
+  --data-dir=/var/etcd/data
+  --name=infra0
+  --initial-advertise-peer-urls=http://10.0.1.10:2380
+  --listen-peer-urls=http://0.0.0.0:2380
+  --listen-client-urls=http://0.0.0.0:2379
+  --advertise-client-urls=http://10.0.1.10:2379
+  --initial-cluster=infra0=http://10.0.1.10:2380
+  --initial-cluster-state=new
+  --initial-cluster-token=4b5215fa-5401-4a95-a8c6-892317c9bef8</code></pre><p>可以看到，这个种子节点的 initial-cluster-state 是 new，并且指定了唯一的 initial-cluster-token 参数。</p>
+<p>我们可以把这个创建种子节点（集群）的阶段称为：<strong>Bootstrap</strong>。</p>
+<p>接下来，<strong>对于其他每一个节点，Operator 只需要执行如下两个操作即可</strong>，以 infra1 为例。</p>
+<p>第一步：通过 Etcd 命令行添加一个新成员：</p>
+<pre><code>$ etcdctl member add infra1 http://10.0.1.11:2380</code></pre><p>第二步：为这个成员节点生成对应的启动参数，并启动它：</p>
+<pre><code>$ etcd
+    --data-dir=/var/etcd/data
+    --name=infra1
+    --initial-advertise-peer-urls=http://10.0.1.11:2380
+    --listen-peer-urls=http://0.0.0.0:2380
+    --listen-client-urls=http://0.0.0.0:2379
+    --advertise-client-urls=http://10.0.1.11:2379
+    --initial-cluster=infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380
+    --initial-cluster-state=existing</code></pre><p>可以看到，对于这个 infra1 成员节点来说，它的 initial-cluster-state 是 existing，也就是要加入已有集群。而它的 initial-cluster 的值，则变成了 infra0 和 infra1 两个节点的 IP 地址。</p>
+<p>所以，以此类推，不断地将 infra2 等后续成员添加到集群中，直到整个集群的节点数目等于用户指定的 size 之后，部署就完成了。</p>
+<p>在熟悉了这个部署思路之后，我再为你讲解<code>Etcd Operator 的工作原理</code>，就非常简单了。</p>
+<p>跟所有的自定义控制器一样，Etcd Operator 的启动流程也是围绕着 Informer 展开的，如下所示：</p>
+<pre><code>func (c *Controller) Start() error {
+ for {
+  err := c.initResource()
+  ...
+  time.Sleep(initRetryWaitTime)
+ }
+ c.run()
+}
+func (c *Controller) run() {
+ ...
+
+ _, informer := cache.NewIndexerInformer(source, &amp;api.EtcdCluster{}, 0, cache.ResourceEventHandlerFuncs{
+  AddFunc:    c.onAddEtcdClus,
+  UpdateFunc: c.onUpdateEtcdClus,
+  DeleteFunc: c.onDeleteEtcdClus,
+ }, cache.Indexers{})
+
+ ctx := context.TODO()
+ // TODO: use workqueue to avoid blocking
+ informer.Run(ctx.Done())
+}</code></pre><p>可以看到，<strong>Etcd Operator 启动要做的第一件事</strong>（ c.initResource），是创建 EtcdCluster 对象所需要的 CRD，即：前面提到的etcdclusters.etcd.database.coreos.com。这样 Kubernetes 就能够“认识”EtcdCluster 这个自定义 API 资源了。</p>
+<p>而<strong>接下来，Etcd Operator 会定义一个 EtcdCluster 对象的 Informer。</strong></p>
+<p>不过，需要注意的是，由于 Etcd Operator 的完成时间相对较早，所以它里面有些代码的编写方式会跟我们之前讲解的最新的编写方式不太一样。在具体实践的时候，你还是应该以我讲解的模板为主。</p>
+<p>比如，在上面的代码最后，你会看到有这样一句注释：</p>
+<pre><code>// TODO: use workqueue to avoid blocking
+...</code></pre><p>也就是说，Etcd Operator 并没有用工作队列来协调 Informer 和控制循环。这其实正是我在第 25 篇文章《深入解析声明式 API（二）：编写自定义控制器》中，给你留的关于工作队列的思考题的答案。</p>
+<p>具体来讲，我们在控制循环里执行的业务逻辑，往往是比较耗时间的。比如，创建一个真实的 Etcd 集群。而 Informer 的 WATCH 机制对 API 对象变化的响应，则非常迅速。所以，控制器里的业务逻辑就很可能会拖慢 Informer 的执行周期，甚至可能 Block 它。而要协调这样两个快、慢任务的一个典型解决方法，就是引入一个工作队列。</p>
+<blockquote>
+<p>备注：如果你感兴趣的话，可以给 Etcd Operator 提一个 patch 来修复这个问题。提 PR 修 TODO，是给一个开源项目做有意义的贡献的一个重要方式。</p>
+</blockquote>
+<p>由于 Etcd Operator 里没有工作队列，那么在它的 EventHandler 部分，就不会有什么入队操作，而直接就是每种事件对应的具体的业务逻辑了。</p>
+<p>不过，Etcd Operator 在业务逻辑的实现方式上，与常规的自定义控制器略有不同。我把在这一部分的工作原理，提炼成了一个详细的流程图，如下所示：</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="2.jpg"  alt="">
+      </p>
+<p>可以看到，Etcd Operator 的特殊之处在于，它为每一个 EtcdCluster 对象，都启动了一个控制循环，“并发”地响应这些对象的变化。显然，这种做法不仅可以简化 Etcd Operator 的代码实现，还有助于提高它的响应速度。</p>
+<p>以文章一开始的 example-etcd-cluster 的 YAML 文件为例。</p>
+<p>当这个 YAML 文件第一次被提交到 Kubernetes 之后，Etcd Operator 的 Informer，就会立刻“感知”到一个新的 EtcdCluster 对象被创建了出来。所以，EventHandler 里的“添加”事件会被触发。</p>
+<p>而这个 Handler 要做的操作也很简单，即：在 Etcd Operator 内部创建一个对应的 Cluster 对象（cluster.New），比如流程图里的 Cluster1。</p>
+<p>这个 Cluster 对象，就是一个 Etcd 集群在 Operator 内部的描述，所以它与真实的 Etcd 集群的生命周期是一致的。</p>
+<p>而一个 Cluster 对象需要具体负责的，其实有两个工作。</p>
+<p><strong>其中，第一个工作只在该 Cluster 对象第一次被创建的时候才会执行。这个工作，就是我们前面提到过的 Bootstrap，即：创建一个单节点的种子集群。</strong></p>
+<p>由于种子集群只有一个节点，所以这一步直接就会生成一个 Etcd 的 Pod 对象。这个 Pod 里有一个 InitContainer，负责检查 Pod 的 DNS 记录是否正常。如果检查通过，用户容器也就是 Etcd 容器就会启动起来。</p>
+<p>而这个 Etcd 容器最重要的部分，当然就是它的启动命令了。</p>
+<p>以我们在文章一开始部署的集群为例，它的种子节点的容器启动命令如下所示：</p>
+<pre><code>/usr/local/bin/etcd
+  --data-dir=/var/etcd/data
+  --name=example-etcd-cluster-mbzlg6sd56
+  --initial-advertise-peer-urls=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2380
+  --listen-peer-urls=http://0.0.0.0:2380
+  --listen-client-urls=http://0.0.0.0:2379
+  --advertise-client-urls=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2379
+  --initial-cluster=example-etcd-cluster-mbzlg6sd56=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2380
+  --initial-cluster-state=new
+  --initial-cluster-token=4b5215fa-5401-4a95-a8c6-892317c9bef8</code></pre><p>上述启动命令里的各个参数的含义，我已经在前面介绍过。</p>
+<p>可以看到，在这些启动参数（比如：initial-cluster）里，Etcd Operator 只会使用 Pod 的 DNS 记录，而不是它的 IP 地址。</p>
+<p>这当然是因为，在 Operator 生成上述启动命令的时候，Etcd 的 Pod 还没有被创建出来，它的 IP 地址自然也无从谈起。</p>
+<p>这也就意味着，每个 Cluster 对象，都会事先创建一个与该 EtcdCluster 同名的 Headless Service。这样，Etcd Operator 在接下来的所有创建 Pod 的步骤里，就都可以使用 Pod 的 DNS 记录来代替它的 IP 地址了。</p>
+<blockquote>
+<p>备注：Headless Service 的 DNS 记录格式是：…svc.cluster.local。如果你记不太清楚了，可以借此再回顾一下第 18 篇文章《深入理解 StatefulSet（一）：拓扑状态》中的相关内容。</p>
+</blockquote>
+<p><strong>Cluster 对象的第二个工作，则是启动该集群所对应的控制循环。</strong></p>
+<p>这个控制循环每隔一定时间，就会执行一次下面的 Diff 流程。</p>
+<p>首先，控制循环要获取到所有正在运行的、属于这个 Cluster 的 Pod 数量，也就是该 Etcd 集群的“实际状态”。</p>
+<p>而这个 Etcd 集群的“期望状态”，正是用户在 EtcdCluster 对象里定义的 size。</p>
+<p>所以接下来，控制循环会对比这两个状态的差异。</p>
+<p>如果实际的 Pod 数量不够，那么控制循环就会执行一个添加成员节点的操作（即：上述流程图中的 addOneMember 方法）；反之，就执行删除成员节点的操作（即：上述流程图中的 removeOneMember 方法）。</p>
+<p>以 addOneMember 方法为例，它执行的流程如下所示：</p>
+<ol>
+<li><p>生成一个新节点的 Pod 的名字，比如：example-etcd-cluster-v6v6s6stxd；</p>
+</li>
+<li><p>调用 Etcd Client，执行前面提到过的 etcdctl member add example-etcd-cluster-v6v6s6stxd 命令；</p>
+</li>
+<li><p>使用这个 Pod 名字，和已经存在的所有节点列表，组合成一个新的 initial-cluster 字段的值；</p>
+</li>
+<li><p>使用这个 initial-cluster 的值，生成这个 Pod 里 Etcd 容器的启动命令。如下所示：</p>
+</li>
+</ol>
+<pre><code>/usr/local/bin/etcd
+  --data-dir=/var/etcd/data
+  --name=example-etcd-cluster-v6v6s6stxd
+  --initial-advertise-peer-urls=http://example-etcd-cluster-v6v6s6stxd.example-etcd-cluster.default.svc:2380
+  --listen-peer-urls=http://0.0.0.0:2380
+  --listen-client-urls=http://0.0.0.0:2379
+  --advertise-client-urls=http://example-etcd-cluster-v6v6s6stxd.example-etcd-cluster.default.svc:2379
+  --initial-cluster=example-etcd-cluster-mbzlg6sd56=http://example-etcd-cluster-mbzlg6sd56.example-etcd-cluster.default.svc:2380,example-etcd-cluster-v6v6s6stxd=http://example-etcd-cluster-v6v6s6stxd.example-etcd-cluster.default.svc:2380
+  --initial-cluster-state=existing</code></pre><p>这样，当这个容器启动之后，一个新的 Etcd 成员节点就被加入到了集群当中。控制循环会重复这个过程，直到正在运行的 Pod 数量与 EtcdCluster 指定的 size 一致。</p>
+<p>在有了这样一个与 EtcdCluster 对象一一对应的控制循环之后，你后续对这个 EtcdCluster 的任何修改，比如：修改 size 或者 Etcd 的 version，它们对应的更新事件都会由这个 Cluster 对象的控制循环进行处理。</p>
+<p>以上，就是一个 Etcd Operator 的工作原理了。</p>
+<p>如果对比一下 Etcd Operator 与我在第 20 篇文章《深入理解 StatefulSet（三）：有状态应用实践》中讲解过的 MySQL StatefulSet 的话，你可能会有两个问题。</p>
+<p><strong>第一个问题是</strong>，在 StatefulSet 里，它为 Pod 创建的名字是带编号的，这样就把整个集群的拓扑状态固定了下来（比如：一个三节点的集群一定是由名叫 web-0、web-1 和 web-2 的三个 Pod 组成）。可是，<strong>在 Etcd Operator 里，为什么我们使用随机名字就可以了呢？</strong></p>
+<p>这是因为，Etcd Operator 在每次添加 Etcd 节点的时候，都会先执行 etcdctl member add &lt;Pod 名字 &gt;；每次删除节点的时候，则会执行 etcdctl member remove &lt;Pod 名字 &gt;。这些操作，其实就会更新 Etcd 内部维护的拓扑信息，所以 Etcd Operator 无需在集群外部通过编号来固定这个拓扑关系。</p>
+<p><strong>第二个问题是，为什么我没有在 EtcdCluster 对象里声明 Persistent Volume？</strong></p>
+<p>难道，我们不担心节点宕机之后 Etcd 的数据会丢失吗？</p>
+<p>我们知道，Etcd 是一个基于 Raft 协议实现的高可用 Key-Value 存储。根据 Raft 协议的设计原则，当 Etcd 集群里只有半数以下（在我们的例子里，小于等于一个）的节点失效时，当前集群依然可以正常工作。此时，Etcd Operator 只需要通过控制循环创建出新的 Pod，然后将它们加入到现有集群里，就完成了“期望状态”与“实际状态”的调谐工作。这个集群，是一直可用的 。</p>
+<blockquote>
+<p>备注：关于 <span class="exturl"><a class="exturl__link"   href="http://www.infoq.com/cn/articles/etcd-interpretation-application-scenario-implement-principle"  target="_blank" rel="noopener">Etcd 的工作原理和 Raft 协议</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>的设计思想，你可以阅读这篇文章来进行学习。</p>
+</blockquote>
+<p>但是，当这个 Etcd 集群里有半数以上（在我们的例子里，大于等于两个）的节点失效的时候，这个集群就会丧失数据写入的能力，从而进入“不可用”状态。此时，即使 Etcd Operator 创建出新的 Pod 出来，Etcd 集群本身也无法自动恢复起来。</p>
+<p>这个时候，我们就必须使用 Etcd 本身的备份数据来对集群进行恢复操作。</p>
+<p>在有了 Operator 机制之后，上述 Etcd 的备份操作，是由一个单独的 Etcd Backup Operator 负责完成的。</p>
+<p>创建和使用这个 Operator 的流程，如下所示：</p>
+<pre><code># 首先，创建etcd-backup-operator
+$ kubectl create -f example/etcd-backup-operator/deployment.yaml
+
+# 确认etcd-backup-operator已经在正常运行
+$ kubectl get pod
+NAME                                    READY     STATUS    RESTARTS   AGE
+etcd-backup-operator-1102130733-hhgt7   1/1       Running   0          3s
+
+# 可以看到，Backup Operator会创建一个叫etcdbackups的CRD
+$ kubectl get crd
+NAME                                    KIND
+etcdbackups.etcd.database.coreos.com    CustomResourceDefinition.v1beta1.apiextensions.k8s.io
+
+# 我们这里要使用AWS S3来存储备份，需要将S3的授权信息配置在文件里
+$ cat $AWS_DIR/credentials
+[default]
+aws_access_key_id = XXX
+aws_secret_access_key = XXX
+
+$ cat $AWS_DIR/config
+[default]
+region = &lt;region&gt;
+
+# 然后，将上述授权信息制作成一个Secret
+$ kubectl create secret generic aws --from-file=$AWS_DIR/credentials --from-file=$AWS_DIR/config
+
+# 使用上述S3的访问信息，创建一个EtcdBackup对象
+$ sed -e &apos;s|&lt;full-s3-path&gt;|mybucket/etcd.backup|g&apos; \
+    -e &apos;s|&lt;aws-secret&gt;|aws|g&apos; \
+    -e &apos;s|&lt;etcd-cluster-endpoints&gt;|&quot;http://example-etcd-cluster-client:2379&quot;|g&apos; \
+    example/etcd-backup-operator/backup_cr.yaml \
+    | kubectl create -f -</code></pre><p>需要注意的是，每当你创建一个 EtcdBackup 对象（<span class="exturl"><a class="exturl__link"   href="https://github.com/coreos/etcd-operator/blob/master/example/etcd-backup-operator/backup_cr.yaml"  target="_blank" rel="noopener">backup_cr.yaml</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>），就相当于为它所指定的 Etcd 集群做了一次备份。EtcdBackup 对象的 etcdEndpoints 字段，会指定它要备份的 Etcd 集群的访问地址。</p>
+<p>所以，在实际的环境里，我建议你把最后这个备份操作，编写成一个 Kubernetes 的 CronJob 以便定时运行。</p>
+<p>而当 Etcd 集群发生了故障之后，你就可以通过创建一个 EtcdRestore 对象来完成恢复操作。当然，这就意味着你也需要事先启动 Etcd Restore Operator。</p>
+<p>这个流程的完整过程，如下所示：</p>
+<pre><code># 创建etcd-restore-operator
+$ kubectl create -f example/etcd-restore-operator/deployment.yaml
+# 确认它已经正常运行
+$ kubectl get pods
+NAME                                     READY     STATUS    RESTARTS   AGE
+etcd-restore-operator-4203122180-npn3g   1/1       Running   0          7s
+# 创建一个EtcdRestore对象，来帮助Etcd Operator恢复数据，记得替换模板里的S3的访问信息
+$ sed -e &apos;s|&lt;full-s3-path&gt;|mybucket/etcd.backup|g&apos; \
+    -e &apos;s|&lt;aws-secret&gt;|aws|g&apos; \
+    example/etcd-restore-operator/restore_cr.yaml \
+    | kubectl create -f -</code></pre><p>上面例子里的 EtcdRestore 对象（restore_cr.yaml），会指定它要恢复的 Etcd 集群的名字和备份数据所在的 S3 存储的访问信息。</p>
+<p>而当一个 EtcdRestore 对象成功创建后，Etcd Restore Operator 就会通过上述信息，恢复出一个全新的 Etcd 集群。然后，Etcd Operator 会把这个新集群直接接管过来，从而重新进入可用的状态。</p>
+<p>EtcdBackup 和 EtcdRestore 这两个 Operator 的工作原理，与 Etcd Operator 的实现方式非常类似。所以，这一部分就交给你课后去探索了。</p>
+<p><strong>总结</strong></p>
+<p>在今天这篇文章中，我以 Etcd Operator 为例，详细介绍了一个 Operator 的工作原理和编写过程。</p>
+<p>可以看到，Etcd 集群本身就拥有良好的分布式设计和一定的高可用能力。在这种情况下，StatefulSet“为 Pod 编号”和“将 Pod 同 PV 绑定”这两个主要的特性，就不太有用武之地了。</p>
+<p>而相比之下，Etcd Operator 把一个 Etcd 集群，抽象成了一个具有一定“自治能力”的整体。而当这个“自治能力”本身不足以解决问题的时候，我们可以通过两个专门负责备份和恢复的 Operator 进行修正。这种实现方式，不仅更加贴近 Etcd 的设计思想，也更加编程友好。</p>
+<p>不过，如果我现在要部署的应用，既需要用 StatefulSet 的方式维持拓扑状态和存储状态，又有大量的编程工作要做，那我到底该如何选择呢？</p>
+<p>其实，Operator 和 StatefulSet 并不是竞争关系。你完全可以编写一个 Operator，然后在 Operator 的控制循环里创建和控制 StatefulSet 而不是 Pod。比如，业界知名的<span class="exturl"><a class="exturl__link"   href="https://github.com/prometheus-operator/prometheus-operator"  target="_blank" rel="noopener">Prometheus 项目的 Operator</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，正是这么实现的。</p>
+<p>此外，CoreOS 公司在被 RedHat 公司收购之后，已经把 Operator 的编写过程封装成了一个叫作<span class="exturl"><a class="exturl__link"   href="https://github.com/operator-framework/operator-sdk"  target="_blank" rel="noopener">Operator SDK</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>的工具（整个项目叫作 Operator Framework），它可以帮助你生成 Operator 的框架代码。感兴趣的话，你可以试用一下。</p>
+<p><strong>思考题</strong></p>
+<p>在 Operator 的实现过程中，我们再一次用到了 CRD。可是，你一定要明白，CRD 并不是万能的，它有很多场景不适用，还有性能瓶颈。你能列举出一些不适用 CRD 的场景么？你知道造成 CRD 性能瓶颈的原因主要在哪里么？</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/">28 | PV、PVC、StorageClass，这些到底在说啥？</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
         <img   class="lazyload lazyload-gif"
           src="/images/loading.svg" data-src="1.jpg"  alt="">
       </p>
@@ -2214,315 +2560,7 @@ daemonset.extensions/fluentd-elasticsearch rolled back</code></pre><p>这个 kub
 <p>而且，相信聪明的你此时已经想到了，StatefulSet 也是直接控制 Pod 对象的，那么它是不是也在使用 ControllerRevision 进行版本管理呢？</p>
 <p>没错。在 Kubernetes 项目里，ControllerRevision 其实是一个通用的版本管理对象。这样，Kubernetes 项目就巧妙地避免了每种控制器都要维护一套冗余的代码和逻辑的问题。</p>
 <p><strong>思考题</strong><br>我在文中提到，在 Kubernetes v1.11 之前，DaemonSet 所管理的 Pod 的调度过程，实际上都是由 DaemonSet Controller 自己而不是由调度器完成的。你能说出这其中有哪些原因吗？</p>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/22.%E6%92%AC%E5%8A%A8%E7%A6%BB%E7%BA%BF%E4%B8%9A%E5%8A%A1%EF%BC%9AJob%E4%B8%8ECronJob/">22 | 撬动离线业务：Job与CronJob</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.4k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="1.jpg"  alt="">
-      </p>
-<p>在前面的几篇文章中，我和你详细分享了 Deployment、StatefulSet，以及 DaemonSet 这三个编排概念。你有没有发现它们的共同之处呢？</p>
-<p>实际上，它们主要编排的对象，都是“在线业务”，即：Long Running Task（长作业）。比如，我在前面举例时常用的 Nginx、Tomcat，以及 MySQL 等等。这些应用一旦运行起来，除非出错或者停止，它的容器进程会一直保持在 Running 状态。</p>
-<p>但是，有一类作业显然不满足这样的条件，这就是“离线业务”，或者叫作 Batch Job（计算业务）。这种业务在计算完成后就直接退出了，而此时如果你依然用 Deployment 来管理这种业务的话，就会发现 Pod 会在计算结束后退出，然后被 Deployment Controller 不断地重启；而像“滚动更新”这样的编排功能，更无从谈起了。</p>
-<p>所以，早在 Borg 项目中，Google 就已经对作业进行了分类处理，提出了 LRS（Long Running Service）和 Batch Jobs 两种作业形态，对它们进行“分别管理”和“混合调度”。<br><strong>(1、LRS（Long Running Service）:Deployment、StatefulSet、DaemonSet; 2、Batch Jobs: Job，CronJob)</strong></p>
-<p>不过，在 2015 年 Borg 论文刚刚发布的时候，Kubernetes 项目并不支持对 Batch Job 的管理。直到 v1.4 版本之后，社区才逐步设计出了一个用来描述离线业务的 API 对象，它的名字就是：Job。</p>
-<p>Job API 对象的定义非常简单，我来举个例子，如下所示：</p>
-<pre><code>apiVersion: batch/v1
-kind: Job
-metadata:
-  name: pi
-spec:
-  template:
-    spec:
-      containers:
-      - name: pi
-        image: resouer/ubuntu-bc 
-        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo &apos;scale=10000; 4*a(1)&apos; | bc -l &quot;]
-      restartPolicy: Never
-  backoffLimit: 4</code></pre><p>此时，相信你对 Kubernetes 的 API 对象已经不再陌生了。在这个 Job 的 YAML 文件里，你肯定一眼就会看到一位“老熟人”：Pod 模板，即 spec.template 字段。</p>
-<p>在这个 Pod 模板中，我定义了一个 Ubuntu 镜像的容器（准确地说，是一个安装了 bc 命令的 Ubuntu 镜像），它运行的程序是：</p>
-<pre><code>echo &quot;scale=10000; 4*a(1)&quot; | bc -l </code></pre><p>其中，bc 命令是 Linux 里的“计算器”；-l 表示，我现在要使用标准数学库；而 a(1)，则是调用数学库中的 arctangent 函数，计算 atan(1)。这是什么意思呢？</p>
-<p>中学知识告诉我们：tan(π/4) = 1。所以，4*atan(1)正好就是π，也就是 3.1415926…。</p>
-<blockquote>
-<p>备注：如果你不熟悉这个知识也不必担心，我也是在查阅资料后才知道的。</p>
-</blockquote>
-<p>所以，这其实就是一个计算π值的容器。而通过 scale=10000，我指定了输出的小数点后的位数是 10000。在我的计算机上，这个计算大概用时 1 分 54 秒。</p>
-<p>但是，跟其他控制器不同的是，Job 对象并不要求你定义一个 spec.selector 来描述要控制哪些 Pod。具体原因，我马上会讲解到。</p>
-<p>现在，我们就可以创建这个 Job 了：</p>
-<pre><code>$ kubectl create -f job.yaml</code></pre><p>在成功创建后，我们来查看一下这个 Job 对象，如下所示：</p>
-<pre><code>$ kubectl describe jobs/pi
-Name:             pi
-Namespace:        default
-Selector:         controller-uid=c2db599a-2c9d-11e6-b324-0209dc45a495
-Labels:           controller-uid=c2db599a-2c9d-11e6-b324-0209dc45a495
-                  job-name=pi
-Annotations:      &lt;none&gt;
-Parallelism:      1
-Completions:      1
-..
-Pods Statuses:    0 Running / 1 Succeeded / 0 Failed
-Pod Template:
-  Labels:       controller-uid=c2db599a-2c9d-11e6-b324-0209dc45a495
-                job-name=pi
-  Containers:
-   ...
-  Volumes:              &lt;none&gt;
-Events:
-  FirstSeen    LastSeen    Count    From            SubobjectPath    Type        Reason            Message
-  ---------    --------    -----    ----            -------------    --------    ------            -------
-  1m           1m          1        {job-controller }                Normal      SuccessfulCreate  Created pod: pi-rq5rl</code></pre><p>可以看到，这个 Job 对象在创建后，它的 Pod 模板，被自动加上了一个 controller-uid=&lt; 一个随机字符串 &gt; 这样的 Label。而这个 Job 对象本身，则被自动加上了这个 Label 对应的 Selector，从而 保证了 Job 与它所管理的 Pod 之间的匹配关系。</p>
-<p>而 Job Controller 之所以要使用这种携带了 UID 的 Label，就是为了避免不同 Job 对象所管理的 Pod 发生重合。需要注意的是，这种自动生成的 Label 对用户来说并不友好，所以不太适合推广到 Deployment 等长作业编排对象上。</p>
-<p>接下来，我们可以看到这个 Job 创建的 Pod 进入了 Running 状态，这意味着它正在计算 Pi 的值。</p>
-<pre><code>$ kubectl get pods
-NAME                                READY     STATUS    RESTARTS   AGE
-pi-rq5rl                            1/1       Running   0          10s</code></pre><p>而几分钟后计算结束，这个 Pod 就会进入 Completed 状态：</p>
-<pre><code>$ kubectl get pods
-NAME                                READY     STATUS      RESTARTS   AGE
-pi-rq5rl                            0/1       Completed   0          4m</code></pre><p>这也是我们需要在 Pod 模板中定义 restartPolicy=Never 的原因：离线计算的 Pod 永远都不应该被重启，否则它们会再重新计算一遍。</p>
-<blockquote>
-<p>事实上，restartPolicy 在 Job 对象里只允许被设置为 Never 和 OnFailure；而在 Deployment 对象里，restartPolicy 则只允许被设置为 Always。</p>
-</blockquote>
-<p>此时，我们通过 kubectl logs 查看一下这个 Pod 的日志，就可以看到计算得到的 Pi 值已经被打印了出来：</p>
-<pre><code>$ kubectl logs pi-rq5rl
-3.141592653589793238462643383279...</code></pre><p>这时候，你一定会想到这样一个问题，如果这个离线作业失败了要怎么办？</p>
-<p>比如，我们在这个例子中定义了 restartPolicy=Never，那么离线作业失败后 Job Controller 就会不断地尝试创建一个新 Pod，如下所示：</p>
-<pre><code>$ kubectl get pods
-NAME                                READY     STATUS              RESTARTS   AGE
-pi-55h89                            0/1       ContainerCreating   0          2s
-pi-tqbcz                            0/1       Error               0          5s</code></pre><p>可以看到，这时候会不断地有新 Pod 被创建出来。</p>
-<p>当然，这个尝试肯定不能无限进行下去。所以，我们就在 Job 对象的 spec.backoffLimit 字段里定义了重试次数为 4（即，backoffLimit=4），而这个字段的默认值是 6。</p>
-<p>需要注意的是，Job Controller 重新创建 Pod 的间隔是呈指数增加的，即下一次重新创建 Pod 的动作会分别发生在 10 s、20 s、40 s …后。</p>
-<p>而如果你定义的 <strong>restartPolicy=OnFailure，那么离线作业失败后，Job Controller 就不会去尝试创建新的 Pod。但是，它会不断地尝试重启 Pod 里的容器</strong>。这也正好对应了 restartPolicy 的含义（你也可以借此机会再回顾一下第 15 篇文章《深入解析 Pod 对象（二）：使用进阶》中的相关内容）。</p>
-<p>如前所述，当一个 Job 的 Pod 运行结束后，它会进入 Completed 状态。但是，如果这个 Pod 因为某种原因一直不肯结束呢？</p>
-<p>在 Job 的 API 对象里，有一个 spec.activeDeadlineSeconds 字段可以设置最长运行时间，比如：</p>
-<pre><code>spec:
- backoffLimit: 5
- activeDeadlineSeconds: 100</code></pre><p>一旦运行超过了 100 s，这个 Job 的所有 Pod 都会被终止。并且，你可以在 Pod 的状态里看到终止的原因是 reason: DeadlineExceeded。</p>
-<p>以上，就是一个 Job API 对象最主要的概念和用法了。不过，离线业务之所以被称为 Batch Job，当然是因为它们可以以“Batch”，也就是并行的方式去运行。</p>
-<p>接下来，我就来为你讲解一下Job Controller 对并行作业的控制方法。</p>
-<p>在 Job 对象中，负责并行控制的参数有两个：</p>
-<ol>
-<li>spec.parallelism，它定义的是一个 Job 在任意时间最多可以启动多少个 Pod 同时运行；</li>
-<li>spec.completions，它定义的是 Job 至少要完成的 Pod 数目，即 Job 的最小完成数。</li>
-</ol>
-<p>这两个参数听起来有点儿抽象，所以我准备了一个例子来帮助你理解。</p>
-<p>现在，我在之前计算 Pi 值的 Job 里，添加这两个参数：</p>
-<pre><code>apiVersion: batch/v1
-kind: Job
-metadata:
-  name: pi
-spec:
-  parallelism: 2
-  completions: 4
-  template:
-    spec:
-      containers:
-      - name: pi
-        image: resouer/ubuntu-bc
-        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo &apos;scale=5000; 4*a(1)&apos; | bc -l &quot;]
-      restartPolicy: Never
-  backoffLimit: 4</code></pre><p>这样，我们就指定了这个 Job 最大的并行数是 2，而最小的完成数是 4。</p>
-<p>接下来，我们来创建这个 Job 对象：</p>
-<pre><code>$ kubectl create -f job.yaml</code></pre><p>可以看到，这个 Job 其实也维护了两个状态字段，即 DESIRED 和 SUCCESSFUL，如下所示：</p>
-<pre><code>$ kubectl get job
-NAME      DESIRED   SUCCESSFUL   AGE
-pi        4         0            3s</code></pre><p>其中，DESIRED 的值，正是 completions 定义的最小完成数。</p>
-<p>然后，我们可以看到，这个 Job 首先创建了两个并行运行的 Pod 来计算 Pi：</p>
-<pre><code>$ kubectl get pods
-NAME       READY     STATUS    RESTARTS   AGE
-pi-5mt88   1/1       Running   0          6s
-pi-gmcq5   1/1       Running   0          6s</code></pre><p>而在 40 s 后，这两个 Pod 相继完成计算。</p>
-<p>这时我们可以看到，每当有一个 Pod 完成计算进入 Completed 状态时，就会有一个新的 Pod 被自动创建出来，并且快速地从 Pending 状态进入到 ContainerCreating 状态：</p>
-<pre><code>$ kubectl get pods
-NAME       READY     STATUS    RESTARTS   AGE
-pi-gmcq5   0/1       Completed   0         40s
-pi-84ww8   0/1       Pending   0         0s
-pi-5mt88   0/1       Completed   0         41s
-pi-62rbt   0/1       Pending   0         0s
-
-$ kubectl get pods
-NAME       READY     STATUS    RESTARTS   AGE
-pi-gmcq5   0/1       Completed   0         40s
-pi-84ww8   0/1       ContainerCreating   0         0s
-pi-5mt88   0/1       Completed   0         41s
-pi-62rbt   0/1       ContainerCreating   0         0s</code></pre><p>紧接着，Job Controller 第二次创建出来的两个并行的 Pod 也进入了 Running 状态：</p>
-<pre><code>$ kubectl get pods 
-NAME       READY     STATUS      RESTARTS   AGE
-pi-5mt88   0/1       Completed   0          54s
-pi-62rbt   1/1       Running     0          13s
-pi-84ww8   1/1       Running     0          14s
-pi-gmcq5   0/1       Completed   0          54s</code></pre><p>最终，后面创建的这两个 Pod 也完成了计算，进入了 Completed 状态。</p>
-<p>这时，由于所有的 Pod 均已经成功退出，这个 Job 也就执行完了，所以你会看到它的 SUCCESSFUL 字段的值变成了 4：</p>
-<pre><code>$ kubectl get pods 
-NAME       READY     STATUS      RESTARTS   AGE
-pi-5mt88   0/1       Completed   0          5m
-pi-62rbt   0/1       Completed   0          4m
-pi-84ww8   0/1       Completed   0          4m
-pi-gmcq5   0/1       Completed   0          5m
-
-$ kubectl get job
-NAME      DESIRED   SUCCESSFUL   AGE
-pi        4         4            5m</code></pre><p>通过上述 Job 的 DESIRED 和 SUCCESSFUL 字段的关系，我们就可以很容易地理解<code>Job Controller 的工作原理了</code>。</p>
-<p>首先，Job Controller 控制的对象，直接就是 Pod。</p>
-<p>其次，Job Controller 在控制循环中进行的调谐（Reconcile）操作，是根据实际在 Running 状态 Pod 的数目、已经成功退出的 Pod 的数目，以及 parallelism、completions 参数的值共同计算出在这个周期里，应该创建或者删除的 Pod 数目，然后调用 Kubernetes API 来执行这个操作。</p>
-<p>以创建 Pod 为例。在上面计算 Pi 值的这个例子中，当 Job 一开始创建出来时，实际处于 Running 状态的 Pod 数目 =0，已经成功退出的 Pod 数目 =0，而用户定义的 completions，也就是最终用户需要的 Pod 数目 =4。</p>
-<p>所以，在这个时刻，需要创建的 Pod 数目 = 最终需要的 Pod 数目 - 实际在 Running 状态 Pod 数目 - 已经成功退出的 Pod 数目 = 4 - 0 - 0= 4。也就是说，Job Controller 需要创建 4 个 Pod 来纠正这个不一致状态。</p>
-<p>可是，我们又定义了这个 Job 的 parallelism=2。也就是说，我们规定了每次并发创建的 Pod 个数不能超过 2 个。所以，Job Controller 会对前面的计算结果做一个修正，修正后的期望创建的 Pod 数目应该是：2 个。</p>
-<p>这时候，Job Controller 就会并发地向 kube-apiserver 发起两个创建 Pod 的请求。</p>
-<p>类似地，如果在这次调谐周期里，Job Controller 发现实际在 Running 状态的 Pod 数目，比 parallelism 还大，那么它就会删除一些 Pod，使两者相等。</p>
-<p>综上所述，Job Controller 实际上控制了，作业执行的并行度，以及总共需要完成的任务数这两个重要参数。而在实际使用时，你需要根据作业的特性，来决定并行度（parallelism）和任务数（completions）的合理取值。</p>
-<p>接下来，我再和你分享三种常用的、使用 Job 对象的方法。</p>
-<p>第一种用法，也是最简单粗暴的用法：外部管理器 +Job 模板。</p>
-<p>这种模式的特定用法是：把 Job 的 YAML 文件定义为一个“模板”，然后用一个外部工具控制这些“模板”来生成 Job。这时，Job 的定义方式如下所示：</p>
-<pre><code>apiVersion: batch/v1
-kind: Job
-metadata:
-  name: process-item-$ITEM
-  labels:
-    jobgroup: jobexample
-spec:
-  template:
-    metadata:
-      name: jobexample
-      labels:
-        jobgroup: jobexample
-    spec:
-      containers:
-      - name: c
-        image: busybox
-        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo Processing item $ITEM &amp;&amp; sleep 5&quot;]
-      restartPolicy: Never</code></pre><p>可以看到，我们在这个 Job 的 YAML 里，定义了 $ITEM 这样的“变量”。</p>
-<p>所以，在控制这种 Job 时，我们只要注意如下两个方面即可：</p>
-<ol>
-<li>创建 Job 时，替换掉 $ITEM 这样的变量；</li>
-<li>所有来自于同一个模板的 Job，都有一个 jobgroup: jobexample 标签，也就是说这一组 Job 使用这样一个相同的标识。</li>
-</ol>
-<p>而做到第一点非常简单。比如，你可以通过这样一句 shell 把 $ITEM 替换掉：</p>
-<pre><code>$ mkdir ./jobs
-$ for i in apple banana cherry
-do
-  cat job-tmpl.yaml | sed &quot;s/\$ITEM/$i/&quot; &gt; ./jobs/job-$i.yaml
-done</code></pre><p>这样，一组来自于同一个模板的不同 Job 的 yaml 就生成了。接下来，你就可以通过一句 kubectl create 指令创建这些 Job 了：</p>
-<pre><code>$ kubectl create -f ./jobs
-$ kubectl get pods -l jobgroup=jobexample
-NAME                        READY     STATUS      RESTARTS   AGE
-process-item-apple-kixwv    0/1       Completed   0          4m
-process-item-banana-wrsf7   0/1       Completed   0          4m
-process-item-cherry-dnfu9   0/1       Completed   0          4m</code></pre><p>这个模式看起来虽然很“傻”，但却是 Kubernetes 社区里使用 Job 的一个很普遍的模式。</p>
-<p>原因很简单：大多数用户在需要管理 Batch Job 的时候，都已经有了一套自己的方案，需要做的往往就是集成工作。这时候，Kubernetes 项目对这些方案来说最有价值的，就是 Job 这个 API 对象。所以，你只需要编写一个外部工具（等同于我们这里的 for 循环）来管理这些 Job 即可。</p>
-<p>这种模式最典型的应用，就是 TensorFlow 社区的 KubeFlow 项目。</p>
-<p>很容易理解，在这种模式下使用 Job 对象，completions 和 parallelism 这两个字段都应该使用默认值 1，而不应该由我们自行设置。而作业 Pod 的并行控制，应该完全交由外部工具来进行管理（比如，KubeFlow）。</p>
-<p>第二种用法：拥有固定任务数目的并行 Job。</p>
-<p>这种模式下，我只关心最后是否有指定数目（spec.completions）个任务成功退出。至于执行时的并行度是多少，我并不关心。</p>
-<p>比如，我们这个计算 Pi 值的例子，就是这样一个典型的、拥有固定任务数目（completions=4）的应用场景。 它的 parallelism 值是 2；或者，你可以干脆不指定 parallelism，直接使用默认的并行度（即：1）。</p>
-<p>此外，你还可以使用一个工作队列（Work Queue）进行任务分发。这时，Job 的 YAML 文件定义如下所示：</p>
-<pre><code>apiVersion: batch/v1
-kind: Job
-metadata:
-  name: job-wq-1
-spec:
-  completions: 8
-  parallelism: 2
-  template:
-    metadata:
-      name: job-wq-1
-    spec:
-      containers:
-      - name: c
-        image: myrepo/job-wq-1
-        env:
-        - name: BROKER_URL
-          value: amqp://guest:guest@rabbitmq-service:5672
-        - name: QUEUE
-          value: job1
-      restartPolicy: OnFailure</code></pre><p>我们可以看到，它的 completions 的值是：8，这意味着我们总共要处理的任务数目是 8 个。也就是说，总共会有 8 个任务会被逐一放入工作队列里（你可以运行一个外部小程序作为生产者，来提交任务）。</p>
-<p>在这个实例中，我选择充当工作队列的是一个运行在 Kubernetes 里的 RabbitMQ。所以，我们需要在 Pod 模板里定义 BROKER_URL，来作为消费者。</p>
-<p>所以，一旦你用 kubectl create 创建了这个 Job，它就会以并发度为 2 的方式，每两个 Pod 一组，创建出 8 个 Pod。每个 Pod 都会去连接 BROKER_URL，从 RabbitMQ 里读取任务，然后各自进行处理。这个 Pod 里的执行逻辑，我们可以用这样一段伪代码来表示：</p>
-<pre><code>/* job-wq-1 的伪代码 */
-queue := newQueue($BROKER_URL, $QUEUE)
-task := queue.Pop()
-process(task)
-exit</code></pre><p>可以看到，每个 Pod 只需要将任务信息读取出来，处理完成，然后退出即可。而作为用户，我只关心最终一共有 8 个计算任务启动并且退出，只要这个目标达到，我就认为整个 Job 处理完成了。所以说，这种用法，对应的就是“任务总数固定”的场景。</p>
-<p>第三种用法，也是很常用的一个用法：指定并行度（parallelism），但不设置固定的 completions 的值。</p>
-<p>此时，你就必须自己想办法，来决定什么时候启动新 Pod，什么时候 Job 才算执行完成。在这种情况下，任务的总数是未知的，所以你不仅需要一个工作队列来负责任务分发，还需要能够判断工作队列已经为空（即：所有的工作已经结束了）。</p>
-<p>这时候，Job 的定义基本上没变化，只不过是不再需要定义 completions 的值了而已：</p>
-<pre><code>apiVersion: batch/v1
-kind: Job
-metadata:
-  name: job-wq-2
-spec:
-  parallelism: 2
-  template:
-    metadata:
-      name: job-wq-2
-    spec:
-      containers:
-      - name: c
-        image: gcr.io/myproject/job-wq-2
-        env:
-        - name: BROKER_URL
-          value: amqp://guest:guest@rabbitmq-service:5672
-        - name: QUEUE
-          value: job2
-      restartPolicy: OnFailure</code></pre><p>而对应的 Pod 的逻辑会稍微复杂一些，我可以用这样一段伪代码来描述：</p>
-<pre><code>/* job-wq-2 的伪代码 */
-for !queue.IsEmpty($BROKER_URL, $QUEUE) {
-  task := queue.Pop()
-  process(task)
-}
-print(&quot;Queue empty, exiting&quot;)
-exit</code></pre><p>由于任务数目的总数不固定，所以每一个 Pod 必须能够知道，自己什么时候可以退出。比如，在这个例子中，我简单地以“队列为空”，作为任务全部完成的标志。所以说，这种用法，对应的是“任务总数不固定”的场景。</p>
-<p>不过，在实际的应用中，你需要处理的条件往往会非常复杂。比如，任务完成后的输出、每个任务 Pod 之间是不是有资源的竞争和协同等等。</p>
-<p>所以，在今天这篇文章中，我就不再展开 Job 的用法了。因为，在实际场景里，要么干脆就用第一种用法来自己管理作业；要么，这些任务 Pod 之间的关系就不那么“单纯”，甚至还是“有状态应用”（比如，任务的输入 / 输出是在持久化数据卷里）。在这种情况下，我在后面要重点讲解的 Operator，加上 Job 对象一起，可能才能更好的满足实际离线任务的编排需求。</p>
-<p>最后，我再来和你分享一个非常有用的 Job 对象，叫作：<code>CronJob</code>。</p>
-<p>顾名思义，CronJob 描述的，正是定时任务。它的 API 对象，如下所示：</p>
-<pre><code>apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: hello
-spec:
-  schedule: &quot;*/1 * * * *&quot;
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: hello
-            image: busybox
-            args:
-            - /bin/sh
-            - -c
-            - date; echo Hello from the Kubernetes cluster
-          restartPolicy: OnFailure</code></pre><p>在这个 YAML 文件中，最重要的关键词就是jobTemplate。看到它，你一定恍然大悟，原来 CronJob 是一个 Job 对象的控制器（Controller）！</p>
-<p>没错，<strong><code>CronJob 与 Job 的关系，正如同 Deployment 与 Pod 的关系一样。CronJob 是一个专门用来管理 Job 对象的控制器</code></strong>。只不过，它创建和删除 Job 的依据，是 schedule 字段定义的、一个标准的<span class="exturl"><a class="exturl__link"   href="https://en.wikipedia.org/wiki/Cron"  target="_blank" rel="noopener">Unix Cron</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>格式的表达式。</p>
-<p>比如，”*/1 * * * *”。</p>
-<p>这个 Cron 表达式里 */1 中的 * 表示从 0 开始，/ 表示“每”，1 表示偏移量。所以，它的意思就是：从 0 开始，每 1 个时间单位执行一次。</p>
-<p>那么，时间单位又是什么呢？</p>
-<p>Cron 表达式中的五个部分分别代表：分钟、小时、日、月、星期。</p>
-<p>所以，上面这句 Cron 表达式的意思是：从当前开始，每分钟执行一次。</p>
-<p>而这里要执行的内容，就是 jobTemplate 定义的 Job 了。</p>
-<p>所以，这个 CronJob 对象在创建 1 分钟后，就会有一个 Job 产生了，如下所示：</p>
-<pre><code>$ kubectl create -f ./cronjob.yaml
-cronjob &quot;hello&quot; created
-
-# 一分钟后
-$ kubectl get jobs
-NAME               DESIRED   SUCCESSFUL   AGE
-hello-4111706356   1         1         2s</code></pre><p>此时，CronJob 对象会记录下这次 Job 执行的时间：</p>
-<pre><code>$ kubectl get cronjob hello
-NAME      SCHEDULE      SUSPEND   ACTIVE    LAST-SCHEDULE
-hello     */1 * * * *   False     0         Thu, 6 Sep 2018 14:34:00 -070</code></pre><p>需要注意的是，由于定时任务的特殊性，很可能某个 Job 还没有执行完，另外一个新 Job 就产生了。这时候，你可以通过 spec.concurrencyPolicy 字段来定义具体的处理策略。比如：</p>
-<ol>
-<li>concurrencyPolicy=Allow，这也是默认情况，这意味着这些 Job 可以同时存在；</li>
-<li>concurrencyPolicy=Forbid，这意味着不会创建新的 Pod，该创建周期被跳过；</li>
-<li>concurrencyPolicy=Replace，这意味着新产生的 Job 会替换旧的、没有执行完的 Job。</li>
-</ol>
-<p>而如果某一次 Job 创建失败，这次创建就会被标记为“miss”。当在指定的时间窗口内，miss 的数目达到 100 时，那么 CronJob 会停止再创建这个 Job。</p>
-<p>这个时间窗口，可以由 spec.startingDeadlineSeconds 字段指定。比如 startingDeadlineSeconds=200，意味着在过去 200 s 里，如果 miss 的数目达到了 100 次，那么这个 Job 就不会被创建执行了。</p>
-<p><strong>总结</strong><br>在今天这篇文章中，我主要和你分享了 Job 这个离线业务的编排方法，讲解了 completions 和 parallelism 字段的含义，以及 Job Controller 的执行原理。</p>
-<p>紧接着，我通过实例和你分享了 Job 对象三种常见的使用方法。但是，根据我在社区和生产环境中的经验，大多数情况下用户还是更倾向于自己控制 Job 对象。所以，相比于这些固定的“模式”，掌握 Job 的 API 对象，和它各个字段的准确含义会更加重要。</p>
-<p>最后，我还介绍了一种 Job 的控制器，叫作：CronJob。这也印证了我在前面的分享中所说的：用一个对象控制另一个对象，是 Kubernetes 编排的精髓所在。</p>
-<p><strong>思考题</strong><br>根据 Job 控制器的工作原理，如果你定义的 parallelism 比 completions 还大的话，比如：</p>
-<pre><code>parallelism: 4
-completions: 2</code></pre><p>那么，这个 Job 最开始创建的时候，会同时启动几个 Pod 呢？原因是什么？</p>
-</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/22/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/24/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">289</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/22/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/24/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">290</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
   var isXML = true;
   var search_path = 'search.json';
 
