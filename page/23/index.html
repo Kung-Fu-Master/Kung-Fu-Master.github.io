@@ -28,7 +28,255 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/">27 | 聪明的微创新：Operator工作原理解读</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">6.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/26.%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%EF%BC%9ARBAC/">26 | 基于角色的权限控制：RBAC</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.7k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="01.jpg"  alt="">
+      </p>
+
+        <h2 id="基于角色的权限控制之-RBAC。"   >
+          <a href="#基于角色的权限控制之-RBAC。" class="heading-link"><i class="fas fa-link"></i></a>基于角色的权限控制之 RBAC。</h2>
+      <p>在前面的文章中，我已经为你讲解了很多种 Kubernetes 内置的编排对象，以及对应的控制器模式的实现原理。此外，我还剖析了自定义 API 资源类型和控制器的编写方式。</p>
+<p>这时候，你可能已经冒出了这样一个想法：控制器模式看起来好像也不难嘛，我能不能自己写一个编排对象呢？</p>
+<p>答案当然是可以的。而且，这才是 Kubernetes 项目最具吸引力的地方。</p>
+<p>毕竟，在互联网级别的大规模集群里，Kubernetes 内置的编排对象，很难做到完全满足所有需求。所以，很多实际的容器化工作，都会要求你设计一个自己的编排对象，实现自己的控制器模式。</p>
+<p>而在 Kubernetes 项目里，我们可以基于插件机制来完成这些工作，而完全不需要修改任何一行代码。</p>
+<p>不过，你要通过一个外部插件，在 Kubernetes 里新增和操作 API 对象，那么就必须先了解一个非常重要的知识：RBAC。</p>
+<p>我们知道，Kubernetes 中所有的 API 对象，都保存在 Etcd 里。可是，对这些 API 对象的操作，却一定都是通过访问 kube-apiserver 实现的。其中一个非常重要的原因，就是你需要 APIServer 来帮助你做授权工作。</p>
+<p>而在 <strong>Kubernetes 项目中，负责完成授权（Authorization）工作的机制，就是 RBAC：基于角色的访问控制（Role-Based Access Control）。</strong></p>
+<p>如果你直接查看 Kubernetes 项目中关于 RBAC 的文档的话，可能会感觉非常复杂。但实际上，等到你用到这些 RBAC 的细节时，再去查阅也不迟。</p>
+<p>而在这里，我只希望你能明确三个最基本的概念。</p>
+<ol>
+<li>Role：角色，它其实是一组规则，定义了一组对 Kubernetes API 对象的操作权限。</li>
+<li>Subject：被作用者，既可以是“人”，也可以是“机器”，也可以是你在 Kubernetes 里定义的“用户”。</li>
+<li>RoleBinding：定义了“被作用者”和“角色”的绑定关系。</li>
+</ol>
+<p>而这三个概念，其实就是整个 RBAC 体系的核心所在。</p>
+<p><strong><code>我先来讲解一下 Role。</code></strong></p>
+<p>实际上，Role 本身就是一个 Kubernetes 的 API 对象，定义如下所示：</p>
+<pre><code>kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: mynamespace
+  name: example-role
+rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;pods&quot;]
+  verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;]</code></pre><p>首先，这个 Role 对象指定了它能产生作用的 Namepace 是：mynamespace。</p>
+<p>Namespace 是 Kubernetes 项目里的一个逻辑管理单位。不同 Namespace 的 API 对象，在通过 kubectl 命令进行操作的时候，是互相隔离开的。</p>
+<p>比如，kubectl get pods -n mynamespace。</p>
+<p>当然，这仅限于逻辑上的“隔离”，Namespace 并不会提供任何实际的隔离或者多租户能力。而在前面文章中用到的大多数例子里，我都没有指定 Namespace，那就是使用的是默认 Namespace：default。</p>
+<p>然后，这个 Role 对象的 rules 字段，就是它所定义的权限规则。在上面的例子里，这条规则的含义就是：允许“被作用者”，对 mynamespace 下面的 Pod 对象，进行 GET、WATCH 和 LIST 操作。</p>
+<p>那么，<strong><code>这个具体的“被作用者”又是如何指定的呢？这就需要通过 RoleBinding 来实现了。</code></strong></p>
+<p>当然，RoleBinding 本身也是一个 Kubernetes 的 API 对象。它的定义如下所示：</p>
+<pre><code>kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-rolebinding
+  namespace: mynamespace
+subjects:
+- kind: User
+  name: example-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: example-role
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>可以看到，这个 RoleBinding 对象里定义了一个 subjects 字段，即“被作用者”。它的类型是 User，即 Kubernetes 里的用户。这个用户的名字是 example-user。</p>
+<p>可是，在 Kubernetes 中，其实并没有一个叫作“User”的 API 对象。而且，我们在前面和部署使用 Kubernetes 的流程里，既不需要 User，也没有创建过 User。</p>
+<p><strong>这个 User 到底是从哪里来的呢？</strong></p>
+<p>实际上，Kubernetes 里的“User”，也就是“用户”，只是一个授权系统里的逻辑概念。它需要通过外部认证服务，比如 Keystone，来提供。或者，你也可以直接给 APIServer 指定一个用户名、密码文件。那么 Kubernetes 的授权系统，就能够从这个文件里找到对应的“用户”了。当然，在大多数私有的使用环境中，我们只要使用 Kubernetes 提供的内置“用户”，就足够了。这部分知识，我后面马上会讲到。</p>
+<p>接下来，我们会看到一个 roleRef 字段。正是通过这个字段，<strong><code>RoleBinding 对象就可以直接通过名字，来引用我们前面定义的 Role 对象（example-role），从而定义了“被作用者（Subject）”和“角色（Role）”之间的绑定关系。</code></strong></p>
+<p>需要再次提醒的是，Role 和 RoleBinding 对象都是 Namespaced 对象（Namespaced Object），它们对权限的限制规则仅在它们自己的 Namespace 内有效，roleRef 也只能引用当前 Namespace 里的 Role 对象。</p>
+<p>那么，对于非 Namespaced（Non-namespaced）对象（比如：Node），或者，某一个 Role 想要作用于所有的 Namespace 的时候，我们又该如何去做授权呢？</p>
+<p>这时候，我们就必须要使用 ClusterRole 和 ClusterRoleBinding 这两个组合了。这两个 API 对象的用法跟 Role 和 RoleBinding 完全一样。只不过，它们的定义里，没有了 Namespace 字段，如下所示：</p>
+<pre><code>kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-clusterrole
+rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;pods&quot;]
+  verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;]
+
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-clusterrolebinding
+subjects:
+- kind: User
+  name: example-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: example-clusterrole
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>上面的例子里的 ClusterRole 和 ClusterRoleBinding 的组合，意味着名叫 example-user 的用户，拥有对所有 Namespace 里的 Pod 进行 GET、WATCH 和 LIST 操作的权限。</p>
+<p>更进一步地，在 Role 或者 ClusterRole 里面，如果要赋予用户 example-user 所有权限，那你就可以给它指定一个 verbs 字段的全集，如下所示：</p>
+<pre><code>verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;update&quot;, &quot;patch&quot;, &quot;delete&quot;]</code></pre><p>这些就是当前 Kubernetes（v1.11）里能够对 API 对象进行的所有操作了。</p>
+<p>类似地，Role 对象的 rules 字段也可以进一步细化。比如，你可以只针对某一个具体的对象进行权限设置，如下所示：</p>
+<pre><code>rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;configmaps&quot;]
+  resourceNames: [&quot;my-config&quot;]
+  verbs: [&quot;get&quot;]</code></pre><p>这个例子就表示，这条规则的“被作用者”，只对名叫“my-config”的 ConfigMap 对象，有进行 GET 操作的权限。</p>
+<p>而正如我前面介绍过的，在大多数时候，我们其实都不太使用“用户”这个功能，而是直接使用 Kubernetes 里的“内置用户”。</p>
+<p><strong><code>这个由 Kubernetes 负责管理的“内置用户”，正是我们前面曾经提到过的：ServiceAccount。</code></strong></p>
+<p>接下来，我通过一个具体的实例来为你讲解一下为 ServiceAccount 分配权限的过程。</p>
+<p><strong>首先，我们要定义一个 ServiceAccount。</strong>它的 API 对象非常简单，如下所示：</p>
+<pre><code>apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: mynamespace
+  name: example-sa</code></pre><p>可以看到，一个最简单的 ServiceAccount 对象只需要 Name 和 Namespace 这两个最基本的字段。</p>
+<p><strong>然后，我们通过编写 RoleBinding 的 YAML 文件，来为这个 ServiceAccount 分配权限：</strong></p>
+<pre><code>kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: example-rolebinding
+  namespace: mynamespace
+subjects:
+- kind: ServiceAccount
+  name: example-sa
+  namespace: mynamespace
+roleRef:
+  kind: Role
+  name: example-role
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>可以看到，在这个 RoleBinding 对象里，subjects 字段的类型（kind），不再是一个 User，而是一个名叫 example-sa 的 ServiceAccount。而 roleRef 引用的 Role 对象，依然名叫 example-role，也就是我在这篇文章一开始定义的 Role 对象。</p>
+<p><strong>接着，我们用 kubectl 命令创建这三个对象：</strong></p>
+<pre><code>$ kubectl create -f svc-account.yaml
+$ kubectl create -f role-binding.yaml
+$ kubectl create -f role.yaml</code></pre><p>然后，我们来查看一下这个 ServiceAccount 的详细信息：</p>
+<pre><code>$ kubectl get sa -n mynamespace -o yaml
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: 2018-09-08T12:59:17Z
+    name: example-sa
+    namespace: mynamespace
+    resourceVersion: &quot;409327&quot;
+    ...
+  secrets:
+  - name: example-sa-token-vmfg6</code></pre><p>可以看到，<strong><code>Kubernetes 会为一个 ServiceAccount 自动创建并分配一个 Secret 对象，即：上述 ServiceAcount 定义里最下面的 secrets 字段。</code></strong></p>
+<p><strong><code>这个 Secret，就是这个 ServiceAccount 对应的、用来跟 APIServer 进行交互的授权文件，我们一般称它为：Token。Token 文件的内容一般是证书或者密码，它以一个 Secret 对象的方式保存在 Etcd 当中。</code></strong></p>
+<p>这时候，用户的 Pod，就可以声明使用这个 ServiceAccount 了，比如下面这个例子：</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  namespace: mynamespace
+  name: sa-token-test
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.7.9
+  serviceAccountName: example-sa</code></pre><p>在这个例子里，我定义了 Pod 要使用的要使用的 ServiceAccount 的名字是：example-sa。</p>
+<p><strong><code>等这个 Pod 运行起来之后，我们就可以看到，该 ServiceAccount 的 token，也就是一个 Secret 对象，被 Kubernetes 自动挂载到了容器的 /var/run/secrets/kubernetes.io/serviceaccount 目录下，</code></strong>如下所示：</p>
+<pre><code>$ kubectl describe pod sa-token-test -n mynamespace
+Name:               sa-token-test
+Namespace:          mynamespace
+...
+Containers:
+  nginx:
+    ...
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from example-sa-token-vmfg6 (ro)</code></pre><p>这时候，我们可以通过 kubectl exec 查看到这个目录里的文件：</p>
+<pre><code>$ kubectl exec -it sa-token-test -n mynamespace -- /bin/bash
+root@sa-token-test:/# ls /var/run/secrets/kubernetes.io/serviceaccount
+ca.crt namespace  token</code></pre><p>如上所示，容器里的应用，就可以使用这个 ca.crt 来访问 APIServer 了。更重要的是，此时它只能够做 GET、WATCH 和 LIST 操作。因为 example-sa 这个 ServiceAccount 的权限，已经被我们绑定了 Role 做了限制。<br>此外，我在第 15 篇文章《深入解析 Pod 对象（二）：使用进阶》中曾经提到过，如果一个 Pod 没有声明 serviceAccountName，Kubernetes 会自动在它的 Namespace 下创建一个名叫 default 的默认 ServiceAccount，然后分配给这个 Pod。<br>但在这种情况下，这个默认 ServiceAccount 并没有关联任何 Role。也就是说，此时它有访问 APIServer 的绝大多数权限。当然，这个访问所需要的 Token，还是默认 ServiceAccount 对应的 Secret 对象为它提供的，如下所示。</p>
+<pre><code>$kubectl describe sa default
+Name:                default
+Namespace:           default
+Labels:              &lt;none&gt;
+Annotations:         &lt;none&gt;
+Image pull secrets:  &lt;none&gt;
+Mountable secrets:   default-token-s8rbq
+Tokens:              default-token-s8rbq
+Events:              &lt;none&gt;
+
+
+$ kubectl get secret
+NAME                  TYPE                                  DATA      AGE
+kubernetes.io/service-account-token   3         82d
+
+
+$ kubectl describe secret default-token-s8rbq
+Name:         default-token-s8rbq
+Namespace:    default
+Labels:       &lt;none&gt;
+Annotations:  kubernetes.io/service-account.name=default
+            kubernetes.io/service-account.uid=ffcb12b2-917f-11e8-abde-42010aa80002
+Type:  kubernetes.io/service-account-token
+Data
+====
+ca.crt:     1025 bytes
+namespace:  7 bytes
+token:      &lt;TOKEN数据&gt;</code></pre><p>可以看到，Kubernetes 会自动为默认 ServiceAccount 创建并绑定一个特殊的 <strong><code>Secret：</code></strong> 它的类型是kubernetes.io/service-account-token；<strong><code>它的 Annotation 字段，声明了kubernetes.io/service-account.name=default，即这个 Secret 会跟同一 Namespace 下名叫 default 的 ServiceAccount 进行绑定。</code></strong></p>
+<p><strong><code>所以，在生产环境中，我强烈建议你为所有 Namespace 下的默认 ServiceAccount，绑定一个只读权限的 Role。</code></strong>这个具体怎么做，就当作思考题留给你了。</p>
+<p>除了前面使用的“用户”（User），<strong><code>Kubernetes 还拥有“用户组”（Group）的概念，也就是一组“用户”的意思。</code></strong>如果你为 Kubernetes 配置了外部认证服务的话，这个“用户组”的概念就会由外部认证服务提供。</p>
+<p>而对于 Kubernetes 的内置“用户”ServiceAccount 来说，上述“用户组”的概念也同样适用。</p>
+<p>实际上，一个 ServiceAccount，在 Kubernetes 里对应的“用户”的名字是：</p>
+<pre><code>system:serviceaccount:&lt;Namespace名字&gt;:&lt;ServiceAccount名字&gt;</code></pre><p>而它对应的内置“用户组”的名字，就是：</p>
+<pre><code>system:serviceaccounts:&lt;Namespace名字&gt;</code></pre><p>这两个对应关系，请你一定要牢记。</p>
+<p>比如，现在我们可以在 RoleBinding 里定义如下的 subjects：</p>
+<pre><code>subjects:
+- kind: Group
+  name: system:serviceaccounts:mynamespace
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>这就意味着这个 Role 的权限规则，作用于 mynamespace 里的所有 ServiceAccount。这就用到了“用户组”的概念。</p>
+<p>而下面这个例子：</p>
+<pre><code>subjects:
+- kind: Group
+  name: system:serviceaccounts
+  apiGroup: rbac.authorization.k8s.io</code></pre><p>就意味着这个 Role 的权限规则，作用于整个系统里的所有 ServiceAccount。</p>
+<p>最后，值得一提的是，在 <strong><code>Kubernetes 中已经内置了很多个为系统保留的 ClusterRole，它们的名字都以 system: 开头。你可以通过 kubectl get clusterroles 查看到它们。</code></strong></p>
+<p>一般来说，这些系统 ClusterRole，是绑定给 Kubernetes 系统组件对应的 ServiceAccount 使用的。</p>
+<p>比如，其中一个名叫 system:kube-scheduler 的 ClusterRole，定义的权限规则是 kube-scheduler（Kubernetes 的调度器组件）运行所需要的必要权限。你可以通过如下指令查看这些权限的列表：</p>
+<pre><code>$ kubectl describe clusterrole system:kube-scheduler
+Name:         system:kube-scheduler
+...
+PolicyRule:
+  Resources                    Non-Resource URLs Resource Names    Verbs
+  ---------                    -----------------  --------------    -----
+...
+  services                     []                 []                [get list watch]
+  replicasets.apps             []                 []                [get list watch]
+  statefulsets.apps            []                 []                [get list watch]
+  replicasets.extensions       []                 []                [get list watch]
+  poddisruptionbudgets.policy  []                 []                [get list watch]
+  pods/status                  []                 []                [patch update]</code></pre><p>这个 system:kube-scheduler 的 ClusterRole，就会被绑定给 kube-system Namesapce 下名叫 kube-scheduler 的 ServiceAccount，它正是 Kubernetes 调度器的 Pod 声明使用的 ServiceAccount。</p>
+<p>除此之外，Kubernetes 还提供了四个预先定义好的 ClusterRole 来供用户直接使用：</p>
+<ol>
+<li>cluster-admin；</li>
+<li>admin；</li>
+<li>edit；</li>
+<li>view。</li>
+</ol>
+<p>通过它们的名字，你应该能大致猜出它们都定义了哪些权限。比如，这个名叫 view 的 ClusterRole，就规定了被作用者只有 Kubernetes API 的只读权限。</p>
+<p>而我还要提醒你的是，上面这个 cluster-admin 角色，对应的是整个 Kubernetes 项目中的最高权限（verbs=*），如下所示：</p>
+<pre><code>$ kubectl describe clusterrole cluster-admin -n kube-system
+Name:         cluster-admin
+Labels:       kubernetes.io/bootstrapping=rbac-defaults
+Annotations:  rbac.authorization.kubernetes.io/autoupdate=true
+PolicyRule:
+  Resources  Non-Resource URLs Resource Names  Verbs
+  ---------  -----------------  --------------  -----
+  *.*        []                 []              [*]
+             [*]                []              [*]</code></pre><p>所以，请你务必要谨慎而小心地使用 cluster-admin。</p>
+<p><strong>总结</strong></p>
+<p>在今天这篇文章中，我主要为你讲解了基于角色的访问控制（RBAC）。</p>
+<p>其实，你现在已经能够理解，所谓角色（Role），其实就是一组权限规则列表。而我们分配这些权限的方式，就是通过创建 RoleBinding 对象，将被作用者（subject）和权限列表进行绑定。</p>
+<p>另外，与之对应的 ClusterRole 和 ClusterRoleBinding，则是 Kubernetes 集群级别的 Role 和 RoleBinding，它们的作用范围不受 Namespace 限制。</p>
+<p>而尽管权限的被作用者可以有很多种（比如，User、Group 等），但在我们平常的使用中，最普遍的用法还是 ServiceAccount。所以，Role + RoleBinding + ServiceAccount 的权限分配方式是你要重点掌握的内容。我们在后面编写和安装各种插件的时候，会经常用到这个组合。</p>
+<p><strong>思考题</strong></p>
+<p>请问，如何为所有 Namespace 下的默认 ServiceAccount（default ServiceAccount），绑定一个只读权限的 Role 呢？请你提供 ClusterRoleBinding（或者 RoleBinding）的 YAML 文件</p>
+<pre><code>kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: readonly-all-default
+subjects:
+- kind: ServiceAccount
+  name: system.serviceaccount.default  // 或者name直接写default，不指定namespace
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io</code></pre></div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/">27 | 聪明的微创新：Operator工作原理解读</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">6.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
         <img   class="lazyload lazyload-gif"
           src="/images/loading.svg" data-src="1.jpg"  alt="">
       </p>
@@ -2328,239 +2576,7 @@ pod &quot;mysql-client&quot; deleted</code></pre><p>就会看到，从 StatefulS
 <p>最后，相信你也已经能够理解，StatefulSet 其实是一种特殊的 Deployment，只不过这个“Deployment”的每个 Pod 实例的名字里，都携带了一个唯一并且固定的编号。这个编号的顺序，固定了 Pod 的拓扑关系；这个编号对应的 DNS 记录，固定了 Pod 的访问方式；这个编号对应的 PV，绑定了 Pod 与持久化存储的关系。所以，当 Pod 被删除重建时，这些“状态”都会保持不变。</p>
 <p>而一旦你的应用没办法通过上述方式进行状态的管理，那就代表了 StatefulSet 已经不能解决它的部署问题了。这时候，我后面讲到的 Operator，可能才是一个更好的选择。</p>
 <p><strong>思考题</strong><br>如果我们现在的需求是：所有的读请求，只由 Slave 节点处理；所有的写请求，只由 Master 节点处理。那么，你需要在今天这篇文章的基础上再做哪些改动呢？</p>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/reference/k8s/21.%E5%AE%B9%E5%99%A8%E5%8C%96%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9ADaemonSet/">21 | 容器化守护进程的意义：DaemonSet</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.8k</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="1.jpg"  alt="">
-      </p>
-<p>在上一篇文章中，我和你详细分享了使用 StatefulSet 编排“有状态应用”的过程。从中不难看出，StatefulSet 其实就是对现有典型运维业务的容器化抽象。也就是说，你一定有方法在不使用 Kubernetes、甚至不使用容器的情况下，自己 DIY 一个类似的方案出来。但是，一旦涉及到升级、版本管理等更工程化的能力，Kubernetes 的好处，才会更加凸现。</p>
-<p>比如，如何对 StatefulSet 进行“滚动更新”（rolling update）？</p>
-<p>很简单。你只要修改 StatefulSet 的 Pod 模板，就会自动触发“滚动更新”:</p>
-<pre><code>$ kubectl patch statefulset mysql --type=&apos;json&apos; -p=&apos;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/image&quot;, &quot;value&quot;:&quot;mysql:5.7.23&quot;}]&apos;
-statefulset.apps/mysql patched</code></pre><p>在这里，我使用了 <strong><code>kubectl patch</code> 命令。它的意思是，以“补丁”的方式（JSON 格式的）修改一个 API 对象的指定字段</strong>，也就是我在后面指定的“spec/template/spec/containers/0/image”。</p>
-<p>这样，StatefulSet Controller 就会按照与 Pod 编号相反的顺序，从最后一个 Pod 开始，逐一更新这个 StatefulSet 管理的每个 Pod。而如果更新发生了错误，这次“滚动更新”就会停止。此外，StatefulSet 的“滚动更新”还允许我们进行更精细的控制，比如金丝雀发布（Canary Deploy）或者灰度发布，这意味着应用的多个实例中被指定的一部分不会被更新到最新的版本。</p>
-<p>这个字段，正是 StatefulSet 的 spec.updateStrategy.rollingUpdate 的 partition 字段。</p>
-<p>比如，现在我将前面这个 StatefulSet 的 partition 字段设置为 2：</p>
-<pre><code>$ kubectl patch statefulset mysql -p &apos;{&quot;spec&quot;:{&quot;updateStrategy&quot;:{&quot;type&quot;:&quot;RollingUpdate&quot;,&quot;rollingUpdate&quot;:{&quot;partition&quot;:2}}}}&apos;
-statefulset.apps/mysql patched</code></pre><p>其中，kubectl patch 命令后面的参数（JSON 格式的），就是 partition 字段在 API 对象里的路径。所以，上述操作等同于直接使用 kubectl edit 命令，打开这个对象，把 partition 字段修改为 2。</p>
-<p>这样，我就指定了当 Pod 模板发生变化的时候，比如 MySQL 镜像更新到 5.7.23，那么只有序号大于或者等于 2 的 Pod 会被更新到这个版本。并且，如果你删除或者重启了序号小于 2 的 Pod，等它再次启动后，也会保持原先的 5.7.2 版本，绝不会被升级到 5.7.23 版本。</p>
-<p>StatefulSet 可以说是 Kubernetes 项目中最为复杂的编排对象，希望你课后能认真消化，动手实践一下这个例子。</p>
-<p>而在今天这篇文章中，我会为你重点讲解一个相对轻松的知识点：DaemonSet。</p>
-<p>顾名思义，DaemonSet 的主要作用，是让你在 Kubernetes 集群里，运行一个 Daemon Pod。 所以，这个 Pod 有如下三个特征：</p>
-<ol>
-<li>这个 Pod 运行在 Kubernetes 集群里的每一个节点（Node）上；</li>
-<li>每个节点上只有一个这样的 Pod 实例；</li>
-<li>当有新的节点加入 Kubernetes 集群后，该 Pod 会自动地在新节点上被创建出来；而当旧节点被删除后，它上面的 Pod 也相应地会被回收掉。</li>
-</ol>
-<p>这个机制听起来很简单，但 Daemon Pod 的意义确实是非常重要的。我随便给你列举几个例子：</p>
-<ol>
-<li>各种网络插件的 Agent 组件，都必须运行在每一个节点上，用来处理这个节点上的容器网络；</li>
-<li>各种存储插件的 Agent 组件，也必须运行在每一个节点上，用来在这个节点上挂载远程存储目录，操作容器的 Volume 目录；</li>
-<li>各种监控组件和日志组件，也必须运行在每一个节点上，负责这个节点上的监控信息和日志搜集。</li>
-</ol>
-<p>更重要的是，跟其他编排对象不一样，DaemonSet 开始运行的时机，很多时候比整个 Kubernetes 集群出现的时机都要早。</p>
-<p>这个乍一听起来可能有点儿奇怪。但其实你来想一下：如果这个 DaemonSet 正是一个网络插件的 Agent 组件呢？</p>
-<p>这个时候，整个 Kubernetes 集群里还没有可用的容器网络，所有 Worker 节点的状态都是 NotReady（NetworkReady=false）。这种情况下，普通的 Pod 肯定不能运行在这个集群上。所以，这也就意味着 DaemonSet 的设计，必须要有某种“过人之处”才行。</p>
-<p>为了弄清楚 DaemonSet 的工作原理，我们还是按照老规矩，先从它的 API 对象的定义说起。</p>
-<pre><code>apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: fluentd-elasticsearch
-  namespace: kube-system
-  labels:
-    k8s-app: fluentd-logging
-spec:
-  selector:
-    matchLabels:
-      name: fluentd-elasticsearch
-  template:
-    metadata:
-      labels:
-        name: fluentd-elasticsearch
-    spec:
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
-      containers:
-      - name: fluentd-elasticsearch
-        image: k8s.gcr.io/fluentd-elasticsearch:1.20
-        resources:
-          limits:
-            memory: 200Mi
-          requests:
-            cpu: 100m
-            memory: 200Mi
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log
-        - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
-          readOnly: true
-      terminationGracePeriodSeconds: 30
-      volumes:
-      - name: varlog
-        hostPath:
-          path: /var/log
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers</code></pre><p>这个 DaemonSet，管理的是一个 fluentd-elasticsearch 镜像的 Pod。这个镜像的功能非常实用：通过 fluentd 将 Docker 容器里的日志转发到 ElasticSearch 中。</p>
-<p>可以看到，DaemonSet 跟 Deployment 其实非常相似，只不过是没有 replicas 字段；它也使用 selector 选择管理所有携带了 name=fluentd-elasticsearch 标签的 Pod。</p>
-<p>而这些 Pod 的模板，也是用 template 字段定义的。在这个字段中，我们定义了一个使用 fluentd-elasticsearch:1.20 镜像的容器，而且这个容器挂载了两个 hostPath 类型的 Volume，分别对应宿主机的 /var/log 目录和 /var/lib/docker/containers 目录。</p>
-<p>显然，fluentd 启动之后，它会从这两个目录里搜集日志信息，并转发给 ElasticSearch 保存。这样，我们通过 ElasticSearch 就可以很方便地检索这些日志了。</p>
-<p>需要注意的是，Docker 容器里应用的日志，默认会保存在宿主机的 <code>/var/lib/docker/containers/&lt;容器 ID&gt;/&lt;容器 ID&gt;-json.log</code> 文件里，所以这个目录正是 fluentd 的搜集目标。</p>
-<p>那么，<strong>DaemonSet 又是如何保证每个 Node 上有且只有一个被管理的 Pod 呢？</strong></p>
-<p>显然，这是一个典型的“控制器模型”能够处理的问题。</p>
-<p>DaemonSet Controller，首先从 Etcd 里获取所有的 Node 列表，然后遍历所有的 Node。这时，它就可以很容易地去检查，当前这个 Node 上是不是有一个携带了 name=fluentd-elasticsearch 标签的 Pod 在运行。</p>
-<p>而检查的结果，可能有这么三种情况：</p>
-<ol>
-<li>没有这种 Pod，那么就意味着要在这个 Node 上创建这样一个 Pod；</li>
-<li>有这种 Pod，但是数量大于 1，那就说明要把多余的 Pod 从这个 Node 上删除掉；</li>
-<li>正好只有一个这种 Pod，那说明这个节点是正常的。</li>
-</ol>
-<p>其中，删除节点（Node）上多余的 Pod 非常简单，直接调用 Kubernetes API 就可以了。</p>
-<p>但是，如何在指定的 Node 上创建新 Pod 呢？</p>
-<p>如果你已经熟悉了 Pod API 对象的话，那一定可以立刻说出答案：用 nodeSelector，选择 Node 的名字即可。</p>
-<pre><code>nodeSelector:
-    name: &lt;Node 名字 &gt;</code></pre><p>没错。</p>
-<p>不过，在 Kubernetes 项目里，<strong>nodeSelector 其实已经是一个将要被废弃的字段了</strong>。因为，现在有了一个新的、功能更完善的字段可以代替它，即：nodeAffinity。我来举个例子：</p>
-<pre><code>apiVersion: v1
-kind: Pod
-metadata:
-  name: with-node-affinity
-spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: metadata.name
-            operator: In
-            values:
-            - node-geektime</code></pre><p>在这个 Pod 里，我声明了一个 spec.affinity 字段，然后定义了一个 nodeAffinity。其中，spec.affinity 字段，是 Pod 里跟调度相关的一个字段。关于它的完整内容，我会在讲解调度策略的时候再详细阐述。</p>
-<p>而在这里，我定义的 nodeAffinity 的含义是：</p>
-<ol>
-<li>requiredDuringSchedulingIgnoredDuringExecution：它的意思是说，这个 nodeAffinity 必须在每次调度的时候予以考虑。同时，这也意味着你可以设置在某些情况下不考虑这个 nodeAffinity；</li>
-<li>这个 Pod，将来只允许运行在“metadata.name”是“node-geektime”的节点上。</li>
-</ol>
-<p>在这里，你应该注意到 nodeAffinity 的定义，可以支持更加丰富的语法，比如 operator: In（即：部分匹配；如果你定义 operator: Equal，就是完全匹配），这也正是 nodeAffinity 会取代 nodeSelector 的原因之一。</p>
-<blockquote>
-<p>备注：其实在大多数时候，这些 Operator 语义没啥用处。所以说，在学习开源项目的时候，一定要学会抓住“主线”。不要顾此失彼。</p>
-</blockquote>
-<p>所以，<strong>我们的 DaemonSet Controller 会在创建 Pod 的时候，自动在这个 Pod 的 API 对象里，加上这样一个 nodeAffinity 定义</strong>。其中，需要绑定的节点名字，正是当前正在遍历的这个 Node。</p>
-<p>当然，DaemonSet 并不需要修改用户提交的 YAML 文件里的 Pod 模板，而是在向 Kubernetes 发起请求之前，直接修改根据模板生成的 Pod 对象。这个思路，也正是我在前面讲解 Pod 对象时介绍过的。</p>
-<p>此外，DaemonSet 还会给这个 Pod 自动加上另外一个与调度相关的字段，叫作 tolerations。这个字段意味着这个 Pod，会“容忍”（Toleration）某些 Node 的“污点”（Taint）。</p>
-<p>而 DaemonSet 自动加上的 tolerations 字段，格式如下所示：</p>
-<pre><code>apiVersion: v1
-kind: Pod
-metadata:
-  name: with-toleration
-spec:
-  tolerations:
-  - key: node.kubernetes.io/unschedulable
-    operator: Exists
-    effect: NoSchedule</code></pre><p>这个 Toleration 的含义是：“容忍”所有被标记为 unschedulable“污点”的 Node；“容忍”的效果是允许调度。</p>
-<blockquote>
-<p>备注：关于如何给一个 Node 标记上“污点”，以及这里具体的语法定义，我会在后面介绍调度器的时候做详细介绍。这里，你可以简单地把“污点”理解为一种特殊的 Label。</p>
-</blockquote>
-<p>而在正常情况下，被标记了 unschedulable“污点”的 Node，是不会有任何 Pod 被调度上去的（effect: NoSchedule）。可是，DaemonSet 自动地给被管理的 Pod 加上了这个特殊的 Toleration，就使得这些 Pod 可以忽略这个限制，继而保证每个节点上都会被调度一个 Pod。当然，如果这个节点有故障的话，这个 Pod 可能会启动失败，而 DaemonSet 则会始终尝试下去，直到 Pod 启动成功。</p>
-<p>这时，你应该可以猜到，我在前面介绍到的DaemonSet 的“过人之处”，其实就是依靠 Toleration 实现的。</p>
-<p>假如当前 DaemonSet 管理的，是一个网络插件的 Agent Pod，那么你就必须在这个 DaemonSet 的 YAML 文件里，给它的 Pod 模板加上一个能够“容忍”node.kubernetes.io/network-unavailable“污点”的 Toleration。正如下面这个例子所示：</p>
-<pre><code>...
-template:
-    metadata:
-      labels:
-        name: network-plugin-agent
-    spec:
-      tolerations:
-      - key: node.kubernetes.io/network-unavailable
-        operator: Exists
-        effect: NoSchedule</code></pre><p>在 Kubernetes 项目中，当一个节点的网络插件尚未安装时，这个节点就会被自动加上名为node.kubernetes.io/network-unavailable的“污点”。</p>
-<p><strong>而通过这样一个 Toleration，调度器在调度这个 Pod 的时候，就会忽略当前节点上的“污点”，从而成功地将网络插件的 Agent 组件调度到这台机器上启动起来。</strong></p>
-<p>这种机制，正是我们在部署 Kubernetes 集群的时候，能够先部署 Kubernetes 本身、再部署网络插件的根本原因：因为当时我们所创建的 Weave 的 YAML，实际上就是一个 DaemonSet。</p>
-<blockquote>
-<p>这里，你也可以再回顾一下第 11 篇文章《从 0 到 1：搭建一个完整的 Kubernetes 集群》中的相关内容。</p>
-</blockquote>
-<p>至此，通过上面这些内容，你应该能够明白，DaemonSet 其实是一个非常简单的控制器。在它的控制循环中，只需要遍历所有节点，然后根据节点上是否有被管理 Pod 的情况，来决定是否要创建或者删除一个 Pod。</p>
-<p>只不过，在创建每个 Pod 的时候，DaemonSet 会自动给这个 Pod 加上一个 nodeAffinity，从而保证这个 Pod 只会在指定节点上启动。同时，它还会自动给这个 Pod 加上一个 Toleration，从而忽略节点的 unschedulable“污点”。</p>
-<p>当然，<strong>你也可以在 Pod 模板里加上更多种类的 Toleration，从而利用 DaemonSet 实现自己的目的</strong>。比如，在这个 fluentd-elasticsearch DaemonSet 里，我就给它加上了这样的 Toleration：</p>
-<pre><code>tolerations:
-- key: node-role.kubernetes.io/master
-  effect: NoSchedule</code></pre><p>这是因为在默认情况下，Kubernetes 集群不允许用户在 Master 节点部署 Pod。因为，Master 节点默认携带了一个叫作node-role.kubernetes.io/master的“污点”。所以，为了能在 Master 节点上部署 DaemonSet 的 Pod，我就必须让这个 Pod“容忍”这个“污点”。</p>
-<p>在理解了 DaemonSet 的工作原理之后，接下来我就通过一个具体的实践来帮你更深入地掌握 DaemonSet 的使用方法。</p>
-<blockquote>
-<p>备注：需要注意的是，在 Kubernetes v1.11 之前，由于调度器尚不完善，DaemonSet 是由 DaemonSet Controller 自行调度的，即它会直接设置 Pod 的 spec.nodename 字段，这样就可以跳过调度器了。但是，这样的做法很快就会被废除，所以在这里我也不推荐你再花时间学习这个流程了。</p>
-</blockquote>
-<p>首先，创建这个 DaemonSet 对象：</p>
-<pre><code>$ kubectl create -f fluentd-elasticsearch.yaml</code></pre><p>需要注意的是，在 DaemonSet 上，我们一般都应该加上 resources 字段，来限制它的 CPU 和内存使用，防止它占用过多的宿主机资源。</p>
-<p>而创建成功后，你就能看到，如果有 N 个节点，就会有 N 个 fluentd-elasticsearch Pod 在运行。比如在我们的例子里，会有两个 Pod，如下所示：</p>
-<pre><code>$ kubectl get pod -n kube-system -l name=fluentd-elasticsearch
-NAME                          READY     STATUS    RESTARTS   AGE
-fluentd-elasticsearch-dqfv9   1/1       Running   0          53m
-fluentd-elasticsearch-pf9z5   1/1       Running   0          53m</code></pre><p>而如果你此时通过 kubectl get 查看一下 Kubernetes 集群里的 DaemonSet 对象：</p>
-<pre><code>$ kubectl get ds -n kube-system fluentd-elasticsearch
-NAME                    DESIRED   CURRENT   READY     UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
-fluentd-elasticsearch   2         2         2         2            2           &lt;none&gt;          1h</code></pre><blockquote>
-<p>备注：Kubernetes 里比较长的 API 对象都有短名字，比如 DaemonSet 对应的是 ds，Deployment 对应的是 deploy。</p>
-</blockquote>
-<p>就会发现 DaemonSet 和 Deployment 一样，也有 DESIRED、CURRENT 等多个状态字段。这也就意味着，DaemonSet 可以像 Deployment 那样，进行版本管理。这个版本，可以使用 kubectl rollout history 看到：</p>
-<pre><code>$ kubectl rollout history daemonset fluentd-elasticsearch -n kube-system
-daemonsets &quot;fluentd-elasticsearch&quot;
-REVISION  CHANGE-CAUSE
-1         &lt;none&gt;</code></pre><p>接下来，我们来把这个 DaemonSet 的容器镜像版本到 v2.2.0：</p>
-<pre><code>$ kubectl set image ds/fluentd-elasticsearch fluentd-elasticsearch=k8s.gcr.io/fluentd-elasticsearch:v2.2.0 --record -n=kube-system</code></pre><p>这个 kubectl set image 命令里，第一个 fluentd-elasticsearch 是 DaemonSet 的名字，第二个 fluentd-elasticsearch 是容器的名字。</p>
-<p>这时候，我们可以使用 kubectl rollout status 命令看到这个“滚动更新”的过程，如下所示：</p>
-<pre><code>$ kubectl rollout status ds/fluentd-elasticsearch -n kube-system
-Waiting for daemon set &quot;fluentd-elasticsearch&quot; rollout to finish: 0 out of 2 new pods have been updated...
-Waiting for daemon set &quot;fluentd-elasticsearch&quot; rollout to finish: 0 out of 2 new pods have been updated...
-Waiting for daemon set &quot;fluentd-elasticsearch&quot; rollout to finish: 1 of 2 updated pods are available...
-daemon set &quot;fluentd-elasticsearch&quot; successfully rolled out</code></pre><p>注意，由于这一次我在升级命令后面加上了<code>--record</code> 参数，所以这次升级使用到的指令就会自动出现在 DaemonSet 的 rollout history 里面，如下所示：</p>
-<pre><code>$ kubectl rollout history daemonset fluentd-elasticsearch -n kube-system
-daemonsets &quot;fluentd-elasticsearch&quot;
-REVISION  CHANGE-CAUSE
-1         &lt;none&gt;
-2         kubectl set image ds/fluentd-elasticsearch fluentd-elasticsearch=k8s.gcr.io/fluentd-elasticsearch:v2.2.0 --namespace=kube-system --record=true</code></pre><p>有了版本号，你也就可以像 Deployment 一样，将 DaemonSet 回滚到某个指定的历史版本了。</p>
-<p>而我在前面的文章中讲解 Deployment 对象的时候，曾经提到过，Deployment 管理这些版本，靠的是“一个版本对应一个 ReplicaSet 对象”。可是，DaemonSet 控制器操作的直接就是 Pod，不可能有 ReplicaSet 这样的对象参与其中。那么，它的这些版本又是如何维护的呢？</p>
-<p>所谓，一切皆对象！</p>
-<p>在 Kubernetes 项目中，任何你觉得需要记录下来的状态，都可以被用 API 对象的方式实现。当然，“版本”也不例外。</p>
-<p>Kubernetes v1.7 之后添加了一个 API 对象，名叫ControllerRevision，专门用来记录某种 Controller 对象的版本。比如，你可以通过如下命令查看 fluentd-elasticsearch 对应的 ControllerRevision：</p>
-<pre><code>$ kubectl get controllerrevision -n kube-system -l name=fluentd-elasticsearch
-NAME                               CONTROLLER                             REVISION   AGE
-fluentd-elasticsearch-64dc6799c9   daemonset.apps/fluentd-elasticsearch   2          1h</code></pre><p>而如果你使用 kubectl describe 查看这个 ControllerRevision 对象：</p>
-<pre><code>$ kubectl describe controllerrevision fluentd-elasticsearch-64dc6799c9 -n kube-system
-Name:         fluentd-elasticsearch-64dc6799c9
-Namespace:    kube-system
-Labels:       controller-revision-hash=2087235575
-              name=fluentd-elasticsearch
-Annotations:  deprecated.daemonset.template.generation=2
-              kubernetes.io/change-cause=kubectl set image ds/fluentd-elasticsearch fluentd-elasticsearch=k8s.gcr.io/fluentd-elasticsearch:v2.2.0 --record=true --namespace=kube-system
-API Version:  apps/v1
-Data:
-  Spec:
-    Template:
-      $ Patch:  replace
-      Metadata:
-        Creation Timestamp:  &lt;nil&gt;
-        Labels:
-          Name:  fluentd-elasticsearch
-      Spec:
-        Containers:
-          Image:              k8s.gcr.io/fluentd-elasticsearch:v2.2.0
-          Image Pull Policy:  IfNotPresent
-          Name:               fluentd-elasticsearch
-...
-Revision:                  2
-Events:                    &lt;none&gt;</code></pre><p>就会看到，这个 ControllerRevision 对象，实际上是在 Data 字段保存了该版本对应的完整的 DaemonSet 的 API 对象。并且，在 Annotation 字段保存了创建这个对象所使用的 kubectl 命令。</p>
-<p>接下来，我们可以尝试将这个 DaemonSet 回滚到 Revision=1 时的状态：</p>
-<pre><code>$ kubectl rollout undo daemonset fluentd-elasticsearch --to-revision=1 -n kube-system
-daemonset.extensions/fluentd-elasticsearch rolled back</code></pre><p>这个 kubectl rollout undo 操作，实际上相当于读取到了 Revision=1 的 ControllerRevision 对象保存的 Data 字段。而这个 Data 字段里保存的信息，就是 Revision=1 时这个 DaemonSet 的完整 API 对象。</p>
-<p>所以，现在 DaemonSet Controller 就可以使用这个历史 API 对象，对现有的 DaemonSet 做一次 PATCH 操作（等价于执行一次 kubectl apply -f “旧的 DaemonSet 对象”），从而把这个 DaemonSet“更新”到一个旧版本。</p>
-<p>这也是为什么，在执行完这次回滚完成后，你会发现，DaemonSet 的 Revision 并不会从 Revision=2 退回到 1，而是会增加成 Revision=3。这是因为，一个新的 ControllerRevision 被创建了出来。</p>
-<p><strong>总结</strong><br>在今天这篇文章中，我首先简单介绍了 StatefulSet 的“滚动更新”，然后重点讲解了本专栏的第三个重要编排对象：DaemonSet。</p>
-<p>相比于 Deployment，DaemonSet 只管理 Pod 对象，然后通过 nodeAffinity 和 Toleration 这两个调度器的小功能，保证了每个节点上有且只有一个 Pod。这个控制器的实现原理简单易懂，希望你能够快速掌握。</p>
-<p>与此同时，DaemonSet 使用 ControllerRevision，来保存和管理自己对应的“版本”。这种“面向 API 对象”的设计思路，大大简化了控制器本身的逻辑，也正是 Kubernetes 项目“声明式 API”的优势所在。</p>
-<p>而且，相信聪明的你此时已经想到了，StatefulSet 也是直接控制 Pod 对象的，那么它是不是也在使用 ControllerRevision 进行版本管理呢？</p>
-<p>没错。在 Kubernetes 项目里，ControllerRevision 其实是一个通用的版本管理对象。这样，Kubernetes 项目就巧妙地避免了每种控制器都要维护一套冗余的代码和逻辑的问题。</p>
-<p><strong>思考题</strong><br>我在文中提到，在 Kubernetes v1.11 之前，DaemonSet 所管理的 Pod 的调度过程，实际上都是由 DaemonSet Controller 自己而不是由调度器完成的。你能说出这其中有哪些原因吗？</p>
-</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/22/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/24/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">290</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/22/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/24/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">291</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
   var isXML = true;
   var search_path = 'search.json';
 

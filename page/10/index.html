@@ -28,7 +28,16 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/perf/">perf</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">31</span></span></div></header><div class="post-body"><div class="post-excerpt">
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Hexo</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/ntpdate_synchronize_os_time/">ntpdate 同步各个系统时间</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">66</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="ntpdate"   >
+          <a href="#ntpdate" class="heading-link"><i class="fas fa-link"></i></a>ntpdate</h2>
+      <p>Centos下载ntpdate</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install ntp ntpdate -y</span></span><br></pre></td></tr></table></div></figure>
+
+<p>集群操作，同步各个系统时间, 与某一台服务器时间保持一致.</p>
+<figure class="highlight basic"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">12</span> * * * */<span class="keyword">usr</span>/sbin/ntpdate <span class="number">192.168.0.1</span></span><br></pre></td></tr></table></div></figure>
+<p>每天12点强制将系统时间设置为192.168.0.1服务器时间</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/perf/">perf</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">31</span></span></div></header><div class="post-body"><div class="post-excerpt">
         <h2 id="perf-命令"   >
           <a href="#perf-命令" class="heading-link"><i class="fas fa-link"></i></a>perf 命令</h2>
       <p>/root/spdk/examples/nvme/perf/perf -q 64 -s 1024 -w write -t 10 -c 0x01 -o 4096 -D -LL -r ‘trtype:PCIe traddr:0000:5e:00.0’ </p>
@@ -413,153 +422,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></he
 <p>ctrl+b, 单独q键， 显示panel号</p>
 <p>ctrl+b, 单独s键， 选择并切换会话；在同时开启了多个会话时使用</p>
 <p>ctrl+b, 单独d键，detached tmux，tmux仍在后台运行</p>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/03/13/linux/vim/">vim</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.4k</span></span></div></header><div class="post-body"><div class="post-excerpt">
-        <h2 id="对比两个文件不同"   >
-          <a href="#对比两个文件不同" class="heading-link"><i class="fas fa-link"></i></a>对比两个文件不同</h2>
-      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vimdiff file1 file2</span></span><br></pre></td></tr></table></div></figure>
-
-
-        <h2 id="Linux下复制粘贴快捷键"   >
-          <a href="#Linux下复制粘贴快捷键" class="heading-link"><i class="fas fa-link"></i></a>Linux下复制粘贴快捷键</h2>
-      <ol>
-<li><p>在终端下：</p>
-<figure class="highlight dos"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">复制命令：Ctrl + <span class="built_in">Shift</span> + C  组合键.</span><br><span class="line">粘贴命令：Ctrl + <span class="built_in">Shift</span> + V  组合键.</span><br></pre></td></tr></table></div></figure>
-</li>
-<li><p>在控制台下：</p>
-<figure class="highlight mipsasm"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">复制命令：Ctrl + <span class="keyword">Insert </span> 组合键　　或　　用鼠标选中即是复制。</span><br><span class="line">粘贴命令：<span class="keyword">Shift </span>+ <span class="keyword">Insert </span> 组合键　　或　　单击鼠标滚轮即为粘贴。</span><br></pre></td></tr></table></div></figure>
-<p>================================================================================</p>
-</li>
-</ol>
-
-        <h2 id="快速查找单词："   >
-          <a href="#快速查找单词：" class="heading-link"><i class="fas fa-link"></i></a>快速查找单词：</h2>
-      <p>1， 最快的方式是让光标停留在想要查找的单词的任意一个字母上面， 然后输入Shift + *  ，即可快速选中该单词，并且可以通过 n  或  N 进行下一个或上一个的匹配。</p>
-<p>2，在一个vim文件中选中单词，另vim文件中查找改单词:<br>  让光标停留在vim文件中单词的第一个字母上， 然后直接敲击键盘yw两个按键拷贝该单词<br>  另一个vim或本文件输入 / (Ctrl + R) 0 （即 /”0），回车， 就查找到了第一个匹配的单词， 并且可以  通过n或N进行下一个或上一个的匹配。</p>
-<p>================================================================================</p>
-
-        <h2 id="多行注释和取消注释"   >
-          <a href="#多行注释和取消注释" class="heading-link"><i class="fas fa-link"></i></a>多行注释和取消注释</h2>
-      <p>多行注释：</p>
-<ol>
-<li><p>进入命令行模式，按ctrl + v进入 visual block模式，然后按j或↓, k或↑选中多行，把需要注释的行标记起来</p>
-</li>
-<li><p>按大写字母I，再插入注释符，例如//</p>
-</li>
-<li><p>按（两次）esc键就会全部注释了</p>
-</li>
-</ol>
-<p>取消多行注释：</p>
-<ol>
-<li><p>进入命令行模式，按ctrl + v进入 visual block模式，按字母l(小写”L”)或←，→键横向选中列的个数，例如 // 需要选中2列</p>
-</li>
-<li><p>按字母j，或者k选中注释符号</p>
-</li>
-<li><p>按d键就可全部取消注释</p>
-</li>
-</ol>
-
-        <h2 id="全选，全部复制，全部删除"   >
-          <a href="#全选，全部复制，全部删除" class="heading-link"><i class="fas fa-link"></i></a>全选，全部复制，全部删除</h2>
-      <p>全选（高亮显示）：按esc后，然后ggvG或者ggVG</p>
-<p>全部复制：按esc后，然后ggyG</p>
-<p>全部删除：按esc后，然后dG</p>
-<p>解析：</p>
-<p>gg：是让光标移到首行，在vim才有效，vi中无效 </p>
-<p>v ： 是进入Visual(可视）模式 </p>
-<p>G ：光标移到最后一行 </p>
-<p>选中内容以后就可以其他的操作了，比如：<br>d  删除选中内容<br>y  复制选中内容到0号寄存器<br>“+y  复制选中内容到＋寄存器，也就是系统的剪贴板，供其他程序用 </p>
-
-        <h2 id="复制剪切n行"   >
-          <a href="#复制剪切n行" class="heading-link"><i class="fas fa-link"></i></a>复制剪切n行</h2>
-      <p>剪切&gt;:<br>快捷键方式：<br>dd：剪切光标所处当前行<br>n + dd：剪切光标所在行及以下共 n 行<br>按 p 粘贴在光标所在行<br>命令行方式：<br>例如剪切1到10行，并粘贴在12行处：<br>1，10 m 12</p>
-<p>复制&gt;：<br>快捷键方式：<br>yy：复制光标所处当前行<br>n + yy：复制光标所在行及以下共 n 行<br>按 p 粘贴在光标所在行<br>命令行方式：<br>例如复制1到10行，并粘贴在12行处：<br>1，10 co 12</p>
-<p>删除&gt;:<br>快捷键方式：<br>dd：删除光标所处当前行<br>n + dd：删除光标所在行及以下共 n 行<br>命令行方式：<br>例如删除1到10行：<br>1，10 de</p>
-<p>进入命令行:&gt;<br>“shift + :” ：进入命令行模式<br>“set nu”或者”set number” ：显示行号, “set nonu”或者”set nonumber”取消显示行号<br>“etc + etc” ：退出命令行模式<br>实际情况下，按 p 粘贴时有的情况是粘贴在光标所在的下一行，自己操作下便可知晓。</p>
-
-        <h2 id="撤销上一次操作"   >
-          <a href="#撤销上一次操作" class="heading-link"><i class="fas fa-link"></i></a>撤销上一次操作:</h2>
-      <p>u   撤销上一步的操作<br>Ctrl+r 恢复上一步被撤销的操作<br>注意：<br>    如果你输入“u”两次，你的文本恢复原样，那应该是你的Vim被配置在Vi兼容模式了。</p>
-
-        <h2 id="实现代码折叠功能"   >
-          <a href="#实现代码折叠功能" class="heading-link"><i class="fas fa-link"></i></a>实现代码折叠功能</h2>
-      <p>解决方法：直接使用vim自带的快捷键和命令，便可以实现功能强大的折叠</p>
-<p>小试折叠：<br>1  :set fdm=marker  在vim中执行该命令<br>2  5G  将光标跳转到第5行<br>3  zf10G  折叠第5行到第10行的代码，vim会在折叠的开始和结束自动添加三个连续的花括号作为标记<br>4  zR  打开所有折叠<br>5  zM  关闭所有折叠<br>6  zE  删除所有的折叠标签<br>7  退出vim窗口再次打开，执行2-6步。依然可以折叠，但是没有标记了。重新打开后折叠信息会丢失。</p>
-<p>折叠方法：<br>1  manual  （不常用）默认折叠方法，如上面第7步即为该方法，关闭vim折叠会丢失。如果想保持折叠信息，可运行 :mkview 命令，重启后用 :loadview 命令回复。该命令生成的缓存文件位于 ~/.vim/view 文件夹中。移动或重命名文件，折叠信息依然会丢失。<br>2  indent  （常用）缩进折叠方法，相同的缩进中代码会被折叠。<br>3  syntax  （不常用）语法高亮折叠，在c/c++中会折叠花括号部分，其它格式代码中有的不能自动折叠。<br>4  marker  （常用）标记折叠方法，如上面1-6所使用的方法。关闭vim折叠信息不会丢失，而且易用控制和标注。<br>5  还有两种 diff 和 expr，目前我还没有用过。</p>
-<p>具体介绍：<br>1  以 marker 为例，可以在vim中运行 :set fdm=marker 来设置折叠方法设置。折叠方法的时候，= 两边不能有空格。也可以将该命令添加到~/.vimrc中，实现vim自动加载。<br>2  在使用小试折叠中 2 3 步折叠的时候，vim会自动添加三个连续的花括号作为标记，可在开始的花括号前添加介绍，花括号后添加级别号，级别号不能为0。</p>
-<p>3  级别的定义稍显复杂。在一般编码中，通常把不需要修改的代码添加标记折叠。没有必要在给折叠分等级。如果想快速折叠就切换为indent折叠方面，适用于任何有缩进的代码。</p>
-<p>折叠命令：<br>1  zf  创建折叠，可以按照前面的方式进行折叠，也可以选中代码后进行折叠。<br>2  zF  在当前行创建折叠。当一开始就计划要折叠所写代码的时候，可以用该命令创建一对折叠符号，然后再往里面填写内容。<br>3  :5,10fo  在vim中运行该命令会在折叠 5-10 行中的代码，可以用其它数字代替之。<br>4  zd  删除光标下的折叠。<br>5  zD  删除光标下的折叠，以及嵌套的折叠。<br>6  zE  删除窗口内的所有折叠。仅当 manual 和 marker 折叠方法下有效。</p>
-<p>打开和关闭折叠：<br>1  zo  打开光标下的折叠。<br>2  zO  打开光标下的折叠，以及嵌套的折叠。<br>3  zc  关闭光标下的折叠。<br>4  zC  关闭光标下的折叠，以及嵌套的折叠。<br>5  za  当光标在关闭折叠上时，打开之。在打开折叠上时，关闭之。<br>6  zA  和za类似，不过对当前折叠和其嵌套折叠都有效。<br>7  zv  打开当前光标所在折叠，仅打开足够的折叠使光标所在的行不被折叠。<br>8  zr和zm  一层一层打开折叠和一层一层关闭折叠，这两个命令会递减和递增一个叫foldlevel的变量。如果你发现zm和zr不灵了，那有可能是你连续按的zr或zm次数多了，只要多按几次让foldlevel回到正常状态即可。执行以下zR和zM也可直接让foldlevel回到正常状态。<br>9  zR和zM  打开所有折叠，设置foldlevel为最高级别。关闭所有折叠，设置foldlevel为0。</p>
-<p>在折叠间移动：<br>1  [z  到当前打开折叠的开始。如果已在开始处，移到包含这个折叠的折叠开始处。<br>2  ]z  到当前打开折叠的结束。如果已在结束处，移到包含这个折叠的折叠结束处。<br>3  zj  把光标移动到下一个折叠的开始处。<br>4  zk  把光标移动到前一个折叠的结束处。</p>
-<p>参考：<br>在vim中运行 :h Folding 命令，查看折叠的帮助文档。</p>
-<p>turbostat 由 kernel-tools 数据包提供。<br>是对 Intel® 64 位处理器中处理器的拓扑、频率、空闲的电源状态统计、温度和用电量的报告。</p>
-
-        <h2 id="vim缩进参数解析"   >
-          <a href="#vim缩进参数解析" class="heading-link"><i class="fas fa-link"></i></a>vim缩进参数解析</h2>
-      <p>缩进用 tab 制表符还是空格，个人爱好问题。但是在大多项目中，习惯使用空格。关于缩进，vim中可以通过如下四个参数进行配置</p>
-<p>set tabstop=4<br>  &lt;—&gt;  set ts=4<br>set softtabstop=4</p>
-<p>set shiftwidth=4</p>
-<p>set noexpandtab / expandtab<br>解析： </p>
-<p>tabstop<br>表示按一个tab之后，显示出来的相当于几个空格，默认的是8个。 </p>
-<p>softtabstop<br>表示在编辑模式的时候按退格键的时候退回缩进的长度。 </p>
-<p>shiftwidth<br>表示每一级缩进的长度，一般设置成跟 softtabstop 一样 </p>
-<p>expandtab与noexpandtab </p>
-<p>当设置成 expandtab 时，缩进用空格来表示，noexpandtab 则是用制表符表示一个缩进。个人习惯使用 ｀set expandtab｀ </p>
-<p>＃标志tab与空格 </p>
-<p>在vim中，默认情况下，没法区分空格和缩进，所以我们需要配置，使其能够区分。</p>
-
-        <h2 id="vim内容左对齐"   >
-          <a href="#vim内容左对齐" class="heading-link"><i class="fas fa-link"></i></a>vim内容左对齐</h2>
-      <p>:{range}left [margin]<br>“:3,6 left” 命令后，3<del>6行代码就左对齐，距离边缘0<br>“:3,6 left 4” 命令后，3</del>6行代码就左对齐，距离边缘4<br>上面的命令会将代码直接都 “左对齐”了，但代码块并不都是左对齐的啊，所以，还是在命令行模式下，使用 ctrl+v 去选中代码块，按下=号，从而让代码块对齐比较好用。</p>
-<p>方法一:</p>
-<p>命令模式下：=:1,$</p>
-<p>方法二：<br>gg（把关标定位到最上面），V（进入VISUAL模式），shift+g（选中整篇文本），然后＝。</p>
-<p>方法三：<br>gg=G</p>
-
-        <h2 id="查看某个函数定义"   >
-          <a href="#查看某个函数定义" class="heading-link"><i class="fas fa-link"></i></a>查看某个函数定义</h2>
-      <p>shift + k</p>
-
-        <h2 id="分屏"   >
-          <a href="#分屏" class="heading-link"><i class="fas fa-link"></i></a>分屏</h2>
-      <p>水平分屏：<br>：sp        水平分屏打开当前文件<br>：sp filename    水平分屏打开另一个文件<br>vim -o exe18.c Makefile hello.c        默认打开3个文件并将它们水平分屏<br>vim -o3 exe18.c Makefile hello.c    打开3个文件并将它们水平分屏<br>vim -on … (n可以省略，表示分屏的个数)</p>
-<p>vim -o *.c 垂直打开所有.c文件</p>
-<p>垂直分屏<br>：vsp        垂直分屏打开当前文件<br>：vsp filename    垂直分屏打开另一个文件<br>vim -O exe18.c Makefile hello.c        默认打开3个文件并将它们垂直分屏<br>vim -O3 exe18.c Makefile hello.c    打开3个文件并将它们垂直分屏<br>     ↓<br>   （大写o）</p>
-<p>切换屏幕<br>ctrl+两次w，或者ctrl + ←||→ 切换屏幕</p>
-<p>退出屏幕<br>:q     退出当前光标在的屏幕<br>：qall    退出所有屏幕</p>
-<p>保存<br>：w    保存当前屏幕<br>：wall    保存所有打开的屏幕<br>：wqall    保存退出所有打开的屏幕</p>
-<p>为了让鼠标可以在几个屏幕间自由切换。<br>按：”Esc”键 + “：”，输入：set mouse=a 。然后，回车(Enter)，这样鼠标就可以在多屏幕之间自由移动了，但是不能复制vim内容<br>：set mouse=v，即可选中复制内容到粘贴板</p>
-
-        <h2 id="显示所打开的文件名"   >
-          <a href="#显示所打开的文件名" class="heading-link"><i class="fas fa-link"></i></a>显示所打开的文件名</h2>
-      <p>1、:set laststatus=2<br>:file或:f</p>
-<p>2、CTRL+g</p>
-<p>3、在/etc/vim/vimrc中添加<br>set statusline=%F\ [%{&amp;fenc}\ %{&amp;ff}\ L%l/%L\ C%c]\ %=%{strftime(‘%Y-%m-%d\ %H:%M’)}<br>set laststatus=2</p>
-
-        <h2 id="补全代码"   >
-          <a href="#补全代码" class="heading-link"><i class="fas fa-link"></i></a>补全代码</h2>
-      <p>vim里面有个快捷键可以用来补全代码 C-n  （Ctrl+n）<br>  需要先有头文件，如vim中输入str后，按ctrl+n不会显示strlen()函数，只有在vim中添加<br>  #include&lt;string.h&gt;头文件后才会智能提示strlen()函数</p>
-<p>”Ctrl + }“ 可以跳转到函数或变量的定义处，“Ctrl + o”可以返回上一个跳转页面。</p>
-
-        <h2 id="比较两个文件file1和file2"   >
-          <a href="#比较两个文件file1和file2" class="heading-link"><i class="fas fa-link"></i></a>比较两个文件file1和file2</h2>
-      <p>vim file1 file2 -O<br>    -o(小写)水平打开两个文件<br>    -O(大写)垂直打开两个文件</p>
-<p>4294967295000 / (1000 * 1000) = 4294967.295</p>
-<p>垂直分屏<br>：vsp filename    垂直分屏打开另一个文件<br>为了让鼠标可以在几个屏幕间自由切换。<br>按：”Esc”键 + “：”，输入：set mouse=a 。然后，回车(Enter)，这样鼠标就可以在多屏幕之间自由移动了。</p>
-<p>================================================================================<br>The ycmd server SHUT DOWN (restart with ‘:YcmRestartServer’).<br>Unexpect …ype ‘:YcmToggleLogs ycmd_*.log’ to check the logs<br>:YcmToggleLogs ycmd_37783_stderr_zcxys8hw.log<br>    ImprotError: Python version mismatch:module was compiled for Python 3.6,<br>    but the interpreter version is incompatible:3.5.2(default), Nov 12 2018, 13:43:14<br>:YcmToggleLogs ycmd_44993_stderr_uid3uor7.log<br>:YcmToggleLogs ycmd_49853_stderr_yckx0mks.log</p>
-<p>================================================================================<br>Vim如何跳转到光标的上次位置<br>Ctrl + O<br>Ctrl + I<br>装了Ctag的插件可以跳转 Ctrl+】。查看函数调用。<br>================================================================================</p>
-<p>vim复制代码包含注释格式如”//“会乱掉<br>    乱码问题<br>    一般来说只需要正确设置vim的编码识别序列就很少会遇到乱码问题：<br>    set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,gb18030,latin1</p>
-<pre><code>1. 每次复制代码时，如果代码里有 // 这样的注释就容易让格式乱掉，通过下面的设置就可以避免这种情况。  
-2.   
-3. 粘贴代码时取消自动缩进  
-4. VIM在粘贴代码时会自动缩进，把代码搞得一团糟糕，甚至可能因为某行的一个注释造成后面的代码全部被注释掉，我知道有同学这个时候会用vi去打开文件再粘贴上去（鄙人以前就是这样），其实需要先设置一下  
-5. set paste  
-6. 然后再进入插入模式粘贴，代码就不会被自动缩进。可是敲代码的时候需要自动缩进，又得改回来:  
-7. set nopaste  
-8. 最方便的方法就是在.vimrc中加一句：  
-9. set pastetoggle=&lt;F9&gt;  
-10. 以后在插入模式下，只要按F9键就可以切换自动缩进。</code></pre><p>From <span class="exturl"><a class="exturl__link"   href="https://www.iteye.com/blog/haoningabc-1907479"  target="_blank" rel="noopener">https://www.iteye.com/blog/haoningabc-1907479</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> </p>
-<p>================================================================================</p>
-</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/9/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/11/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">290</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><a class="extend prev" rel="prev" href="/page/9/"><i class="fas fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/11/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">291</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
   var isXML = true;
   var search_path = 'search.json';
 
