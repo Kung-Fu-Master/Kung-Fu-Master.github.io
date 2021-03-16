@@ -1,529 +1,292 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="referenc link       https:&#x2F;&#x2F;github.com&#x2F;minio&#x2F;kes&#x2F;wikihttps:&#x2F;&#x2F;github.com&#x2F;minio&#x2F;kes&#x2F;wiki&#x2F;Hashicorp-Vault-Keystorehttps:&#x2F;&#x2F;github.com&#x2F;minio&#x2F;kes&#x2F;wiki&#x2F;MinIO-Object-Storage#minio-configurationhttp">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Deploy MinIO with KMS(vault)">
-<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="referenc link       https:&#x2F;&#x2F;github.com&#x2F;minio&#x2F;kes&#x2F;wikihttps:&#x2F;&#x2F;github.com&#x2F;minio&#x2F;kes&#x2F;wiki&#x2F;Hashicorp-Vault-Keystorehttps:&#x2F;&#x2F;github.com&#x2F;minio&#x2F;kes&#x2F;wiki&#x2F;MinIO-Object-Storage#minio-configurationhttp">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-15T11:39:44.945Z">
-<meta property="article:modified_time" content="2021-03-16T10:57:37.653Z">
-<meta property="article:author" content="Kung-Fu-Master">
-<meta property="article:tag" content="storage">
-<meta name="twitter:card" content="summary"><title>Deploy MinIO with KMS(vault) | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: true,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
+<!-- build time:Wed Mar 17 2021 02:52:23 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="https://kung-fu-master.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="https://kung-fu-master.github.io/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="https://kung-fu-master.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="storage"><link rel="canonical" href="https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/"><title>Deploy MinIO with KMS(vault) - minio - storage | Kung Fu Master = Hexo</title><meta name="generator" content="Hexo 4.2.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">Deploy MinIO with KMS(vault)</h1><div class="meta"><span class="item" title="创建时间：2021-03-15 19:39:44"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-03-15T19:39:44+08:00">2021-03-15</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>12k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>11 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Kung Fu Master</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclj9410cj20zk0m8h12.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciszlczyj20zk0m816d.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipexw3o58j20zk0m8e81.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicitcxhpij20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/storage/" itemprop="item" rel="index" title="分类于 storage"><span itemprop="name">storage</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/storage/minio/" itemprop="item" rel="index" title="分类于 minio"><span itemprop="name">minio</span></a><meta itemprop="position" content="2"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Kung-Fu-Master"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><h2 id="referenc-link"><a class="anchor" href="#referenc-link">#</a> referenc link</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL2tlcy93aWtp">https://github.com/minio/kes/wiki</span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL2tlcy93aWtpL0hhc2hpY29ycC1WYXVsdC1LZXlzdG9yZQ==">https://github.com/minio/kes/wiki/Hashicorp-Vault-Keystore</span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL2tlcy93aWtpL01pbklPLU9iamVjdC1TdG9yYWdlI21pbmlvLWNvbmZpZ3VyYXRpb24=">https://github.com/minio/kes/wiki/MinIO-Object-Storage#minio-configuration</span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL21pbmlvL2Jsb2IvbWFzdGVyL2RvY3Mva21zL1JFQURNRS5tZA==">https://github.com/minio/minio/blob/master/docs/kms/README.md</span></p><p><a id="more"></a></p><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pbi5pby9kb2NzL21pbmlvLXNlY3VyaXR5LW92ZXJ2aWV3Lmh0bWw=">https://docs.min.io/docs/minio-security-overview.html</span><br><span class="exturl" data-url="aHR0cDovL2RvY3MubWluaW8ub3JnLmNuL2RvY3MvbWFzdGVyL21pbmlvLWttcy1xdWlja3N0YXJ0LWd1aWRl">http://docs.minio.org.cn/docs/master/minio-kms-quickstart-guide</span><br><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pbi5pby9kb2NzL21pbmlvLWNsaWVudC1xdWlja3N0YXJ0LWd1aWRl">https://docs.min.io/docs/minio-client-quickstart-guide</span></p><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BldGVyd2FuZ2hhby9hcnRpY2xlL2RldGFpbHMvODMxODE5MzI=">https://blog.csdn.net/peterwanghao/article/details/83181932</span></p><p>valut:<br><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5oYXNoaWNvcnAuY29tL3R1dG9yaWFscy92YXVsdC9oYS13aXRoLWNvbnN1bD9pbj12YXVsdC9vcGVyYXRpb25z">https://learn.hashicorp.com/tutorials/vault/ha-with-consul?in=vault/operations</span></p><h2 id="概念"><a class="anchor" href="#概念">#</a> 概念</h2><p>MinIO 使用密钥管理系统（KMS）支持 SSE-S3。如果客户端请求 SSE-S3，或 启用了自动加密，则 MinIO 服务器会使用唯一的对象密钥对每个对象进行加密，该对象密钥受 KMS 管理的主密钥保护。</p><p>KMS 将 MinIO 作为面向应用程序的存储系统与安全密钥存储区分开，并且 可以由专门的安全团队进行管理。MinIO 通过我们的 KES project 支持常用的 KMS 实现，例如 Hashicorp Vault。 通过 KES，可以利用存储基础架构（MinIO 群集）水平扩展 KMS。 通常，MinIO-KMS 基础结构如下所示：</p><pre><code>     ┌─────────┐         ┌────────────┐         ┌─────────┐  
+     │  MinIO  ├─────────┤ KES Server ├─────────┤   KMS   │ 
+     └─────────┘         └────────────┘         └─────────┘  
+</code></pre><p>当您将存储基础架构扩展到多个 MinIO 群集时，您的架构应如下所示：</p><pre><code>    ┌────────────┐
+    │ ┌──────────┴─┬─────╮          ┌────────────┐
+    └─┤ ┌──────────┴─┬───┴──────────┤ ┌──────────┴─┬─────────────────╮
+      └─┤ ┌──────────┴─┬─────┬──────┴─┤ KES Server ├─────────────────┤
+        └─┤   MinIO    ├─────╯        └────────────┘            ┌────┴────┐
+          └────────────┘                                        │   KMS   │
+                                                                └─────────┘
+</code></pre><p><strong><code>请注意</code> </strong>，所有 MinIO 群集均仅具有 <strong><code>其自己的</code> </strong>KES 实例的连接，而不能直接访问 Vault（作为一种可能的 KMS 实现）。 每个 KES 实例将处理 “其” MinIO 群集发出的所有加密 / 解密请求，从而使中央 KMS 实现不必处理 大量流量。相反，每个 KES 实例都将使用中央 KMS 实现作为安全密钥存储，并从中获取所需的主密钥。</p><p>该指南显示了如何使用 Hashicorp Vault 作为 KMS 实施来设置 MinIO-KMS 部署。 因此，它显示了如何设置和配置：</p><ul><li>Vault 服务器作为中央密钥库。</li><li>一个 KES 服务器实例，作为 MinIO 和保险柜之间的中间件。</li><li>MinIO 实例本身。</li></ul><p><strong><code>请注意，</code> </strong>为简便起见，本指南使用自签名证书。在生产部署中，应使用 由 “公共”（例如，让我们加密）或组织内部的 CA 颁发的 X.509 证书。</p><p>本指南说明如何在同一台计算机上设置三台不同的服务器：</p><ul><li>Vault 服务器为 <span class="exturl" data-url="aHR0cHM6Ly8xMjcuMC4wLjE6ODIwMA==">https://127.0.0.1:8200</span></li><li>KES 服务器为 <span class="exturl" data-url="aHR0cHM6Ly8xMjcuMC4wLjE6NzM3Mw==">https://127.0.0.1:7373</span></li><li>MinIO 在 K8s 上部署后 9000 映射到主机端口位 30007, 则服务器为 <span class="exturl" data-url="aHR0cHM6Ly8xMjcuMC4wLjE6MzAwMDc=">https://127.0.0.1:30007</span></li></ul><h2 id="先决条件"><a class="anchor" href="#先决条件">#</a> 先决条件</h2><p>安装 MinIO，KES 和 Vault。对于 MinIO，请参阅 MinIO 快速入门指南。然后安装 KES 并下载 适用于您的操作系统和平台的最新 Vault 二进制文件.</p><h3 id="vault"><a class="anchor" href="#vault">#</a> * Vault:</h3><pre><code>wget https://releases.hashicorp.com/vault/1.7.0-rc1/vault_1.7.0-rc1_linux_amd64.zip
+unzip vault_1.7.0-rc1_linux_amd64.zip
+mv vault /usr/local/bin/ # 如果cp过去的话, 下面启动vault server时候自动创建的vault文件夹会与此已存在的vault二进制文件冲突, 因此直接move过去.
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Deploy MinIO with KMS(vault)</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-15</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-16</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.6k</span></span></div></header><div class="post-body">
-        <h2 id="referenc-link"   >
-          <a href="#referenc-link" class="heading-link"><i class="fas fa-link"></i></a>referenc link</h2>
-      <p><span class="exturl"><a class="exturl__link"   href="https://github.com/minio/kes/wiki"  target="_blank" rel="noopener">https://github.com/minio/kes/wiki</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://github.com/minio/kes/wiki/Hashicorp-Vault-Keystore"  target="_blank" rel="noopener">https://github.com/minio/kes/wiki/Hashicorp-Vault-Keystore</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://github.com/minio/kes/wiki/MinIO-Object-Storage#minio-configuration"  target="_blank" rel="noopener">https://github.com/minio/kes/wiki/MinIO-Object-Storage#minio-configuration</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://github.com/minio/minio/blob/master/docs/kms/README.md"  target="_blank" rel="noopener">https://github.com/minio/minio/blob/master/docs/kms/README.md</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<a id="more"></a>
+# vault 可以在Linux系统上使用 mlock syscall 来防止 OS 将内存中的数据写入磁盘（交换）
+sudo setcap cap_ipc_lock=+ep $(readlink -f $(which vault))
+</code></pre><h3 id="kes"><a class="anchor" href="#kes">#</a> * KES:</h3><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL2tlcyNiaW5hcnktcmVsZWFzZXM=">https://github.com/minio/kes#binary-releases</span></p><pre><code>wget https://github.com/minio/kes/releases/latest/download/kes-linux-amd64
+mv kes-linux-amd64 kes
+chmod +x kes
+cp kes /usr/local/bin/
+kes -h
 
-<p><span class="exturl"><a class="exturl__link"   href="https://docs.min.io/docs/minio-security-overview.html"  target="_blank" rel="noopener">https://docs.min.io/docs/minio-security-overview.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="http://docs.minio.org.cn/docs/master/minio-kms-quickstart-guide"  target="_blank" rel="noopener">http://docs.minio.org.cn/docs/master/minio-kms-quickstart-guide</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://docs.min.io/docs/minio-client-quickstart-guide"  target="_blank" rel="noopener">https://docs.min.io/docs/minio-client-quickstart-guide</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<p><span class="exturl"><a class="exturl__link"   href="https://blog.csdn.net/peterwanghao/article/details/83181932"  target="_blank" rel="noopener">https://blog.csdn.net/peterwanghao/article/details/83181932</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<p>valut:<br><span class="exturl"><a class="exturl__link"   href="https://learn.hashicorp.com/tutorials/vault/ha-with-consul?in=vault/operations"  target="_blank" rel="noopener">https://learn.hashicorp.com/tutorials/vault/ha-with-consul?in=vault/operations</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+# KES 可以在Linux系统上使用 mlock syscall 来防止 OS 将内存中的数据写入磁盘（交换）
+sudo setcap cap_ipc_lock=+ep $(readlink -f $(which kes))
+</code></pre><h3 id="minio"><a class="anchor" href="#minio">#</a> * MinIO：</h3><pre><code>wget https://dl.min.io/server/minio/release/linux-amd64/minio
+chmod +x minio
+cp minio /usr/local/bin/
+</code></pre><h3 id="mc"><a class="anchor" href="#mc">#</a> * mc:</h3><pre><code>wget https://dl.min.io/client/mc/release/linux-amd64/mc
+chmod +x mc
+./mc --help
+</code></pre><h2 id="机器配置"><a class="anchor" href="#机器配置">#</a> 机器配置</h2><table><thead><tr><th style="text-align:left">IP</th><th style="text-align:left">机器名</th><th style="text-align:left">用途</th></tr></thead><tbody><tr><td style="text-align:left">10.239.140.73</td><td style="text-align:left">master</td><td style="text-align:left">K8S 集群节点，master (去除污点), 部署 KMS, KES 到本机，MinIO 部署到 K8S 集群</td></tr><tr><td style="text-align:left">10.239.131.157</td><td style="text-align:left">laboratory</td><td style="text-align:left">K8S 集群节点，master (去除污点)</td></tr></tbody></table><p>openssl 版本：</p><pre><code>$ openssl version
+OpenSSL 1.0.2k-fips  26 Jan 2017
+built on: reproducible build, date unspecified
+platform: linux-x86_64
+options:  bn(64,64) md2(int) rc4(16x,int) des(idx,cisc,16,int) idea(int) blowfish(idx)
+compiler: gcc -I. -I.. -I../include  -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -DKRB5_MIT -m64 -DL_ENDIAN -Wall -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches   -m64 -mtune=generic -Wa,--noexecstack -DPURIFY -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DRC4_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM -DECP_NISTZ256_ASM
+OPENSSLDIR: &quot;/etc/pki/tls&quot;
+engines:  rdrand dynamic
+</code></pre><h2 id="kmsvault"><a class="anchor" href="#kmsvault">#</a> KMS(Vault)</h2><h3 id="为保险柜生成tls证书"><a class="anchor" href="#为保险柜生成tls证书">#</a> 为保险柜生成 TLS 证书</h3><p>vault-crt.conf</p><pre><code>[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
 
-        <h2 id="概念"   >
-          <a href="#概念" class="heading-link"><i class="fas fa-link"></i></a>概念</h2>
-      <p>MinIO使用密钥管理系统（KMS）支持SSE-S3。如果客户端请求SSE-S3，或 启用了自动加密，则MinIO服务器会使用唯一的对象密钥对每个对象进行加密，该对象密钥受 KMS管理的主密钥保护。</p>
-<p>KMS将MinIO作为面向应用程序的存储系统与安全密钥存储区分开，并且 可以由专门的安全团队进行管理。MinIO 通过我们的KES project支持常用的KMS实现，例如 Hashicorp Vault。 通过KES，可以利用存储基础架构（MinIO群集）水平扩展KMS。 通常，MinIO-KMS基础结构如下所示：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─────────┐         ┌────────────┐         ┌─────────┐  </span><br><span class="line">│  MinIO  ├─────────┤ KES<span class="built_in"> Server </span>├─────────┤   KMS   │ </span><br><span class="line">└─────────┘         └────────────┘         └─────────┘</span><br></pre></td></tr></table></div></figure>
+[req_distinguished_name]
+C = US
+ST = state
+L = location
+O = organization
+CN = localhost
 
-<p>当您将存储基础架构扩展到多个MinIO群集时，您的架构应如下所示：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌────────────┐</span><br><span class="line">│ ┌──────────┴─┬─────╮          ┌────────────┐</span><br><span class="line">└─┤ ┌──────────┴─┬───┴──────────┤ ┌──────────┴─┬─────────────────╮</span><br><span class="line">  └─┤ ┌──────────┴─┬─────┬──────┴─┤ KES<span class="built_in"> Server </span>├─────────────────┤</span><br><span class="line">    └─┤   MinIO    ├─────╯        └────────────┘            ┌────┴────┐</span><br><span class="line">      └────────────┘                                        │   KMS   │</span><br><span class="line">                                                            └─────────┘</span><br></pre></td></tr></table></div></figure>
+[v3_req]
+subjectAltName = @alt_names
 
-<p><strong><code>请注意</code></strong>, 所有MinIO群集均仅具有 <strong><code>其自己的</code></strong> KES实例的连接，而不能直接访问Vault（作为一种可能的KMS实现）。 每个KES实例将处理“其” MinIO群集发出的所有加密/解密请求，从而使中央KMS实现不必处理 大量流量。相反，每个KES实例都将使用中央KMS实现作为安全密钥存储，并从中获取所需的主密钥。</p>
-<p>该指南显示了如何使用Hashicorp Vault作为KMS实施来设置MinIO-KMS部署。 因此，它显示了如何设置和配置：</p>
-<ul>
-<li>Vault服务器作为中央密钥库。</li>
-<li>一个KES服务器实例，作为MinIO和保险柜之间的中间件。</li>
-<li>MinIO实例本身。</li>
-</ul>
-<p><strong><code>请注意，</code></strong> 为简便起见，本指南使用自签名证书。在生产部署中，应使用 由“公共”（例如，让我们加密）或组织内部的CA颁发的X.509证书。</p>
-<p>本指南说明如何在同一台计算机上设置三台不同的服务器：</p>
-<ul>
-<li>Vault服务器为 <span class="exturl"><a class="exturl__link"   href="https://127.0.0.1:8200"  target="_blank" rel="noopener">https://127.0.0.1:8200</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li>KES服务器为 <span class="exturl"><a class="exturl__link"   href="https://127.0.0.1:7373"  target="_blank" rel="noopener">https://127.0.0.1:7373</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li>MinIO在K8s上部署后9000映射到主机端口位30007, 则服务器为 <span class="exturl"><a class="exturl__link"   href="https://127.0.0.1:30007"  target="_blank" rel="noopener">https://127.0.0.1:30007</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-</ul>
+[alt_names]
+[alt_names]
+IP.1 = 127.0.0.1
+IP.2 = 10.239.140.73
+DNS.1 = localhost
+DNS.2 = master
+</code></pre><p>生成证书</p><pre><code># 使用ECDSA生成密钥
+openssl ecparam -genkey -name prime256v1 | openssl ec -out vault-tls.key
+openssl req -new -x509 -nodes -days 30 -key vault-tls.key -sha384 -out vault-tls.crt -config vault-crt.conf
 
-        <h2 id="先决条件"   >
-          <a href="#先决条件" class="heading-link"><i class="fas fa-link"></i></a>先决条件</h2>
-      <p>安装MinIO，KES和Vault。对于MinIO，请参阅 MinIO 快速入门指南. 然后安装KES并下载 适用于您的操作系统和平台的最新Vault二进制文件.  </p>
+# 使用RSA生成密钥
+openssl genrsa -out vault-tls.key 2048
+openssl req -new -x509 -nodes -days 30 -key private.key -sha384 -out vault-tls.crt -config vault-crt.conf
+</code></pre><p>查看密钥和证书</p><pre><code># 查看ecdsa生成的密钥
+openssl ec -in vault-tls.key -text -noout
+# 查看rsa生成的密钥
+openssl rsa -in vault-tls.key -text -noout
 
-        <h3 id="Vault"   >
-          <a href="#Vault" class="heading-link"><i class="fas fa-link"></i></a>* Vault:</h3>
-      <figure class="highlight elixir"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">https:</span>/<span class="regexp">/releases.hashicorp.com/vault</span><span class="regexp">/1.7.0-rc1/vault</span>_1.<span class="number">7.0</span>-rc1_linux_amd64.zip</span><br><span class="line">unzip vault_1.<span class="number">7.0</span>-rc1_linux_amd64.zip</span><br><span class="line">mv vault /usr/local/bin/ <span class="comment"># 如果cp过去的话, 下面启动vault server时候自动创建的vault文件夹会与此已存在的vault二进制文件冲突, 因此直接move过去.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vault 可以在Linux系统上使用 mlock syscall 来防止 OS 将内存中的数据写入磁盘（交换）</span></span><br><span class="line">sudo setcap cap_ipc_lock=+ep <span class="variable">$(</span>readlink -f <span class="variable">$(</span>which vault))</span><br></pre></td></tr></table></div></figure>
+(Optional)# 查看csr
+(Optional)openssl req -in root-cert.csr -text -noout
 
-
-        <h3 id="KES"   >
-          <a href="#KES" class="heading-link"><i class="fas fa-link"></i></a>* KES:</h3>
-      <p><span class="exturl"><a class="exturl__link"   href="https://github.com/minio/kes#binary-releases"  target="_blank" rel="noopener">https://github.com/minio/kes#binary-releases</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<figure class="highlight awk"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="regexp">//gi</span>thub.com<span class="regexp">/minio/</span>kes<span class="regexp">/releases/</span>latest<span class="regexp">/download/</span>kes-linux-amd64</span><br><span class="line">mv kes-linux-amd64 kes</span><br><span class="line">chmod +x kes</span><br><span class="line">cp kes <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span></span><br><span class="line">kes -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># KES 可以在Linux系统上使用 mlock syscall 来防止 OS 将内存中的数据写入磁盘（交换）</span></span><br><span class="line">sudo setcap cap_ipc_lock=+ep $(readlink -f $(which kes))</span><br></pre></td></tr></table></div></figure>
-
-
-        <h3 id="MinIO："   >
-          <a href="#MinIO：" class="heading-link"><i class="fas fa-link"></i></a>* MinIO：</h3>
-      <figure class="highlight groovy"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">https:</span><span class="comment">//dl.min.io/server/minio/release/linux-amd64/minio</span></span><br><span class="line">chmod +x minio</span><br><span class="line">cp minio <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span></span><br></pre></td></tr></table></div></figure>
-
-
-        <h3 id="mc"   >
-          <a href="#mc" class="heading-link"><i class="fas fa-link"></i></a>* mc:</h3>
-      <figure class="highlight vim"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http<span class="variable">s:</span>//<span class="keyword">dl</span>.<span class="built_in">min</span>.io/client/mc/release/linux-amd64/mc</span><br><span class="line">chmod +<span class="keyword">x</span> mc</span><br><span class="line">./mc --<span class="keyword">help</span></span><br></pre></td></tr></table></div></figure>
-
-
-        <h2 id="机器配置"   >
-          <a href="#机器配置" class="heading-link"><i class="fas fa-link"></i></a>机器配置</h2>
-      <div class="table-container"><table>
-<thead>
-<tr>
-<th align="left">IP</th>
-<th align="left">机器名</th>
-<th align="left">用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">10.239.140.73</td>
-<td align="left">master</td>
-<td align="left">K8S集群节点, master(去除污点), 部署KMS, KES到本机, MinIO 部署到K8S集群</td>
-</tr>
-<tr>
-<td align="left">10.239.131.157</td>
-<td align="left">laboratory</td>
-<td align="left">K8S集群节点, master(去除污点)</td>
-</tr>
-</tbody></table></div>
-<p>openssl 版本：</p>
-<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ openssl version</span><br><span class="line">OpenSSL <span class="number">1.0</span><span class="number">.2</span>k-fips  <span class="number">26</span> Jan <span class="number">2017</span></span><br><span class="line">built on: reproducible build, date unspecified</span><br><span class="line">platform: linux-x86_64</span><br><span class="line">options:  bn(<span class="number">64</span>,<span class="number">64</span>) md2(<span class="built_in">int</span>) rc4(<span class="number">16</span>x,<span class="built_in">int</span>) des(idx,cisc,<span class="number">16</span>,<span class="built_in">int</span>) idea(<span class="built_in">int</span>) blowfish(idx)</span><br><span class="line">compiler: gcc -I. -I.. -I../include  -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -DKRB5_MIT -m64 -DL_ENDIAN -Wall -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=<span class="number">2</span> -fexceptions -fstack-protector-strong --param=ssp-buffer-size=<span class="number">4</span> -grecord-gcc-switches   -m64 -mtune=generic -Wa,--noexecstack -DPURIFY -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DRC4_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM -DECP_NISTZ256_ASM</span><br><span class="line">OPENSSLDIR: <span class="string">"/etc/pki/tls"</span></span><br><span class="line">engines:  rdrand dynamic</span><br></pre></td></tr></table></div></figure>
-
-
-        <h2 id="KMS-Vault"   >
-          <a href="#KMS-Vault" class="heading-link"><i class="fas fa-link"></i></a>KMS(Vault)</h2>
-      
-        <h3 id="为保险柜生成TLS证书"   >
-          <a href="#为保险柜生成TLS证书" class="heading-link"><i class="fas fa-link"></i></a>为保险柜生成TLS证书</h3>
-      <p>vault-crt.conf</p>
-<figure class="highlight ini"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[req]</span></span><br><span class="line"><span class="attr">distinguished_name</span> = req_distinguished_name</span><br><span class="line"><span class="attr">x509_extensions</span> = v3_req</span><br><span class="line"><span class="attr">prompt</span> = <span class="literal">no</span></span><br><span class="line"></span><br><span class="line"><span class="section">[req_distinguished_name]</span></span><br><span class="line"><span class="attr">C</span> = US</span><br><span class="line"><span class="attr">ST</span> = state</span><br><span class="line"><span class="attr">L</span> = location</span><br><span class="line"><span class="attr">O</span> = organization</span><br><span class="line"><span class="attr">CN</span> = localhost</span><br><span class="line"></span><br><span class="line"><span class="section">[v3_req]</span></span><br><span class="line"><span class="attr">subjectAltName</span> = @alt_names</span><br><span class="line"></span><br><span class="line"><span class="section">[alt_names]</span></span><br><span class="line"><span class="section">[alt_names]</span></span><br><span class="line"><span class="attr">IP.1</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">IP.2</span> = <span class="number">10.239</span>.<span class="number">140.73</span></span><br><span class="line"><span class="attr">DNS.1</span> = localhost</span><br><span class="line"><span class="attr">DNS.2</span> = master</span><br></pre></td></tr></table></div></figure>
-<p>生成证书</p>
-<figure class="highlight vbnet"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 使用ECDSA生成密钥</span></span><br><span class="line">openssl ecparam -genkey -name prime256v1 | openssl ec -out vault-tls.<span class="keyword">key</span></span><br><span class="line">openssl req -<span class="keyword">new</span> -x509 -nodes -days <span class="number">30</span> -<span class="keyword">key</span> vault-tls.<span class="keyword">key</span> -sha384 -out vault-tls.crt -config vault-crt.conf</span><br><span class="line"></span><br><span class="line"><span class="meta"># 使用RSA生成密钥</span></span><br><span class="line">openssl genrsa -out vault-tls.<span class="keyword">key</span> <span class="number">2048</span></span><br><span class="line">openssl req -<span class="keyword">new</span> -x509 -nodes -days <span class="number">30</span> -<span class="keyword">key</span> <span class="keyword">private</span>.<span class="keyword">key</span> -sha384 -out vault-tls.crt -config vault-crt.conf</span><br></pre></td></tr></table></div></figure>
-
-<p>查看密钥和证书</p>
-<figure class="highlight vbnet"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 查看ecdsa生成的密钥</span></span><br><span class="line">openssl ec -<span class="keyword">in</span> vault-tls.<span class="keyword">key</span> -<span class="keyword">text</span> -noout</span><br><span class="line"><span class="meta"># 查看rsa生成的密钥</span></span><br><span class="line">openssl rsa -<span class="keyword">in</span> vault-tls.<span class="keyword">key</span> -<span class="keyword">text</span> -noout</span><br><span class="line"></span><br><span class="line">(<span class="keyword">Optional</span>)<span class="meta"># 查看csr</span></span><br><span class="line">(<span class="keyword">Optional</span>)openssl req -<span class="keyword">in</span> root-cert.csr -<span class="keyword">text</span> -noout</span><br><span class="line"></span><br><span class="line"><span class="meta"># 查看证书</span></span><br><span class="line">openssl x509 -<span class="keyword">in</span> vault-tls.crt -<span class="keyword">text</span> -noout</span><br></pre></td></tr></table></div></figure>
-
-
-        <h3 id="创建保管库配置文件"   >
-          <a href="#创建保管库配置文件" class="heading-link"><i class="fas fa-link"></i></a>创建保管库配置文件</h3>
-      <figure class="highlight mipsasm"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; vault-<span class="built_in">config</span>.<span class="keyword">json </span>&lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"api_addr"</span>: <span class="string">"https://127.0.0.1:8200"</span>,</span><br><span class="line">   <span class="string">"backend"</span>: &#123;</span><br><span class="line">     <span class="string">"file"</span>: &#123;</span><br><span class="line">       <span class="string">"path"</span>: <span class="string">"vault/file"</span></span><br><span class="line">     &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">  <span class="string">"default_lease_ttl"</span>: <span class="string">"168h"</span>,</span><br><span class="line">  <span class="string">"max_lease_ttl"</span>: <span class="string">"720h"</span>,</span><br><span class="line">  <span class="string">"listener"</span>: &#123;</span><br><span class="line">    <span class="string">"tcp"</span>: &#123;</span><br><span class="line">      <span class="string">"address"</span>: <span class="string">"0.0.0.0:8200"</span>,</span><br><span class="line">      <span class="string">"tls_cert_file"</span>: <span class="string">"vault-tls.crt"</span>,</span><br><span class="line">      <span class="string">"tls_key_file"</span>: <span class="string">"vault-tls.key"</span>,</span><br><span class="line">      <span class="string">"tls_min_version"</span>: <span class="string">"tls12"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></div></figure>
-
-<p>请注意，我们使用文件后端运行Vault。为了获得高可用性，您可能需要使用其他 后端，例如<span class="exturl"><a class="exturl__link"   href="https://www.vaultproject.io/docs/configuration/storage/etcd"  target="_blank" rel="noopener">etcd</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>或<span class="exturl"><a class="exturl__link"   href="https://learn.hashicorp.com/tutorials/vault/ha-with-consul"  target="_blank" rel="noopener">consul</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</p>
-
-        <h3 id="启动Vault服务器："   >
-          <a href="#启动Vault服务器：" class="heading-link"><i class="fas fa-link"></i></a>启动Vault服务器：</h3>
-      <p>启动vault server, 测试完终止后, 下次直接运行此命令重启vault server, 再用下面 三条unseal 命令解封即可.  </p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vault<span class="built_in"> server </span>-config vault-config.json</span><br></pre></td></tr></table></div></figure>
-
-
-        <h3 id="初始化和解封保管箱"   >
-          <a href="#初始化和解封保管箱" class="heading-link"><i class="fas fa-link"></i></a>初始化和解封保管箱</h3>
-      <p>切换终端, 在单独的终端窗口中设置环境VAULT_ADDR。保险柜服务器的变量:</p>
-<figure class="highlight dart"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> VAULT_ADDR=<span class="string">'https://127.0.0.1:8200'</span></span><br><span class="line"><span class="comment">// 如果Vault使用自签名TLS 证书，则可能要运行如下命令, 当Vault提供 由计算机信任的CA颁发的TLS证书（例如，让我们加密）时，则无需运行此命令.</span></span><br><span class="line"><span class="keyword">export</span> VAULT_SKIP_VERIFY=<span class="keyword">true</span></span><br><span class="line"><span class="comment">// 初始化保险柜</span></span><br><span class="line">vault <span class="keyword">operator</span> init</span><br></pre></td></tr></table></div></figure>
-<p><strong><code>保管箱将打印n（默认情况下为5）解封密钥共享，其中至少m（至少3） 为重新生成实际解封密钥才能解封保管库.</code></strong> 因此，请务必 记住它们。特别是，请将那些未密封的密钥共享放在安全且持久的位置<br>您应该看到类似于以下内容的输出：</p>
-<figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CopyUnseal Key 1: eyW/+8ZtsgT81Cb0e8OVxzJAQP5lY7Dcamnze+JnWEDT</span><br><span class="line">Unseal Key 2: 0tZn+7QQCxphpHwTm6/dC3LpP5JGIbYl6PK8Sy79R+P2</span><br><span class="line">Unseal Key 3: cmhs+AUMXUuB6Lzsvgcbp3bRT6VDGQjgCBwB2xm0ANeF</span><br><span class="line">Unseal Key 4: /fTPpec5fWpGqWHK+uhnnTNMQyAbl5alUi4iq2yNgyqj</span><br><span class="line">Unseal Key 5: UPdDVPto+H6ko+20NKmagK40MOskqOBw4y/S51WpgVy/</span><br><span class="line"></span><br><span class="line">Initial Root Token: s.zaU4Gbcu0Wh46uj2V3VuUde0</span><br><span class="line"></span><br><span class="line">Vault is initialized <span class="keyword">with</span> <span class="number">5</span> <span class="keyword">key</span> shares <span class="keyword">and</span> a <span class="keyword">key</span> threshold <span class="keyword">of</span> <span class="number">3.</span> Please securely</span><br><span class="line"><span class="keyword">distribute</span> the <span class="keyword">key</span> shares printed above. <span class="keyword">When</span> the Vault <span class="keyword">is</span> re-sealed,</span><br><span class="line">restarted, <span class="keyword">or</span> stopped, you must supply <span class="keyword">at</span> <span class="keyword">least</span> <span class="number">3</span> <span class="keyword">of</span> these <span class="keyword">keys</span> <span class="keyword">to</span> unseal it</span><br><span class="line"><span class="keyword">before</span> it can <span class="keyword">start</span> servicing requests.</span><br><span class="line"></span><br><span class="line">Vault does <span class="keyword">not</span> <span class="keyword">store</span> the <span class="keyword">generated</span> <span class="keyword">master</span> key. <span class="keyword">Without</span> <span class="keyword">at</span> <span class="keyword">least</span> <span class="number">3</span> <span class="keyword">key</span> <span class="keyword">to</span></span><br><span class="line">reconstruct the <span class="keyword">master</span> <span class="keyword">key</span>, Vault will remain permanently sealed!</span><br><span class="line"></span><br><span class="line">It <span class="keyword">is</span> possible <span class="keyword">to</span> generate <span class="keyword">new</span> unseal <span class="keyword">keys</span>, provided you have a quorum <span class="keyword">of</span></span><br><span class="line">existing unseal <span class="keyword">keys</span> shares. See <span class="string">"vault operator rekey"</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></div></figure>
-
-<p>设置环境, 变量 <strong><code>VAULT_TOKEN</code></strong> 到命令之前打印的根令牌</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">VAULT_TOKEN</span>=s.zaU4Gbcu0Wh46uj2V3VuUde0</span><br></pre></td></tr></table></div></figure>
-
-<p>然后, 使用任何先前生成的密钥共享来打开Vault的密封.</p>
-<figure class="highlight angelscript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vault operator unseal eyW/+<span class="number">8</span>ZtsgT81Cb0e8OVxzJAQP5lY7Dcamnze+JnWEDT</span><br><span class="line">vault operator unseal <span class="number">0</span>tZn+<span class="number">7</span>QQCxphpHwTm6/dC3LpP5JGIbYl6PK8Sy79R+P2</span><br><span class="line">vault operator unseal cmhs+AUMXUuB6Lzsvgcbp3bRT6VDGQjgCBwB2xm0ANeF</span><br></pre></td></tr></table></div></figure>
-<p>提交足够的有效密钥共享后，保管箱将被解封 并能够处理请求。</p>
-
-        <h3 id="启用保险柜的K-V后端"   >
-          <a href="#启用保险柜的K-V后端" class="heading-link"><i class="fas fa-link"></i></a>启用保险柜的K/V后端.</h3>
-      <p>加密主密钥（而不是对象加密密钥）将存储 在Vault中。因此，我们需要启用Vault的K/V后端。为此，请运行：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vault secrets <span class="builtin-name">enable</span> kv</span><br></pre></td></tr></table></div></figure>
-<p>为 K/V引擎 创建访问策略.<br>以下策略确定应用程序（即KES服务器）如​​何 与Vault 交互.  </p>
-<figure class="highlight lsl"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; minio-kes-policy.hcl &lt;&lt;<span class="literal">EOF</span></span><br><span class="line">path <span class="string">"kv/minio/*"</span> &#123;</span><br><span class="line">  capabilities = [ <span class="string">"create"</span>, <span class="string">"read"</span>, <span class="string">"delete"</span> ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="literal">EOF</span></span><br></pre></td></tr></table></div></figure>
-<p>观察在 <strong><code>kv/minio/*</code></strong> 的路径前缀 <strong><code>minio</code></strong>, 此前缀确保 KES 服务器只能在 <strong><code>minio/-</code></strong> 下进行读取，而只能在-下进行写入 <code>some-app/</code>. 如何在 K/V 引擎上分隔域取决于您的基础结构 和安全要求。</p>
-<p>然后，我们将政策上传到保险柜：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vault<span class="built_in"> policy </span>write minio-key-policy ./minio-kes-policy.hcl</span><br></pre></td></tr></table></div></figure>
-
-
-        <h3 id="启用AppRole身份验证"   >
-          <a href="#启用AppRole身份验证" class="heading-link"><i class="fas fa-link"></i></a>启用AppRole身份验证</h3>
-      <p>由于我们希望稍后将一个/多个KES服务器连接到Vault，因此必须启用 AppRole身份验证。为此，请运行：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vault auth <span class="builtin-name">enable</span> approle</span><br></pre></td></tr></table></div></figure>
-<p>创建一个新的AppRole ID并将其绑定到策略.<br>创建一个新的AppRole ID并授予该ID特定的权限。 该应用程序（即KES服务器）将通过AppRole角色ID 和机密ID 向Vault进行身份验证，并且仅允许执行特定策略授予的操作.  </p>
-<figure class="highlight crmsh"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我们首先为KES服务器创建一个新角色:</span></span><br><span class="line">vault <span class="keyword">write</span> auth/approle/role/kes-<span class="keyword">role</span> <span class="title">token_num_uses</span>=<span class="number">0</span>  <span class="attr">secret_id_num_uses=</span><span class="number">0</span>  <span class="attr">period=</span><span class="number">5m</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后，我们将策略绑定到角色：</span></span><br><span class="line">vault <span class="keyword">write</span> auth/approle/role/kes-<span class="keyword">role</span> <span class="title">policies</span>=minio-key-policy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后，我们从Vault请求AppRole角色ID和秘密ID。</span></span><br><span class="line">首先是角色ID：</span><br><span class="line">vault <span class="keyword">read</span> auth/approle/role/kes-role/role-id </span><br><span class="line">	fe46e329-bb70-<span class="number">2342</span>-<span class="number">9</span>fac-f3964a447d07</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后是秘密ID：</span></span><br><span class="line">vault <span class="keyword">write</span> -f auth/approle/role/kes-role/secret-id</span><br><span class="line">	<span class="number">50646</span>d24-<span class="number">5589</span>-bba9-<span class="number">3</span>f99-<span class="number">15</span>ef2ae7e100</span><br></pre></td></tr></table></div></figure>
-<p>我们只对secret_id感兴趣, 不包括secret_id_accessor.</p>
-
-        <h2 id="KES-1"   >
-          <a href="#KES-1" class="heading-link"><i class="fas fa-link"></i></a>KES</h2>
-      
-        <h3 id="生成KES证书和私钥"   >
-          <a href="#生成KES证书和私钥" class="heading-link"><i class="fas fa-link"></i></a>生成KES证书和私钥</h3>
-      <p><strong><code>此部署文档将Kes和MinIO共用相同的private.key和public.crt</code></strong><br>上面私匙和证书名字不要改变, 因为MinIO的私匙和证书必须是private.key和public.crt,</p>
-<p>kes-minio-crt.conf:</p>
-<figure class="highlight ini"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[req]</span></span><br><span class="line"><span class="attr">distinguished_name</span> = req_distinguished_name</span><br><span class="line"><span class="attr">x509_extensions</span> = v3_req</span><br><span class="line"><span class="attr">prompt</span> = <span class="literal">no</span></span><br><span class="line"></span><br><span class="line"><span class="section">[req_distinguished_name]</span></span><br><span class="line"><span class="attr">C</span> = US</span><br><span class="line"><span class="attr">ST</span> = state</span><br><span class="line"><span class="attr">L</span> = location</span><br><span class="line"><span class="attr">O</span> = organization</span><br><span class="line"><span class="attr">CN</span> = localhost</span><br><span class="line"></span><br><span class="line"><span class="section">[v3_req]</span></span><br><span class="line"><span class="attr">subjectAltName</span> = @alt_names</span><br><span class="line"></span><br><span class="line"><span class="section">[alt_names]</span></span><br><span class="line"><span class="attr">IP.1</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">IP.2</span> = <span class="number">10.239</span>.<span class="number">140.73</span></span><br><span class="line"><span class="attr">DNS.1</span> = *.minio-hl-svc.minio.svc.cluster.local</span><br><span class="line"><span class="attr">DNS.2</span> = master</span><br><span class="line"><span class="attr">DNS.3</span> = localhost</span><br></pre></td></tr></table></div></figure>
-<p>连接到KES服务器（mTLS）时，每个用户或应用程序必须出示有效的X.509证书。 KES服务器将接受/拒绝连接尝试，并根据证书应用策略。</p>
-<p>因此，每个MinIO群集都需要一个X.509 TLS证书来进行客户端身份验证. 可以通过运行以下命令来创建MinIO（自签名）证书. </p>
-<figure class="highlight vbnet"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 使用ECDSA生成密钥</span></span><br><span class="line">openssl ecparam -genkey -name prime256v1 | openssl ec -out minio-pki/<span class="keyword">private</span>.<span class="keyword">key</span></span><br><span class="line">openssl req -<span class="keyword">new</span> -x509 -nodes -days <span class="number">730</span> -<span class="keyword">key</span> minio-pki/<span class="keyword">private</span>.<span class="keyword">key</span> -sha384 -out minio-pki/<span class="keyword">public</span>.crt -config kes-minio-crt.conf</span><br><span class="line"></span><br><span class="line"><span class="meta"># 使用RSA生成密钥</span></span><br><span class="line">openssl genrsa -out <span class="keyword">private</span>.<span class="keyword">key</span> <span class="number">2048</span></span><br><span class="line">openssl req -<span class="keyword">new</span> -x509 -nodes -days <span class="number">730</span> -<span class="keyword">key</span> minio-pki/<span class="keyword">private</span>.<span class="keyword">key</span> -out minio-pki/<span class="keyword">public</span>.crt -config kes-minio-crt.conf</span><br><span class="line"></span><br><span class="line"><span class="meta"># KES和MinIO共用相同的证书和私钥, 因此拷贝一份MinIO密钥和证书给KES用:</span></span><br><span class="line">cp minio-pki/<span class="keyword">private</span>.<span class="keyword">key</span> ./kes-server.<span class="keyword">key</span></span><br><span class="line">cp minio-pki/<span class="keyword">public</span>.crt ./kes-server.crt</span><br></pre></td></tr></table></div></figure>
-
-<p>注意，MinIO是<span class="exturl"><a class="exturl__link"   href="https://en.wikipedia.org/wiki/X.509#Structure_of_a_certificate"  target="_blank" rel="noopener">subject name</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>。 您可以为您的部署方案选择一个更合适的名称。此外，对于生产部署，我们 建议获取由CA颁发的用于客户端身份验证的TLS证书。</p>
-<p>要获取 MinIO 的 X.509 证书的身份，请运行：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kes<span class="built_in"> tool identity </span>of minio-pki/public.crt</span><br><span class="line"><span class="comment"># 此命令可与任何（有效）X.509证书一起使用-无论如何创建它-并 产生类似于以下内容的输出：</span></span><br><span class="line">  Identity: dd46485bedc9ad2909d2e8f9017216eec4413bc5c64b236d992f7ec19c843c5f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">APP_IDENTITY</span>=dd46485bedc9ad2909d2e8f9017216eec4413bc5c64b236d992f7ec19c843c5f</span><br></pre></td></tr></table></div></figure>
-
-
-        <h3 id="创建KES配置文件"   >
-          <a href="#创建KES配置文件" class="heading-link"><i class="fas fa-link"></i></a>创建KES配置文件</h3>
-      <p>创建KES配置文件并启动KES服务器.  </p>
-<figure class="highlight yaml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">&gt;</span> <span class="string">kes-server-config.yml</span> <span class="string">&lt;&lt;EOF</span></span><br><span class="line"><span class="attr">address:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">:7373</span></span><br><span class="line"><span class="attr">root:</span>    <span class="string">disabled</span>  <span class="comment"># We disable the root identity since we don't need it in this guide</span></span><br><span class="line"></span><br><span class="line"><span class="attr">tls:</span></span><br><span class="line">  <span class="attr">key:</span>  <span class="string">kes-server.key</span></span><br><span class="line">  <span class="attr">cert:</span> <span class="string">kes-server.crt</span></span><br><span class="line"></span><br><span class="line"><span class="attr">policy:</span></span><br><span class="line">  <span class="attr">my-app:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/v1/key/create/minio-*</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/v1/key/generate/minio-*</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/v1/key/decrypt/minio-*</span></span><br><span class="line">    <span class="attr">identities:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">$&#123;APP_IDENTITY&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">  <span class="attr">expiry:</span></span><br><span class="line">    <span class="attr">any:</span>    <span class="string">5m0s</span></span><br><span class="line">    <span class="attr">unused:</span> <span class="string">20s</span></span><br><span class="line"></span><br><span class="line"><span class="attr">keys:</span></span><br><span class="line">  <span class="attr">vault:</span></span><br><span class="line">    <span class="attr">endpoint:</span> <span class="string">https://127.0.0.1:8200</span></span><br><span class="line">    <span class="attr">prefix:</span> <span class="string">minio</span></span><br><span class="line">    <span class="attr">approle:</span></span><br><span class="line">      <span class="attr">id:</span>     <span class="string">"fe46e329-bb70-2342-9fac-f3964a447d07"</span> <span class="comment"># Your AppRole ID: $ vault read auth/approle/role/kes-role/role-id</span></span><br><span class="line">      <span class="attr">secret:</span> <span class="string">"50646d24-5589-bba9-3f99-15ef2ae7e100"</span> <span class="comment"># Your AppRole Secret ID: $ vault write -f auth/approle/role/kes-role/secret-id</span></span><br><span class="line">      <span class="attr">retry:</span>  <span class="string">15s</span></span><br><span class="line">    <span class="attr">status:</span></span><br><span class="line">      <span class="attr">ping:</span> <span class="string">10s</span></span><br><span class="line">    <span class="attr">tls:</span></span><br><span class="line">      <span class="attr">ca:</span> <span class="string">"vault-tls.crt"</span> <span class="comment"># Since we use self-signed certificates</span></span><br><span class="line"></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></div></figure>
-<p>请identities在policy部分中将的值更改为您的身份 minio-pki/public.crt, 或者在终端运行 <strong><code>export APP_IDENTITY=dd46485bedc9ad2909d2e8f9017216eec4413bc5c64b236d992f7ec19c843c5f</code></strong><br>另外，插入您在保险柜设置过程中之前创建的AppRole角色ID和密码ID。 您可以<span class="exturl"><a class="exturl__link"   href="https://github.com/minio/kes/blob/master/server-config.yaml"  target="_blank" rel="noopener">在此处</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>找到包含所有可用参数的文档化配置文件.  </p>
-<p>最后，通过以下方式启动KES服务器：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kes<span class="built_in"> server </span>--mlock <span class="attribute">--config</span>=kes-server-config.yml <span class="attribute">--auth</span>=off</span><br></pre></td></tr></table></div></figure>
-<p><strong><code>--auth=off</code></strong> is required since our root.cert and app.cert certificates are self-signed.<br>The <strong><code>--mlock</code></strong> option is currently only available on Linux.</p>
-<p>有关KES访问控制模型和身份验证的更多信息:<span class="exturl"><a class="exturl__link"   href="https://github.com/minio/kes/wiki/Concepts"  target="_blank" rel="noopener">KES Concepts</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-
-        <h3 id="创建一个新的主密钥"   >
-          <a href="#创建一个新的主密钥" class="heading-link"><i class="fas fa-link"></i></a>创建一个新的主密钥</h3>
-      <p>在继续进行MinIO设置之前，我们需要创建一个新的主密钥。因此，我们使用 MinIO身份和KES CLI。</p>
-<p>在新的终端窗口中，通过以下方式成为MinIO身份：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">KES_CLIENT_CERT</span>=minio-pki/public.crt</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">KES_CLIENT_KEY</span>=minio-pki/private.key</span><br></pre></td></tr></table></div></figure>
-<p>然后运行以下命令来创建主密钥：</p>
-<figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置访问vault变量:</span></span><br><span class="line">export VAULT_SKIP_VERIFY=true</span><br><span class="line">export VAULT_TOKEN=s.zaU4Gbcu0Wh46uj2V3VuUde0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建主密钥:</span></span><br><span class="line">kes key <span class="keyword">create</span> -k minio-<span class="keyword">key</span><span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有key-value文件夹</span></span><br><span class="line">vault kv <span class="keyword">list</span> kv/</span><br><span class="line">  <span class="keyword">Keys</span></span><br><span class="line">  <span class="comment">----</span></span><br><span class="line">  minio/</span><br><span class="line">  test01</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个文件夹下有哪些主密钥</span></span><br><span class="line">vault kv <span class="keyword">list</span> kv/minio</span><br><span class="line">  <span class="keyword">Keys</span></span><br><span class="line">  <span class="comment">----</span></span><br><span class="line">  minio-<span class="keyword">key</span><span class="number">-1</span></span><br><span class="line">  minio-<span class="keyword">key</span><span class="number">-2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取某个主密钥数据信息</span></span><br><span class="line">vault kv <span class="keyword">get</span> kv/minio/minio-<span class="keyword">key</span><span class="number">-1</span></span><br><span class="line">  ======= <span class="keyword">Data</span> =======</span><br><span class="line">  <span class="keyword">Key</span>            <span class="keyword">Value</span></span><br><span class="line">  <span class="comment">---            -----</span></span><br><span class="line">  minio-<span class="keyword">key</span><span class="number">-1</span>    &#123;<span class="string">"bytes"</span>:<span class="string">"rrjxB3THaSzSGaJ2mUwWDjT/+Tvgb5XbECPi3P9rgBs="</span>&#125;</span><br></pre></td></tr></table></div></figure>
-<p>由于我们使用自签名证书，因此仅需要 <strong><code>-k</code></strong> 标志.<br>另外，请注意，基于服务器配置文件， 仅允许MinIO标识创建/使用以开头的主密钥 <code>minio-</code>. 因此，尝试创建密钥（例如） <code>kes key create my-key-1 -k</code> 将失败，并出现策略错误禁止的消息.  </p>
-
-        <h2 id="MinIO"   >
-          <a href="#MinIO" class="heading-link"><i class="fas fa-link"></i></a>MinIO</h2>
-      <p>minio的证书和私钥请参考上面KES生成 minio-pki/private.key 和 minio-pki/public.crt 步骤.  </p>
-<p>MinIO服务器将需要知道KES服务器端点， 用于身份验证和授权的mTLS客户端证书以及默认的主密钥名称.  </p>
-
-        <h3 id="搭建本地minio服务"   >
-          <a href="#搭建本地minio服务" class="heading-link"><i class="fas fa-link"></i></a>搭建本地minio服务</h3>
-      <p>MinIO服务器将需要知道KES服务器端点， 用于身份验证和授权的mTLS客户端证书以及默认的主密钥名称.  </p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">MINIO_KMS_KES_ENDPOINT</span>=https://10.239.140.73:7373</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">MINIO_KMS_KES_CERT_FILE</span>=minio-pki/public.crt</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">MINIO_KMS_KES_KEY_FILE</span>=minio-pki/private.key</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">MINIO_KMS_KES_CA_PATH</span>=kes-server.crt</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">MINIO_KMS_KES_KEY_NAME</span>=minio-key-1</span><br></pre></td></tr></table></div></figure>
-<p>由于我们使用自签名证书, 因此只需要<strong><code>MINIO_KMS_KES_CA_PATH</code></strong></p>
-<p>然后启动MinIO服务器：</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">MINIO_ACCESS_KEY</span>=minio</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">MINIO_SECRET_KEY</span>=minio123</span><br><span class="line">rm -rf /root/.mc</span><br><span class="line">rm -rf /root/.minio</span><br><span class="line">minio<span class="built_in"> server </span>--certs-dir ./minio-pki ./data</span><br><span class="line"> * 指定上传minio server端证书存放路径文件夹为: ./minio-pki</span><br><span class="line"> * minio存储的数据保存到data目录</span><br></pre></td></tr></table></div></figure>
-
-<p>切换终端,启动自动加密, 如果在K8S上部署MinIO server enable了密钥和证书, 则执行下面类似命令时候都要加上 <strong><code>--insecure</code></strong>, 信任自签的证书.</p>
-<figure class="highlight pgsql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 设置<span class="keyword">server</span>服务地址</span><br><span class="line">mc <span class="keyword">alias</span> <span class="keyword">set</span> myminio https://<span class="number">10.239</span><span class="number">.140</span><span class="number">.73</span>:<span class="number">9000</span> minio minio123 <span class="comment">--insecure</span></span><br><span class="line"></span><br><span class="line"># 创建bucket</span><br><span class="line">mc mb myminio/test01 <span class="comment">--insecure</span></span><br><span class="line"></span><br><span class="line"># 加密minio 已存在的某个 bucket</span><br><span class="line">mc encrypt <span class="keyword">set</span> sse-s3 myminio/test01/ <span class="comment">--insecure</span></span><br><span class="line">mc encrypt <span class="keyword">info</span> myminio/test01/ <span class="comment">--insecure</span></span><br><span class="line">  Auto encryption <span class="string">'sse-s3'</span> <span class="keyword">is</span> enabled</span><br><span class="line"></span><br><span class="line"># 将本地文件synk.jpg上传到minio</span><br><span class="line">mc cp synk.jpg myminio/test01/ <span class="comment">--insecure</span></span><br><span class="line"></span><br><span class="line"># 查看上传文件状态, 可以看到已自动加密</span><br><span class="line">mc stat myminio/test01/synk.jpg <span class="comment">--insecure</span></span><br><span class="line">  <span class="type">Name</span>      : synk.jpg</span><br><span class="line">  <span class="type">Date</span>      : <span class="number">2021</span><span class="number">-03</span><span class="number">-15</span> <span class="number">11</span>:<span class="number">54</span>:<span class="number">36</span> CST</span><br><span class="line">  Size      : <span class="number">112</span> B</span><br><span class="line">  ETag      : <span class="number">2</span>ced7fb62d324c643aeb21eccbe86eeb</span><br><span class="line">  <span class="keyword">Type</span>      : file</span><br><span class="line">  Metadata  :</span><br><span class="line">    Content-<span class="keyword">Type</span>: application/x-sh</span><br><span class="line">  <span class="keyword">Encrypted</span> :</span><br><span class="line">    X-Amz-<span class="keyword">Server</span>-Side-Encryption: AES256</span><br><span class="line"></span><br><span class="line"># 将上传的文件下载到本地</span><br><span class="line">mc cp myminio/test01/synk.jpg <span class="number">001.</span>jpg <span class="comment">--insecure</span></span><br></pre></td></tr></table></div></figure>
-
-
-        <h3 id="k8s上搭建minio"   >
-          <a href="#k8s上搭建minio" class="heading-link"><i class="fas fa-link"></i></a>k8s上搭建minio</h3>
-      </div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/">https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/storage/">storage</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/16/technologies/security/openssl_update/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">openssl update</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/entertainment/test/"><span class="paginator-prev__text">test</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#referenc-link"><span class="toc-number">1.</span> <span class="toc-text">
-          referenc link</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text">
-          概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#先决条件"><span class="toc-number">3.</span> <span class="toc-text">
-          先决条件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vault"><span class="toc-number">3.1.</span> <span class="toc-text">
-          * Vault:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KES"><span class="toc-number">3.2.</span> <span class="toc-text">
-          * KES:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MinIO："><span class="toc-number">3.3.</span> <span class="toc-text">
-          * MinIO：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mc"><span class="toc-number">3.4.</span> <span class="toc-text">
-          * mc:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器配置"><span class="toc-number">4.</span> <span class="toc-text">
-          机器配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KMS-Vault"><span class="toc-number">5.</span> <span class="toc-text">
-          KMS(Vault)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为保险柜生成TLS证书"><span class="toc-number">5.1.</span> <span class="toc-text">
-          为保险柜生成TLS证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建保管库配置文件"><span class="toc-number">5.2.</span> <span class="toc-text">
-          创建保管库配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动Vault服务器："><span class="toc-number">5.3.</span> <span class="toc-text">
-          启动Vault服务器：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化和解封保管箱"><span class="toc-number">5.4.</span> <span class="toc-text">
-          初始化和解封保管箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启用保险柜的K-V后端"><span class="toc-number">5.5.</span> <span class="toc-text">
-          启用保险柜的K&#x2F;V后端.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启用AppRole身份验证"><span class="toc-number">5.6.</span> <span class="toc-text">
-          启用AppRole身份验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KES-1"><span class="toc-number">6.</span> <span class="toc-text">
-          KES</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成KES证书和私钥"><span class="toc-number">6.1.</span> <span class="toc-text">
-          生成KES证书和私钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建KES配置文件"><span class="toc-number">6.2.</span> <span class="toc-text">
-          创建KES配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个新的主密钥"><span class="toc-number">6.3.</span> <span class="toc-text">
-          创建一个新的主密钥</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MinIO"><span class="toc-number">7.</span> <span class="toc-text">
-          MinIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建本地minio服务"><span class="toc-number">7.1.</span> <span class="toc-text">
-          搭建本地minio服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#k8s上搭建minio"><span class="toc-number">7.2.</span> <span class="toc-text">
-          k8s上搭建minio</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">292</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
-
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
-
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
-
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
-
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
-
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
-
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
-
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
-
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
-
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
-
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
-
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
-
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
-
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
+# 查看证书
+openssl x509 -in vault-tls.crt -text -noout
+</code></pre><h3 id="创建保管库配置文件"><a class="anchor" href="#创建保管库配置文件">#</a> 创建保管库配置文件</h3><pre><code>cat &gt; vault-config.json &lt;&lt;EOF
+{
+   &quot;api_addr&quot;: &quot;https://127.0.0.1:8200&quot;,
+   &quot;backend&quot;: {
+     &quot;file&quot;: {
+       &quot;path&quot;: &quot;vault/file&quot;
+     }
+   },
+  &quot;default_lease_ttl&quot;: &quot;168h&quot;,
+  &quot;max_lease_ttl&quot;: &quot;720h&quot;,
+  &quot;listener&quot;: {
+    &quot;tcp&quot;: {
+      &quot;address&quot;: &quot;0.0.0.0:8200&quot;,
+      &quot;tls_cert_file&quot;: &quot;vault-tls.crt&quot;,
+      &quot;tls_key_file&quot;: &quot;vault-tls.key&quot;,
+      &quot;tls_min_version&quot;: &quot;tls12&quot;
     }
-  });
-}
-
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
-
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
-
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
-
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
-
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
-
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
-
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
   }
 }
+EOF
+</code></pre><p>请注意，我们使用文件后端运行 Vault。为了获得高可用性，您可能需要使用其他 后端，例如<span class="exturl" data-url="aHR0cHM6Ly93d3cudmF1bHRwcm9qZWN0LmlvL2RvY3MvY29uZmlndXJhdGlvbi9zdG9yYWdlL2V0Y2Q="> etcd</span> 或<span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5oYXNoaWNvcnAuY29tL3R1dG9yaWFscy92YXVsdC9oYS13aXRoLWNvbnN1bA=="> consul</span>.</p><h3 id="启动vault服务器"><a class="anchor" href="#启动vault服务器">#</a> 启动 Vault 服务器：</h3><p>启动 vault server, 测试完终止后，下次直接运行此命令重启 vault server, 再用下面 三条 unseal 命令解封即可.</p><pre><code>vault server -config vault-config.json
+</code></pre><h3 id="初始化和解封保管箱"><a class="anchor" href="#初始化和解封保管箱">#</a> 初始化和解封保管箱</h3><p>切换终端，在单独的终端窗口中设置环境 VAULT_ADDR。保险柜服务器的变量:</p><pre><code>export VAULT_ADDR='https://127.0.0.1:8200'
+// 如果Vault使用自签名TLS 证书，则可能要运行如下命令, 当Vault提供 由计算机信任的CA颁发的TLS证书（例如，让我们加密）时，则无需运行此命令.
+export VAULT_SKIP_VERIFY=true
+// 初始化保险柜
+vault operator init
+</code></pre><p><strong><code>保管箱将打印n（默认情况下为5）解封密钥共享，其中至少m（至少3） 为重新生成实际解封密钥才能解封保管库.</code> </strong>因此，请务必 记住它们。特别是，请将那些未密封的密钥共享放在安全且持久的位置<br>您应该看到类似于以下内容的输出：</p><pre><code>CopyUnseal Key 1: eyW/+8ZtsgT81Cb0e8OVxzJAQP5lY7Dcamnze+JnWEDT
+Unseal Key 2: 0tZn+7QQCxphpHwTm6/dC3LpP5JGIbYl6PK8Sy79R+P2
+Unseal Key 3: cmhs+AUMXUuB6Lzsvgcbp3bRT6VDGQjgCBwB2xm0ANeF
+Unseal Key 4: /fTPpec5fWpGqWHK+uhnnTNMQyAbl5alUi4iq2yNgyqj
+Unseal Key 5: UPdDVPto+H6ko+20NKmagK40MOskqOBw4y/S51WpgVy/
 
-var assistSearchList = window.CONFIG.assistSearch;
+Initial Root Token: s.zaU4Gbcu0Wh46uj2V3VuUde0
 
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
+Vault is initialized with 5 key shares and a key threshold of 3. Please securely
+distribute the key shares printed above. When the Vault is re-sealed,
+restarted, or stopped, you must supply at least 3 of these keys to unseal it
+before it can start servicing requests.
+
+Vault does not store the generated master key. Without at least 3 key to
+reconstruct the master key, Vault will remain permanently sealed!
+
+It is possible to generate new unseal keys, provided you have a quorum of
+existing unseal keys shares. See &quot;vault operator rekey&quot; for more information.
+</code></pre><p>设置环境，变量 <strong><code>VAULT_TOKEN</code> </strong>到命令之前打印的根令牌</p><pre><code>export VAULT_TOKEN=s.zaU4Gbcu0Wh46uj2V3VuUde0
+</code></pre><p>然后，使用任何先前生成的密钥共享来打开 Vault 的密封.</p><pre><code>vault operator unseal eyW/+8ZtsgT81Cb0e8OVxzJAQP5lY7Dcamnze+JnWEDT
+vault operator unseal 0tZn+7QQCxphpHwTm6/dC3LpP5JGIbYl6PK8Sy79R+P2
+vault operator unseal cmhs+AUMXUuB6Lzsvgcbp3bRT6VDGQjgCBwB2xm0ANeF
+</code></pre><p>提交足够的有效密钥共享后，保管箱将被解封 并能够处理请求。</p><h3 id="启用保险柜的kv后端"><a class="anchor" href="#启用保险柜的kv后端">#</a> 启用保险柜的 K/V 后端.</h3><p>加密主密钥（而不是对象加密密钥）将存储 在 Vault 中。因此，我们需要启用 Vault 的 K/V 后端。为此，请运行：</p><pre><code>vault secrets enable kv
+</code></pre><p>为 K/V 引擎 创建访问策略.<br>以下策略确定应用程序（即 KES 服务器）如​​何 与 Vault 交互.</p><pre><code>cat &gt; minio-kes-policy.hcl &lt;&lt;EOF
+path &quot;kv/minio/*&quot; {
+  capabilities = [ &quot;create&quot;, &quot;read&quot;, &quot;delete&quot; ]
+}
+EOF
+</code></pre><p>观察在 <strong><code>kv/minio/*</code> </strong>的路径前缀 <strong><code>minio</code> </strong>, 此前缀确保 KES 服务器只能在 <strong><code>minio/-</code> </strong>下进行读取，而只能在 - 下进行写入 <code>some-app/</code> . 如何在 K/V 引擎上分隔域取决于您的基础结构 和安全要求。</p><p>然后，我们将政策上传到保险柜：</p><pre><code>vault policy write minio-key-policy ./minio-kes-policy.hcl
+</code></pre><h3 id="启用approle身份验证"><a class="anchor" href="#启用approle身份验证">#</a> 启用 AppRole 身份验证</h3><p>由于我们希望稍后将一个 / 多个 KES 服务器连接到 Vault，因此必须启用 AppRole 身份验证。为此，请运行：</p><pre><code>vault auth enable approle
+</code></pre><p>创建一个新的 AppRole ID 并将其绑定到策略.<br>创建一个新的 AppRole ID 并授予该 ID 特定的权限。 该应用程序（即 KES 服务器）将通过 AppRole 角色 ID 和机密 ID 向 Vault 进行身份验证，并且仅允许执行特定策略授予的操作.</p><pre><code># 我们首先为KES服务器创建一个新角色:
+vault write auth/approle/role/kes-role token_num_uses=0  secret_id_num_uses=0  period=5m
+
+# 然后，我们将策略绑定到角色：
+vault write auth/approle/role/kes-role policies=minio-key-policy
+
+# 最后，我们从Vault请求AppRole角色ID和秘密ID。
+首先是角色ID：
+vault read auth/approle/role/kes-role/role-id 
+	fe46e329-bb70-2342-9fac-f3964a447d07
+
+# 然后是秘密ID：
+vault write -f auth/approle/role/kes-role/secret-id
+	50646d24-5589-bba9-3f99-15ef2ae7e100
+</code></pre><p>我们只对 secret_id 感兴趣，不包括 secret_id_accessor.</p><h2 id="kes-2"><a class="anchor" href="#kes-2">#</a> KES</h2><h3 id="生成kes证书和私钥"><a class="anchor" href="#生成kes证书和私钥">#</a> 生成 KES 证书和私钥</h3><p><strong><code>此部署文档将Kes和MinIO共用相同的private.key和public.crt</code></strong><br>上面私匙和证书名字不要改变，因为 MinIO 的私匙和证书必须是 private.key 和 public.crt,</p><p>kes-minio-crt.conf:</p><pre><code>[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+C = US
+ST = state
+L = location
+O = organization
+CN = localhost
+
+[v3_req]
+subjectAltName = @alt_names
+
+[alt_names]
+IP.1 = 127.0.0.1
+IP.2 = 10.239.140.73
+DNS.1 = *.minio-hl-svc.minio.svc.cluster.local
+DNS.2 = master
+DNS.3 = localhost
+</code></pre><p>连接到 KES 服务器（mTLS）时，每个用户或应用程序必须出示有效的 X.509 证书。 KES 服务器将接受 / 拒绝连接尝试，并根据证书应用策略。</p><p>因此，每个 MinIO 群集都需要一个 X.509 TLS 证书来进行客户端身份验证。可以通过运行以下命令来创建 MinIO（自签名）证书.</p><pre><code># 使用ECDSA生成密钥
+openssl ecparam -genkey -name prime256v1 | openssl ec -out minio-pki/private.key
+openssl req -new -x509 -nodes -days 730 -key minio-pki/private.key -sha384 -out minio-pki/public.crt -config kes-minio-crt.conf
+
+# 使用RSA生成密钥
+openssl genrsa -out private.key 2048
+openssl req -new -x509 -nodes -days 730 -key minio-pki/private.key -out minio-pki/public.crt -config kes-minio-crt.conf
+
+# KES和MinIO共用相同的证书和私钥, 因此拷贝一份MinIO密钥和证书给KES用:
+cp minio-pki/private.key ./kes-server.key
+cp minio-pki/public.crt ./kes-server.crt
+</code></pre><p>注意，MinIO 是<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvWC41MDkjU3RydWN0dXJlX29mX2FfY2VydGlmaWNhdGU="> subject name</span>。 您可以为您的部署方案选择一个更合适的名称。此外，对于生产部署，我们 建议获取由 CA 颁发的用于客户端身份验证的 TLS 证书。</p><p>要获取 MinIO 的 X.509 证书的身份，请运行：</p><pre><code>kes tool identity of minio-pki/public.crt
+# 此命令可与任何（有效）X.509证书一起使用-无论如何创建它-并 产生类似于以下内容的输出：
+  Identity: dd46485bedc9ad2909d2e8f9017216eec4413bc5c64b236d992f7ec19c843c5f
+
+# 设置环境变量
+export APP_IDENTITY=dd46485bedc9ad2909d2e8f9017216eec4413bc5c64b236d992f7ec19c843c5f
+</code></pre><h3 id="创建kes配置文件"><a class="anchor" href="#创建kes配置文件">#</a> 创建 KES 配置文件</h3><p>创建 KES 配置文件并启动 KES 服务器.</p><pre><code>cat &gt; kes-server-config.yml &lt;&lt;EOF
+address: 0.0.0.0:7373
+root:    disabled  # We disable the root identity since we don't need it in this guide
+
+tls:
+  key:  kes-server.key
+  cert: kes-server.crt
+
+policy:
+  my-app:
+    paths:
+    - /v1/key/create/minio-*
+    - /v1/key/generate/minio-*
+    - /v1/key/decrypt/minio-*
+    identities:
+    - ${APP_IDENTITY}
+
+cache:
+  expiry:
+    any:    5m0s
+    unused: 20s
+
+keys:
+  vault:
+    endpoint: https://127.0.0.1:8200
+    prefix: minio
+    approle:
+      id:     &quot;fe46e329-bb70-2342-9fac-f3964a447d07&quot; # Your AppRole ID: $ vault read auth/approle/role/kes-role/role-id
+      secret: &quot;50646d24-5589-bba9-3f99-15ef2ae7e100&quot; # Your AppRole Secret ID: $ vault write -f auth/approle/role/kes-role/secret-id
+      retry:  15s
+    status:
+      ping: 10s
+    tls:
+      ca: &quot;vault-tls.crt&quot; # Since we use self-signed certificates
+
+EOF
+</code></pre><p>请 identities 在 policy 部分中将的值更改为您的身份 minio-pki/public.crt, 或者在终端运行 <strong><code>export APP_IDENTITY=dd46485bedc9ad2909d2e8f9017216eec4413bc5c64b236d992f7ec19c843c5f</code></strong><br>另外，插入您在保险柜设置过程中之前创建的 AppRole 角色 ID 和密码 ID。 您可以<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL2tlcy9ibG9iL21hc3Rlci9zZXJ2ZXItY29uZmlnLnlhbWw=">在此处</span>找到包含所有可用参数的文档化配置文件.</p><p>最后，通过以下方式启动 KES 服务器：</p><pre><code>kes server --mlock --config=kes-server-config.yml --auth=off
+</code></pre><p><strong><code>--auth=off</code> </strong>is required since our root.cert and app.cert certificates are self-signed.<br>The <strong><code>--mlock</code> </strong>option is currently only available on Linux.</p><p>有关 KES 访问控制模型和身份验证的更多信息:<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmlvL2tlcy93aWtpL0NvbmNlcHRz">KES Concepts</span></p><h3 id="创建一个新的主密钥"><a class="anchor" href="#创建一个新的主密钥">#</a> 创建一个新的主密钥</h3><p>在继续进行 MinIO 设置之前，我们需要创建一个新的主密钥。因此，我们使用 MinIO 身份和 KES CLI。</p><p>在新的终端窗口中，通过以下方式成为 MinIO 身份：</p><pre><code>export KES_CLIENT_CERT=minio-pki/public.crt
+export KES_CLIENT_KEY=minio-pki/private.key
+</code></pre><p>然后运行以下命令来创建主密钥：</p><pre><code># 设置访问vault变量:
+export VAULT_SKIP_VERIFY=true
+export VAULT_TOKEN=s.zaU4Gbcu0Wh46uj2V3VuUde0
+
+# 创建主密钥:
+kes key create -k minio-key-1
+
+# 查看所有key-value文件夹
+vault kv list kv/
+  Keys
+  ----
+  minio/
+  test01
+
+# 查看某个文件夹下有哪些主密钥
+vault kv list kv/minio
+  Keys
+  ----
+  minio-key-1
+  minio-key-2
+
+# 获取某个主密钥数据信息
+vault kv get kv/minio/minio-key-1
+  ======= Data =======
+  Key            Value
+  ---            -----
+  minio-key-1    {&quot;bytes&quot;:&quot;rrjxB3THaSzSGaJ2mUwWDjT/+Tvgb5XbECPi3P9rgBs=&quot;}
+
+</code></pre><p>由于我们使用自签名证书，因此仅需要 <strong><code>-k</code> </strong>标志.<br>另外，请注意，基于服务器配置文件， 仅允许 MinIO 标识创建 / 使用以开头的主密钥 <code>minio-</code> . 因此，尝试创建密钥（例如） <code>kes key create my-key-1 -k</code> 将失败，并出现策略错误禁止的消息.</p><h2 id="minio-2"><a class="anchor" href="#minio-2">#</a> MinIO</h2><p>minio 的证书和私钥请参考上面 KES 生成 minio-pki/private.key 和 minio-pki/public.crt 步骤.</p><p>MinIO 服务器将需要知道 KES 服务器端点， 用于身份验证和授权的 mTLS 客户端证书以及默认的主密钥名称.</p><h3 id="搭建本地minio服务"><a class="anchor" href="#搭建本地minio服务">#</a> 搭建本地 minio 服务</h3><p>MinIO 服务器将需要知道 KES 服务器端点， 用于身份验证和授权的 mTLS 客户端证书以及默认的主密钥名称.</p><pre><code>export MINIO_KMS_KES_ENDPOINT=https://10.239.140.73:7373
+export MINIO_KMS_KES_CERT_FILE=minio-pki/public.crt
+export MINIO_KMS_KES_KEY_FILE=minio-pki/private.key
+export MINIO_KMS_KES_CA_PATH=kes-server.crt
+export MINIO_KMS_KES_KEY_NAME=minio-key-1
+</code></pre><p>由于我们使用自签名证书，因此只需要 ** <code>MINIO_KMS_KES_CA_PATH</code> **</p><p>然后启动 MinIO 服务器：</p><pre><code>export MINIO_ACCESS_KEY=minio
+export MINIO_SECRET_KEY=minio123
+rm -rf /root/.mc
+rm -rf /root/.minio
+minio server --certs-dir ./minio-pki ./data
+ * 指定上传minio server端证书存放路径文件夹为: ./minio-pki
+ * minio存储的数据保存到data目录
+</code></pre><p>切换终端，启动自动加密，如果在 K8S 上部署 MinIO server enable 了密钥和证书，则执行下面类似命令时候都要加上 <strong><code>--insecure</code> </strong>, 信任自签的证书.</p><pre><code># 设置server服务地址
+mc alias set myminio https://10.239.140.73:9000 minio minio123 --insecure
+
+# 创建bucket
+mc mb myminio/test01 --insecure
+
+# 加密minio 已存在的某个 bucket
+mc encrypt set sse-s3 myminio/test01/ --insecure
+mc encrypt info myminio/test01/ --insecure
+  Auto encryption 'sse-s3' is enabled
+
+# 将本地文件synk.jpg上传到minio
+mc cp synk.jpg myminio/test01/ --insecure
+
+# 查看上传文件状态, 可以看到已自动加密
+mc stat myminio/test01/synk.jpg --insecure
+  Name      : synk.jpg
+  Date      : 2021-03-15 11:54:36 CST
+  Size      : 112 B
+  ETag      : 2ced7fb62d324c643aeb21eccbe86eeb
+  Type      : file
+  Metadata  :
+    Content-Type: application/x-sh
+  Encrypted :
+    X-Amz-Server-Side-Encryption: AES256
+
+# 将上传的文件下载到本地
+mc cp myminio/test01/synk.jpg 001.jpg --insecure
+</code></pre><h3 id="k8s上搭建minio"><a class="anchor" href="#k8s上搭建minio">#</a> k8s 上搭建 minio</h3><div class="tags"><a href="/tags/storage/" rel="tag"><i class="ic i-tag"></i> storage</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2021-03-16 18:57:37" itemprop="dateModified" datetime="2021-03-16T18:57:37+08:00">2021-03-16</time></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Kung-Fu-Master 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Kung-Fu-Master 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Kung-Fu-Master 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Kung-Fu-Master <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>本文链接：</strong> <a href="https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/" title="Deploy MinIO with KMS(vault)">https://kung-fu-master.github.io/2021/03/15/storage/minio/minIO_05_KMS/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/entertainment/test/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciszlczyj20zk0m816d.jpg" title="test"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> entertainment</span><h3>test</h3></a></div><div class="item right"><a href="/2021/03/16/technologies/security/openssl_update/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeudstjqj20zk0m8k3r.jpg" title="openssl update"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> security</span><h3>openssl update</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#referenc-link"><span class="toc-number">1.</span> <span class="toc-text"># referenc link</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text"># 概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#先决条件"><span class="toc-number">3.</span> <span class="toc-text"># 先决条件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vault"><span class="toc-number">3.1.</span> <span class="toc-text"># * Vault:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kes"><span class="toc-number">3.2.</span> <span class="toc-text"># * KES:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#minio"><span class="toc-number">3.3.</span> <span class="toc-text"># * MinIO：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mc"><span class="toc-number">3.4.</span> <span class="toc-text"># * mc:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器配置"><span class="toc-number">4.</span> <span class="toc-text"># 机器配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kmsvault"><span class="toc-number">5.</span> <span class="toc-text"># KMS(Vault)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为保险柜生成tls证书"><span class="toc-number">5.1.</span> <span class="toc-text"># 为保险柜生成 TLS 证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建保管库配置文件"><span class="toc-number">5.2.</span> <span class="toc-text"># 创建保管库配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动vault服务器"><span class="toc-number">5.3.</span> <span class="toc-text"># 启动 Vault 服务器：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化和解封保管箱"><span class="toc-number">5.4.</span> <span class="toc-text"># 初始化和解封保管箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启用保险柜的kv后端"><span class="toc-number">5.5.</span> <span class="toc-text"># 启用保险柜的 K&#x2F;V 后端.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启用approle身份验证"><span class="toc-number">5.6.</span> <span class="toc-text"># 启用 AppRole 身份验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kes-2"><span class="toc-number">6.</span> <span class="toc-text"># KES</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成kes证书和私钥"><span class="toc-number">6.1.</span> <span class="toc-text"># 生成 KES 证书和私钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建kes配置文件"><span class="toc-number">6.2.</span> <span class="toc-text"># 创建 KES 配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个新的主密钥"><span class="toc-number">6.3.</span> <span class="toc-text"># 创建一个新的主密钥</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#minio-2"><span class="toc-number">7.</span> <span class="toc-text"># MinIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建本地minio服务"><span class="toc-number">7.1.</span> <span class="toc-text"># 搭建本地 minio 服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#k8s上搭建minio"><span class="toc-number">7.2.</span> <span class="toc-text"># k8s 上搭建 minio</span></a></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/2021/03/13/storage/minio/minIO_01_conception/" rel="bookmark" title="MinIO 01 conception">MinIO 01 conception</a></li><li><a href="/2021/03/13/storage/minio/minIO_02_deployment_on_kubernetes/" rel="bookmark" title="MinIO 02 deployment on kubernetes">MinIO 02 deployment on kubernetes</a></li><li><a href="/2021/03/13/storage/minio/minIO_04_client_SDK/" rel="bookmark" title="MinIO 04 client SDK">MinIO 04 client SDK</a></li><li><a href="/2021/03/13/storage/minio/minIO_03_client.md/" rel="bookmark" title="MinIO 03 client">MinIO 03 client</a></li><li class="active"><a href="/2021/03/15/storage/minio/minIO_05_KMS/" rel="bookmark" title="Deploy MinIO with KMS(vault)">Deploy MinIO with KMS(vault)</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Kung-Fu-Master" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Kung-Fu-Master</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">292</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">40</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">12</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/entertainment/test/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/16/technologies/security/openssl_update/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/wget_www.baidu.com/" title="wget www.baidu.com">wget www.baidu.com</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/Devtoolset%20%E5%8D%87%E7%BA%A7gcc%E5%88%B08.3.1/" title="Devtoolset 升级gcc到8.3.1">Devtoolset 升级gcc到8.3.1</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/blogs/" title="分类于 blogs">blogs</a> <i class="ic i-angle-right"></i> <a href="/categories/blogs/blogs/" title="分类于 blogs">blogs</a></div><span><a href="/2021/03/13/blogs/blogs/VScode_%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE/" title="VScode 配置设置">VScode 配置设置</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/18.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%80)%EF%BC%9A%E6%8B%93%E6%89%91%E7%8A%B6%E6%80%81/" title="18 | 深入理解StatefulSet（一）：拓扑状态">18 | 深入理解StatefulSet（一）：拓扑状态</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/history/" title="Linux中禁用命令历史记录">Linux中禁用命令历史记录</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/windows/" title="分类于 windows">windows</a></div><span><a href="/2021/03/13/windows/U%E7%9B%98%E5%88%86%E5%8C%BA%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D/" title="U盘分区之后如何恢复">U盘分区之后如何恢复</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/36.%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4Kubernetes%E5%8F%AA%E6%9C%89soft%20multi-tenancy/" title="36 | 为什么说Kubernetes只有soft multi-tenancy？">36 | 为什么说Kubernetes只有soft multi-tenancy？</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/23.%E5%A3%B0%E6%98%8E%E5%BC%8FAPI%E4%B8%8EKubernetes%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" title="23 | 声明式API与Kubernetes编程范式">23 | 声明式API与Kubernetes编程范式</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/windows/" title="分类于 windows">windows</a></div><span><a href="/2021/03/13/windows/Windows10_VScode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5linux%E7%BC%96%E8%BE%91%E8%B0%83%E8%AF%95/" title="Windows10_VScode远程连接linux编辑调试">Windows10_VScode远程连接linux编辑调试</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/web%E5%89%8D%E7%AB%AF/" title="分类于 web前端">web前端</a></div><span><a href="/2021/03/13/technologies/web/datatables/" title="web前端datatables框架">web前端datatables框架</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Kung-Fu-Master @ Kung Fu Master</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">1.1m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">16:30</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/15/storage/minio/minIO_05_KMS/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->

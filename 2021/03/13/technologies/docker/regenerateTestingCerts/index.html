@@ -1,316 +1,220 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="regenerateTestingCerts.sh脚本内容">
-<meta property="og:type" content="article">
-<meta property="og:title" content="regenerateTestingCerts.sh">
-<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="regenerateTestingCerts.sh脚本内容">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-13T05:00:42.904Z">
-<meta property="article:modified_time" content="2021-03-13T05:00:42.904Z">
-<meta property="article:author" content="Kung-Fu-Master">
-<meta property="article:tag" content="docker">
-<meta name="twitter:card" content="summary"><title>regenerateTestingCerts.sh | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: true,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
+<!-- build time:Wed Mar 17 2021 02:52:23 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="https://kung-fu-master.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="https://kung-fu-master.github.io/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="https://kung-fu-master.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="docker"><link rel="canonical" href="https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/"><title>regenerateTestingCerts.sh - docker - technologies | Kung Fu Master = Hexo</title><meta name="generator" content="Hexo 4.2.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">regenerateTestingCerts.sh</h1><div class="meta"><span class="item" title="创建时间：2021-03-13 13:00:42"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-03-13T13:00:42+08:00">2021-03-13</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>9.2k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>8 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Kung Fu Master</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipesng5oej20zk0m87d4.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicitcxhpij20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/technologies/" itemprop="item" rel="index" title="分类于 technologies"><span itemprop="name">technologies</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/technologies/docker/" itemprop="item" rel="index" title="分类于 docker"><span itemprop="name">docker</span></a><meta itemprop="position" content="2"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Kung-Fu-Master"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><h2 id="regeneratetestingcertssh脚本内容"><a class="anchor" href="#regeneratetestingcertssh脚本内容">#</a> regenerateTestingCerts.sh 脚本内容</h2><p><a id="more"></a></p><pre><code>#!/usr/bin/env bash
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">regenerateTestingCerts.sh</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.2k</span></span></div></header><div class="post-body">
-        <h2 id="regenerateTestingCerts-sh脚本内容"   >
-          <a href="#regenerateTestingCerts-sh脚本内容" class="heading-link"><i class="fas fa-link"></i></a>regenerateTestingCerts.sh脚本内容</h2>
-      <a id="more"></a>
+# Script to be used for generating testing certs only for notary-server and notary-signer
+# Will also create a root-ca and intermediate-ca, deleting those keys when finished
 
-<figure class="highlight stata"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env bash</span><br><span class="line"></span><br><span class="line"># Script to be used <span class="keyword">for</span> generating testing certs only <span class="keyword">for</span> notary-server and notary-signer</span><br><span class="line"># Will also create a root-<span class="keyword">ca</span> and intermediate-<span class="keyword">ca</span>, deleting those keys when finished</span><br><span class="line"></span><br><span class="line">OPENSSLCNF=</span><br><span class="line"><span class="keyword">for</span> path <span class="keyword">in</span> /etc/pki/tls/openssl.cnf /etc/openssl/openssl.cnf /etc/ssl/openssl.cnf /usr/<span class="keyword">local</span>/etc/openssl/openssl.cnf; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [[ -<span class="keyword">e</span> <span class="variable">$&#123;path&#125;</span> ]]; then</span><br><span class="line">        OPENSSLCNF=<span class="variable">$&#123;path&#125;</span></span><br><span class="line">    fi</span><br><span class="line">done</span><br><span class="line"><span class="keyword">if</span> [[ -z <span class="variable">$&#123;OPENSSLCNF&#125;</span> ]]; then</span><br><span class="line">    printf <span class="string">"Could not find openssl.cnf"</span></span><br><span class="line">    <span class="keyword">exit</span> 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># First generates root-<span class="keyword">ca</span></span><br><span class="line">openssl genrsa -<span class="keyword">out</span> <span class="string">"root-ca.key"</span> 4096</span><br><span class="line">openssl req -new -key <span class="string">"root-ca.key"</span> -<span class="keyword">out</span> <span class="string">"root-ca.csr"</span> -sha512 \</span><br><span class="line">        -subj '/C=<span class="keyword">US</span>/<span class="keyword">ST</span>=<span class="keyword">CA</span>/<span class="keyword">L</span>=San Francisco/O=Docker/CN=Notary Testing <span class="keyword">CA</span>'</span><br><span class="line"></span><br><span class="line"><span class="keyword">cat</span> &gt; <span class="string">"root-ca.cnf"</span> &lt;&lt;EOL</span><br><span class="line">[root_ca]</span><br><span class="line">basicConstraints = critical,<span class="keyword">CA</span>:TRUE,pathlen:1</span><br><span class="line">keyUsage = critical, nonRepudiation, cRLSign, keyCertSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 3650 -<span class="keyword">in</span> <span class="string">"root-ca.csr"</span> -signkey <span class="string">"root-ca.key"</span> -sha512 \</span><br><span class="line">        -<span class="keyword">out</span> <span class="string">"root-ca.crt"</span> -extfile <span class="string">"root-ca.cnf"</span> -extensions root_ca</span><br><span class="line">cp <span class="string">"root-ca.crt"</span> <span class="string">"../cmd/notary/root-ca.crt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">rm</span> <span class="string">"root-ca.cnf"</span> <span class="string">"root-ca.csr"</span></span><br><span class="line"></span><br><span class="line"># Then <span class="keyword">generate</span> intermediate-<span class="keyword">ca</span></span><br><span class="line">openssl genrsa -<span class="keyword">out</span> <span class="string">"intermediate-ca.key"</span> 4096</span><br><span class="line">openssl req -new -key <span class="string">"intermediate-ca.key"</span> -<span class="keyword">out</span> <span class="string">"intermediate-ca.csr"</span> -sha512 \</span><br><span class="line">        -subj '/C=<span class="keyword">US</span>/<span class="keyword">ST</span>=<span class="keyword">CA</span>/<span class="keyword">L</span>=San Francisco/O=Docker/CN=Notary Intermediate Testing <span class="keyword">CA</span>'</span><br><span class="line"></span><br><span class="line"><span class="keyword">cat</span> &gt; <span class="string">"intermediate-ca.cnf"</span> &lt;&lt;EOL</span><br><span class="line">[intermediate_ca]</span><br><span class="line">authorityKeyIdentifier=keyid,issuer</span><br><span class="line">basicConstraints = critical,<span class="keyword">CA</span>:TRUE,pathlen:0</span><br><span class="line">extendedKeyUsage=serverAuth,clientAuth</span><br><span class="line">keyUsage = critical, nonRepudiation, cRLSign, keyCertSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 3650 -<span class="keyword">in</span> <span class="string">"intermediate-ca.csr"</span> -sha512 \</span><br><span class="line">        -<span class="keyword">CA</span> <span class="string">"root-ca.crt"</span> -CAkey <span class="string">"root-ca.key"</span>  -CAcreateserial \</span><br><span class="line">        -<span class="keyword">out</span> <span class="string">"intermediate-ca.crt"</span> -extfile <span class="string">"intermediate-ca.cnf"</span> -extensions intermediate_ca</span><br><span class="line"></span><br><span class="line"><span class="keyword">rm</span> <span class="string">"intermediate-ca.cnf"</span> <span class="string">"intermediate-ca.csr"</span></span><br><span class="line"><span class="keyword">rm</span> <span class="string">"root-ca.key"</span> <span class="string">"root-ca.srl"</span></span><br><span class="line"></span><br><span class="line"># Then <span class="keyword">generate</span> notary-server</span><br><span class="line">openssl genrsa -<span class="keyword">out</span> <span class="string">"notary-server.key"</span> 3072</span><br><span class="line"># <span class="keyword">Use</span> the existing notary-server key</span><br><span class="line">openssl req -new -key <span class="string">"notary-server.key"</span> -<span class="keyword">out</span> <span class="string">"notary-server.csr"</span> -sha384 \</span><br><span class="line">        -subj '/C=<span class="keyword">US</span>/<span class="keyword">ST</span>=<span class="keyword">CA</span>/<span class="keyword">L</span>=San Francisco/O=Docker/CN=notary-server'</span><br><span class="line"></span><br><span class="line"><span class="keyword">cat</span> &gt; <span class="string">"notary-server.cnf"</span> &lt;&lt;EOL</span><br><span class="line">[notary_server]</span><br><span class="line">authorityKeyIdentifier=keyid,issuer</span><br><span class="line">basicConstraints = critical,<span class="keyword">CA</span>:FALSE</span><br><span class="line">extendedKeyUsage=serverAuth,clientAuth</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment</span><br><span class="line">subjectAltName = DNS:notary-server, DNS:notaryserver, DNS:localhost, IP:10.239.140.65, IP:127.0.0.1</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 750 -<span class="keyword">in</span> <span class="string">"notary-server.csr"</span> -sha384 \</span><br><span class="line">        -<span class="keyword">CA</span> <span class="string">"intermediate-ca.crt"</span> -CAkey <span class="string">"intermediate-ca.key"</span>  -CAcreateserial \</span><br><span class="line">        -<span class="keyword">out</span> <span class="string">"notary-server.crt"</span> -extfile <span class="string">"notary-server.cnf"</span> -extensions notary_server</span><br><span class="line"># <span class="keyword">append</span> the intermediate cert to this <span class="keyword">one</span> to make it a proper bundle</span><br><span class="line"><span class="keyword">cat</span> <span class="string">"intermediate-ca.crt"</span> &gt;&gt; <span class="string">"notary-server.crt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">rm</span> <span class="string">"notary-server.cnf"</span> <span class="string">"notary-server.csr"</span></span><br><span class="line"></span><br><span class="line"># Then <span class="keyword">generate</span> notary-signer</span><br><span class="line">openssl genrsa -<span class="keyword">out</span> <span class="string">"notary-signer.key"</span> 3072</span><br><span class="line"># <span class="keyword">Use</span> the existing notary-signer key</span><br><span class="line">openssl req -new -key <span class="string">"notary-signer.key"</span> -<span class="keyword">out</span> <span class="string">"notary-signer.csr"</span> -sha384 \</span><br><span class="line">        -subj '/C=<span class="keyword">US</span>/<span class="keyword">ST</span>=<span class="keyword">CA</span>/<span class="keyword">L</span>=San Francisco/O=Docker/CN=notary-signer'</span><br><span class="line"></span><br><span class="line"><span class="keyword">cat</span> &gt; <span class="string">"notary-signer.cnf"</span> &lt;&lt;EOL</span><br><span class="line">[notary_signer]</span><br><span class="line">authorityKeyIdentifier=keyid,issuer</span><br><span class="line">basicConstraints = critical,<span class="keyword">CA</span>:FALSE</span><br><span class="line">extendedKeyUsage=serverAuth,clientAuth</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment</span><br><span class="line">subjectAltName = DNS:notary-signer, DNS:notarysigner, DNS:localhost, IP:127.0.0.1</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 750 -<span class="keyword">in</span> <span class="string">"notary-signer.csr"</span> -sha384 \</span><br><span class="line">        -<span class="keyword">CA</span> <span class="string">"intermediate-ca.crt"</span> -CAkey <span class="string">"intermediate-ca.key"</span>  -CAcreateserial \</span><br><span class="line">        -<span class="keyword">out</span> <span class="string">"notary-signer.crt"</span> -extfile <span class="string">"notary-signer.cnf"</span> -extensions notary_signer</span><br><span class="line"># <span class="keyword">append</span> the intermediate cert to this <span class="keyword">one</span> to make it a proper bundle</span><br><span class="line"><span class="keyword">cat</span> <span class="string">"intermediate-ca.crt"</span> &gt;&gt; <span class="string">"notary-signer.crt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">rm</span> <span class="string">"notary-signer.cnf"</span> <span class="string">"notary-signer.csr"</span></span><br><span class="line"></span><br><span class="line"># Then <span class="keyword">generate</span> notary-escrow</span><br><span class="line">openssl genrsa -<span class="keyword">out</span> <span class="string">"notary-escrow.key"</span> 3072</span><br><span class="line"># <span class="keyword">Use</span> the existing notary-escrow key</span><br><span class="line">openssl req -new -key <span class="string">"notary-escrow.key"</span> -<span class="keyword">out</span> <span class="string">"notary-escrow.csr"</span> -sha384 \</span><br><span class="line">        -subj '/C=<span class="keyword">US</span>/<span class="keyword">ST</span>=<span class="keyword">CA</span>/<span class="keyword">L</span>=San Francisco/O=Docker/CN=notary-escrow'</span><br><span class="line"></span><br><span class="line"><span class="keyword">cat</span> &gt; <span class="string">"notary-escrow.cnf"</span> &lt;&lt;EOL</span><br><span class="line">[notary_escrow]</span><br><span class="line">authorityKeyIdentifier=keyid,issuer</span><br><span class="line">basicConstraints = critical,<span class="keyword">CA</span>:FALSE</span><br><span class="line">extendedKeyUsage=serverAuth,clientAuth</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment</span><br><span class="line">subjectAltName = DNS:notary-escrow, DNS:notaryescrow, DNS:localhost, IP:127.0.0.1</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 750 -<span class="keyword">in</span> <span class="string">"notary-escrow.csr"</span> -sha384 \</span><br><span class="line">        -<span class="keyword">CA</span> <span class="string">"intermediate-ca.crt"</span> -CAkey <span class="string">"intermediate-ca.key"</span>  -CAcreateserial \</span><br><span class="line">        -<span class="keyword">out</span> <span class="string">"notary-escrow.crt"</span> -extfile <span class="string">"notary-escrow.cnf"</span> -extensions notary_escrow</span><br><span class="line"># <span class="keyword">append</span> the intermediate cert to this <span class="keyword">one</span> to make it a proper bundle</span><br><span class="line"><span class="keyword">cat</span> <span class="string">"intermediate-ca.crt"</span> &gt;&gt; <span class="string">"notary-escrow.crt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">rm</span> <span class="string">"notary-escrow.cnf"</span> <span class="string">"notary-escrow.csr"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Then <span class="keyword">generate</span> secure.example.com</span><br><span class="line"># <span class="keyword">Use</span> the existing secure.example.com key</span><br><span class="line">openssl req -new -key <span class="string">"secure.example.com.key"</span> -<span class="keyword">out</span> <span class="string">"secure.example.com.csr"</span> -sha384 \</span><br><span class="line">        -subj '/C=<span class="keyword">US</span>/<span class="keyword">ST</span>=<span class="keyword">CA</span>/<span class="keyword">L</span>=San Francisco/O=Docker/CN=secure.example.com'</span><br><span class="line"></span><br><span class="line"><span class="keyword">cat</span> &gt; <span class="string">"secure.example.com.cnf"</span> &lt;&lt;EOL</span><br><span class="line">[secure.example.com]</span><br><span class="line">authorityKeyIdentifier=keyid,issuer</span><br><span class="line">basicConstraints = critical,<span class="keyword">CA</span>:FALSE</span><br><span class="line">extendedKeyUsage=serverAuth,clientAuth</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment</span><br><span class="line">subjectAltName = DNS:secure.example.com, DNS:localhost, IP:127.0.0.1</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 750 -<span class="keyword">in</span> <span class="string">"secure.example.com.csr"</span> -sha384 \</span><br><span class="line">        -<span class="keyword">CA</span> <span class="string">"intermediate-ca.crt"</span> -CAkey <span class="string">"intermediate-ca.key"</span>  -CAcreateserial \</span><br><span class="line">        -<span class="keyword">out</span> <span class="string">"secure.example.com.crt"</span> -extfile <span class="string">"secure.example.com.cnf"</span> -extensions secure.example.com</span><br><span class="line"><span class="keyword">rm</span> <span class="string">"secure.example.com.cnf"</span> <span class="string">"secure.example.com.csr"</span></span><br><span class="line"><span class="keyword">rm</span> <span class="string">"intermediate-ca.key"</span> <span class="string">"intermediate-ca.srl"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="keyword">generate</span> self-signed_docker.com-notary.crt and self-signed_secure.example.com</span><br><span class="line"><span class="keyword">for</span> selfsigned <span class="keyword">in</span> self-signed_docker.com-notary self-signed_secure.example.com; <span class="keyword">do</span></span><br><span class="line">        subj='/O=Docker/CN=docker.com\/notary'</span><br><span class="line">        <span class="keyword">if</span> [[ <span class="string">"$&#123;selfsigned&#125;"</span> =~ .*example.com ]]; then</span><br><span class="line">                subj='/O=secure.example.com/CN=secure.example.com'</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        openssl ecparam -name prime256v1 -genkey -<span class="keyword">out</span> <span class="string">"$&#123;selfsigned&#125;.key"</span></span><br><span class="line">        openssl req -new -key <span class="string">"$&#123;selfsigned&#125;.key"</span> -<span class="keyword">out</span> <span class="string">"$&#123;selfsigned&#125;.csr"</span> -sha256 -subj <span class="string">"$&#123;subj&#125;"</span></span><br><span class="line">        <span class="keyword">cat</span> &gt; <span class="string">"$&#123;selfsigned&#125;.cnf"</span> &lt;&lt;EOL</span><br><span class="line">[selfsigned]</span><br><span class="line">basicConstraints = critical,<span class="keyword">CA</span>:FALSE</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment</span><br><span class="line">extendedKeyUsage=codeSigning</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">        openssl x509 -req -days 750 -<span class="keyword">in</span> <span class="string">"$&#123;selfsigned&#125;.csr"</span> -signkey <span class="string">"$&#123;selfsigned&#125;.key"</span> \</span><br><span class="line">                -<span class="keyword">out</span> <span class="string">"$&#123;selfsigned&#125;.crt"</span> -extfile <span class="string">"$&#123;selfsigned&#125;.cnf"</span> -extensions selfsigned</span><br><span class="line"></span><br><span class="line">        <span class="keyword">rm</span> <span class="string">"$&#123;selfsigned&#125;.cnf"</span> <span class="string">"$&#123;selfsigned&#125;.csr"</span> <span class="string">"$&#123;selfsigned&#125;.key"</span></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># Postgresql keys <span class="keyword">for</span> testing server/client auth</span><br><span class="line"></span><br><span class="line">command -v cfssljson  &gt;/dev/null 2&gt;&amp;1 || &#123; </span><br><span class="line">    echo &gt;&amp;2 <span class="string">"Installing cfssl tools"</span>; go get -<span class="keyword">u</span> github.com/cloudflare/cfssl/cmd/...;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># Create a <span class="keyword">dir</span> to store keys generated temporarily</span><br><span class="line"><span class="keyword">mkdir</span> cfssl</span><br><span class="line"><span class="keyword">cd</span> cfssl</span><br><span class="line"></span><br><span class="line"># <span class="keyword">Generate</span> <span class="keyword">CA</span> and certificates</span><br><span class="line"></span><br><span class="line">echo '&#123;<span class="string">"CN"</span>: <span class="string">"Test Notary CA"</span>,<span class="string">"key"</span>:&#123;<span class="string">"algo"</span>:<span class="string">"rsa"</span>,<span class="string">"size"</span>:2048&#125;&#125;' | cfssl gencert -initca - | cfssljson -bare <span class="keyword">ca</span> -</span><br><span class="line"></span><br><span class="line">echo '&#123;<span class="string">"signing"</span>:&#123;<span class="string">"default"</span>:&#123;<span class="string">"expiry"</span>:<span class="string">"43800h"</span>&#125;,<span class="string">"profiles"</span>:&#123;<span class="string">"server"</span>:&#123;<span class="string">"expiry"</span>:<span class="string">"43800h"</span>, <span class="string">"usages"</span>:[<span class="string">"signing"</span>,<span class="string">"key encipherment"</span>,<span class="string">"server auth"</span>]&#125;,<span class="string">"client"</span>:&#123;<span class="string">"expiry"</span>:<span class="string">"43800h"</span>, <span class="string">"usages"</span>:[<span class="string">"signing"</span>,<span class="string">"key encipherment"</span>,<span class="string">"client auth"</span>]&#125;&#125;&#125;&#125;' &gt; <span class="keyword">ca</span>-config.json</span><br><span class="line"></span><br><span class="line">echo '&#123;<span class="string">"CN"</span>:<span class="string">"database"</span>,<span class="string">"hosts"</span>:[<span class="string">"postgresql"</span>,<span class="string">"mysql"</span>],<span class="string">"key"</span>:&#123;<span class="string">"algo"</span>:<span class="string">"rsa"</span>,<span class="string">"size"</span>:2048&#125;&#125;' &gt; server.json</span><br><span class="line"></span><br><span class="line"># <span class="keyword">Generate</span> server cert and private key</span><br><span class="line">cfssl gencert -<span class="keyword">ca</span>=<span class="keyword">ca</span>.pem -<span class="keyword">ca</span>-key=<span class="keyword">ca</span>-key.pem -config=<span class="keyword">ca</span>-config.json -profile=server server.json | cfssljson -bare server</span><br><span class="line"></span><br><span class="line"># <span class="keyword">Generate</span> client certificate (notary server)</span><br><span class="line">echo '&#123;<span class="string">"CN"</span>:<span class="string">"server"</span>,<span class="string">"hosts"</span>:[<span class="string">""</span>],<span class="string">"key"</span>:&#123;<span class="string">"algo"</span>:<span class="string">"rsa"</span>,<span class="string">"size"</span>:2048&#125;&#125;' &gt; notary-server.json</span><br><span class="line"></span><br><span class="line">cfssl gencert -<span class="keyword">ca</span>=<span class="keyword">ca</span>.pem -<span class="keyword">ca</span>-key=<span class="keyword">ca</span>-key.pem -config=<span class="keyword">ca</span>-config.json -profile=client notary-server.json | cfssljson -bare notary-server</span><br><span class="line"></span><br><span class="line"># <span class="keyword">Generate</span> client certificate (notary notary-signer)</span><br><span class="line">echo '&#123;<span class="string">"CN"</span>:<span class="string">"signer"</span>,<span class="string">"hosts"</span>:[<span class="string">""</span>],<span class="string">"key"</span>:&#123;<span class="string">"algo"</span>:<span class="string">"rsa"</span>,<span class="string">"size"</span>:2048&#125;&#125;' &gt; notary-signer.json</span><br><span class="line"></span><br><span class="line">cfssl gencert -<span class="keyword">ca</span>=<span class="keyword">ca</span>.pem -<span class="keyword">ca</span>-key=<span class="keyword">ca</span>-key.pem -config=<span class="keyword">ca</span>-config.json -profile=client notary-signer.json | cfssljson -bare notary-signer</span><br><span class="line"></span><br><span class="line"># <span class="keyword">Copy</span> keys over to ../fixtures/database/[...] and ../notarysql/postgresql-initdb.<span class="keyword">d</span>/[...]</span><br><span class="line">cp <span class="keyword">ca</span>.pem ../database/</span><br><span class="line">cp notary-signer.pem ../database/</span><br><span class="line">cp notary-signer-key.pem ../database/</span><br><span class="line">cp notary-server.pem ../database</span><br><span class="line">cp notary-server-key.pem ../database/</span><br><span class="line"></span><br><span class="line">cp <span class="keyword">ca</span>.pem ../../notarysql/postgresql-initdb.<span class="keyword">d</span>/root.crt</span><br><span class="line">cp server.pem ../../notarysql/postgresql-initdb.<span class="keyword">d</span>/server.crt</span><br><span class="line">cp server-key.pem ../../notarysql/postgresql-initdb.<span class="keyword">d</span>/server.key</span><br><span class="line"></span><br><span class="line"># remove the working <span class="keyword">dir</span></span><br><span class="line"><span class="keyword">cd</span> ..</span><br><span class="line"><span class="keyword">rm</span> -rf cfssl</span><br></pre></td></tr></table></div></figure>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/">https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/docker/">docker</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/technologies/docker/%E5%AE%89%E8%A3%85docker-compose/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">安装 docker compose</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/technologies/git/git_commands/"><span class="paginator-prev__text">git commands</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#regenerateTestingCerts-sh脚本内容"><span class="toc-number">1.</span> <span class="toc-text">
-          regenerateTestingCerts.sh脚本内容</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">292</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
+OPENSSLCNF=
+for path in /etc/pki/tls/openssl.cnf /etc/openssl/openssl.cnf /etc/ssl/openssl.cnf /usr/local/etc/openssl/openssl.cnf; do
+    if [[ -e ${path} ]]; then
+        OPENSSLCNF=${path}
+    fi
+done
+if [[ -z ${OPENSSLCNF} ]]; then
+    printf &quot;Could not find openssl.cnf&quot;
+    exit 1
+fi
 
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
+# First generates root-ca
+openssl genrsa -out &quot;root-ca.key&quot; 4096
+openssl req -new -key &quot;root-ca.key&quot; -out &quot;root-ca.csr&quot; -sha512 \
+        -subj '/C=US/ST=CA/L=San Francisco/O=Docker/CN=Notary Testing CA'
 
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
+cat &gt; &quot;root-ca.cnf&quot; &lt;&lt;EOL
+[root_ca]
+basicConstraints = critical,CA:TRUE,pathlen:1
+keyUsage = critical, nonRepudiation, cRLSign, keyCertSign
+subjectKeyIdentifier=hash
+EOL
 
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
+openssl x509 -req -days 3650 -in &quot;root-ca.csr&quot; -signkey &quot;root-ca.key&quot; -sha512 \
+        -out &quot;root-ca.crt&quot; -extfile &quot;root-ca.cnf&quot; -extensions root_ca
+cp &quot;root-ca.crt&quot; &quot;../cmd/notary/root-ca.crt&quot;
 
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
+rm &quot;root-ca.cnf&quot; &quot;root-ca.csr&quot;
 
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
+# Then generate intermediate-ca
+openssl genrsa -out &quot;intermediate-ca.key&quot; 4096
+openssl req -new -key &quot;intermediate-ca.key&quot; -out &quot;intermediate-ca.csr&quot; -sha512 \
+        -subj '/C=US/ST=CA/L=San Francisco/O=Docker/CN=Notary Intermediate Testing CA'
 
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
+cat &gt; &quot;intermediate-ca.cnf&quot; &lt;&lt;EOL
+[intermediate_ca]
+authorityKeyIdentifier=keyid,issuer
+basicConstraints = critical,CA:TRUE,pathlen:0
+extendedKeyUsage=serverAuth,clientAuth
+keyUsage = critical, nonRepudiation, cRLSign, keyCertSign
+subjectKeyIdentifier=hash
+EOL
 
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
+openssl x509 -req -days 3650 -in &quot;intermediate-ca.csr&quot; -sha512 \
+        -CA &quot;root-ca.crt&quot; -CAkey &quot;root-ca.key&quot;  -CAcreateserial \
+        -out &quot;intermediate-ca.crt&quot; -extfile &quot;intermediate-ca.cnf&quot; -extensions intermediate_ca
 
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
+rm &quot;intermediate-ca.cnf&quot; &quot;intermediate-ca.csr&quot;
+rm &quot;root-ca.key&quot; &quot;root-ca.srl&quot;
 
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
+# Then generate notary-server
+openssl genrsa -out &quot;notary-server.key&quot; 3072
+# Use the existing notary-server key
+openssl req -new -key &quot;notary-server.key&quot; -out &quot;notary-server.csr&quot; -sha384 \
+        -subj '/C=US/ST=CA/L=San Francisco/O=Docker/CN=notary-server'
 
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
+cat &gt; &quot;notary-server.cnf&quot; &lt;&lt;EOL
+[notary_server]
+authorityKeyIdentifier=keyid,issuer
+basicConstraints = critical,CA:FALSE
+extendedKeyUsage=serverAuth,clientAuth
+keyUsage = critical, digitalSignature, keyEncipherment
+subjectAltName = DNS:notary-server, DNS:notaryserver, DNS:localhost, IP:10.239.140.65, IP:127.0.0.1
+subjectKeyIdentifier=hash
+EOL
 
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
+openssl x509 -req -days 750 -in &quot;notary-server.csr&quot; -sha384 \
+        -CA &quot;intermediate-ca.crt&quot; -CAkey &quot;intermediate-ca.key&quot;  -CAcreateserial \
+        -out &quot;notary-server.crt&quot; -extfile &quot;notary-server.cnf&quot; -extensions notary_server
+# append the intermediate cert to this one to make it a proper bundle
+cat &quot;intermediate-ca.crt&quot; &gt;&gt; &quot;notary-server.crt&quot;
 
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+rm &quot;notary-server.cnf&quot; &quot;notary-server.csr&quot;
 
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
+# Then generate notary-signer
+openssl genrsa -out &quot;notary-signer.key&quot; 3072
+# Use the existing notary-signer key
+openssl req -new -key &quot;notary-signer.key&quot; -out &quot;notary-signer.csr&quot; -sha384 \
+        -subj '/C=US/ST=CA/L=San Francisco/O=Docker/CN=notary-signer'
 
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
-    }
-  });
+cat &gt; &quot;notary-signer.cnf&quot; &lt;&lt;EOL
+[notary_signer]
+authorityKeyIdentifier=keyid,issuer
+basicConstraints = critical,CA:FALSE
+extendedKeyUsage=serverAuth,clientAuth
+keyUsage = critical, digitalSignature, keyEncipherment
+subjectAltName = DNS:notary-signer, DNS:notarysigner, DNS:localhost, IP:127.0.0.1
+subjectKeyIdentifier=hash
+EOL
+
+openssl x509 -req -days 750 -in &quot;notary-signer.csr&quot; -sha384 \
+        -CA &quot;intermediate-ca.crt&quot; -CAkey &quot;intermediate-ca.key&quot;  -CAcreateserial \
+        -out &quot;notary-signer.crt&quot; -extfile &quot;notary-signer.cnf&quot; -extensions notary_signer
+# append the intermediate cert to this one to make it a proper bundle
+cat &quot;intermediate-ca.crt&quot; &gt;&gt; &quot;notary-signer.crt&quot;
+
+rm &quot;notary-signer.cnf&quot; &quot;notary-signer.csr&quot;
+
+# Then generate notary-escrow
+openssl genrsa -out &quot;notary-escrow.key&quot; 3072
+# Use the existing notary-escrow key
+openssl req -new -key &quot;notary-escrow.key&quot; -out &quot;notary-escrow.csr&quot; -sha384 \
+        -subj '/C=US/ST=CA/L=San Francisco/O=Docker/CN=notary-escrow'
+
+cat &gt; &quot;notary-escrow.cnf&quot; &lt;&lt;EOL
+[notary_escrow]
+authorityKeyIdentifier=keyid,issuer
+basicConstraints = critical,CA:FALSE
+extendedKeyUsage=serverAuth,clientAuth
+keyUsage = critical, digitalSignature, keyEncipherment
+subjectAltName = DNS:notary-escrow, DNS:notaryescrow, DNS:localhost, IP:127.0.0.1
+subjectKeyIdentifier=hash
+EOL
+
+openssl x509 -req -days 750 -in &quot;notary-escrow.csr&quot; -sha384 \
+        -CA &quot;intermediate-ca.crt&quot; -CAkey &quot;intermediate-ca.key&quot;  -CAcreateserial \
+        -out &quot;notary-escrow.crt&quot; -extfile &quot;notary-escrow.cnf&quot; -extensions notary_escrow
+# append the intermediate cert to this one to make it a proper bundle
+cat &quot;intermediate-ca.crt&quot; &gt;&gt; &quot;notary-escrow.crt&quot;
+
+rm &quot;notary-escrow.cnf&quot; &quot;notary-escrow.csr&quot;
+
+
+# Then generate secure.example.com
+# Use the existing secure.example.com key
+openssl req -new -key &quot;secure.example.com.key&quot; -out &quot;secure.example.com.csr&quot; -sha384 \
+        -subj '/C=US/ST=CA/L=San Francisco/O=Docker/CN=secure.example.com'
+
+cat &gt; &quot;secure.example.com.cnf&quot; &lt;&lt;EOL
+[secure.example.com]
+authorityKeyIdentifier=keyid,issuer
+basicConstraints = critical,CA:FALSE
+extendedKeyUsage=serverAuth,clientAuth
+keyUsage = critical, digitalSignature, keyEncipherment
+subjectAltName = DNS:secure.example.com, DNS:localhost, IP:127.0.0.1
+subjectKeyIdentifier=hash
+EOL
+
+openssl x509 -req -days 750 -in &quot;secure.example.com.csr&quot; -sha384 \
+        -CA &quot;intermediate-ca.crt&quot; -CAkey &quot;intermediate-ca.key&quot;  -CAcreateserial \
+        -out &quot;secure.example.com.crt&quot; -extfile &quot;secure.example.com.cnf&quot; -extensions secure.example.com
+rm &quot;secure.example.com.cnf&quot; &quot;secure.example.com.csr&quot;
+rm &quot;intermediate-ca.key&quot; &quot;intermediate-ca.srl&quot;
+
+
+# generate self-signed_docker.com-notary.crt and self-signed_secure.example.com
+for selfsigned in self-signed_docker.com-notary self-signed_secure.example.com; do
+        subj='/O=Docker/CN=docker.com\/notary'
+        if [[ &quot;${selfsigned}&quot; =~ .*example.com ]]; then
+                subj='/O=secure.example.com/CN=secure.example.com'
+        fi
+
+        openssl ecparam -name prime256v1 -genkey -out &quot;${selfsigned}.key&quot;
+        openssl req -new -key &quot;${selfsigned}.key&quot; -out &quot;${selfsigned}.csr&quot; -sha256 -subj &quot;${subj}&quot;
+        cat &gt; &quot;${selfsigned}.cnf&quot; &lt;&lt;EOL
+[selfsigned]
+basicConstraints = critical,CA:FALSE
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage=codeSigning
+subjectKeyIdentifier=hash
+EOL
+
+        openssl x509 -req -days 750 -in &quot;${selfsigned}.csr&quot; -signkey &quot;${selfsigned}.key&quot; \
+                -out &quot;${selfsigned}.crt&quot; -extfile &quot;${selfsigned}.cnf&quot; -extensions selfsigned
+
+        rm &quot;${selfsigned}.cnf&quot; &quot;${selfsigned}.csr&quot; &quot;${selfsigned}.key&quot;
+done
+
+# Postgresql keys for testing server/client auth
+
+command -v cfssljson  &gt;/dev/null 2&gt;&amp;1 || { 
+    echo &gt;&amp;2 &quot;Installing cfssl tools&quot;; go get -u github.com/cloudflare/cfssl/cmd/...;
 }
 
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
+# Create a dir to store keys generated temporarily
+mkdir cfssl
+cd cfssl
 
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
+# Generate CA and certificates
 
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
+echo '{&quot;CN&quot;: &quot;Test Notary CA&quot;,&quot;key&quot;:{&quot;algo&quot;:&quot;rsa&quot;,&quot;size&quot;:2048}}' | cfssl gencert -initca - | cfssljson -bare ca -
 
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
+echo '{&quot;signing&quot;:{&quot;default&quot;:{&quot;expiry&quot;:&quot;43800h&quot;},&quot;profiles&quot;:{&quot;server&quot;:{&quot;expiry&quot;:&quot;43800h&quot;, &quot;usages&quot;:[&quot;signing&quot;,&quot;key encipherment&quot;,&quot;server auth&quot;]},&quot;client&quot;:{&quot;expiry&quot;:&quot;43800h&quot;, &quot;usages&quot;:[&quot;signing&quot;,&quot;key encipherment&quot;,&quot;client auth&quot;]}}}}' &gt; ca-config.json
 
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
+echo '{&quot;CN&quot;:&quot;database&quot;,&quot;hosts&quot;:[&quot;postgresql&quot;,&quot;mysql&quot;],&quot;key&quot;:{&quot;algo&quot;:&quot;rsa&quot;,&quot;size&quot;:2048}}' &gt; server.json
 
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
+# Generate server cert and private key
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server server.json | cfssljson -bare server
 
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
+# Generate client certificate (notary server)
+echo '{&quot;CN&quot;:&quot;server&quot;,&quot;hosts&quot;:[&quot;&quot;],&quot;key&quot;:{&quot;algo&quot;:&quot;rsa&quot;,&quot;size&quot;:2048}}' &gt; notary-server.json
 
-var assistSearchList = window.CONFIG.assistSearch;
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client notary-server.json | cfssljson -bare notary-server
 
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
+# Generate client certificate (notary notary-signer)
+echo '{&quot;CN&quot;:&quot;signer&quot;,&quot;hosts&quot;:[&quot;&quot;],&quot;key&quot;:{&quot;algo&quot;:&quot;rsa&quot;,&quot;size&quot;:2048}}' &gt; notary-signer.json
+
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client notary-signer.json | cfssljson -bare notary-signer
+
+# Copy keys over to ../fixtures/database/[...] and ../notarysql/postgresql-initdb.d/[...]
+cp ca.pem ../database/
+cp notary-signer.pem ../database/
+cp notary-signer-key.pem ../database/
+cp notary-server.pem ../database
+cp notary-server-key.pem ../database/
+
+cp ca.pem ../../notarysql/postgresql-initdb.d/root.crt
+cp server.pem ../../notarysql/postgresql-initdb.d/server.crt
+cp server-key.pem ../../notarysql/postgresql-initdb.d/server.key
+
+# remove the working dir
+cd ..
+rm -rf cfssl
+
+</code></pre><div class="tags"><a href="/tags/docker/" rel="tag"><i class="ic i-tag"></i> docker</a></div></div><footer><div class="meta"></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Kung-Fu-Master 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Kung-Fu-Master 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Kung-Fu-Master 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Kung-Fu-Master <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>本文链接：</strong> <a href="https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/" title="regenerateTestingCerts.sh">https://kung-fu-master.github.io/2021/03/13/technologies/docker/regenerateTestingCerts/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/technologies/docker/docker_01_installation/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicivghyooj20zk0m8dir.jpg" title="docker 01 installation and control commands"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> docker</span><h3>docker 01 installation and control commands</h3></a></div><div class="item right"><a href="/2021/03/13/storage/minio/minIO_04_client_SDK/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeyhsblkj20zk0m81kx.jpg" title="MinIO 04 client SDK"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> minio</span><h3>MinIO 04 client SDK</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#regeneratetestingcertssh脚本内容"><span class="toc-number">1.</span> <span class="toc-text"># regenerateTestingCerts.sh 脚本内容</span></a></li></ol></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/2021/03/13/technologies/docker/DCT/" rel="bookmark" title="Docker Content Trust(DCT) and Notary">Docker Content Trust(DCT) and Notary</a></li><li><a href="/2021/03/13/technologies/docker/docker_02_private_hub/" rel="bookmark" title="docker 02 private hub & journal">docker 02 private hub & journal</a></li><li class="active"><a href="/2021/03/13/technologies/docker/regenerateTestingCerts/" rel="bookmark" title="regenerateTestingCerts.sh">regenerateTestingCerts.sh</a></li><li><a href="/2021/03/13/technologies/docker/docker_01_installation/" rel="bookmark" title="docker 01 installation and control commands">docker 01 installation and control commands</a></li><li><a href="/2021/03/13/technologies/docker/dockerfile/" rel="bookmark" title="Dockerfile introduction">Dockerfile introduction</a></li><li><a href="/2021/03/13/technologies/docker/%E5%AE%89%E8%A3%85docker-compose/" rel="bookmark" title="安装 docker compose">安装 docker compose</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Kung-Fu-Master" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Kung-Fu-Master</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">292</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">40</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">12</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/technologies/docker/docker_01_installation/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/13/storage/minio/minIO_04_client_SDK/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/kubernetes/" title="分类于 kubernetes">kubernetes</a></div><span><a href="/2021/03/13/micro_service/kubernetes/kubernetes_%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6/" title="kubernetes 准入控制">kubernetes 准入控制</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/Centos%E6%9B%B4%E6%94%B9kernel%20%E9%BB%98%E8%AE%A4%E5%90%AF%E5%8A%A8%E9%A1%B9/" title="Centos 更改kernel 默认启动项">Centos 更改kernel 默认启动项</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/kubernetes/" title="分类于 kubernetes">kubernetes</a></div><span><a href="/2021/03/13/micro_service/kubernetes/k8s_secret/" title="k8s secret">k8s secret</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/cut/" title="cut">cut</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/36.%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4Kubernetes%E5%8F%AA%E6%9C%89soft%20multi-tenancy/" title="36 | 为什么说Kubernetes只有soft multi-tenancy？">36 | 为什么说Kubernetes只有soft multi-tenancy？</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/" title="29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起">29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/kubernetes/" title="分类于 kubernetes">kubernetes</a></div><span><a href="/2021/03/13/micro_service/kubernetes/09_kubernetes_certificate/" title="09 Kubernetes Certificates">09 Kubernetes Certificates</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/storage/" title="分类于 storage">storage</a> <i class="ic i-angle-right"></i> <a href="/categories/storage/minio/" title="分类于 minio">minio</a></div><span><a href="/2021/03/13/storage/minio/minIO_04_client_SDK/" title="MinIO 04 client SDK">MinIO 04 client SDK</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/docker/" title="分类于 docker">docker</a></div><span><a href="/2021/03/13/technologies/docker/docker_01_installation/" title="docker 01 installation and control commands">docker 01 installation and control commands</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/sda_hda/" title="sda hda">sda hda</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Kung-Fu-Master @ Kung Fu Master</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">1.1m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">16:30</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/13/technologies/docker/regenerateTestingCerts/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->

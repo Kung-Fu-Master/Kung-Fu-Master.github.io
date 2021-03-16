@@ -1,485 +1,138 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="python中有很多画图库, 基本上都是用matplotlib进行封装">
-<meta property="og:type" content="article">
-<meta property="og:title" content="01 matplotlib">
-<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="python中有很多画图库, 基本上都是用matplotlib进行封装">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/line_style.png">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/line01.png">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/subpic01.png">
-<meta property="article:published_time" content="2021-03-13T05:00:42.794Z">
-<meta property="article:modified_time" content="2021-03-13T05:00:42.794Z">
-<meta property="article:author" content="Kung-Fu-Master">
-<meta property="article:tag" content="MLearning">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/line_style.png"><title>01 matplotlib | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: true,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
+<!-- build time:Wed Mar 17 2021 02:52:24 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="https://kung-fu-master.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="https://kung-fu-master.github.io/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="https://kung-fu-master.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="MLearning"><link rel="canonical" href="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/"><title>01 matplotlib - matplotlib - MLearning | Kung Fu Master = Hexo</title><meta name="generator" content="Hexo 4.2.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">01 matplotlib</h1><div class="meta"><span class="item" title="创建时间：2021-03-13 13:00:42"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-03-13T13:00:42+08:00">2021-03-13</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>4.1k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>4 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Kung Fu Master</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipew28b65j20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciukx8a7j20zk0m8aio.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicliwyw55j20zk0m8hdt.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/MLearning/" itemprop="item" rel="index" title="分类于 MLearning"><span itemprop="name">MLearning</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/MLearning/matplotlib/" itemprop="item" rel="index" title="分类于 matplotlib"><span itemprop="name">matplotlib</span></a><meta itemprop="position" content="2"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Kung-Fu-Master"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><p>python 中有很多画图库，基本上都是用 matplotlib 进行封装</p><p><a id="more"></a></p><h2 id="matplotlib"><a class="anchor" href="#matplotlib">#</a> matplotlib</h2><pre><code>import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">01 matplotlib</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">834</span></span></div></header><div class="post-body"><p>python中有很多画图库, 基本上都是用matplotlib进行封装</p>
-<a id="more"></a>
+// 查看matplotlib包所在位置
+print(mpl.__file__)
+// 输出: /usr/local/lib64/python3.6/site-packages/matplotlib/__init__.py
 
+plt.plot([1, 2, 3, 4, 5], [1, 4, 9, 16, 25], &quot;-.&quot;, color=&quot;r&quot;)
+#plt.plot([1, 2, 3, 4, 5], [1, 4, 9, 16, 25], linestyle=&quot;-.&quot;, color=&quot;r&quot;)
 
-        <h2 id="matplotlib"   >
-          <a href="#matplotlib" class="heading-link"><i class="fas fa-link"></i></a>matplotlib</h2>
-      <figure class="highlight lsl"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib as mpl</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看matplotlib包所在位置</span></span><br><span class="line">print(mpl.__file__)</span><br><span class="line"><span class="comment">// 输出: /usr/local/lib64/python3.6/site-packages/matplotlib/__init__.py</span></span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>], <span class="string">"-."</span>, color=<span class="string">"r"</span>)</span><br><span class="line">#plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>], linestyle=<span class="string">"-."</span>, color=<span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">"xlabel"</span>, fontsize=<span class="number">16</span>)</span><br><span class="line">plt.ylabel(<span class="string">"ylabel"</span>)</span><br><span class="line">plt.show()</span><br><span class="line">#plt.savefig(<span class="string">"matplotlib/test01.png"</span>)</span><br></pre></td></tr></table></div></figure>
+plt.xlabel(&quot;xlabel&quot;, fontsize=16)
+plt.ylabel(&quot;ylabel&quot;)
+plt.show()
+#plt.savefig(&quot;matplotlib/test01.png&quot;)
 
+</code></pre><h2 id="线条"><a class="anchor" href="#线条">#</a> 线条</h2><h3 id="线条形状"><a class="anchor" href="#线条形状">#</a> 线条形状</h3><p>更多线条参考 reference:<br><span class="exturl" data-url="aHR0cHM6Ly9tYXRwbG90bGliLm9yZy90dXRvcmlhbHMvaW5kZXguaHRtbA==">https://matplotlib.org/tutorials/index.html</span><br><span class="exturl" data-url="aHR0cHM6Ly9tYXRwbG90bGliLm9yZy90dXRvcmlhbHMvaW50cm9kdWN0b3J5L3NhbXBsZV9wbG90cy5odG1s">https://matplotlib.org/tutorials/introductory/sample_plots.html</span><br><span class="exturl" data-url="aHR0cHM6Ly9tYXRwbG90bGliLm9yZy90dXRvcmlhbHMvaW50cm9kdWN0b3J5L3B5cGxvdC5odG1s">https://matplotlib.org/tutorials/introductory/pyplot.html</span><br><span class="exturl" data-url="aHR0cHM6Ly9tYXRwbG90bGliLm9yZy9hcGkvX2FzX2dlbi9tYXRwbG90bGliLmxpbmVzLkxpbmUyRC5odG1sI21hdHBsb3RsaWIubGluZXMuTGluZTJELnNldF9saW5lc3R5bGU=">https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D.set_linestyle</span><br><span class="exturl" data-url="aHR0cHM6Ly9tYXRwbG90bGliLm9yZy9leGFtcGxlcy9weWxhYl9leGFtcGxlcy9tdWx0aWNvbG9yZWRfbGluZS5odG1s">https://matplotlib.org/examples/pylab_examples/multicolored_line.html</span></p><table><thead><tr><th style="text-align:center">字符</th><th style="text-align:center">类型</th></tr></thead><tbody><tr><td style="text-align:center">'-' or 'solid'</td><td style="text-align:center">实线 solid hline</td></tr><tr><td style="text-align:center">'_'</td><td style="text-align:center">横线点</td></tr><tr><td style="text-align:center">'</td><td style="text-align:center">'</td><td>vline</td></tr><tr><td style="text-align:center">'+'</td><td style="text-align:center">plus</td></tr><tr><td style="text-align:center">'--' or 'dashed'</td><td style="text-align:center">虚线 dashed line</td></tr><tr><td style="text-align:center">'-.' or 'dashdot'</td><td style="text-align:center">虚点线 dash-dotted line</td></tr><tr><td style="text-align:center">':' or 'dotted'</td><td style="text-align:center">点线 dotted line</td></tr><tr><td style="text-align:center">'None' or ' ' or ''</td><td style="text-align:center">draw nothing</td></tr><tr><td style="text-align:center">'.'</td><td style="text-align:center">点</td></tr><tr><td style="text-align:center">','</td><td style="text-align:center">像素点</td></tr><tr><td style="text-align:center">'o'</td><td style="text-align:center">圆点</td></tr><tr><td style="text-align:center">'s'</td><td style="text-align:center">正方点</td></tr><tr><td style="text-align:center">'p'</td><td style="text-align:center">五角点</td></tr><tr><td style="text-align:center">'*'</td><td style="text-align:center">star</td></tr><tr><td style="text-align:center">'h'</td><td style="text-align:center">六边形点 1</td></tr><tr><td style="text-align:center">'H'</td><td style="text-align:center">六边形点 2</td></tr><tr><td style="text-align:center">'D'</td><td style="text-align:center">实心菱形点</td></tr><tr><td style="text-align:center">'d'</td><td style="text-align:center">瘦菱形点</td></tr><tr><td style="text-align:center">'x'</td><td style="text-align:center">filled</td></tr><tr><td style="text-align:center">'v'</td><td style="text-align:center">下三角点</td></tr><tr><td style="text-align:center">'^'</td><td style="text-align:center">上三角点</td></tr><tr><td style="text-align:center">'&lt;'</td><td style="text-align:center">左三角点</td></tr><tr><td style="text-align:center">'&gt;'</td><td style="text-align:center">右三角点</td></tr><tr><td style="text-align:center">'1'</td><td style="text-align:center">下三叉点</td></tr><tr><td style="text-align:center">'2'</td><td style="text-align:center">上三叉点</td></tr><tr><td style="text-align:center">'3'</td><td style="text-align:center">左三叉点</td></tr><tr><td style="text-align:center">'4'</td><td style="text-align:center">右三叉点</td></tr></tbody></table><pre><code>import matplotlib.pylab as plt
+markers = [
+    '.', ',', 'o', 'v', '^', '&lt;', '&gt;', '1', '2', '3', '4', '8', 's', 'p', 'P',
+    '*', 'h', 'H', '+', 'x', 'X', 'D', 'd', '|', '_'
+]
+descriptions = [
+    'point', 'pixel', 'circle', 'triangle_down', 'triangle_up',
+    'triangle_left', 'triangle_right', 'tri_down', 'tri_up', 'tri_left',
+    'tri_right', 'octagon', 'square', 'pentagon', 'plus (filled)', 'star',
+    'hexagon1', 'hexagon2', 'plus', 'x', 'x (filled)', 'diamond',
+    'thin_diamond', 'vline', 'hline'
+]
+x = []
+y = []
+for i in range(5):
+    for j in range(5):
+        x.append(i)
+        y.append(j)
+plt.figure()
+for i, j, m, l in zip(x, y, markers, descriptions):
+    plt.scatter(i, j, marker=m)
+    plt.text(i - 0.15, j + 0.15, s=m + ' : ' + l)
+plt.axis([-0.1, 4.8, -0.1, 4.5])
+plt.tight_layout()
+plt.axis('off')
+plt.show()
+</code></pre><p><img data-src="line_style.png" alt=""></p><h3 id="线条颜色"><a class="anchor" href="#线条颜色">#</a> 线条颜色</h3><p>reference:<br><span class="exturl" data-url="aHR0cHM6Ly9tYXRwbG90bGliLm9yZy90dXRvcmlhbHMvaW5kZXguaHRtbCNjb2xvcnM=">https://matplotlib.org/tutorials/index.html#colors</span></p><pre><code>// 线条与颜色分开写
+plt.plot([1, 2, 3, 4, 5], [1, 4, 9, 16, 25], &quot;-.&quot;, color=&quot;r&quot;)
+// 线条与颜色连在一块写
+plt.plot([1, 2, 3, 4, 5], [1, 4, 9, 16, 25], &quot;r-.&quot;)
+</code></pre><h2 id="绘制多条线"><a class="anchor" href="#绘制多条线">#</a> 绘制多条线</h2><pre><code>plt.plot(tang_numpy, tang_numpy, &quot;r--&quot;)
+plt.plot(tang_numpy, tang_numpy**2, &quot;bs&quot;)
+// 上面两行等同于以下一行python代码
+plt.plot(tang_numpy, tang_numpy, &quot;r--&quot;, tang_numpy, tang_numpy**2, &quot;bs&quot;)
+</code></pre><p>指定线条宽度，关键点标志</p><pre><code>x = np.linspace(-10, 10)
+y = np.sin(x)
 
-        <h2 id="线条"   >
-          <a href="#线条" class="heading-link"><i class="fas fa-link"></i></a>线条</h2>
-      
-        <h3 id="线条形状"   >
-          <a href="#线条形状" class="heading-link"><i class="fas fa-link"></i></a>线条形状</h3>
-      <p>更多线条参考reference:<br><span class="exturl"><a class="exturl__link"   href="https://matplotlib.org/tutorials/index.html"  target="_blank" rel="noopener">https://matplotlib.org/tutorials/index.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://matplotlib.org/tutorials/introductory/sample_plots.html"  target="_blank" rel="noopener">https://matplotlib.org/tutorials/introductory/sample_plots.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://matplotlib.org/tutorials/introductory/pyplot.html"  target="_blank" rel="noopener">https://matplotlib.org/tutorials/introductory/pyplot.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D.set_linestyle"  target="_blank" rel="noopener">https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D.set_linestyle</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br><span class="exturl"><a class="exturl__link"   href="https://matplotlib.org/examples/pylab_examples/multicolored_line.html"  target="_blank" rel="noopener">https://matplotlib.org/examples/pylab_examples/multicolored_line.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<div class="table-container"><table>
-<thead>
-<tr>
-<th align="center">字符</th>
-<th align="center">类型</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">‘-‘ or ‘solid’</td>
-<td align="center">实线solid hline</td>
-</tr>
-<tr>
-<td align="center">‘_’</td>
-<td align="center">横线点</td>
-</tr>
-<tr>
-<td align="center">‘</td>
-<td align="center">‘</td>
-</tr>
-<tr>
-<td align="center">‘+’</td>
-<td align="center">plus</td>
-</tr>
-<tr>
-<td align="center">‘–’ or ‘dashed’</td>
-<td align="center">虚线dashed line</td>
-</tr>
-<tr>
-<td align="center">‘-.’ or ‘dashdot’</td>
-<td align="center">虚点线dash-dotted line</td>
-</tr>
-<tr>
-<td align="center">‘:’ or ‘dotted’</td>
-<td align="center">点线dotted line</td>
-</tr>
-<tr>
-<td align="center">‘None’ or ‘ ‘ or ‘’</td>
-<td align="center">draw nothing</td>
-</tr>
-<tr>
-<td align="center">‘.’</td>
-<td align="center">点</td>
-</tr>
-<tr>
-<td align="center">‘,’</td>
-<td align="center">像素点</td>
-</tr>
-<tr>
-<td align="center">‘o’</td>
-<td align="center">圆点</td>
-</tr>
-<tr>
-<td align="center">‘s’</td>
-<td align="center">正方点</td>
-</tr>
-<tr>
-<td align="center">‘p’</td>
-<td align="center">五角点</td>
-</tr>
-<tr>
-<td align="center">‘*’</td>
-<td align="center">star</td>
-</tr>
-<tr>
-<td align="center">‘h’</td>
-<td align="center">六边形点1</td>
-</tr>
-<tr>
-<td align="center">‘H’</td>
-<td align="center">六边形点2</td>
-</tr>
-<tr>
-<td align="center">‘D’</td>
-<td align="center">实心菱形点</td>
-</tr>
-<tr>
-<td align="center">‘d’</td>
-<td align="center">瘦菱形点</td>
-</tr>
-<tr>
-<td align="center">‘x’</td>
-<td align="center">filled</td>
-</tr>
-<tr>
-<td align="center">‘v’</td>
-<td align="center">下三角点</td>
-</tr>
-<tr>
-<td align="center">‘^’</td>
-<td align="center">上三角点</td>
-</tr>
-<tr>
-<td align="center">‘&lt;’</td>
-<td align="center">左三角点</td>
-</tr>
-<tr>
-<td align="center">‘&gt;’</td>
-<td align="center">右三角点</td>
-</tr>
-<tr>
-<td align="center">‘1’</td>
-<td align="center">下三叉点</td>
-</tr>
-<tr>
-<td align="center">‘2’</td>
-<td align="center">上三叉点</td>
-</tr>
-<tr>
-<td align="center">‘3’</td>
-<td align="center">左三叉点</td>
-</tr>
-<tr>
-<td align="center">‘4’</td>
-<td align="center">右三叉点</td>
-</tr>
-</tbody></table></div>
-<figure class="highlight matlab"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pylab as plt</span><br><span class="line">markers = [</span><br><span class="line">    <span class="string">'.'</span>, <span class="string">','</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'^'</span>, <span class="string">'&lt;'</span>, <span class="string">'&gt;'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'8'</span>, <span class="string">'s'</span>, <span class="string">'p'</span>, <span class="string">'P'</span>,</span><br><span class="line">    <span class="string">'*'</span>, <span class="string">'h'</span>, <span class="string">'H'</span>, <span class="string">'+'</span>, <span class="string">'x'</span>, <span class="string">'X'</span>, <span class="string">'D'</span>, <span class="string">'d'</span>, <span class="string">'|'</span>, <span class="string">'_'</span></span><br><span class="line">]</span><br><span class="line">descriptions = [</span><br><span class="line">    <span class="string">'point'</span>, <span class="string">'pixel'</span>, <span class="string">'circle'</span>, <span class="string">'triangle_down'</span>, <span class="string">'triangle_up'</span>,</span><br><span class="line">    <span class="string">'triangle_left'</span>, <span class="string">'triangle_right'</span>, <span class="string">'tri_down'</span>, <span class="string">'tri_up'</span>, <span class="string">'tri_left'</span>,</span><br><span class="line">    <span class="string">'tri_right'</span>, <span class="string">'octagon'</span>, <span class="string">'square'</span>, <span class="string">'pentagon'</span>, <span class="string">'plus (filled)'</span>, <span class="string">'star'</span>,</span><br><span class="line">    <span class="string">'hexagon1'</span>, <span class="string">'hexagon2'</span>, <span class="string">'plus'</span>, <span class="string">'x'</span>, <span class="string">'x (filled)'</span>, <span class="string">'diamond'</span>,</span><br><span class="line">    <span class="string">'thin_diamond'</span>, <span class="string">'vline'</span>, <span class="string">'hline'</span></span><br><span class="line">]</span><br><span class="line">x = []</span><br><span class="line">y = []</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> in range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> in range(<span class="number">5</span>):</span><br><span class="line">        x.append(<span class="built_in">i</span>)</span><br><span class="line">        y.append(<span class="built_in">j</span>)</span><br><span class="line">plt.<span class="built_in">figure</span>()</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>, <span class="built_in">j</span>, m, l in zip(x, y, markers, descriptions):</span><br><span class="line">    plt.<span class="built_in">scatter</span>(<span class="built_in">i</span>, <span class="built_in">j</span>, marker=m)</span><br><span class="line">    plt.text(<span class="built_in">i</span> - <span class="number">0.15</span>, <span class="built_in">j</span> + <span class="number">0.15</span>, s=m + <span class="string">' : '</span> + l)</span><br><span class="line">plt.axis([<span class="number">-0.1</span>, <span class="number">4.8</span>, <span class="number">-0.1</span>, <span class="number">4.5</span>])</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.axis(<span class="string">'off'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></div></figure>
-<p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="line_style.png"  alt="">
-      </p>
+plt.plot(x,
+         y,
+         linestyle=&quot;:&quot;,
+         linewidth=3.0,
+         marker=&quot;o&quot;,			# 指定x轴值所在位置标志图形
+         markerfacecolor=&quot;r&quot;,	# 标志颜色
+         markersize=10,			# 标志大小
+         alpha=0.5)				# 透明程度
+plt.savefig(&quot;matplotlib/line01.png&quot;)
+plt.show()
+</code></pre><p>先画图，再设置参数</p><pre><code>x = np.linspace(-10, 10)
+y = np.sin(x)
+line = plt.plot(x, y)
+plt.setp(line,
+         color=&quot;r&quot;,
+         linestyle=&quot;:&quot;,
+         linewidth=3.0,
+         marker=&quot;o&quot;,
+         markerfacecolor=&quot;r&quot;,
+         markersize=10,
+         alpha=0.5)
+plt.savefig(&quot;matplotlib/line01.png&quot;)
+plt.show()
+</code></pre><p><img data-src="line01.png" alt=""></p><h2 id="子图"><a class="anchor" href="#子图">#</a> 子图</h2><p><img data-src="subpic01.png" alt=""></p><pre><code>import numpy as np
+import matplotlib as mpl
+import matplotlib.pylab as plt
 
-        <h3 id="线条颜色"   >
-          <a href="#线条颜色" class="heading-link"><i class="fas fa-link"></i></a>线条颜色</h3>
-      <p>reference:<br><span class="exturl"><a class="exturl__link"   href="https://matplotlib.org/tutorials/index.html#colors"  target="_blank" rel="noopener">https://matplotlib.org/tutorials/index.html#colors</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
-<figure class="highlight lsl"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 线条与颜色分开写</span></span><br><span class="line">plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>], <span class="string">"-."</span>, color=<span class="string">"r"</span>)</span><br><span class="line"><span class="comment">// 线条与颜色连在一块写</span></span><br><span class="line">plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>], <span class="string">"r-."</span>)</span><br></pre></td></tr></table></div></figure>
+tang_numpy = np.arange(0, 10, 0.5)
+plt.plot(tang_numpy, tang_numpy, &quot;r--&quot;)
+plt.plot(tang_numpy, tang_numpy**2, &quot;bs&quot;)
+# 上面两行等价于下面一行
+#plt.plot(tang_numpy, tang_numpy, &quot;r--&quot;, tang_numpy, tang_numpy**2, &quot;bs&quot;)
+plt.show()
 
+#====================================================================================
 
-        <h2 id="绘制多条线"   >
-          <a href="#绘制多条线" class="heading-link"><i class="fas fa-link"></i></a>绘制多条线</h2>
-      <figure class="highlight less"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">plt</span><span class="selector-class">.plot</span>(tang_numpy, tang_numpy, <span class="string">"r--"</span>)</span><br><span class="line"><span class="selector-tag">plt</span><span class="selector-class">.plot</span>(tang_numpy, tang_numpy**<span class="number">2</span>, <span class="string">"bs"</span>)</span><br><span class="line"><span class="comment">// 上面两行等同于以下一行python代码</span></span><br><span class="line"><span class="selector-tag">plt</span><span class="selector-class">.plot</span>(tang_numpy, tang_numpy, <span class="string">"r--"</span>, tang_numpy, tang_numpy**<span class="number">2</span>, <span class="string">"bs"</span>)</span><br></pre></td></tr></table></div></figure>
+x = np.linspace(-10, 10)
+y = np.sin(x)
+line = plt.plot(x, y)
+plt.setp(line,
+         color=&quot;r&quot;,
+         linestyle=&quot;:&quot;,
+         linewidth=3.0,
+         marker=&quot;o&quot;,
+         markerfacecolor=&quot;r&quot;,
+         markersize=10,
+         alpha=0.5)
+plt.savefig(&quot;matplotlib/line01.png&quot;)
+plt.show()
 
-<p>指定线条宽度, 关键点标志</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(-10, 10)</span><br><span class="line">y = np.sin(x)</span><br><span class="line"></span><br><span class="line">plt.plot(x,</span><br><span class="line">         y,</span><br><span class="line">         <span class="attribute">linestyle</span>=<span class="string">":"</span>,</span><br><span class="line">         <span class="attribute">linewidth</span>=3.0,</span><br><span class="line">         <span class="attribute">marker</span>=<span class="string">"o"</span>,			# 指定x轴值所在位置标志图形</span><br><span class="line">         <span class="attribute">markerfacecolor</span>=<span class="string">"r"</span>,	# 标志颜色</span><br><span class="line">         <span class="attribute">markersize</span>=10,			# 标志大小</span><br><span class="line">         <span class="attribute">alpha</span>=0.5)				# 透明程度</span><br><span class="line">plt.savefig(<span class="string">"matplotlib/line01.png"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></div></figure>
+#====================================================================================
 
-<p>先画图, 再设置参数</p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(-10, 10)</span><br><span class="line">y = np.sin(x)</span><br><span class="line">line = plt.plot(x, y)</span><br><span class="line">plt.setp(line,</span><br><span class="line">         <span class="attribute">color</span>=<span class="string">"r"</span>,</span><br><span class="line">         <span class="attribute">linestyle</span>=<span class="string">":"</span>,</span><br><span class="line">         <span class="attribute">linewidth</span>=3.0,</span><br><span class="line">         <span class="attribute">marker</span>=<span class="string">"o"</span>,</span><br><span class="line">         <span class="attribute">markerfacecolor</span>=<span class="string">"r"</span>,</span><br><span class="line">         <span class="attribute">markersize</span>=10,</span><br><span class="line">         <span class="attribute">alpha</span>=0.5)</span><br><span class="line">plt.savefig(<span class="string">"matplotlib/line01.png"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></div></figure>
-<p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="line01.png"  alt="">
-      </p>
+x = np.linspace(-10, 10)
+y = np.sin(x)
+# 211 表示一会要画的图是3行2列的，最后一个1表示子图当中第1个图
+plt.subplot(321)
+plt.plot(x, y, color=&quot;r&quot;)
+plt.xlabel(&quot;01XXX&quot;)
+plt.ylabel(&quot;01YYY&quot;)
+plt.title(&quot;Test 01&quot;)
+# 在图中坐标(5, 0)处添加信息
+plt.text(5, 0, &quot;Info&quot;)
+# 添加注释箭头
+plt.annotate(
+    &quot;zhushi001&quot;,
+    xy=(-5, 0),
+    xytext=(-1, 0.3),
+    arrowprops=dict(
+        facecolor=&quot;black&quot;,  # 箭头颜色
+        shrink=0.01,  # 箭头大小
+        headlength=20,  # 箭头长度
+        headwidth=10))  # 箭头宽度
+# 添加格子
+plt.grid(True)
 
-        <h2 id="子图"   >
-          <a href="#子图" class="heading-link"><i class="fas fa-link"></i></a>子图</h2>
-      <p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="subpic01.png"  alt="">
-      </p>
-<figure class="highlight routeros"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib as mpl</span><br><span class="line">import matplotlib.pylab as plt</span><br><span class="line"></span><br><span class="line">tang_numpy = np.arange(0, 10, 0.5)</span><br><span class="line">plt.plot(tang_numpy, tang_numpy, <span class="string">"r--"</span>)</span><br><span class="line">plt.plot(tang_numpy, tang_numpy*<span class="number">*2</span>, <span class="string">"bs"</span>)</span><br><span class="line"><span class="comment"># 上面两行等价于下面一行</span></span><br><span class="line"><span class="comment">#plt.plot(tang_numpy, tang_numpy, "r--", tang_numpy, tang_numpy**2, "bs")</span></span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment">#====================================================================================</span></span><br><span class="line"></span><br><span class="line">x = np.linspace(-10, 10)</span><br><span class="line">y = np.sin(x)</span><br><span class="line">line = plt.plot(x, y)</span><br><span class="line">plt.setp(line,</span><br><span class="line">         <span class="attribute">color</span>=<span class="string">"r"</span>,</span><br><span class="line">         <span class="attribute">linestyle</span>=<span class="string">":"</span>,</span><br><span class="line">         <span class="attribute">linewidth</span>=3.0,</span><br><span class="line">         <span class="attribute">marker</span>=<span class="string">"o"</span>,</span><br><span class="line">         <span class="attribute">markerfacecolor</span>=<span class="string">"r"</span>,</span><br><span class="line">         <span class="attribute">markersize</span>=10,</span><br><span class="line">         <span class="attribute">alpha</span>=0.5)</span><br><span class="line">plt.savefig(<span class="string">"matplotlib/line01.png"</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment">#====================================================================================</span></span><br><span class="line"></span><br><span class="line">x = np.linspace(-10, 10)</span><br><span class="line">y = np.sin(x)</span><br><span class="line"><span class="comment"># 211 表示一会要画的图是3行2列的，最后一个1表示子图当中第1个图</span></span><br><span class="line">plt.subplot(321)</span><br><span class="line">plt.plot(x, y, <span class="attribute">color</span>=<span class="string">"r"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"01XXX"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"01YYY"</span>)</span><br><span class="line">plt.title(<span class="string">"Test 01"</span>)</span><br><span class="line"><span class="comment"># 在图中坐标(5, 0)处添加信息</span></span><br><span class="line">plt.text(5, 0, <span class="string">"Info"</span>)</span><br><span class="line"><span class="comment"># 添加注释箭头</span></span><br><span class="line">plt.annotate(</span><br><span class="line">    <span class="string">"zhushi001"</span>,</span><br><span class="line">    xy=(-5, 0),</span><br><span class="line">    xytext=(-1, 0.3),</span><br><span class="line">    <span class="attribute">arrowprops</span>=dict(</span><br><span class="line">        <span class="attribute">facecolor</span>=<span class="string">"black"</span>,  # 箭头颜色</span><br><span class="line">        <span class="attribute">shrink</span>=0.01,  # 箭头大小</span><br><span class="line">        <span class="attribute">headlength</span>=20,  # 箭头长度</span><br><span class="line">        <span class="attribute">headwidth</span>=10))  # 箭头宽度</span><br><span class="line"><span class="comment"># 添加格子</span></span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(324)</span><br><span class="line">plt.plot(x, x*<span class="number">*2</span>, <span class="attribute">color</span>=<span class="string">"b"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"01XXX"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"01YYY"</span>)</span><br><span class="line">plt.title(<span class="string">"Test 03"</span>)</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">"matplotlib\matplotlib.png"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></div></figure>
+plt.subplot(324)
+plt.plot(x, x**2, color=&quot;b&quot;)
+plt.xlabel(&quot;01XXX&quot;)
+plt.ylabel(&quot;01YYY&quot;)
+plt.title(&quot;Test 03&quot;)
 
+plt.savefig(&quot;matplotlib\matplotlib.png&quot;)
+plt.show()
 
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/">https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://kung-fu-master.github.io/tags/MLearning/">MLearning</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/language/cpp/STL/02.%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">STL 02 泛型编程</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/MLearning/matplotlib/%E5%BC%80%E5%8F%91matplotlib%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"><span class="paginator-prev__text">开发matplotlib遇到的问题</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#matplotlib"><span class="toc-number">1.</span> <span class="toc-text">
-          matplotlib</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线条"><span class="toc-number">2.</span> <span class="toc-text">
-          线条</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线条形状"><span class="toc-number">2.1.</span> <span class="toc-text">
-          线条形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线条颜色"><span class="toc-number">2.2.</span> <span class="toc-text">
-          线条颜色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绘制多条线"><span class="toc-number">3.</span> <span class="toc-text">
-          绘制多条线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子图"><span class="toc-number">4.</span> <span class="toc-text">
-          子图</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">292</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
-
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
-
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
-
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
-
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
-
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
-
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
-
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
-
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
-
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
-
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
-
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
-
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
-
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
-    }
-  });
-}
-
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
-
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
-
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
-
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
-
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
-
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
-
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
-
-var assistSearchList = window.CONFIG.assistSearch;
-
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
+</code></pre><div class="tags"><a href="/tags/MLearning/" rel="tag"><i class="ic i-tag"></i> MLearning</a></div></div><footer><div class="meta"></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Kung-Fu-Master 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Kung-Fu-Master 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Kung-Fu-Master 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Kung-Fu-Master <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>本文链接：</strong> <a href="https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/" title="01 matplotlib">https://kung-fu-master.github.io/2021/03/13/MLearning/matplotlib/matplotlib/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/MLearning/numpy/numpy/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipey84bjtj20zk0m8hdt.jpg" title="numpy 基本操作"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> numpy</span><h3>numpy 基本操作</h3></a></div><div class="item right"><a href="/2021/03/13/language/cpp/STL/02.%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclip4jbpj20zk0m87cv.jpg" title="STL 02 泛型编程"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> cpp</span><h3>STL 02 泛型编程</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#matplotlib"><span class="toc-number">1.</span> <span class="toc-text"># matplotlib</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线条"><span class="toc-number">2.</span> <span class="toc-text"># 线条</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线条形状"><span class="toc-number">2.1.</span> <span class="toc-text"># 线条形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线条颜色"><span class="toc-number">2.2.</span> <span class="toc-text"># 线条颜色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绘制多条线"><span class="toc-number">3.</span> <span class="toc-text"># 绘制多条线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子图"><span class="toc-number">4.</span> <span class="toc-text"># 子图</span></a></li></ol></div><div class="related panel pjax" data-title="系列文章"><ul><li class="active"><a href="/2021/03/13/MLearning/matplotlib/matplotlib/" rel="bookmark" title="01 matplotlib">01 matplotlib</a></li><li><a href="/2021/03/13/MLearning/matplotlib/%E5%BC%80%E5%8F%91matplotlib%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="bookmark" title="开发matplotlib遇到的问题">开发matplotlib遇到的问题</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Kung-Fu-Master" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Kung-Fu-Master</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">292</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">40</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">12</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/MLearning/numpy/numpy/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/13/language/cpp/STL/02.%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/ln%E8%BD%AF%E8%BF%9E%E6%8E%A5_head_tail_more_less/" title="ln软连接, head, tail, more&amp;less">ln软连接, head, tail, more&less</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/security/" title="分类于 security">security</a></div><span><a href="/2021/03/16/technologies/security/openssl_update/" title="openssl update">openssl update</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/" title="28 | PV、PVC、StorageClass，这些到底在说啥？">28 | PV、PVC、StorageClass，这些到底在说啥？</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/24.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%B8%80)%EF%BC%9AAPI%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A5%A5%E7%A7%98/" title="24 | 深入解析声明式API（一）：API对象的奥秘">24 | 深入解析声明式API（一）：API对象的奥秘</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/yum%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="yum 遇到的问题">yum 遇到的问题</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/kubernetes/" title="分类于 kubernetes">kubernetes</a></div><span><a href="/2021/03/13/micro_service/kubernetes/kubernetes_%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6/" title="kubernetes 准入控制">kubernetes 准入控制</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/istio/" title="分类于 istio">istio</a></div><span><a href="/2021/03/13/micro_service/istio/istio_%E6%9F%A5%E7%9C%8B%E5%92%8C%E5%BB%B6%E9%95%BF%E8%87%AA%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6/" title="istio 查看和延长自签名证书">istio 查看和延长自签名证书</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/storage/" title="分类于 storage">storage</a> <i class="ic i-angle-right"></i> <a href="/categories/storage/ceph/" title="分类于 ceph">ceph</a></div><span><a href="/2021/03/13/storage/ceph/ceph_02_deployment/" title="Ceph 02 deployment on Kubernetes">Ceph 02 deployment on Kubernetes</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/windows/" title="分类于 windows">windows</a></div><span><a href="/2021/03/13/windows/%E6%92%AD%E6%94%BE%E5%99%A8%E6%8E%A8%E8%8D%90/" title="播放器推荐">播放器推荐</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/52.%E7%AD%94%E7%96%91%EF%BC%9A%E5%9C%A8%E9%97%AE%E9%A2%98%E4%B8%AD%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%EF%BC%8C%E5%9C%A8%E6%80%9D%E8%80%83%E4%B8%AD%E4%BA%A7%E7%94%9F%E6%80%9D%E8%80%83/" title="52 | 答疑：在问题中解决问题，在思考中产生思考">52 | 答疑：在问题中解决问题，在思考中产生思考</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Kung-Fu-Master @ Kung Fu Master</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">1.1m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">16:30</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/13/MLearning/matplotlib/matplotlib/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(t){return t.includes("#")},function(t){return new RegExp(LOCAL.path+"$").test(t)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->

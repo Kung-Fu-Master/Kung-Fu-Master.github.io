@@ -1,54 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="PV、PVC、StorageClass，这些到底在说啥？       在前面的文章中，我重点为你分析了 Kubernetes 的各种编排能力。 在这些讲解中，你应该已经发现，容器化一个应用比较麻烦的地方，莫过于对其“状态”的管理。而最常见的“状态”，又莫过于存储状态了。 所以，从今天这篇文章开始，我会通过 4 篇文章为你剖析">
-<meta property="og:type" content="article">
-<meta property="og:title" content="28 | PV、PVC、StorageClass，这些到底在说啥？">
-<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="PV、PVC、StorageClass，这些到底在说啥？       在前面的文章中，我重点为你分析了 Kubernetes 的各种编排能力。 在这些讲解中，你应该已经发现，容器化一个应用比较麻烦的地方，莫过于对其“状态”的管理。而最常见的“状态”，又莫过于存储状态了。 所以，从今天这篇文章开始，我会通过 4 篇文章为你剖析">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/1.jpg">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/2.png">
-<meta property="article:published_time" content="2021-03-13T04:35:15.356Z">
-<meta property="article:modified_time" content="2021-03-13T04:35:15.356Z">
-<meta property="article:author" content="Kung-Fu-Master">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/1.jpg"><title>28 | PV、PVC、StorageClass，这些到底在说啥？ | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: true,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
-
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">28 | PV、PVC、StorageClass，这些到底在说啥？</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.7k</span></span></div></header><div class="post-body"><p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="1.jpg"  alt="">
-      </p>
-
-        <h2 id="PV、PVC、StorageClass，这些到底在说啥？"   >
-          <a href="#PV、PVC、StorageClass，这些到底在说啥？" class="heading-link"><i class="fas fa-link"></i></a>PV、PVC、StorageClass，这些到底在说啥？</h2>
-      <p>在前面的文章中，我重点为你分析了 Kubernetes 的各种编排能力。</p>
-<p>在这些讲解中，你应该已经发现，容器化一个应用比较麻烦的地方，莫过于对其“状态”的管理。而最常见的“状态”，又莫过于存储状态了。</p>
-<p>所以，从今天这篇文章开始，我会通过 <strong>4 篇文章为你剖析 Kubernetes 项目处理容器持久化存储的核心原理</strong>，从而帮助你更好地理解和使用这部分内容。</p>
-<p>首先，我们来回忆一下我在第 19 篇文章《深入理解 StatefulSet（二）：存储状态》中，和你分享 StatefulSet 如何管理存储状态的时候，介绍过的<code>Persistent Volume（PV）和 Persistent Volume Claim（PVC）</code>这套持久化存储体系。</p>
-<p>其中，<strong>PV 描述的，是持久化存储数据卷。</strong>这个 API 对象主要定义的是一个持久化存储在宿主机上的目录，比如一个 NFS 的挂载目录。</p>
-<p>通常情况下，PV 对象是由运维人员事先创建在 Kubernetes 集群里待用的。比如，运维人员可以定义这样一个 NFS 类型的 PV，如下所示：</p>
-<pre><code>apiVersion: v1
+<!-- build time:Wed Mar 17 2021 02:52:24 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="https://kung-fu-master.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="https://kung-fu-master.github.io/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="https://kung-fu-master.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/"><title>28 | PV、PVC、StorageClass，这些到底在说啥？ - k8s - reference | Kung Fu Master = Hexo</title><meta name="generator" content="Hexo 4.2.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">28 | PV、PVC、StorageClass，这些到底在说啥？</h1><div class="meta"><span class="item" title="创建时间：2021-03-13 12:35:15"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-03-13T12:35:15+08:00">2021-03-13</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>11k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>10 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Kung Fu Master</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeyhsblkj20zk0m81kx.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicm0fdw5cj20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipetfk5zwj20zk0m8e81.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicm07ih54j20zk0m84qp.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicli3sbvtj20zk0m8x6p.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/reference/" itemprop="item" rel="index" title="分类于 reference"><span itemprop="name">reference</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/reference/k8s/" itemprop="item" rel="index" title="分类于 k8s"><span itemprop="name">k8s</span></a><meta itemprop="position" content="2"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Kung-Fu-Master"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><p><img data-src="1.jpg" alt=""></p><h2 id="pv-pvc-storageclass这些到底在说啥"><a class="anchor" href="#pv-pvc-storageclass这些到底在说啥">#</a> PV、PVC、StorageClass，这些到底在说啥？</h2><p>在前面的文章中，我重点为你分析了 Kubernetes 的各种编排能力。</p><p>在这些讲解中，你应该已经发现，容器化一个应用比较麻烦的地方，莫过于对其 “状态” 的管理。而最常见的 “状态”，又莫过于存储状态了。</p><p>所以，从今天这篇文章开始，我会通过 <strong>4 篇文章为你剖析 Kubernetes 项目处理容器持久化存储的核心原理</strong>，从而帮助你更好地理解和使用这部分内容。</p><p>首先，我们来回忆一下我在第 19 篇文章《深入理解 StatefulSet（二）：存储状态》中，和你分享 StatefulSet 如何管理存储状态的时候，介绍过的 <code>Persistent Volume（PV）和 Persistent Volume Claim（PVC）</code> 这套持久化存储体系。</p><p>其中，**PV 描述的，是持久化存储数据卷。** 这个 API 对象主要定义的是一个持久化存储在宿主机上的目录，比如一个 NFS 的挂载目录。</p><p>通常情况下，PV 对象是由运维人员事先创建在 Kubernetes 集群里待用的。比如，运维人员可以定义这样一个 NFS 类型的 PV，如下所示：</p><pre><code>apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nfs
@@ -60,10 +10,8 @@ spec:
     - ReadWriteMany
   nfs:
     server: 10.244.1.4
-    path: &quot;/&quot;</code></pre><p>而 <strong>PVC 描述的，则是 Pod 所希望使用的持久化存储的属性。</strong> 比如，Volume 存储的大小、可读写权限等等。</p>
-<p>PVC 对象通常由开发人员创建；或者以 PVC 模板的方式成为 StatefulSet 的一部分，然后由 StatefulSet 控制器负责创建带编号的 PVC。</p>
-<p>比如，开发人员可以声明一个 1 GiB 大小的 PVC，如下所示：</p>
-<pre><code>apiVersion: v1
+    path: &quot;/&quot;
+</code></pre><p>而 <strong>PVC 描述的，则是 Pod 所希望使用的持久化存储的属性。</strong> 比如，Volume 存储的大小、可读写权限等等。</p><p>PVC 对象通常由开发人员创建；或者以 PVC 模板的方式成为 StatefulSet 的一部分，然后由 StatefulSet 控制器负责创建带编号的 PVC。</p><p>比如，开发人员可以声明一个 1 GiB 大小的 PVC，如下所示：</p><pre><code>apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nfs
@@ -73,13 +21,8 @@ spec:
   storageClassName: manual
   resources:
     requests:
-      storage: 1Gi</code></pre><p>而用户创建的 PVC 要真正被容器使用起来，就必须先和某个符合条件的 PV 进行绑定。这里要检查的条件，包括两部分：</p>
-<ul>
-<li>第一个条件，当然是 PV 和 PVC 的 spec 字段。比如，PV 的存储（storage）大小，就必须满足 PVC 的要求。</li>
-<li>而第二个条件，则是 PV 和 PVC 的 storageClassName 字段必须一样。这个机制我会在本篇文章的最后一部分专门介绍。</li>
-</ul>
-<p>在成功地将 PVC 和 PV 进行绑定之后，Pod 就能够像使用 hostPath 等常规类型的 Volume 一样，在自己的 YAML 文件里声明使用这个 PVC 了，如下所示：</p>
-<pre><code>apiVersion: v1
+      storage: 1Gi
+</code></pre><p>而用户创建的 PVC 要真正被容器使用起来，就必须先和某个符合条件的 PV 进行绑定。这里要检查的条件，包括两部分：</p><ul><li>第一个条件，当然是 PV 和 PVC 的 spec 字段。比如，PV 的存储（storage）大小，就必须满足 PVC 的要求。</li><li>而第二个条件，则是 PV 和 PVC 的 storageClassName 字段必须一样。这个机制我会在本篇文章的最后一部分专门介绍。</li></ul><p>在成功地将 PVC 和 PV 进行绑定之后，Pod 就能够像使用 hostPath 等常规类型的 Volume 一样，在自己的 YAML 文件里声明使用这个 PVC 了，如下所示：</p><pre><code>apiVersion: v1
 kind: Pod
 metadata:
   labels:
@@ -97,88 +40,25 @@ spec:
   volumes:
   - name: nfs
     persistentVolumeClaim:
-      claimName: nfs</code></pre><p>可以看到，Pod 需要做的，就是在 volumes 字段里声明自己要使用的 PVC 名字。接下来，等这个 Pod 创建之后，kubelet 就会把这个 PVC 所对应的 PV，也就是一个 NFS 类型的 Volume，挂载在这个 Pod 容器内的目录上。</p>
-<p>不难看出，<strong>PVC 和 PV 的设计，其实跟“面向对象”的思想完全一致。</strong></p>
-<p>PVC 可以理解为持久化存储的“接口”，它提供了对某种持久化存储的描述，但不提供具体的实现；而这个持久化存储的实现部分则由 PV 负责完成。</p>
-<p>这样做的好处是，作为应用开发者，我们只需要跟 PVC 这个“接口”打交道，而不必关心具体的实现是 NFS 还是 Ceph。毕竟这些存储相关的知识太专业了，应该交给专业的人去做。</p>
-<p>而在上面的讲述中，<code>其实还有一个比较棘手的情况。</code></p>
-<p>比如，你在创建 Pod 的时候，系统里并没有合适的 PV 跟它定义的 PVC 绑定，也就是说此时容器想要使用的 Volume 不存在。这时候，Pod 的启动就会报错。</p>
-<p>但是，过了一会儿，运维人员也发现了这个情况，所以他赶紧创建了一个对应的 PV。这时候，我们当然希望 Kubernetes 能够再次完成 PVC 和 PV 的绑定操作，从而启动 Pod。</p>
-<p>所以在 Kubernetes 中，实际上存在着一个专门处理持久化存储的控制器，叫作 Volume Controller。这个 Volume Controller 维护着多个控制循环，其中有一个循环，扮演的就是撮合 PV 和 PVC 的“红娘”的角色。它的名字叫作 PersistentVolumeController。</p>
-<p>PersistentVolumeController 会不断地查看当前每一个 PVC，是不是已经处于 Bound（已绑定）状态。如果不是，那它就会遍历所有的、可用的 PV，并尝试将其与这个“单身”的 PVC 进行绑定。这样，Kubernetes 就可以保证用户提交的每一个 PVC，只要有合适的 PV 出现，它就能够很快进入绑定状态，从而结束“单身”之旅。</p>
-<p><strong><code>而所谓将一个 PV 与 PVC 进行“绑定”，其实就是将这个 PV 对象的名字，填在了 PVC 对象的 spec.volumeName 字段上。所以，接下来 Kubernetes 只要获取到这个 PVC 对象，就一定能够找到它所绑定的 PV。</code></strong></p>
-<p>那么，<code>这个 PV 对象，又是如何变成容器里的一个持久化存储的呢？</code></p>
-<p>我在前面讲解容器基础的时候，已经为你详细剖析了容器 Volume 的挂载机制。用一句话总结，<strong>所谓容器的 Volume，其实就是将一个宿主机上的目录，跟一个容器里的目录绑定挂载在了一起</strong>。（你可以借此机会，再回顾一下专栏的第 8 篇文章《白话容器基础（四）：重新认识 Docker 容器》中的相关内容）</p>
-<p><strong>而所谓的“持久化 Volume”，指的就是这个宿主机上的目录，具备“持久性”</strong>。即：<strong><code>这个目录里面的内容，既不会因为容器的删除而被清理掉，也不会跟当前的宿主机绑定。这样，当容器被重启或者在其他节点上重建出来之后，它仍然能够通过挂载这个 Volume，访问到这些内容。</code></strong></p>
-<p>显然，我们前面使用的 hostPath 和 emptyDir 类型的 Volume 并不具备这个特征：它们既有可能被 kubelet 清理掉，也不能被“迁移”到其他节点上。</p>
-<p>所以，大多数情况下，持久化 Volume 的实现，往往依赖于一个远程存储服务，比如：远程文件存储（比如，NFS、GlusterFS）、远程块存储（比如，公有云提供的远程磁盘）等等。</p>
-<p>而 Kubernetes 需要做的工作，就是使用这些存储服务，来为容器准备一个持久化的宿主机目录，以供将来进行绑定挂载时使用。<strong><code>而所谓“持久化”，指的是容器在这个目录里写入的文件，都会保存在远程存储中，从而使得这个目录具备了“持久性”。</code></strong></p>
-<p><strong>这个准备“持久化”宿主机目录的过程，我们可以形象地称为“两阶段处理”</strong>。</p>
-<p>接下来，我通过一个具体的例子为你说明。</p>
-<p>当一个 Pod 调度到一个节点上之后，kubelet 就要负责为这个 Pod 创建它的 Volume 目录。默认情况下，kubelet 为 Volume 创建的目录是如下所示的一个宿主机上的路径：</p>
-<pre><code>/var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;</code></pre><p>接下来，kubelet 要做的操作就取决于你的 Volume 类型了。</p>
-<p>如果你的 Volume 类型是远程块存储，比如 Google Cloud 的 Persistent Disk（GCE 提供的远程磁盘服务），那么 kubelet 就需要先调用 Goolge Cloud 的 API，将它所提供的 Persistent Disk 挂载到 Pod 所在的宿主机上。</p>
-<blockquote>
-<p>备注：你如果不太了解块存储的话，可以直接把它理解为：<strong>一块磁盘。</strong></p>
-</blockquote>
-<p>这相当于执行：</p>
-<pre><code>$ gcloud compute instances attach-disk &lt;虚拟机名字&gt; --disk &lt;远程磁盘名字&gt;</code></pre><p><strong>这一步为虚拟机挂载远程磁盘的操作，对应的正是“两阶段处理”的第一阶段。在 Kubernetes 中，我们把这个阶段称为 Attach。</strong></p>
-<p>Attach 阶段完成后，为了能够使用这个远程磁盘，kubelet 还要进行第二个操作，即：格式化这个磁盘设备，然后将它挂载到宿主机指定的挂载点上。不难理解，这个挂载点，正是我在前面反复提到的 Volume 的宿主机目录。所以，这一步相当于执行：</p>
-<pre><code># 通过lsblk命令获取磁盘设备ID
+      claimName: nfs
+</code></pre><p>可以看到，Pod 需要做的，就是在 volumes 字段里声明自己要使用的 PVC 名字。接下来，等这个 Pod 创建之后，kubelet 就会把这个 PVC 所对应的 PV，也就是一个 NFS 类型的 Volume，挂载在这个 Pod 容器内的目录上。</p><p>不难看出，<strong>PVC 和 PV 的设计，其实跟 “面向对象” 的思想完全一致。</strong></p><p>PVC 可以理解为持久化存储的 “接口”，它提供了对某种持久化存储的描述，但不提供具体的实现；而这个持久化存储的实现部分则由 PV 负责完成。</p><p>这样做的好处是，作为应用开发者，我们只需要跟 PVC 这个 “接口” 打交道，而不必关心具体的实现是 NFS 还是 Ceph。毕竟这些存储相关的知识太专业了，应该交给专业的人去做。</p><p>而在上面的讲述中， <code>其实还有一个比较棘手的情况。</code></p><p>比如，你在创建 Pod 的时候，系统里并没有合适的 PV 跟它定义的 PVC 绑定，也就是说此时容器想要使用的 Volume 不存在。这时候，Pod 的启动就会报错。</p><p>但是，过了一会儿，运维人员也发现了这个情况，所以他赶紧创建了一个对应的 PV。这时候，我们当然希望 Kubernetes 能够再次完成 PVC 和 PV 的绑定操作，从而启动 Pod。</p><p>所以在 Kubernetes 中，实际上存在着一个专门处理持久化存储的控制器，叫作 Volume Controller。这个 Volume Controller 维护着多个控制循环，其中有一个循环，扮演的就是撮合 PV 和 PVC 的 “红娘” 的角色。它的名字叫作 PersistentVolumeController。</p><p>PersistentVolumeController 会不断地查看当前每一个 PVC，是不是已经处于 Bound（已绑定）状态。如果不是，那它就会遍历所有的、可用的 PV，并尝试将其与这个 “单身” 的 PVC 进行绑定。这样，Kubernetes 就可以保证用户提交的每一个 PVC，只要有合适的 PV 出现，它就能够很快进入绑定状态，从而结束 “单身” 之旅。</p><p><strong><code>而所谓将一个 PV 与 PVC 进行“绑定”，其实就是将这个 PV 对象的名字，填在了 PVC 对象的 spec.volumeName 字段上。所以，接下来 Kubernetes 只要获取到这个 PVC 对象，就一定能够找到它所绑定的 PV。</code></strong></p><p>那么， <code>这个 PV 对象，又是如何变成容器里的一个持久化存储的呢？</code></p><p>我在前面讲解容器基础的时候，已经为你详细剖析了容器 Volume 的挂载机制。用一句话总结，<strong>所谓容器的 Volume，其实就是将一个宿主机上的目录，跟一个容器里的目录绑定挂载在了一起</strong>。（你可以借此机会，再回顾一下专栏的第 8 篇文章《白话容器基础（四）：重新认识 Docker 容器》中的相关内容）</p><p><strong>而所谓的 “持久化 Volume”，指的就是这个宿主机上的目录，具备 “持久性”</strong>。即：<strong> <code>这个目录里面的内容，既不会因为容器的删除而被清理掉，也不会跟当前的宿主机绑定。这样，当容器被重启或者在其他节点上重建出来之后，它仍然能够通过挂载这个 Volume，访问到这些内容。</code></strong></p><p>显然，我们前面使用的 hostPath 和 emptyDir 类型的 Volume 并不具备这个特征：它们既有可能被 kubelet 清理掉，也不能被 “迁移” 到其他节点上。</p><p>所以，大多数情况下，持久化 Volume 的实现，往往依赖于一个远程存储服务，比如：远程文件存储（比如，NFS、GlusterFS）、远程块存储（比如，公有云提供的远程磁盘）等等。</p><p>而 Kubernetes 需要做的工作，就是使用这些存储服务，来为容器准备一个持久化的宿主机目录，以供将来进行绑定挂载时使用。<strong> <code>而所谓“持久化”，指的是容器在这个目录里写入的文件，都会保存在远程存储中，从而使得这个目录具备了“持久性”。</code></strong></p><p><strong>这个准备 “持久化” 宿主机目录的过程，我们可以形象地称为 “两阶段处理”</strong>。</p><p>接下来，我通过一个具体的例子为你说明。</p><p>当一个 Pod 调度到一个节点上之后，kubelet 就要负责为这个 Pod 创建它的 Volume 目录。默认情况下，kubelet 为 Volume 创建的目录是如下所示的一个宿主机上的路径：</p><pre><code>/var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;
+</code></pre><p>接下来，kubelet 要做的操作就取决于你的 Volume 类型了。</p><p>如果你的 Volume 类型是远程块存储，比如 Google Cloud 的 Persistent Disk（GCE 提供的远程磁盘服务），那么 kubelet 就需要先调用 Goolge Cloud 的 API，将它所提供的 Persistent Disk 挂载到 Pod 所在的宿主机上。</p><blockquote><p>备注：你如果不太了解块存储的话，可以直接把它理解为：<strong>一块磁盘。</strong></p></blockquote><p>这相当于执行：</p><pre><code>$ gcloud compute instances attach-disk &lt;虚拟机名字&gt; --disk &lt;远程磁盘名字&gt;
+</code></pre><p><strong>这一步为虚拟机挂载远程磁盘的操作，对应的正是 “两阶段处理” 的第一阶段。在 Kubernetes 中，我们把这个阶段称为 Attach。</strong></p><p>Attach 阶段完成后，为了能够使用这个远程磁盘，kubelet 还要进行第二个操作，即：格式化这个磁盘设备，然后将它挂载到宿主机指定的挂载点上。不难理解，这个挂载点，正是我在前面反复提到的 Volume 的宿主机目录。所以，这一步相当于执行：</p><pre><code># 通过lsblk命令获取磁盘设备ID
 $ sudo lsblk
 # 格式化成ext4格式
 $ sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/&lt;磁盘设备ID&gt;
 # 挂载到挂载点
-$ sudo mkdir -p /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;</code></pre><p><strong>这个将磁盘设备格式化并挂载到 Volume 宿主机目录的操作，对应的正是“两阶段处理”的第二个阶段，我们一般称为：Mount。</strong></p>
-<p>Mount 阶段完成后，这个 Volume 的宿主机目录就是一个“持久化”的目录了，容器在它里面写入的内容，会保存在 Google Cloud 的远程磁盘中。</p>
-<p>而如果你的 Volume 类型是远程文件存储（比如 NFS）的话，kubelet 的处理过程就会更简单一些。</p>
-<p>因为在这种情况下，kubelet 可以跳过“第一阶段”（Attach）的操作，这是因为一般来说，远程文件存储并没有一个“存储设备”需要挂载在宿主机上。</p>
-<p>所以，kubelet 会直接从“第二阶段”（Mount）开始准备宿主机上的 Volume 目录。</p>
-<p>在这一步，kubelet 需要作为 client，将远端 NFS 服务器的目录（比如：“/”目录），挂载到 Volume 的宿主机目录上，即相当于执行如下所示的命令：</p>
-<pre><code>$ mount -t nfs &lt;NFS服务器地址&gt;:/ /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt; </code></pre><p>通过这个挂载操作，Volume 的宿主机目录就成为了一个远程 NFS 目录的挂载点，后面你在这个目录里写入的所有文件，都会被保存在远程 NFS 服务器上。所以，我们也就完成了对这个 Volume 宿主机目录的“持久化”。</p>
-<p><strong>到这里，你可能会有疑问，Kubernetes 又是如何定义和区分这两个阶段的呢？</strong></p>
-<p>其实很简单，在具体的 Volume 插件的实现接口上，Kubernetes 分别给这两个阶段提供了两种不同的参数列表：</p>
-<ul>
-<li>对于“第一阶段”（Attach），Kubernetes 提供的可用参数是 nodeName，即宿主机的名字。</li>
-<li>而对于“第二阶段”（Mount），Kubernetes 提供的可用参数是 dir，即 Volume 的宿主机目录。</li>
-</ul>
-<p>所以，作为一个存储插件，你只需要根据自己的需求进行选择和实现即可。在后面关于编写存储插件的文章中，我会对这个过程做深入讲解。</p>
-<p>而经过了“两阶段处理”，我们就得到了一个“持久化”的 Volume 宿主机目录。所以，接下来，kubelet 只要把这个 Volume 目录通过 CRI 里的 Mounts 参数，传递给 Docker，然后就可以为 Pod 里的容器挂载这个“持久化”的 Volume 了。其实，这一步相当于执行了如下所示的命令：</p>
-<pre><code>$ docker run -v /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;:/&lt;容器内的目标目录&gt; 我的镜像 ...</code></pre><p>以上，就是 Kubernetes 处理 PV 的具体原理了。</p>
-<blockquote>
-<p>备注：对应地，在删除一个 PV 的时候，Kubernetes 也需要 Unmount 和 Dettach 两个阶段来处理。这个过程我就不再详细介绍了，执行“反向操作”即可。</p>
-</blockquote>
-<p>实际上，你可能已经发现，这个 PV 的处理流程似乎跟 Pod 以及容器的启动流程没有太多的耦合，只要 kubelet 在向 Docker 发起 CRI 请求之前，确保“持久化”的宿主机目录已经处理完毕即可。</p>
-<p>所以，在 Kubernetes 中，上述<strong>关于 PV 的“两阶段处理”流程，是靠独立于 kubelet 主控制循环（Kubelet Sync Loop）之外的两个控制循环来实现的。</strong></p>
-<p>其中，“第一阶段”的 Attach（以及 Dettach）操作，是由 Volume Controller 负责维护的，这个控制循环的名字叫作： <strong>AttachDetachController</strong>。而它的作用，就是不断地检查每一个 Pod 对应的 PV，和这个 Pod 所在宿主机之间挂载情况。从而决定，是否需要对这个 PV 进行 Attach（或者 Dettach）操作。</p>
-<p>需要注意，作为一个 Kubernetes 内置的控制器，Volume Controller 自然是 kube-controller-manager 的一部分。所以，AttachDetachController 也一定是运行在 Master 节点上的。当然，Attach 操作只需要调用公有云或者具体存储项目的 API，并不需要在具体的宿主机上执行操作，所以这个设计没有任何问题。</p>
-<p>而“第二阶段”的 Mount（以及 Unmount）操作，必须发生在 Pod 对应的宿主机上，所以它必须是 kubelet 组件的一部分。这个控制循环的名字，叫作： <strong>VolumeManagerReconciler</strong>，它运行起来之后，是一个独立于 kubelet 主循环的 Goroutine。</p>
-<p>通过这样将 Volume 的处理同 kubelet 的主循环解耦，Kubernetes 就避免了这些耗时的远程挂载操作拖慢 kubelet 的主控制循环，进而导致 Pod 的创建效率大幅下降的问题。实际上，<strong>kubelet 的一个主要设计原则，就是它的主控制循环绝对不可以被 block</strong>。这个思想，我在后续的讲述容器运行时的时候还会提到。</p>
-<p><code>在了解了 Kubernetes 的 Volume 处理机制之后，我再来为你介绍这个体系里最后一个重要概念：StorageClass。</code></p>
-<p>我在前面介绍 PV 和 PVC 的时候，曾经提到过，PV 这个对象的创建，是由运维人员完成的。但是，在大规模的生产环境里，这其实是一个非常麻烦的工作。</p>
-<p>这是因为，一个大规模的 Kubernetes 集群里很可能有成千上万个 PVC，这就意味着运维人员必须得事先创建出成千上万个 PV。更麻烦的是，随着新的 PVC 不断被提交，运维人员就不得不继续添加新的、能满足条件的 PV，否则新的 Pod 就会因为 PVC 绑定不到 PV 而失败。在实际操作中，这几乎没办法靠人工做到。</p>
-<p>所以，Kubernetes 为我们提供了一套可以自动创建 PV 的机制，即：Dynamic Provisioning。</p>
-<p>相比之下，前面人工管理 PV 的方式就叫作 Static Provisioning。</p>
-<p>Dynamic Provisioning 机制工作的核心，在于一个名叫 StorageClass 的 API 对象。</p>
-<p><strong>而 StorageClass 对象的作用，其实就是创建 PV 的模板。</strong></p>
-<p>具体地说，StorageClass 对象会定义如下两个部分内容：</p>
-<ul>
-<li>第一，PV 的属性。比如，存储类型、Volume 的大小等等。</li>
-<li>第二，创建这种 PV 需要用到的存储插件。比如，Ceph 等等。</li>
-</ul>
-<p>有了这样两个信息之后，Kubernetes 就能够根据用户提交的 PVC，找到一个对应的 StorageClass 了。然后，Kubernetes 就会调用该 StorageClass 声明的存储插件，创建出需要的 PV。</p>
-<p>举个例子，假如我们的 Volume 的类型是 GCE 的 Persistent Disk 的话，运维人员就需要定义一个如下所示的 StorageClass：</p>
-<pre><code>apiVersion: storage.k8s.io/v1
+$ sudo mkdir -p /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;
+</code></pre><p><strong>这个将磁盘设备格式化并挂载到 Volume 宿主机目录的操作，对应的正是 “两阶段处理” 的第二个阶段，我们一般称为：Mount。</strong></p><p>Mount 阶段完成后，这个 Volume 的宿主机目录就是一个 “持久化” 的目录了，容器在它里面写入的内容，会保存在 Google Cloud 的远程磁盘中。</p><p>而如果你的 Volume 类型是远程文件存储（比如 NFS）的话，kubelet 的处理过程就会更简单一些。</p><p>因为在这种情况下，kubelet 可以跳过 “第一阶段”（Attach）的操作，这是因为一般来说，远程文件存储并没有一个 “存储设备” 需要挂载在宿主机上。</p><p>所以，kubelet 会直接从 “第二阶段”（Mount）开始准备宿主机上的 Volume 目录。</p><p>在这一步，kubelet 需要作为 client，将远端 NFS 服务器的目录（比如：“/” 目录），挂载到 Volume 的宿主机目录上，即相当于执行如下所示的命令：</p><pre><code>$ mount -t nfs &lt;NFS服务器地址&gt;:/ /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt; 
+</code></pre><p>通过这个挂载操作，Volume 的宿主机目录就成为了一个远程 NFS 目录的挂载点，后面你在这个目录里写入的所有文件，都会被保存在远程 NFS 服务器上。所以，我们也就完成了对这个 Volume 宿主机目录的 “持久化”。</p><p><strong>到这里，你可能会有疑问，Kubernetes 又是如何定义和区分这两个阶段的呢？</strong></p><p>其实很简单，在具体的 Volume 插件的实现接口上，Kubernetes 分别给这两个阶段提供了两种不同的参数列表：</p><ul><li>对于 “第一阶段”（Attach），Kubernetes 提供的可用参数是 nodeName，即宿主机的名字。</li><li>而对于 “第二阶段”（Mount），Kubernetes 提供的可用参数是 dir，即 Volume 的宿主机目录。</li></ul><p>所以，作为一个存储插件，你只需要根据自己的需求进行选择和实现即可。在后面关于编写存储插件的文章中，我会对这个过程做深入讲解。</p><p>而经过了 “两阶段处理”，我们就得到了一个 “持久化” 的 Volume 宿主机目录。所以，接下来，kubelet 只要把这个 Volume 目录通过 CRI 里的 Mounts 参数，传递给 Docker，然后就可以为 Pod 里的容器挂载这个 “持久化” 的 Volume 了。其实，这一步相当于执行了如下所示的命令：</p><pre><code>$ docker run -v /var/lib/kubelet/pods/&lt;Pod的ID&gt;/volumes/kubernetes.io~&lt;Volume类型&gt;/&lt;Volume名字&gt;:/&lt;容器内的目标目录&gt; 我的镜像 ...
+</code></pre><p>以上，就是 Kubernetes 处理 PV 的具体原理了。</p><blockquote><p>备注：对应地，在删除一个 PV 的时候，Kubernetes 也需要 Unmount 和 Dettach 两个阶段来处理。这个过程我就不再详细介绍了，执行 “反向操作” 即可。</p></blockquote><p>实际上，你可能已经发现，这个 PV 的处理流程似乎跟 Pod 以及容器的启动流程没有太多的耦合，只要 kubelet 在向 Docker 发起 CRI 请求之前，确保 “持久化” 的宿主机目录已经处理完毕即可。</p><p>所以，在 Kubernetes 中，上述<strong>关于 PV 的 “两阶段处理” 流程，是靠独立于 kubelet 主控制循环（Kubelet Sync Loop）之外的两个控制循环来实现的。</strong></p><p>其中，“第一阶段” 的 Attach（以及 Dettach）操作，是由 Volume Controller 负责维护的，这个控制循环的名字叫作： <strong>AttachDetachController</strong>。而它的作用，就是不断地检查每一个 Pod 对应的 PV，和这个 Pod 所在宿主机之间挂载情况。从而决定，是否需要对这个 PV 进行 Attach（或者 Dettach）操作。</p><p>需要注意，作为一个 Kubernetes 内置的控制器，Volume Controller 自然是 kube-controller-manager 的一部分。所以，AttachDetachController 也一定是运行在 Master 节点上的。当然，Attach 操作只需要调用公有云或者具体存储项目的 API，并不需要在具体的宿主机上执行操作，所以这个设计没有任何问题。</p><p>而 “第二阶段” 的 Mount（以及 Unmount）操作，必须发生在 Pod 对应的宿主机上，所以它必须是 kubelet 组件的一部分。这个控制循环的名字，叫作： <strong>VolumeManagerReconciler</strong>，它运行起来之后，是一个独立于 kubelet 主循环的 Goroutine。</p><p>通过这样将 Volume 的处理同 kubelet 的主循环解耦，Kubernetes 就避免了这些耗时的远程挂载操作拖慢 kubelet 的主控制循环，进而导致 Pod 的创建效率大幅下降的问题。实际上，<strong>kubelet 的一个主要设计原则，就是它的主控制循环绝对不可以被 block</strong>。这个思想，我在后续的讲述容器运行时的时候还会提到。</p><p><code>在了解了 Kubernetes 的 Volume 处理机制之后，我再来为你介绍这个体系里最后一个重要概念：StorageClass。</code></p><p>我在前面介绍 PV 和 PVC 的时候，曾经提到过，PV 这个对象的创建，是由运维人员完成的。但是，在大规模的生产环境里，这其实是一个非常麻烦的工作。</p><p>这是因为，一个大规模的 Kubernetes 集群里很可能有成千上万个 PVC，这就意味着运维人员必须得事先创建出成千上万个 PV。更麻烦的是，随着新的 PVC 不断被提交，运维人员就不得不继续添加新的、能满足条件的 PV，否则新的 Pod 就会因为 PVC 绑定不到 PV 而失败。在实际操作中，这几乎没办法靠人工做到。</p><p>所以，Kubernetes 为我们提供了一套可以自动创建 PV 的机制，即：Dynamic Provisioning。</p><p>相比之下，前面人工管理 PV 的方式就叫作 Static Provisioning。</p><p>Dynamic Provisioning 机制工作的核心，在于一个名叫 StorageClass 的 API 对象。</p><p><strong>而 StorageClass 对象的作用，其实就是创建 PV 的模板。</strong></p><p>具体地说，StorageClass 对象会定义如下两个部分内容：</p><ul><li>第一，PV 的属性。比如，存储类型、Volume 的大小等等。</li><li>第二，创建这种 PV 需要用到的存储插件。比如，Ceph 等等。</li></ul><p>有了这样两个信息之后，Kubernetes 就能够根据用户提交的 PVC，找到一个对应的 StorageClass 了。然后，Kubernetes 就会调用该 StorageClass 声明的存储插件，创建出需要的 PV。</p><p>举个例子，假如我们的 Volume 的类型是 GCE 的 Persistent Disk 的话，运维人员就需要定义一个如下所示的 StorageClass：</p><pre><code>apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: block-service
 provisioner: kubernetes.io/gce-pd
 parameters:
-  type: pd-ssd</code></pre><p>在这个 YAML 文件里，我们定义了一个名叫 block-service 的 StorageClass。</p>
-<p>这个 StorageClass 的 provisioner 字段的值是：kubernetes.io/gce-pd，这正是 Kubernetes 内置的 GCE PD 存储插件的名字。</p>
-<p>而这个 StorageClass 的 parameters 字段，就是 PV 的参数。比如：上面例子里的 type=pd-ssd，指的是这个 PV 的类型是“SSD 格式的 GCE 远程磁盘”。</p>
-<p>需要注意的是，由于需要使用 GCE Persistent Disk，上面这个例子只有在 GCE 提供的 Kubernetes 服务里才能实践。如果你想使用我们之前部署在本地的 Kubernetes 集群以及 Rook 存储服务的话，你的 StorageClass 需要使用如下所示的 YAML 文件来定义：</p>
-<pre><code>apiVersion: ceph.rook.io/v1beta1
+  type: pd-ssd
+</code></pre><p>在这个 YAML 文件里，我们定义了一个名叫 block-service 的 StorageClass。</p><p>这个 StorageClass 的 provisioner 字段的值是：<span class="exturl" data-url="aHR0cDovL2t1YmVybmV0ZXMuaW8vZ2NlLXBkJUVGJUJDJThDJUU4JUJGJTk5JUU2JUFEJUEzJUU2JTk4JUFG">kubernetes.io/gce-pd，这正是</span> Kubernetes 内置的 GCE PD 存储插件的名字。</p><p>而这个 StorageClass 的 parameters 字段，就是 PV 的参数。比如：上面例子里的 type=pd-ssd，指的是这个 PV 的类型是 “SSD 格式的 GCE 远程磁盘”。</p><p>需要注意的是，由于需要使用 GCE Persistent Disk，上面这个例子只有在 GCE 提供的 Kubernetes 服务里才能实践。如果你想使用我们之前部署在本地的 Kubernetes 集群以及 Rook 存储服务的话，你的 StorageClass 需要使用如下所示的 YAML 文件来定义：</p><pre><code>apiVersion: ceph.rook.io/v1beta1
 kind: Pool
 metadata:
   name: replicapool
@@ -195,10 +75,9 @@ provisioner: ceph.rook.io/block
 parameters:
   pool: replicapool
   #The value of &quot;clusterNamespace&quot; MUST be the same as the one in which your rook cluster exist
-  clusterNamespace: rook-ceph</code></pre><p>在这个 YAML 文件中，我们定义的还是一个名叫 block-service 的 StorageClass，只不过它声明使的存储插件是由 Rook 项目。</p>
-<p>有了 StorageClass 的 YAML 文件之后，运维人员就可以在 Kubernetes 里创建这个 StorageClass 了：</p>
-<pre><code>$ kubectl create -f sc.yaml</code></pre><p>这时候，作为应用开发者，我们只需要在 PVC 里指定要使用的 StorageClass 名字即可，如下所示：</p>
-<pre><code>apiVersion: v1
+  clusterNamespace: rook-ceph
+</code></pre><p>在这个 YAML 文件中，我们定义的还是一个名叫 block-service 的 StorageClass，只不过它声明使的存储插件是由 Rook 项目。</p><p>有了 StorageClass 的 YAML 文件之后，运维人员就可以在 Kubernetes 里创建这个 StorageClass 了：</p><pre><code>$ kubectl create -f sc.yaml
+</code></pre><p>这时候，作为应用开发者，我们只需要在 PVC 里指定要使用的 StorageClass 名字即可，如下所示：</p><pre><code>apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: claim1
@@ -208,12 +87,9 @@ spec:
   storageClassName: block-service
   resources:
     requests:
-      storage: 30Gi</code></pre><p>可以看到，我们在这个 PVC 里添加了一个叫作 storageClassName 的字段，用于指定该 PVC 所要使用的 StorageClass 的名字是：block-service。</p>
-<p>以 Google Cloud 为例。</p>
-<p>当我们通过 kubectl create 创建上述 PVC 对象之后，Kubernetes 就会调用 Google Cloud 的 API，创建出一块 SSD 格式的 Persistent Disk。然后，再使用这个 Persistent Disk 的信息，自动创建出一个对应的 PV 对象。</p>
-<p>我们可以一起来实践一下这个过程（如果使用 Rook 的话下面的流程也是一样的，只不过 Rook 创建出的是 Ceph 类型的 PV）：</p>
-<pre><code>$ kubectl create -f pvc.yaml</code></pre><p>可以看到，我们创建的 PVC 会绑定一个 Kubernetes 自动创建的 PV，如下所示：</p>
-<pre><code>$ kubectl describe pvc claim1
+      storage: 30Gi
+</code></pre><p>可以看到，我们在这个 PVC 里添加了一个叫作 storageClassName 的字段，用于指定该 PVC 所要使用的 StorageClass 的名字是：block-service。</p><p>以 Google Cloud 为例。</p><p>当我们通过 kubectl create 创建上述 PVC 对象之后，Kubernetes 就会调用 Google Cloud 的 API，创建出一块 SSD 格式的 Persistent Disk。然后，再使用这个 Persistent Disk 的信息，自动创建出一个对应的 PV 对象。</p><p>我们可以一起来实践一下这个过程（如果使用 Rook 的话下面的流程也是一样的，只不过 Rook 创建出的是 Ceph 类型的 PV）：</p><pre><code>$ kubectl create -f pvc.yaml
+</code></pre><p>可以看到，我们创建的 PVC 会绑定一个 Kubernetes 自动创建的 PV，如下所示：</p><pre><code>$ kubectl describe pvc claim1
 Name:           claim1
 Namespace:      default
 StorageClass:   block-service
@@ -222,8 +98,8 @@ Volume:         pvc-e5578707-c626-11e6-baf6-08002729a32b
 Labels:         &lt;none&gt;
 Capacity:       30Gi
 Access Modes:   RWO
-No Events.</code></pre><p>而且，通过查看这个自动创建的 PV 的属性，你就可以看到它跟我们在 PVC 里声明的存储的属性是一致的，如下所示：</p>
-<pre><code>$ kubectl describe pv pvc-e5578707-c626-11e6-baf6-08002729a32b
+No Events.
+</code></pre><p>而且，通过查看这个自动创建的 PV 的属性，你就可以看到它跟我们在 PVC 里声明的存储的属性是一致的，如下所示：</p><pre><code>$ kubectl describe pv pvc-e5578707-c626-11e6-baf6-08002729a32b
 Name:            pvc-e5578707-c626-11e6-baf6-08002729a32b
 Labels:          &lt;none&gt;
 StorageClass:    block-service
@@ -233,321 +109,11 @@ Reclaim Policy:  Delete
 Access Modes:    RWO
 Capacity:        30Gi
 ...
-No events.</code></pre><p>此外，你还可以看到，这个自动创建出来的 PV 的 StorageClass 字段的值，也是 block-service。<strong><code>这是因为，Kubernetes 只会将 StorageClass 相同的 PVC 和 PV 绑定起来。</code></strong></p>
-<p>有了 Dynamic Provisioning 机制，运维人员只需要在 Kubernetes 集群里创建出数量有限的 StorageClass 对象就可以了。这就好比，运维人员在 Kubernetes 集群里创建出了各种各样的 PV 模板。这时候，当开发人员提交了包含 StorageClass 字段的 PVC 之后，Kubernetes 就会根据这个 StorageClass 创建出对应的 PV。</p>
-<blockquote>
-<p><span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/concepts/storage/storage-classes/#provisioner"  target="_blank" rel="noopener">Kubernetes 的官方文档</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>里已经列出了默认支持 Dynamic Provisioning 的内置存储插件。而对于不在文档里的插件，比如 NFS，或者其他非内置存储插件，你其实可以通过<span class="exturl"><a class="exturl__link"   href="https://github.com/kubernetes-incubator/external-storage"  target="_blank" rel="noopener">kubernetes-incubator/external-storage</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>这个库来自己编写一个外部插件完成这个工作。像我们之前部署的 Rook，已经内置了 external-storage 的实现，所以 Rook 是完全支持 Dynamic Provisioning 特性的。</p>
-</blockquote>
-<p><strong>例子:</strong><br><span class="exturl"><a class="exturl__link"   href="https://kubernetes.io/docs/concepts/storage/storage-classes/#local"  target="_blank" rel="noopener">Local StorageClass</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>: </p>
-<pre><code>apiVersion: storage.k8s.io/v1
+No events.
+</code></pre><p>此外，你还可以看到，这个自动创建出来的 PV 的 StorageClass 字段的值，也是 block-service。<strong> <code>这是因为，Kubernetes 只会将 StorageClass 相同的 PVC 和 PV 绑定起来。</code></strong></p><p>有了 Dynamic Provisioning 机制，运维人员只需要在 Kubernetes 集群里创建出数量有限的 StorageClass 对象就可以了。这就好比，运维人员在 Kubernetes 集群里创建出了各种各样的 PV 模板。这时候，当开发人员提交了包含 StorageClass 字段的 PVC 之后，Kubernetes 就会根据这个 StorageClass 创建出对应的 PV。</p><blockquote><p><span class="exturl" data-url="aHR0cHM6Ly9rdWJlcm5ldGVzLmlvL2RvY3MvY29uY2VwdHMvc3RvcmFnZS9zdG9yYWdlLWNsYXNzZXMvI3Byb3Zpc2lvbmVy">Kubernetes 的官方文档</span>里已经列出了默认支持 Dynamic Provisioning 的内置存储插件。而对于不在文档里的插件，比如 NFS，或者其他非内置存储插件，你其实可以通过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1YmVybmV0ZXMtaW5jdWJhdG9yL2V4dGVybmFsLXN0b3JhZ2U="> kubernetes-incubator/external-storage</span> 这个库来自己编写一个外部插件完成这个工作。像我们之前部署的 Rook，已经内置了 external-storage 的实现，所以 Rook 是完全支持 Dynamic Provisioning 特性的。</p></blockquote><p><strong>例子:</strong><br><span class="exturl" data-url="aHR0cHM6Ly9rdWJlcm5ldGVzLmlvL2RvY3MvY29uY2VwdHMvc3RvcmFnZS9zdG9yYWdlLWNsYXNzZXMvI2xvY2Fs">Local StorageClass</span>:</p><pre><code>apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: local-storage
 provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer</code></pre><p>Local volumes do not currently support dynamic provisioning, however a StorageClass should still be created to delay volume binding until Pod scheduling. This is specified by the WaitForFirstConsumer volume binding mode.</p>
-<p>Delaying volume binding allows the scheduler to consider all of a Pod’s scheduling constraints when choosing an appropriate PersistentVolume for a PersistentVolumeClaim.</p>
-<p>需要注意的是，<strong>StorageClass 并不是专门为了 Dynamic Provisioning 而设计的。</strong></p>
-<p>比如，在本篇一开始的例子里，我在 PV 和 PVC 里都声明了 storageClassName=manual。而我的集群里，实际上并没有一个名叫 manual 的 StorageClass 对象。这完全没有问题，这个时候 Kubernetes 进行的是 Static Provisioning，但在做绑定决策的时候，它依然会考虑 PV 和 PVC 的 StorageClass 定义。</p>
-<p>而这么做的好处也很明显：这个 PVC 和 PV 的绑定关系，就完全在我自己的掌控之中。</p>
-<p>这里，你可能会有疑问，我在之前讲解 StatefulSet 存储状态的例子时，好像并没有声明 StorageClass 啊？</p>
-<p>实际上，<strong>如果你的集群已经开启了名叫 DefaultStorageClass 的 Admission Plugin，它就会为 PVC 和 PV 自动添加一个默认的 StorageClass；否则，PVC 的 storageClassName 的值就是“”，这也意味着它只能够跟 storageClassName 也是“”的 PV 进行绑定。</strong></p>
-<p><strong>总结</strong></p>
-<p>在今天的分享中，我为你详细解释了 PVC 和 PV 的设计与实现原理，并为你阐述了 StorageClass 到底是干什么用的。这些概念之间的关系，可以用如下所示的一幅示意图描述：</p>
-<p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="2.png"  alt="">
-      </p>
-<p>从图中我们可以看到，在这个体系中：</p>
-<p>PVC 描述的，是 Pod 想要使用的持久化存储的属性，比如存储的大小、读写权限等。</p>
-<p>PV 描述的，则是一个具体的 Volume 的属性，比如 Volume 的类型、挂载目录、远程存储服务器地址等。</p>
-<p>而 StorageClass 的作用，则是充当 PV 的模板。并且，只有同属于一个 StorageClass 的 PV 和 PVC，才可以绑定在一起。</p>
-<p>当然，StorageClass 的另一个重要作用，是指定 PV 的 Provisioner（存储插件）。这时候，如果你的存储插件支持 Dynamic Provisioning 的话，Kubernetes 就可以自动为你创建 PV 了。</p>
-<p>基于上述讲述，为了统一概念和方便叙述，在本专栏中，我以后凡是提到“Volume”，指的就是一个远程存储服务挂载在宿主机上的持久化目录；而“PV”，指的是这个 Volume 在 Kubernetes 里的 API 对象。</p>
-<p>需要注意的是，这套容器持久化存储体系，完全是 Kubernetes 项目自己负责管理的，并不依赖于 docker volume 命令和 Docker 的存储插件。当然，这套体系本身就比 docker volume 命令的诞生时间还要早得多。</p>
-<p><strong>容器持久化存储涉及的概念比较多，试着总结一下整体流程:</strong></p>
-<ol>
-<li>用户提交请求创建pod，Kubernetes发现这个pod声明使用了PVC，那就靠PersistentVolumeController帮它找一个PV配对。</li>
-<li>没有现成的PV，就去找对应的StorageClass，帮它新创建一个PV，然后和PVC完成绑定。</li>
-<li>新创建的PV，还只是一个API 对象，需要经过“两阶段处理”变成宿主机上的“持久化 Volume”才真正有用：<ul>
-<li>第一阶段由运行在master上的AttachDetachController负责，为这个PV完成 Attach 操作，为宿主机挂载远程磁盘；</li>
-<li>第二阶段是运行在每个节点上kubelet组件的内部，把第一步attach的远程磁盘 mount 到宿主机目录。这个控制循环叫VolumeManagerReconciler，运行在独立的Goroutine，不会阻塞kubelet主循环。<br>完成这两步，PV对应的“持久化 Volume”就准备好了，POD可以正常启动，将“持久化 Volume”挂载在容器内指定的路径。</li>
-</ul>
-</li>
-</ol>
-<p><strong>思考题</strong></p>
-<p>在了解了 PV、PVC 的设计和实现原理之后，你是否依然觉得它有“过度设计”的嫌疑？或者，你是否有更加简单、足以解决你 90% 需求的 Volume 的用法？</p>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/">https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">27 | 聪明的微创新：Operator工作原理解读</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/reference/k8s/30.%E7%BC%96%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AD%98%E5%82%A8%E6%8F%92%E4%BB%B6%EF%BC%9AFlexVolume%E4%B8%8ECSI/"><span class="paginator-prev__text">30 | 编写自己的存储插件：FlexVolume与CSI</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PV、PVC、StorageClass，这些到底在说啥？"><span class="toc-number">1.</span> <span class="toc-text">
-          PV、PVC、StorageClass，这些到底在说啥？</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">292</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
-
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
-
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
-
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
-
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
-
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
-
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
-
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
-
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
-
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
-
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
-
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
-
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
-
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
-    }
-  });
-}
-
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
-
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
-
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
-
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
-
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
-
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
-
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
-
-var assistSearchList = window.CONFIG.assistSearch;
-
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
+volumeBindingMode: WaitForFirstConsumer
+</code></pre><p>Local volumes do not currently support dynamic provisioning, however a StorageClass should still be created to delay volume binding until Pod scheduling. This is specified by the WaitForFirstConsumer volume binding mode.</p><p>Delaying volume binding allows the scheduler to consider all of a Pod's scheduling constraints when choosing an appropriate PersistentVolume for a PersistentVolumeClaim.</p><p>需要注意的是，<strong>StorageClass 并不是专门为了 Dynamic Provisioning 而设计的。</strong></p><p>比如，在本篇一开始的例子里，我在 PV 和 PVC 里都声明了 storageClassName=manual。而我的集群里，实际上并没有一个名叫 manual 的 StorageClass 对象。这完全没有问题，这个时候 Kubernetes 进行的是 Static Provisioning，但在做绑定决策的时候，它依然会考虑 PV 和 PVC 的 StorageClass 定义。</p><p>而这么做的好处也很明显：这个 PVC 和 PV 的绑定关系，就完全在我自己的掌控之中。</p><p>这里，你可能会有疑问，我在之前讲解 StatefulSet 存储状态的例子时，好像并没有声明 StorageClass 啊？</p><p>实际上，<strong>如果你的集群已经开启了名叫 DefaultStorageClass 的 Admission Plugin，它就会为 PVC 和 PV 自动添加一个默认的 StorageClass；否则，PVC 的 storageClassName 的值就是 “”，这也意味着它只能够跟 storageClassName 也是 “” 的 PV 进行绑定。</strong></p><p><strong>总结</strong></p><p>在今天的分享中，我为你详细解释了 PVC 和 PV 的设计与实现原理，并为你阐述了 StorageClass 到底是干什么用的。这些概念之间的关系，可以用如下所示的一幅示意图描述：</p><p><img data-src="2.png" alt=""></p><p>从图中我们可以看到，在这个体系中：</p><p>PVC 描述的，是 Pod 想要使用的持久化存储的属性，比如存储的大小、读写权限等。</p><p>PV 描述的，则是一个具体的 Volume 的属性，比如 Volume 的类型、挂载目录、远程存储服务器地址等。</p><p>而 StorageClass 的作用，则是充当 PV 的模板。并且，只有同属于一个 StorageClass 的 PV 和 PVC，才可以绑定在一起。</p><p>当然，StorageClass 的另一个重要作用，是指定 PV 的 Provisioner（存储插件）。这时候，如果你的存储插件支持 Dynamic Provisioning 的话，Kubernetes 就可以自动为你创建 PV 了。</p><p>基于上述讲述，为了统一概念和方便叙述，在本专栏中，我以后凡是提到 “Volume”，指的就是一个远程存储服务挂载在宿主机上的持久化目录；而 “PV”，指的是这个 Volume 在 Kubernetes 里的 API 对象。</p><p>需要注意的是，这套容器持久化存储体系，完全是 Kubernetes 项目自己负责管理的，并不依赖于 docker volume 命令和 Docker 的存储插件。当然，这套体系本身就比 docker volume 命令的诞生时间还要早得多。</p><p><strong>容器持久化存储涉及的概念比较多，试着总结一下整体流程:</strong></p><ol><li>用户提交请求创建 pod，Kubernetes 发现这个 pod 声明使用了 PVC，那就靠 PersistentVolumeController 帮它找一个 PV 配对。</li><li>没有现成的 PV，就去找对应的 StorageClass，帮它新创建一个 PV，然后和 PVC 完成绑定。</li><li>新创建的 PV，还只是一个 API 对象，需要经过 “两阶段处理” 变成宿主机上的 “持久化 Volume” 才真正有用：</li></ol><ul><li>第一阶段由运行在 master 上的 AttachDetachController 负责，为这个 PV 完成 Attach 操作，为宿主机挂载远程磁盘；</li><li>第二阶段是运行在每个节点上 kubelet 组件的内部，把第一步 attach 的远程磁盘 mount 到宿主机目录。这个控制循环叫 VolumeManagerReconciler，运行在独立的 Goroutine，不会阻塞 kubelet 主循环。<br>完成这两步，PV 对应的 “持久化 Volume” 就准备好了，POD 可以正常启动，将 “持久化 Volume” 挂载在容器内指定的路径。</li></ul><p><strong>思考题</strong></p><p>在了解了 PV、PVC 的设计和实现原理之后，你是否依然觉得它有 “过度设计” 的嫌疑？或者，你是否有更加简单、足以解决你 90% 需求的 Volume 的用法？</p></div><footer><div class="meta"></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Kung-Fu-Master 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Kung-Fu-Master 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Kung-Fu-Master 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Kung-Fu-Master <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>本文链接：</strong> <a href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/" title="28 | PV、PVC、StorageClass，这些到底在说啥？">https://kung-fu-master.github.io/2021/03/13/reference/k8s/28.PV、PVC、StorageClass，这些到底在说啥/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicliierfjj20zk0m8npd.jpg" title="29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> k8s</span><h3>29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起</h3></a></div><div class="item right"><a href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeuv80yoj20zk0m8kjl.jpg" title="27 | 聪明的微创新：Operator工作原理解读"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> k8s</span><h3>27 | 聪明的微创新：Operator工作原理解读</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pv-pvc-storageclass这些到底在说啥"><span class="toc-number">1.</span> <span class="toc-text"># PV、PVC、StorageClass，这些到底在说啥？</span></a></li></ol></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/2021/03/13/reference/k8s/00.%E5%BC%80%E7%AF%87%E8%AF%8D-%E6%89%93%E9%80%9A%E2%80%9C%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E2%80%9D%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/" rel="bookmark" title="00 | 开篇词-打通“容器技术”的任督二脉">00 | 开篇词-打通“容器技术”的任督二脉</a></li><li><a href="/2021/03/13/reference/k8s/03.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%B8%89)%E7%BE%A4%E9%9B%84%E5%B9%B6%E8%B5%B7/" rel="bookmark" title="03 | 预习篇 · 小鲸鱼大事记（三）：群雄并起">03 | 预习篇 · 小鲸鱼大事记（三）：群雄并起</a></li><li><a href="/2021/03/13/reference/k8s/01.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%B8%80)%E5%88%9D%E5%87%BA%E8%8C%85%E5%BA%90/" rel="bookmark" title="01 | 预习篇 · 小鲸鱼大事记（一）：初出茅庐">01 | 预习篇 · 小鲸鱼大事记（一）：初出茅庐</a></li><li><a href="/2021/03/13/reference/k8s/02.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%BA%8C)%E5%B4%AD%E9%9C%B2%E5%A4%B4%E8%A7%92/" rel="bookmark" title="02 | 预习篇 · 小鲸鱼大事记（二）：崭露头角">02 | 预习篇 · 小鲸鱼大事记（二）：崭露头角</a></li><li><a href="/2021/03/13/reference/k8s/04.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E5%9B%9B)%E5%B0%98%E5%9F%83%E8%90%BD%E5%AE%9A/" rel="bookmark" title="04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定">04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定</a></li><li><a href="/2021/03/13/reference/k8s/05.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%80)%E4%BB%8E%E8%BF%9B%E7%A8%8B%E8%AF%B4%E5%BC%80%E5%8E%BB/" rel="bookmark" title="05 | 白话容器基础（一）：从进程说开去">05 | 白话容器基础（一）：从进程说开去</a></li><li><a href="/2021/03/13/reference/k8s/06.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%BA%8C)%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/" rel="bookmark" title="06 | 白话容器基础（二）：隔离与限制">06 | 白话容器基础（二）：隔离与限制</a></li><li><a href="/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/" rel="bookmark" title="07 | 白话容器基础（三）：深入理解容器镜像">07 | 白话容器基础（三）：深入理解容器镜像</a></li><li><a href="/2021/03/13/reference/k8s/08.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E5%9B%9B)%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86Docker%E5%AE%B9%E5%99%A8/" rel="bookmark" title="08 | 白话容器基础（四）：重新认识Docker容器">08 | 白话容器基础（四）：重新认识Docker容器</a></li><li><a href="/2021/03/13/reference/k8s/09.%E4%BB%8E%E5%AE%B9%E5%99%A8%E5%88%B0%E5%AE%B9%E5%99%A8%E4%BA%91%EF%BC%9A%E8%B0%88%E8%B0%88Kubernetes%E7%9A%84%E6%9C%AC%E8%B4%A8/" rel="bookmark" title="09 | 从容器到容器云：谈谈Kubernetes的本质">09 | 从容器到容器云：谈谈Kubernetes的本质</a></li><li><a href="/2021/03/13/reference/k8s/12.%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BA%94%E7%94%A8/" rel="bookmark" title="12 | 牛刀小试：我的第一个容器化应用">12 | 牛刀小试：我的第一个容器化应用</a></li><li><a href="/2021/03/13/reference/k8s/13.%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81Pod/" rel="bookmark" title="13 | 为什么我们需要Pod？">13 | 为什么我们需要Pod？</a></li><li><a href="/2021/03/13/reference/k8s/11.%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84Kubernetes%E9%9B%86%E7%BE%A4/" rel="bookmark" title="11 | 从0到1：搭建一个完整的Kubernetes集群">11 | 从0到1：搭建一个完整的Kubernetes集群</a></li><li><a href="/2021/03/13/reference/k8s/10.Kubernetes%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%A9%E5%99%A8kubeadm/" rel="bookmark" title="10 | Kubernetes一键部署利器：kubeadm">10 | Kubernetes一键部署利器：kubeadm</a></li><li><a href="/2021/03/13/reference/k8s/14.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90Pod%E5%AF%B9%E8%B1%A1(%E4%B8%80)%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" rel="bookmark" title="14 | 深入解析Pod对象（一）：基本概念">14 | 深入解析Pod对象（一）：基本概念</a></li><li><a href="/2021/03/13/reference/k8s/15.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90Pod%E5%AF%B9%E8%B1%A1(%E4%BA%8C)%E4%BD%BF%E7%94%A8%E8%BF%9B%E9%98%B6/" rel="bookmark" title="15 | 深入解析Pod对象（二）：使用进阶">15 | 深入解析Pod对象（二）：使用进阶</a></li><li><a href="/2021/03/13/reference/k8s/16.%E7%BC%96%E6%8E%92%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95%EF%BC%9A%E8%B0%88%E8%B0%88%E2%80%9C%E6%8E%A7%E5%88%B6%E5%99%A8%E2%80%9D%E6%A8%A1%E5%9E%8B/" rel="bookmark" title="16 | 编排其实很简单：谈谈“控制器”模型">16 | 编排其实很简单：谈谈“控制器”模型</a></li><li><a href="/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/" rel="bookmark" title="17 | 经典PaaS的记忆：作业副本与水平扩展">17 | 经典PaaS的记忆：作业副本与水平扩展</a></li><li><a href="/2021/03/13/reference/k8s/21.%E5%AE%B9%E5%99%A8%E5%8C%96%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9ADaemonSet/" rel="bookmark" title="21 | 容器化守护进程的意义：DaemonSet">21 | 容器化守护进程的意义：DaemonSet</a></li><li><a href="/2021/03/13/reference/k8s/19.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%BA%8C)%EF%BC%9A%E5%AD%98%E5%82%A8%E7%8A%B6%E6%80%81/" rel="bookmark" title="19 | 深入理解StatefulSet（二）：存储状态">19 | 深入理解StatefulSet（二）：存储状态</a></li><li><a href="/2021/03/13/reference/k8s/18.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%80)%EF%BC%9A%E6%8B%93%E6%89%91%E7%8A%B6%E6%80%81/" rel="bookmark" title="18 | 深入理解StatefulSet（一）：拓扑状态">18 | 深入理解StatefulSet（一）：拓扑状态</a></li><li><a href="/2021/03/13/reference/k8s/20.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%89)%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/" rel="bookmark" title="17 | 经典PaaS的记忆：作业副本与水平扩展">17 | 经典PaaS的记忆：作业副本与水平扩展</a></li><li><a href="/2021/03/13/reference/k8s/23.%E5%A3%B0%E6%98%8E%E5%BC%8FAPI%E4%B8%8EKubernetes%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" rel="bookmark" title="23 | 声明式API与Kubernetes编程范式">23 | 声明式API与Kubernetes编程范式</a></li><li><a href="/2021/03/13/reference/k8s/22.%E6%92%AC%E5%8A%A8%E7%A6%BB%E7%BA%BF%E4%B8%9A%E5%8A%A1%EF%BC%9AJob%E4%B8%8ECronJob/" rel="bookmark" title="22 | 撬动离线业务：Job与CronJob">22 | 撬动离线业务：Job与CronJob</a></li><li><a href="/2021/03/13/reference/k8s/24.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%B8%80)%EF%BC%9AAPI%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A5%A5%E7%A7%98/" rel="bookmark" title="24 | 深入解析声明式API（一）：API对象的奥秘">24 | 深入解析声明式API（一）：API对象的奥秘</a></li><li><a href="/2021/03/13/reference/k8s/25.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%BA%8C)%EF%BC%9A%E7%BC%96%E5%86%99%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E5%88%B6%E5%99%A8/" rel="bookmark" title="25 | 深入解析声明式API（二）：编写自定义控制器">25 | 深入解析声明式API（二）：编写自定义控制器</a></li><li><a href="/2021/03/13/reference/k8s/26.%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%EF%BC%9ARBAC/" rel="bookmark" title="26 | 基于角色的权限控制：RBAC">26 | 基于角色的权限控制：RBAC</a></li><li><a href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" rel="bookmark" title="27 | 聪明的微创新：Operator工作原理解读">27 | 聪明的微创新：Operator工作原理解读</a></li><li class="active"><a href="/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/" rel="bookmark" title="28 | PV、PVC、StorageClass，这些到底在说啥？">28 | PV、PVC、StorageClass，这些到底在说啥？</a></li><li><a href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/" rel="bookmark" title="29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起">29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起</a></li><li><a href="/2021/03/13/reference/k8s/30.%E7%BC%96%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AD%98%E5%82%A8%E6%8F%92%E4%BB%B6%EF%BC%9AFlexVolume%E4%B8%8ECSI/" rel="bookmark" title="30 | 编写自己的存储插件：FlexVolume与CSI">30 | 编写自己的存储插件：FlexVolume与CSI</a></li><li><a href="/2021/03/13/reference/k8s/31.%E5%AE%B9%E5%99%A8%E5%AD%98%E5%82%A8%E5%AE%9E%E8%B7%B5%EF%BC%9ACSI%E6%8F%92%E4%BB%B6%E7%BC%96%E5%86%99%E6%8C%87%E5%8D%97/" rel="bookmark" title="31 | 容器存储实践：CSI插件编写指南">31 | 容器存储实践：CSI插件编写指南</a></li><li><a href="/2021/03/13/reference/k8s/32.%E6%B5%85%E8%B0%88%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/" rel="bookmark" title="32 | 浅谈容器网络">32 | 浅谈容器网络</a></li><li><a href="/2021/03/13/reference/k8s/33.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%AE%B9%E5%99%A8%E8%B7%A8%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="bookmark" title="33 | 深入解析容器跨主机网络">33 | 深入解析容器跨主机网络</a></li><li><a href="/2021/03/13/reference/k8s/34.Kubernetes%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8ECNI%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/" rel="bookmark" title="34 | Kubernetes网络模型与CNI网络插件">34 | Kubernetes网络模型与CNI网络插件</a></li><li><a href="/2021/03/13/reference/k8s/35.%E8%A7%A3%E8%AF%BBKubernetes%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E6%96%B9%E6%A1%88/" rel="bookmark" title="35 | 解读Kubernetes三层网络方案">35 | 解读Kubernetes三层网络方案</a></li><li><a href="/2021/03/13/reference/k8s/36.%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4Kubernetes%E5%8F%AA%E6%9C%89soft%20multi-tenancy/" rel="bookmark" title="36 | 为什么说Kubernetes只有soft multi-tenancy？">36 | 为什么说Kubernetes只有soft multi-tenancy？</a></li><li><a href="/2021/03/13/reference/k8s/37.%E6%89%BE%E5%88%B0%E5%AE%B9%E5%99%A8%E4%B8%8D%E5%AE%B9%E6%98%93%EF%BC%9AService%E3%80%81DNS%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" rel="bookmark" title="37 | 找到容器不容易：Service、DNS与服务发现">37 | 找到容器不容易：Service、DNS与服务发现</a></li><li><a href="/2021/03/13/reference/k8s/38.%E4%BB%8E%E5%A4%96%E7%95%8C%E8%BF%9E%E9%80%9AService%E4%B8%8EService%E8%B0%83%E8%AF%95%E2%80%9C%E4%B8%89%E6%9D%BF%E6%96%A7%E2%80%9D/" rel="bookmark" title="38 | 从外界连通Service与Service调试“三板斧”">38 | 从外界连通Service与Service调试“三板斧”</a></li><li><a href="/2021/03/13/reference/k8s/39.%E8%B0%88%E8%B0%88Service%E4%B8%8EIngress/" rel="bookmark" title="39 | 谈谈Service与Ingress">39 | 谈谈Service与Ingress</a></li><li><a href="/2021/03/13/reference/k8s/40.Kubernetes%E7%9A%84%E8%B5%84%E6%BA%90%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" rel="bookmark" title="40 | Kubernetes的资源模型与资源管理">40 | Kubernetes的资源模型与资源管理</a></li><li><a href="/2021/03/13/reference/k8s/41.%E5%8D%81%E5%AD%97%E8%B7%AF%E5%8F%A3%E4%B8%8A%E7%9A%84Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8/" rel="bookmark" title="41 | 十字路口上的Kubernetes默认调度器">41 | 十字路口上的Kubernetes默认调度器</a></li><li><a href="/2021/03/13/reference/k8s/43.Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E4%B8%8E%E6%8A%A2%E5%8D%A0%E6%9C%BA%E5%88%B6/" rel="bookmark" title="43 | Kubernetes默认调度器的优先级与抢占机制">43 | Kubernetes默认调度器的优先级与抢占机制</a></li><li><a href="/2021/03/13/reference/k8s/44.Kubernetes%20GPU%E7%AE%A1%E7%90%86%E4%B8%8EDevice%20Plugin%E6%9C%BA%E5%88%B6/" rel="bookmark" title="44 | Kubernetes GPU管理与Device Plugin机制">44 | Kubernetes GPU管理与Device Plugin机制</a></li><li><a href="/2021/03/13/reference/k8s/45.%E5%B9%95%E5%90%8E%E8%8B%B1%E9%9B%84%EF%BC%9ASIG-Node%E4%B8%8ECRI/" rel="bookmark" title="45 | 幕后英雄：SIG-Node与CRI">45 | 幕后英雄：SIG-Node与CRI</a></li><li><a href="/2021/03/13/reference/k8s/42.Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5%E8%A7%A3%E6%9E%90/" rel="bookmark" title="42 | Kubernetes默认调度器调度策略解析">42 | Kubernetes默认调度器调度策略解析</a></li><li><a href="/2021/03/13/reference/k8s/46.%E8%A7%A3%E8%AF%BB%20CRI%20%E4%B8%8E%20%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6/" rel="bookmark" title="46 | 解读 CRI 与 容器运行时">46 | 解读 CRI 与 容器运行时</a></li><li><a href="/2021/03/13/reference/k8s/48.Prometheus%E3%80%81Metrics%20Server%E4%B8%8EKubernetes%E7%9B%91%E6%8E%A7%E4%BD%93%E7%B3%BB/" rel="bookmark" title="48 | Prometheus、Metrics Server与Kubernetes监控体系">48 | Prometheus、Metrics Server与Kubernetes监控体系</a></li><li><a href="/2021/03/13/reference/k8s/49.Custom%20Metrics%E8%AE%A9Auto%20Scaling%E4%B8%8D%E5%86%8D%E2%80%9C%E9%A3%9F%E4%B9%8B%E6%97%A0%E5%91%B3%E2%80%9D/" rel="bookmark" title="49 | Custom Metrics 让Auto Scaling不再 食之无味">49 | Custom Metrics 让Auto Scaling不再 食之无味</a></li><li><a href="/2021/03/13/reference/k8s/50.%E8%AE%A9%E6%97%A5%E5%BF%97%E6%97%A0%E5%A4%84%E5%8F%AF%E9%80%83%EF%BC%9A%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E4%B8%8E%E7%AE%A1%E7%90%86/" rel="bookmark" title="50 | 让日志无处可逃：容器日志收集与管理">50 | 让日志无处可逃：容器日志收集与管理</a></li><li><a href="/2021/03/13/reference/k8s/47.%E7%BB%9D%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%AE%89%E5%85%A8%EF%BC%9AKata%20Containers%E4%B8%8EgVisor/" rel="bookmark" title="47 | 绝不仅仅是安全：Kata Containers 与 gVisor">47 | 绝不仅仅是安全：Kata Containers 与 gVisor</a></li><li><a href="/2021/03/13/reference/k8s/53.%E7%89%B9%E5%88%AB%E6%94%BE%E9%80%812019%E5%B9%B4%EF%BC%8C%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E7%94%9F%E6%80%81%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BA%9B%E4%BB%80%E4%B9%88/" rel="bookmark" title="53 | 特别放送 | 2019 年，容器技术生态会发生些什么？">53 | 特别放送 | 2019 年，容器技术生态会发生些什么？</a></li><li><a href="/2021/03/13/reference/k8s/51.%E8%B0%88%E8%B0%88Kubernetes%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%E5%92%8C%E6%9C%AA%E6%9D%A5%E8%B5%B0%E5%90%91/" rel="bookmark" title="51 | 谈谈Kubernetes开源社区和未来走向">51 | 谈谈Kubernetes开源社区和未来走向</a></li><li><a href="/2021/03/13/reference/k8s/54.%E7%89%B9%E5%88%AB%E6%94%BE%E9%80%81.%E5%9F%BA%E4%BA%8E%20Kubernetes%20%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86%EF%BC%8C%E5%88%B0%E5%BA%95%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A/" rel="bookmark" title="54 | 特别放送 | 基于 Kubernetes 的云原生应用管理，到底应该怎么做？">54 | 特别放送 | 基于 Kubernetes 的云原生应用管理，到底应该怎么做？</a></li><li><a href="/2021/03/13/reference/k8s/52.%E7%AD%94%E7%96%91%EF%BC%9A%E5%9C%A8%E9%97%AE%E9%A2%98%E4%B8%AD%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%EF%BC%8C%E5%9C%A8%E6%80%9D%E8%80%83%E4%B8%AD%E4%BA%A7%E7%94%9F%E6%80%9D%E8%80%83/" rel="bookmark" title="52 | 答疑：在问题中解决问题，在思考中产生思考">52 | 答疑：在问题中解决问题，在思考中产生思考</a></li><li><a href="/2021/03/13/reference/k8s/55.%E7%BB%93%E6%9D%9F%E8%AF%ADKubernetes%EF%BC%9A%E8%B5%A2%E5%BC%80%E5%8F%91%E8%80%85%E8%B5%A2%E5%A4%A9%E4%B8%8B/" rel="bookmark" title="55 | 结束语 | Kubernetes：赢开发者赢天下">55 | 结束语 | Kubernetes：赢开发者赢天下</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Kung-Fu-Master" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Kung-Fu-Master</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">292</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">40</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">12</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/Windows10mstsc%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Centos7.0/" title="Windows10 mstsc远程登录Centos7.0">Windows10 mstsc远程登录Centos7.0</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/04.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E5%9B%9B)%E5%B0%98%E5%9F%83%E8%90%BD%E5%AE%9A/" title="04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定">04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/maven/" title="分类于 maven">maven</a></div><span><a href="/2021/03/13/technologies/maven/maven_project/" title="maven project">maven project</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/%E7%94%A8%E6%88%B7%E6%80%81%E5%92%8C%E5%86%85%E6%A0%B8%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98-%E4%BD%BF%E7%94%A8dev_mem&mmap/" title="用户态和内核共享内存----使用 &#x2F;dev&#x2F;mem &amp; mmap">用户态和内核共享内存----使用 /dev/mem & mmap</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/kubernetes/" title="分类于 kubernetes">kubernetes</a></div><span><a href="/2021/03/13/micro_service/kubernetes/02_kubernetes_roles_introduction/" title="02 kubernetes introduction">02 kubernetes introduction</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/16.%E7%BC%96%E6%8E%92%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95%EF%BC%9A%E8%B0%88%E8%B0%88%E2%80%9C%E6%8E%A7%E5%88%B6%E5%99%A8%E2%80%9D%E6%A8%A1%E5%9E%8B/" title="16 | 编排其实很简单：谈谈“控制器”模型">16 | 编排其实很简单：谈谈“控制器”模型</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/%E4%BF%AE%E6%94%B9os%E6%97%B6%E9%97%B4%E6%97%B6%E5%8C%BA/" title="linux 修改系统时间时区">linux 修改系统时间时区</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/ACPI%E6%98%AF%E4%BB%80%E4%B9%88&BIOS%E4%B8%ADACPI%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE/" title="ACPI是什么,BIOS中ACPI要怎么设置">ACPI是什么,BIOS中ACPI要怎么设置</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/security/" title="分类于 security">security</a></div><span><a href="/2021/03/13/technologies/security/cfssl/" title="cfssl">cfssl</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/storage/" title="分类于 storage">storage</a> <i class="ic i-angle-right"></i> <a href="/categories/storage/greenplum/" title="分类于 greenplum">greenplum</a></div><span><a href="/2021/03/13/storage/greenplum/greenplum_client/" title="greenplum client">greenplum client</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Kung-Fu-Master @ Kung Fu Master</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">1.1m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">16:30</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/13/reference/k8s/28.PV、PVC、StorageClass，这些到底在说啥/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->

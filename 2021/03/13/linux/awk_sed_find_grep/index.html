@@ -1,71 +1,88 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="grep       1234uname - a	查看内核版本root@Alpha:# uname -aLinux Alpha 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU&#x2F;Linux   12345678grep">
-<meta property="og:type" content="article">
-<meta property="og:title" content="awk, sed, find, grep">
-<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="grep       1234uname - a	查看内核版本root@Alpha:# uname -aLinux Alpha 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU&#x2F;Linux   12345678grep">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-13T05:00:42.841Z">
-<meta property="article:modified_time" content="2021-03-13T05:00:42.841Z">
-<meta property="article:author" content="Kung-Fu-Master">
-<meta name="twitter:card" content="summary"><title>awk, sed, find, grep | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: true,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
+<!-- build time:Wed Mar 17 2021 02:52:24 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="https://kung-fu-master.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="https://kung-fu-master.github.io/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="https://kung-fu-master.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/"><title>awk, sed, find, grep - linux | Kung Fu Master = Hexo</title><meta name="generator" content="Hexo 4.2.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">awk, sed, find, grep</h1><div class="meta"><span class="item" title="创建时间：2021-03-13 13:00:42"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-03-13T13:00:42+08:00">2021-03-13</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>5.6k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>5 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Kung Fu Master</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipevarprfj20zk0m8npd.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipew8gmvyj20zk0m87wh.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicis3attqj20zk0m8k7l.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/linux/" itemprop="item" rel="index" title="分类于 linux"><span itemprop="name">linux</span></a><meta itemprop="position" content="1"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Kung-Fu-Master"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><h2 id="grep"><a class="anchor" href="#grep">#</a> <strong>grep</strong></h2><figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">uname</span> - a</pre></td></tr><tr><td data-num="2"></td><td><pre>	查看内核版本</pre></td></tr><tr><td data-num="3"></td><td><pre>root@Alpha:<span class="token comment"># uname -a</span></pre></td></tr><tr><td data-num="4"></td><td><pre>Linux Alpha <span class="token number">4.13</span>.0-36-generic <span class="token comment">#40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span></pre></td></tr></table></figure><hr><figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">grep</span>      <span class="token function">grep</span> --help</pre></td></tr><tr><td data-num="2"></td><td><pre>	-c</pre></td></tr><tr><td data-num="3"></td><td><pre>	-i    不区分大小写</pre></td></tr><tr><td data-num="4"></td><td><pre>	-h</pre></td></tr><tr><td data-num="5"></td><td><pre>	-l</pre></td></tr><tr><td data-num="6"></td><td><pre>	-n</pre></td></tr><tr><td data-num="7"></td><td><pre>	-s</pre></td></tr><tr><td data-num="8"></td><td><pre>	-v</pre></td></tr></table></figure><figure class="highlight shell"><figcaption data-lang="Bash"><span>l</span></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">grep</span> -n <span class="token string">"IndexIVFFlat*"</span> *.py  //查找本目录所有后缀为.py的文件是否包含IndexIVFFlat*内容</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">grep</span> <span class="token string">'test'</span> aa bb cc</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">grep</span> -r <span class="token string">"exit"</span> ./ --color<span class="token operator">=</span>auto</pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token function">grep</span> -r <span class="token string">"exit"</span> ./ -h</pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token function">grep</span> -r <span class="token string">"exit"</span> ./ -n    --显示搜索内容在文件中的行号</pre></td></tr><tr><td data-num="6"></td><td><pre>root@Alpha:~/zhan/system/day4<span class="token comment"># grep  -r  "exit"  process_work.c   -n</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token number">29</span>:             exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>root@Alpha:~/zhan/system/day4<span class="token comment">#</span></pre></td></tr></table></figure><h2 id="find"><a class="anchor" href="#find">#</a> <strong>find</strong></h2><p>find find --help<br>find ./ -name &quot;exit&quot;</p><pre><code>root@Alpha:~/zhan/system/day4# find ./ -size +2k    --搜索大于2k文件的当前目录文件
+./
+./pthread_attr.o
+./pthread_cancel.o
+./condition.o
+./process_work.o
+./rwlock.o
+./mutex.o
+./pthread_create.o
+root@Alpha:~/zhan/system/day4#
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">awk, sed, find, grep</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.1k</span></span></div></header><div class="post-body">
-        <h2 id="grep"   >
-          <a href="#grep" class="heading-link"><i class="fas fa-link"></i></a>grep</h2>
-      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname - a</span><br><span class="line">	查看内核版本</span><br><span class="line">root@Alpha:# uname -a</span><br><span class="line">Linux Alpha 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></div></figure>
+root@Alpha:~/zhan/system/day4# find ./ -size +2k -size 9k    --搜索大于2k小于9k的当前目录文件
+./pthread_attr.o
+./pthread_cancel.o
+./pthread_create.o
+root@Alpha:~/zhan/system/day4#
 
-<hr>
-<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">grep      grep --help</span><br><span class="line">	-c</span><br><span class="line">	-i    不区分大小写</span><br><span class="line">	-h</span><br><span class="line">	-l</span><br><span class="line">	-n</span><br><span class="line">	-s</span><br><span class="line">	-v</span><br></pre></td></tr></table></div></figure>
+find ./ -size +200 -size -500   --&gt;不加-size参数时候默认单位: 512B(扇区大小0.5K)，不指定单位默认按照扇区大小
+磁盘最小扇区512B(512字节)
+内存最小块4K(4096字节)
+内存分配1000B和4096B空间对计算机来讲没什么区别都是以4096大小来做映射
 
-<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">grep -n "IndexIVFFlat*" *.py  //查找本目录所有后缀为.py的文件是否包含IndexIVFFlat*内容</span><br><span class="line">grep 'test' aa bb cc</span><br><span class="line">grep -r "exit" ./ --color=auto</span><br><span class="line">grep -r "exit" ./ -h</span><br><span class="line">grep -r "exit" ./ -n    --显示搜索内容在文件中的行号</span><br><span class="line">root@Alpha:~/zhan/system/day4# grep  -r  "exit"  process_work.c   -n</span><br><span class="line">29:             exit(1);</span><br><span class="line">root@Alpha:~/zhan/system/day4#</span><br></pre></td></tr></table></div></figure>
+find  ./ -type f  --默认递归搜索所有第一级到第n级目录中的文件，而不包含目录
+find ./ -maxdepth 1 -type f   --只找当前目录文件，不找子级目录文件
+find ./ -maxdepth 1 -type f -size +2k
+find ./ -maxdepth 1 -type f -size +2k | ls -l  不生效，find不能跟管道&quot;|&quot;一起使用, 如下使用
+find ./ -maxdepth 1 -type f -size +2k -exec ls -l {} \;
+	-exec指明要执行&quot;{}&quot;里面的内容，&quot;{}&quot;的内容由ls -l 传参, 执行完要有结束标志分号&quot;;&quot;， &quot;\&quot;符号转义字符将分号&quot;;&quot;转义
+</code></pre><h2 id="sed"><a class="anchor" href="#sed">#</a> <strong>sed</strong></h2><p>sed --Stream Editor (流编辑器)<br>早起 Unix 系统 -- ed 编辑器，很多 sed 命令和 vi 的末行命令是相同的<br>| |<br>vi sed</p><p>😕	查找<br>:%/the/this/g	替换文件中的所有 the 为 this</p><p>sed option'script' file1 file2 …… sed 参数 's/the/this/', 待处理文件 ---the 替换为 this<br>sed's/char/int/' test.c -i test.c 文件中的 char 改为 int<br>sed's/char/int/' test.c | tee tt.c test.c 文件中的 char 改为 int 并另存为 tt.c 文件<br>sed option -f scriptfile file1 file2 …… sed 参数 -f ' 脚本文件里写正则等 ' 待处理文件</p><p>选项含义：<br>--version<br>--help<br>-n, --quiet, --silent 静默输出<br>- i, --in-place 直接修改源文件<br>- e script 允许多个脚本指令被执行<br>- f script-file<br>--file=script-file 从文件中读取脚本指令，对编写自动脚本程序来说很棒<br>- l N, --line-length=N 该选项指定 l 指令可以输出的行长度<br>--posix 禁用 GNU sed 扩展功能<br>- r，--regexp-extended 在脚本指令中使用扩展正则表达式<br>- s，--separate 默认情况下，sed 将把命令行指定的多个文件名作为一个长的连续的输入流，<br>而 GNU sed 则允许把他们当做单独的文件，这样如正则表达式则不进行跨文件匹配.<br>-u， --unbuffered 最低限度的缓存输入与输出</p><p>a， append 追加<br>i， insert 插入<br>d， delete 删除<br>s， substitution 替换<br>如：$ sed -i &quot;2a itcast&quot; ./testfile 在 testfile 文件中第 2 行后添加 &quot;itcast&quot;<br>$ sed -i&quot;3d&quot; testfile 删除 testfile 文件中的第三行</p><p>sed 程序一行一行读出待处理文件，如果某一行与 pattern 匹配，则执行相应的 action，如果一条命令没有 patter 而只有 action，这个 action 将作用于待处理文件的每一行， 如 &quot;s/the/this/&quot; &quot;the&quot; 就是 pattern</p><pre><code>$ sed 's/bc/-&amp;-/' testfile
+123
+a-bc-
+456
+pattern2 中的&amp;表示源文件当前行中与pattern1相匹配的字符串
 
-        <h2 id="find"   >
-          <a href="#find" class="heading-link"><i class="fas fa-link"></i></a>find</h2>
-      <p>find     find –help<br>find ./ -name “exit”</p>
-<figure class="highlight elixir"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment"># find ./ -size +2k    --搜索大于2k文件的当前目录文件</span></span><br><span class="line">./</span><br><span class="line">./pthread_attr.o</span><br><span class="line">./pthread_cancel.o</span><br><span class="line">./condition.o</span><br><span class="line">./process_work.o</span><br><span class="line">./rwlock.o</span><br><span class="line">./mutex.o</span><br><span class="line">./pthread_create.o</span><br><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment"># find ./ -size +2k -size 9k    --搜索大于2k小于9k的当前目录文件</span></span><br><span class="line">./pthread_attr.o</span><br><span class="line">./pthread_cancel.o</span><br><span class="line">./pthread_create.o</span><br><span class="line">root<span class="variable">@Alpha</span><span class="symbol">:~/zhan/system/day4</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">find ./ -size +<span class="number">200</span> -size <span class="number">-500</span>   --&gt;不加-size参数时候默认单位: <span class="number">512</span>B(扇区大小0.<span class="number">5</span>K)，不指定单位默认按照扇区大小</span><br><span class="line">磁盘最小扇区<span class="number">512</span>B(<span class="number">512</span>字节)</span><br><span class="line">内存最小块<span class="number">4</span>K(<span class="number">4096</span>字节)</span><br><span class="line">内存分配<span class="number">1000</span>B和<span class="number">4096</span>B空间对计算机来讲没什么区别都是以<span class="number">4096</span>大小来做映射</span><br><span class="line"></span><br><span class="line">find  ./ -type f  --默认递归搜索所有第一级到第n级目录中的文件，而不包含目录</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f   --只找当前目录文件，不找子级目录文件</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f -size +<span class="number">2</span>k</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f -size +<span class="number">2</span>k | ls -l  不生效，find不能跟管道<span class="string">"|"</span>一起使用, 如下使用</span><br><span class="line">find ./ -maxdepth <span class="number">1</span> -type f -size +<span class="number">2</span>k -exec ls -l &#123;&#125; \;</span><br><span class="line">	-exec指明要执行<span class="string">"&#123;&#125;"</span>里面的内容，<span class="string">"&#123;&#125;"</span>的内容由ls -l 传参, 执行完要有结束标志分号<span class="string">";"</span>， <span class="string">"\"符号转义字符将分号"</span>;<span class="string">"转义</span></span><br></pre></td></tr></table></div></figure>
+$ sed 's/\([0-9]\)\([0-9]\)/-\1-~\2~/' testfile
+-1-~2~3
+Abc
+-4-~5~6
+pattern2中的\1表示与pattern1的第一个()括号相匹配的内容，\2表示与pattern1的第二个()括号相匹配的内容弄。
+sed默认使用Basic正则表达式规范，如果制定了-r选项则使用Extended规范，那么()括号就不必转移了，
+如：sed -r 's/([0-9])([0-9])/-\1-~\2~/' testfile
 
-
-        <h2 id="sed"   >
-          <a href="#sed" class="heading-link"><i class="fas fa-link"></i></a>sed</h2>
-      <p>sed  –Stream Editor(流编辑器)<br>早起Unix系统 – ed 编辑器 , 很多sed命令和vi的末行命令是相同的<br>                |       |<br>                      vi      sed</p>
-<p>:/    查找<br>:%/the/this/g    替换文件中的所有the为this</p>
-<p>sed option ‘script’ file1 file2 ……                sed 参数  ‘s/the/this/‘, 待处理文件     —the 替换为 this<br>    sed ‘s/char/int/‘ test.c -i                test.c文件中的char改为int<br>    sed ‘s/char/int/‘ test.c | tee tt.c         test.c文件中的char改为int并另存为tt.c文件<br>sed option -f scriptfile file1 file2 ……         sed 参数  -f ‘脚本文件里写正则等’  待处理文件</p>
-<p>选项含义：<br>–version<br>–help<br>-n, –quiet, –silent                静默输出<br>-i, –in-place                           直接修改源文件<br>-e script                        允许多个脚本指令被执行<br>-f  script-file<br>–file=script-file             从文件中读取脚本指令，对编写自动脚本程序来说很棒<br>-l   N, –line-length=N   该选项指定l指令可以输出的行长度<br>–posix                            禁用GNU sed扩展功能<br>-r，–regexp-extended   在脚本指令中使用扩展正则表达式<br>-s，–separate                 默认情况下，sed将把命令行指定的多个文件名作为一个长的连续的输入流，<br>                                        而GNU sed则允许把他们当做单独的文件，这样如正则表达式则不进行跨文件匹配.<br>-u， –unbuffered           最低限度的缓存输入与输出</p>
-<p>a，    append              追加<br>i，     insert                   插入<br>d，    delete                 删除<br>s，     substitution        替换<br>如：$ sed -i “2a itcast” ./testfile    在testfile文件中第2行后添加”itcast”<br>       $ sed -i “3d” testfile          删除testfile文件中的第三行</p>
-<p>sed程序一行一行读出待处理文件，如果某一行与pattern匹配，则执行相应的action，如果一条命令没有patter而只有action，这个action将作用于待处理文件的每一行， 如”s/the/this/“  “the”就是pattern</p>
-<figure class="highlight ruby"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">$ sed <span class="string">'s/bc/-&amp;-/'</span> testfile</span><br><span class="line"><span class="number">123</span></span><br><span class="line">a-bc-</span><br><span class="line"><span class="number">456</span></span><br><span class="line">pattern2 中的&amp;表示源文件当前行中与pattern1相匹配的字符串</span><br><span class="line"></span><br><span class="line">$ sed <span class="string">'s/\([0-9]\)\([0-9]\)/-\1-~\2~/'</span> testfile</span><br><span class="line">-<span class="number">1</span>-~<span class="number">2</span>~<span class="number">3</span></span><br><span class="line">Abc</span><br><span class="line">-<span class="number">4</span>-~<span class="number">5</span>~<span class="number">6</span></span><br><span class="line">pattern2中的\<span class="number">1</span>表示与pattern1的第一个()括号相匹配的内容，\<span class="number">2</span>表示与pattern1的第二个()括号相匹配的内容弄。</span><br><span class="line">sed默认使用Basic正则表达式规范，如果制定了-r选项则使用Extended规范，那么()括号就不必转移了，</span><br><span class="line">如：sed -r <span class="string">'s/([0-9])([0-9])/-\1-~\2~/'</span> testfile</span><br><span class="line"></span><br><span class="line">	sed <span class="string">'/def/p'</span> out    --- <span class="string">"p"</span>表示打印输出包含echo内容的行</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '/def/p' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	<span class="function"><span class="keyword">def</span></span></span><br><span class="line">	<span class="function"><span class="keyword">def</span>      <span class="title">-</span><span class="title">-</span>由参数<span class="title">p</span>打印输出的</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed -n '/def/p' abc.c   -n 表示静默输出，只输出改变的内容</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span></span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '/def/d' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	ghi</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed  -i 's/def/ddd/' abc.c == sed  -i  '/def/s/def/ddd/' abc.c</span></span><br><span class="line">	abc                                                                                             sed  参数 pattern/action(动作)   目标文件</span><br><span class="line">	ddd                                                                                                                         pattern大多数情况可以省略如替换</span><br><span class="line">	ghi</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '1,1s/def/ddd/' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	<span class="function"><span class="keyword">def</span></span></span><br><span class="line">	ghi</span><br><span class="line">	jkl</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '1,2s/def/ddd/' abc.c   表示1到2行的所有 "def" 替换为 "ddd"</span></span><br><span class="line">	abc</span><br><span class="line">	ddd</span><br><span class="line">	ghi</span><br><span class="line">	jkl</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed '1,2s/def/-&amp;-/' abc.c</span></span><br><span class="line">	abc</span><br><span class="line">	-<span class="function"><span class="keyword">def</span><span class="title">-</span></span></span><br><span class="line">	ghi</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment"># sed -r 's/([a-z])([a-z])/-\1-~\2~/' abc.c == sed -E 's/([a-z])([a-z])/-\1-~\2~/' abc.c</span></span><br><span class="line">	-a-~b~c</span><br><span class="line">	-d-~e~f</span><br><span class="line">	-g-~h~i</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br></pre></td></tr></table></div></figure>
-
-
-        <h2 id="awk"   >
-          <a href="#awk" class="heading-link"><i class="fas fa-link"></i></a>awk</h2>
-      <p>awk 是开发awk命令的三个人名字的首字母，不是单词缩写，不能读’a wa k’<br>sed是以行为单位处理文件，awk比sed强，不仅以行为单位，还能以列为单位处理文件，awk缺省的行分隔符是换行，缺省的列分隔符是连续的空格和Tab，但是行分隔符和列分隔符都可以自定义</p>
-<pre><code>ps aux | awk &apos;{print $0}&apos;    取全部，相当于ps aux
-ps aux | awk &apos;{print $2}&apos;    按列拆分</code></pre><p><code>查看所有链接本机6443服务端口的客户端IP地址, 地址一致的合并, 然后连接数从高到底排序.</code></p>
-<pre><code>$ netstat -antp | grep :6443 | awk &apos;{print $5}&apos; | awk -F &quot;:&quot; &apos;{print $1}&apos; | sort | uniq -c | sort -r -n
-      4 10.239.4.100    // 表示从10.239.4.100客户端请求访问本机6443服务端口的进程数为4
+	sed '/def/p' out    --- &quot;p&quot;表示打印输出包含echo内容的行
+	root@Alpha:~/zhan/test# sed '/def/p' abc.c
+	abc
+	def
+	def      --由参数p打印输出的
+	root@Alpha:~/zhan/test#
+	root@Alpha:~/zhan/test# sed -n '/def/p' abc.c   -n 表示静默输出，只输出改变的内容
+	def
+	root@Alpha:~/zhan/test#
+	root@Alpha:~/zhan/test# sed '/def/d' abc.c
+	abc
+	ghi
+	root@Alpha:~/zhan/test#
+	root@Alpha:~/zhan/test# sed  -i 's/def/ddd/' abc.c == sed  -i  '/def/s/def/ddd/' abc.c
+	abc                                                                                             sed  参数 pattern/action(动作)   目标文件
+	ddd                                                                                                                         pattern大多数情况可以省略如替换
+	ghi
+	root@Alpha:~/zhan/test#
+	root@Alpha:~/zhan/test# sed '1,1s/def/ddd/' abc.c
+	abc
+	def
+	ghi
+	jkl
+	root@Alpha:~/zhan/test# sed '1,2s/def/ddd/' abc.c   表示1到2行的所有 &quot;def&quot; 替换为 &quot;ddd&quot;
+	abc
+	ddd
+	ghi
+	jkl
+	root@Alpha:~/zhan/test#
+	root@Alpha:~/zhan/test# sed '1,2s/def/-&amp;-/' abc.c
+	abc
+	-def-
+	ghi
+	root@Alpha:~/zhan/test#
+	root@Alpha:~/zhan/test# sed -r 's/([a-z])([a-z])/-\1-~\2~/' abc.c == sed -E 's/([a-z])([a-z])/-\1-~\2~/' abc.c
+	-a-~b~c
+	-d-~e~f
+	-g-~h~i
+	root@Alpha:~/zhan/test#
+</code></pre><h2 id="awk"><a class="anchor" href="#awk">#</a> <strong>awk</strong></h2><p>awk 是开发 awk 命令的三个人名字的首字母，不是单词缩写，不能读 'a wa k'<br>sed 是以行为单位处理文件，awk 比 sed 强，不仅以行为单位，还能以列为单位处理文件，awk 缺省的行分隔符是换行，缺省的列分隔符是连续的空格和 Tab，但是行分隔符和列分隔符都可以自定义</p><pre><code>ps aux | awk '{print $0}'    取全部，相当于ps aux
+ps aux | awk '{print $2}'    按列拆分
+</code></pre><p><code>查看所有链接本机6443服务端口的客户端IP地址, 地址一致的合并, 然后连接数从高到底排序.</code></p><pre><code>$ netstat -antp | grep :6443 | awk '{print $5}' | awk -F &quot;:&quot; '{print $1}' | sort | uniq -c | sort -r -n
+      4 10.239.4.100	// 表示从10.239.4.100客户端请求访问本机6443服务端口的进程数为4
       3 10.239.4.80
       3 10.239.141.194
       3 10.239.141.145
@@ -77,300 +94,30 @@ ps aux | awk &apos;{print $2}&apos;    按列拆分</code></pre><p><code>查看�
       1 10.40.0.9
       1 10.40.0.2
       1 10.40.0.1
-      1 10.109.19.68</code></pre><p>Awk option ‘script’ file1 file2 ……<br>Awk option -f scriptfile file1 file2 ……<br>和sed一样，awk处理的文件既可以由标准输入重定向得到，也可以当命令行参数传入，编辑命令可以直接当命令行参数传入，也可以用-f参数指定一个脚本文件，如果一条awk命令只有actions部分，则actions作用于待处理文件的每一行，编辑命令格式为:<br>/pattern/{actions}        ps aux | awk ‘print $0’  其中awk ‘print $0’即为actions<br>condition{actions}</p>
-<p>如果某种产品的库存量低于75则在行末标注需要订货：<br>$ awk ‘$2 &lt; 75  {printf  “%s\t%s\n”,  $0,  “REORDER”} $2 &gt;= 75  {print $0;}’  testfile<br>                  |                                |                                                 |                  |<br>             pattern                    action                                       pattern        action<br>productA   30   REORDER<br>productB   76<br>productC   55   REORDER</p>
-<pre><code>awk &apos;$2 &lt; 75 {printf &quot;%s %s\n&quot;, $0, &quot;reorder&quot;;} $2 &gt;= 75 {printf &quot;%s\n&quot;, $0;}&apos; testfile</code></pre><p>ProductA 70 reorder<br>ProductB 35 reorder<br>ProductC 75</p>
-<pre><code>ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2 &quot; recorder&quot;;}&apos;
-root@Alpha:~/zhan/test# ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2 &quot; recorder&quot;}&apos;
+      1 10.109.19.68
+</code></pre><p actions="">Awk option 'script' file1 file2 ……<br>Awk option -f scriptfile file1 file2 ……<br>和 sed 一样，awk 处理的文件既可以由标准输入重定向得到，也可以当命令行参数传入，编辑命令可以直接当命令行参数传入，也可以用 - f 参数指定一个脚本文件，如果一条 awk 命令只有 actions 部分，则 actions 作用于待处理文件的每一行，编辑命令格式为:<br>/pattern/{actions} ps aux | awk 'print $0' 其中 awk 'print $0' 即为 actions<br>condition</p><p>如果某种产品的库存量低于 75 则在行末标注需要订货：<br>$ awk '$2 &lt; 75 {printf &quot;%s\t%s\n&quot;, $0, &quot;REORDER&quot;} $2 &gt;= 75 {print $0;}' testfile<br>| | | |<br>pattern action pattern action<br>productA 30 REORDER<br>productB 76<br>productC 55 REORDER</p><pre><code>awk '$2 &lt; 75 {printf &quot;%s %s\n&quot;, $0, &quot;reorder&quot;;} $2 &gt;= 75 {printf &quot;%s\n&quot;, $0;}' testfile
+</code></pre><p>ProductA 70 reorder<br>ProductB 35 reorder<br>ProductC 75</p><pre><code>ps aux | awk '$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2 &quot; recorder&quot;;}'
+root@Alpha:~/zhan/test# ps aux | awk '$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2 &quot; recorder&quot;}'
 32106 recorder
 32146 recorder
 ……
 root@Alpha:~/zhan/test#
-ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2}&apos;                           与下面命令等价
-ps aux | awk &apos;$2&gt;32000 &amp;&amp; $2&lt;50000 {printf(&quot;%s\n&quot;, $2);}&apos;        花括号前的&quot;;&quot;分号去掉也可以
-root@Alpha:~/zhan/test# ps aux|awk &apos; $2 &gt; 30000 &amp;&amp; $2 &lt; 40000 {var = var + 1} END {print var}&apos;
-root@Alpha:~/zhan/test# ps aux|awk &apos; $2 &gt; 30000 &amp;&amp; $2 &lt; 40000 {var = var + 1} END {print var}&apos;
+ps aux | awk '$2&gt;32000 &amp;&amp; $2&lt;50000 {print $2}'                           与下面命令等价
+ps aux | awk '$2&gt;32000 &amp;&amp; $2&lt;50000 {printf(&quot;%s\n&quot;, $2);}'        花括号前的&quot;;&quot;分号去掉也可以
+root@Alpha:~/zhan/test# ps aux|awk ' $2 &gt; 30000 &amp;&amp; $2 &lt; 40000 {var = var + 1} END {print var}'
+root@Alpha:~/zhan/test# ps aux|awk ' $2 &gt; 30000 &amp;&amp; $2 &lt; 40000 {var = var + 1} END {print var}'
 18
-root@Alpha:~/zhan/test#</code></pre><p>统计文件中的空行</p>
-<figure class="highlight ruby"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ awk <span class="string">'/^ *$/ &#123;x=x+1;&#125; END &#123;print x;&#125;'</span> testfile</span><br><span class="line">         以空格开始，到结束都是空格, <span class="keyword">END</span>代表一直读到文件尾</span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#  awk '/^ *$/ &#123;x=x+1;&#125; END &#123;print x;&#125;' testfile</span></span><br><span class="line">	<span class="number">10</span></span><br><span class="line">	root@Alpha<span class="symbol">:~/zhan/test</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">打印系统中用户账号列表</span><br><span class="line">$ awk <span class="string">'BEGIN &#123;FS=":"&#125; &#123;print $1;&#125;'</span> /etc/passwd   </span><br><span class="line">	awk默认空格为列分隔符，<span class="keyword">BEGIN</span>表示在匹配之前以<span class="string">":"</span>冒号分隔符分割列</span><br><span class="line">$ awk -<span class="symbol">F:</span>  <span class="string">'&#123;print $1&#125;'</span> /etc/passwd   与上面等价</span><br><span class="line">	-<span class="symbol">F:</span>  设置<span class="string">":"</span>冒号为列分隔符， -F相当于awk的option可选参数</span><br><span class="line">	/etc/passwd 文件中把第一列用户名a对应的第二列如<span class="string">"x"</span>删掉，则注销机器用户a下次登录则不需要再输入密码，但是sudo 等仍然需要指定密码，只是图形界面省略了登录输密码步骤</span><br></pre></td></tr></table></div></figure>
+root@Alpha:~/zhan/test#
+</code></pre><p>统计文件中的空行</p><pre><code>$ awk '/^ *$/ {x=x+1;} END {print x;}' testfile
+         以空格开始，到结束都是空格, END代表一直读到文件尾
+	root@Alpha:~/zhan/test#  awk '/^ *$/ {x=x+1;} END {print x;}' testfile
+	10
+	root@Alpha:~/zhan/test#
 
-
-<hr>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/">https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/linux/alias/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">alias</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/linux/aws-sdk-cpp%E4%BA%9A%E9%A9%AC%E9%80%8A/"><span class="paginator-prev__text">亚马逊aws-sdk-cpp</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#grep"><span class="toc-number">1.</span> <span class="toc-text">
-          grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#find"><span class="toc-number">2.</span> <span class="toc-text">
-          find</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sed"><span class="toc-number">3.</span> <span class="toc-text">
-          sed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk"><span class="toc-number">4.</span> <span class="toc-text">
-          awk</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">292</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
-
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
-
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
-
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
-
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
-
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
-
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
-
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
-
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
-
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
-
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
-
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
-
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
-
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
-    }
-  });
-}
-
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
-
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
-
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
-
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
-
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
-
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
-
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
-
-var assistSearchList = window.CONFIG.assistSearch;
-
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
+打印系统中用户账号列表
+$ awk 'BEGIN {FS=&quot;:&quot;} {print $1;}' /etc/passwd   
+	awk默认空格为列分隔符，BEGIN表示在匹配之前以&quot;:&quot;冒号分隔符分割列
+$ awk -F:  '{print $1}' /etc/passwd   与上面等价
+	-F:  设置&quot;:&quot;冒号为列分隔符， -F相当于awk的option可选参数
+	/etc/passwd 文件中把第一列用户名a对应的第二列如&quot;x&quot;删掉，则注销机器用户a下次登录则不需要再输入密码，但是sudo 等仍然需要指定密码，只是图形界面省略了登录输密码步骤
+</code></pre><hr></div><footer><div class="meta"></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Kung-Fu-Master 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Kung-Fu-Master 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Kung-Fu-Master 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Kung-Fu-Master <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>本文链接：</strong> <a href="https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/" title="awk, sed, find, grep">https://kung-fu-master.github.io/2021/03/13/linux/awk_sed_find_grep/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/linux/aws-sdk-cpp%E4%BA%9A%E9%A9%AC%E9%80%8A/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli9lfebj20zk0m84qp.jpg" title="亚马逊aws-sdk-cpp"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> security</span><h3>亚马逊aws-sdk-cpp</h3></a></div><div class="item right"><a href="/2021/03/13/linux/U%E7%9B%98%E5%AE%89%E8%A3%85OS/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclhpw3lwj20zk0m8gvw.jpg" title="U盘安装OS"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> linux</span><h3>U盘安装OS</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#grep"><span class="toc-number">1.</span> <span class="toc-text"># grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#find"><span class="toc-number">2.</span> <span class="toc-text"># find</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sed"><span class="toc-number">3.</span> <span class="toc-text"># sed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk"><span class="toc-number">4.</span> <span class="toc-text"># awk</span></a></li></ol></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/2021/03/13/linux/ACPI%E6%98%AF%E4%BB%80%E4%B9%88&BIOS%E4%B8%ADACPI%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE/" rel="bookmark" title="ACPI是什么,BIOS中ACPI要怎么设置">ACPI是什么,BIOS中ACPI要怎么设置</a></li><li><a href="/2021/03/13/linux/CPU%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3PCIE/" rel="bookmark" title="CPU角度理解PCIE">CPU角度理解PCIE</a></li><li><a href="/2021/03/13/linux/BIOS/" rel="bookmark" title="BIOS">BIOS</a></li><li><a href="/2021/03/13/linux/Intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E5%88%87%E6%8D%A2/" rel="bookmark" title="Intel_pstate/acpi-cpufreq驱动切换">Intel_pstate/acpi-cpufreq驱动切换</a></li><li><a href="/2021/03/13/linux/Linux_kernel_userspace%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" rel="bookmark" title="Linux kernel userspace体系结构">Linux kernel userspace体系结构</a></li><li><a href="/2021/03/13/linux/PTU(Power%20Thermal%20Utility)/" rel="bookmark" title="PTU(Power Thermal Utility)">PTU(Power Thermal Utility)</a></li><li><a href="/2021/03/13/linux/TSC/" rel="bookmark" title="TSC">TSC</a></li><li><a href="/2021/03/13/linux/U%E7%9B%98RAW%E7%B1%BB%E5%9E%8B%E4%BF%AE%E5%A4%8D/" rel="bookmark" title="U盘RAW类型修复">U盘RAW类型修复</a></li><li><a href="/2021/03/13/linux/U%E7%9B%98%E5%88%86%E5%8C%BA%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D/" rel="bookmark" title="U盘制作启动盘分区后恢复">U盘制作启动盘分区后恢复</a></li><li><a href="/2021/03/13/linux/VirtualBox%E5%AE%89%E8%A3%85Centos7/" rel="bookmark" title="VirutalBos安装Centos7">VirutalBos安装Centos7</a></li><li><a href="/2021/03/13/linux/Windows10mstsc%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Centos7.0/" rel="bookmark" title="Windows10 mstsc远程登录Centos7.0">Windows10 mstsc远程登录Centos7.0</a></li><li><a href="/2021/03/13/linux/centos%E5%8D%87%E7%BA%A7gcc%E5%88%B09.1.0/" rel="bookmark" title="centos升级gcc到9.1.0">centos升级gcc到9.1.0</a></li><li><a href="/2021/03/13/linux/emon/" rel="bookmark" title="emon">emon</a></li><li><a href="/2021/03/13/linux/intel_pstate-acpi-cpufreq%E9%A9%B1%E5%8A%A8%E7%A0%94%E7%A9%B6/" rel="bookmark" title="intel_pstate/acpi-cpufreq驱动研究">intel_pstate/acpi-cpufreq驱动研究</a></li><li><a href="/2021/03/13/linux/ln%E8%BD%AF%E8%BF%9E%E6%8E%A5_head_tail_more_less/" rel="bookmark" title="ln软连接, head, tail, more&less">ln软连接, head, tail, more&less</a></li><li><a href="/2021/03/13/linux/sda_hda/" rel="bookmark" title="sda hda">sda hda</a></li><li><a href="/2021/03/13/linux/wget_www.baidu.com/" rel="bookmark" title="wget www.baidu.com">wget www.baidu.com</a></li><li><a href="/2021/03/13/linux/yum%E4%B8%8B%E8%BD%BD%E9%81%87%E5%88%B0XZ_5.1.2alpha%E9%97%AE%E9%A2%98/" rel="bookmark" title="yum下载遇到XZ_5.1.2alpha问题">yum下载遇到XZ_5.1.2alpha问题</a></li><li><a href="/2021/03/13/linux/yum%E4%BD%BF%E7%94%A8%E5%92%8C%E5%AE%89%E8%A3%85cmake-3%E7%89%88%E6%9C%AC%E4%B8%8A/" rel="bookmark" title="yum使用和安装cmake 3 版本上">yum使用和安装cmake 3 版本上</a></li><li><a href="/2021/03/13/linux/%E4%BF%AE%E6%94%B9os%E6%97%B6%E9%97%B4%E6%97%B6%E5%8C%BA/" rel="bookmark" title="linux 修改系统时间时区">linux 修改系统时间时区</a></li><li><a href="/2021/03/13/linux/yum%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="bookmark" title="yum 遇到的问题">yum 遇到的问题</a></li><li><a href="/2021/03/13/linux/%E6%8C%89%E5%AD%97%E8%8A%82-%E5%AD%97%E5%AF%BB%E5%9D%80_%E5%AD%97%E9%95%BF_%E5%9C%B0%E5%9D%80%E6%80%BB%E7%BA%BF_%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF%E5%85%B3%E7%B3%BB/" rel="bookmark" title="按字节/字寻址，字长，地址总线，数据总线关系">按字节/字寻址，字长，地址总线，数据总线关系</a></li><li><a href="/2021/03/13/linux/%E6%9F%A5%E7%9C%8BSSD/" rel="bookmark" title="查看SSD">查看SSD</a></li><li><a href="/2021/03/13/linux/%E7%94%A8%E6%88%B7%E6%80%81%E5%92%8C%E5%86%85%E6%A0%B8%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98-%E4%BD%BF%E7%94%A8dev_mem&mmap/" rel="bookmark" title="用户态和内核共享内存----使用 /dev/mem & mmap">用户态和内核共享内存----使用 /dev/mem & mmap</a></li><li><a href="/2021/03/13/linux/%E7%A1%AC%E7%9B%98%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%8D%95%E4%BD%8DGB/" rel="bookmark" title="硬盘存储空间单位GB">硬盘存储空间单位GB</a></li><li><a href="/2021/03/13/linux/%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E9%94%99%E8%AF%AF_r_command%20not%20found/" rel="bookmark" title="脚本执行错误 $'\r':command not found">脚本执行错误 $'\r':command not found</a></li><li><a href="/2021/03/13/linux/%E8%BF%9E%E6%8E%A5router%E5%90%8E%E6%9C%BA%E5%99%A8%E8%BF%9E%E4%B8%8D%E4%B8%8A%E5%A4%96%E7%BD%91/" rel="bookmark" title="连接router后机器连不上外网">连接router后机器连不上外网</a></li><li><a href="/2021/03/13/linux/Centos%E6%9B%B4%E6%94%B9kernel%20%E9%BB%98%E8%AE%A4%E5%90%AF%E5%8A%A8%E9%A1%B9/" rel="bookmark" title="Centos 更改kernel 默认启动项">Centos 更改kernel 默认启动项</a></li><li><a href="/2021/03/13/linux/Devtoolset%20%E5%8D%87%E7%BA%A7gcc%E5%88%B08.3.1/" rel="bookmark" title="Devtoolset 升级gcc到8.3.1">Devtoolset 升级gcc到8.3.1</a></li><li><a href="/2021/03/13/linux/EOF/" rel="bookmark" title="EOF">EOF</a></li><li><a href="/2021/03/13/linux/Linux_kernel_%E6%9B%B4%E6%96%B0/" rel="bookmark" title="Linux kernel 更新">Linux kernel 更新</a></li><li><a href="/2021/03/13/linux/Linux%20%E4%BF%AE%E6%94%B9root%E5%90%8D%E7%A7%B0/" rel="bookmark" title="Linux 修改root名称">Linux 修改root名称</a></li><li><a href="/2021/03/13/linux/Intel_pstate&HWP%E5%8A%9F%E8%83%BDenable_disable/" rel="bookmark" title="Intel_pstate & HWP功能enable/disable">Intel_pstate & HWP功能enable/disable</a></li><li><a href="/2021/03/13/linux/Centos%E5%AE%89%E8%A3%85chrome/" rel="bookmark" title="Centos安装chrome">Centos安装chrome</a></li><li><a href="/2021/03/13/linux/MMIO/" rel="bookmark" title="MMIO">MMIO</a></li><li><a href="/2021/03/13/linux/Linux%E4%B8%8B%E5%91%BD%E4%BB%A4Is%E5%92%8C%E5%91%BD%E4%BB%A4dir%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="bookmark" title="Linux下命令Is和命令dir的区别">Linux下命令Is和命令dir的区别</a></li><li><a href="/2021/03/13/linux/Makefile/" rel="bookmark" title="Makefile">Makefile</a></li><li><a href="/2021/03/13/linux/alias/" rel="bookmark" title="alias">alias</a></li><li><a href="/2021/03/13/linux/U%E7%9B%98%E5%AE%89%E8%A3%85OS/" rel="bookmark" title="U盘安装OS">U盘安装OS</a></li><li class="active"><a href="/2021/03/13/linux/awk_sed_find_grep/" rel="bookmark" title="awk, sed, find, grep">awk, sed, find, grep</a></li><li><a href="/2021/03/13/linux/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85CUDA8.0%E5%8F%8Anvidia%E9%A9%B1%E5%8A%A8(%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B)/" rel="bookmark" title="Ubuntu下安装CUDA8.0及nvidia驱动(详细教程）">Ubuntu下安装CUDA8.0及nvidia驱动(详细教程）</a></li><li><a href="/2021/03/13/linux/chown/" rel="bookmark" title="chown改变文件所属用户和用户组">chown改变文件所属用户和用户组</a></li><li><a href="/2021/03/13/linux/RHEL8.0%E5%BC%80%E6%9C%BA%E6%80%BB%E6%98%AF%E8%A6%81dhclient%E6%89%8B%E5%8A%A8%E8%8E%B7%E5%8F%96IP/" rel="bookmark" title="RHEL8.0开机总是要dhclient手动获取IP">RHEL8.0开机总是要dhclient手动获取IP</a></li><li><a href="/2021/03/13/linux/curl%E5%8D%87%E7%BA%A7/" rel="bookmark" title="curl 升级">curl 升级</a></li><li><a href="/2021/03/13/linux/dd_command/" rel="bookmark" title="dd 命令">dd 命令</a></li><li><a href="/2021/03/13/linux/cut/" rel="bookmark" title="cut">cut</a></li><li><a href="/2021/03/13/linux/dmidecode/" rel="bookmark" title="dmidecode">dmidecode</a></li><li><a href="/2021/03/13/linux/etc_profile-etc_bashrc-~.bashrc/" rel="bookmark" title="/etc/profile, /etc/bashrc, ~/.bashrc">/etc/profile, /etc/bashrc, ~/.bashrc</a></li><li><a href="/2021/03/13/linux/docker/" rel="bookmark" title="docker">docker</a></li><li><a href="/2021/03/13/linux/cmake/" rel="bookmark" title="cmake">cmake</a></li><li><a href="/2021/03/13/linux/gdb/" rel="bookmark" title="gdb">gdb</a></li><li><a href="/2021/03/13/linux/helm/" rel="bookmark" title="helm安装">helm安装</a></li><li><a href="/2021/03/13/linux/history/" rel="bookmark" title="Linux中禁用命令历史记录">Linux中禁用命令历史记录</a></li><li><a href="/2021/03/13/linux/fdisk%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA_mount/" rel="bookmark" title="fdisk磁盘分区 mount操作">fdisk磁盘分区 mount操作</a></li><li><a href="/2021/03/13/linux/jq_json%E8%A7%A3%E6%9E%90%E5%B7%A5%E5%85%B7/" rel="bookmark" title="jq json解析工具">jq json解析工具</a></li><li><a href="/2021/03/13/linux/getopt_getopts_%E8%A7%A3%E6%9E%90%E5%91%BD%E4%BB%A4%E9%95%BF%E5%8F%82%E6%95%B0/" rel="bookmark" title="getopt,getopts解析命令行长参数">getopt,getopts解析命令行长参数</a></li><li><a href="/2021/03/13/linux/expect%E6%89%A7%E8%A1%8C%E4%B8%8E%E7%BB%88%E7%AB%AF%E7%9A%84%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C/" rel="bookmark" title="expect 执行与终端的交互操作">expect 执行与终端的交互操作</a></li><li><a href="/2021/03/13/linux/cppc%E5%8A%A8%E6%80%81%E8%B0%83%E9%A2%91/" rel="bookmark" title="cppc动态调频">cppc动态调频</a></li><li><a href="/2021/03/13/linux/linux%E5%88%B6%E4%BD%9CU%E7%9B%98%E5%90%AF%E5%8A%A8%E7%9B%98/" rel="bookmark" title="linux制作U盘启动盘">linux制作U盘启动盘</a></li><li><a href="/2021/03/13/linux/java%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD/" rel="bookmark" title="java安装与卸载">java安装与卸载</a></li><li><a href="/2021/03/13/linux/curl_wget/" rel="bookmark" title="curl & wget">curl & wget</a></li><li><a href="/2021/03/13/linux/linux%E6%97%A5%E5%BF%97_%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97/" rel="bookmark" title="查看 linux 系统日志 和 服务的日志">查看 linux 系统日志 和 服务的日志</a></li><li><a href="/2021/03/13/linux/linux%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/" rel="bookmark" title="linux查看运行的服务">linux查看运行的服务</a></li><li><a href="/2021/03/13/linux/linux%E6%B7%BB%E5%8A%A0%E4%BF%AE%E6%94%B9%E7%BD%91%E7%BB%9C%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%AE%BE%E5%A4%87/" rel="bookmark" title="linux添加修改网络命名空间设备">linux添加修改网络命名空间设备</a></li><li><a href="/2021/03/13/linux/maven/" rel="bookmark" title="maven">maven</a></li><li><a href="/2021/03/13/linux/linux%E7%BB%99grub%E6%B7%BB%E5%8A%A0%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0/" rel="bookmark" title="linux给grub添加内核启动参数">linux给grub添加内核启动参数</a></li><li><a href="/2021/03/13/linux/linux%E5%90%91%E5%85%B6%E5%AE%83%E7%BB%88%E7%AB%AF%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/" rel="bookmark" title="linux向其它终端发送消息">linux向其它终端发送消息</a></li><li><a href="/2021/03/13/linux/ntpdate_synchronize_os_time/" rel="bookmark" title="ntpdate 同步各个系统时间">ntpdate 同步各个系统时间</a></li><li><a href="/2021/03/13/linux/perf/" rel="bookmark" title="perf">perf</a></li><li><a href="/2021/03/13/linux/scp%E6%9C%BA%E5%99%A8%E9%97%B4%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6/" rel="bookmark" title="scp机器间复制文件">scp机器间复制文件</a></li><li><a href="/2021/03/13/linux/nginx/" rel="bookmark" title="nginx">nginx</a></li><li><a href="/2021/03/13/linux/rpm_yum/" rel="bookmark" title="RPM, yum">RPM, yum</a></li><li><a href="/2021/03/13/linux/python%E5%AE%89%E8%A3%85/" rel="bookmark" title="python 安装">python 安装</a></li><li><a href="/2021/03/13/linux/ssh%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84/" rel="bookmark" title="ssh端口映射">ssh端口映射</a></li><li><a href="/2021/03/13/linux/nc_netstat_tee/" rel="bookmark" title="nc, netstat, tee">nc, netstat, tee</a></li><li><a href="/2021/03/13/linux/vim/" rel="bookmark" title="vim">vim</a></li><li><a href="/2021/03/13/linux/tmux%E6%93%8D%E4%BD%9C/" rel="bookmark" title="tmux 操作">tmux 操作</a></li><li><a href="/2021/03/13/linux/screen%E7%A8%8B%E5%BA%8F%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C/" rel="bookmark" title="screen程序在后台运行">screen程序在后台运行</a></li><li><a href="/2021/03/13/linux/time/" rel="bookmark" title="time">time</a></li><li><a href="/2021/03/13/linux/ssh-keygen_%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/" rel="bookmark" title="ssh-keygen,known_hosts 免密登陆">ssh-keygen,known_hosts 免密登陆</a></li><li><a href="/2021/03/13/linux/%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/" rel="bookmark" title="解压缩命令合集">解压缩命令合集</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Kung-Fu-Master" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Kung-Fu-Master</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">292</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">40</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">12</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/linux/aws-sdk-cpp%E4%BA%9A%E9%A9%AC%E9%80%8A/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/13/linux/U%E7%9B%98%E5%AE%89%E8%A3%85OS/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/storage/" title="分类于 storage">storage</a> <i class="ic i-angle-right"></i> <a href="/categories/storage/greenplum/" title="分类于 greenplum">greenplum</a></div><span><a href="/2021/03/13/storage/greenplum/greenplum_K8s_%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" title="greenplum(psql) 远程连接k8s部署的greenplum">greenplum(psql) 远程连接k8s部署的greenplum</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/cpp/" title="分类于 cpp">cpp</a></div><span><a href="/2021/03/13/language/cpp/STL/03.shared_ptr/" title="STL 03 shared_ptr">STL 03 shared_ptr</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/centos%E5%8D%87%E7%BA%A7gcc%E5%88%B09.1.0/" title="centos升级gcc到9.1.0">centos升级gcc到9.1.0</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/security/" title="分类于 security">security</a></div><span><a href="/2021/03/13/technologies/security/ECDHE-RSA-AES256-GCM-SHA384%E8%A7%A3%E9%87%8A/" title="ECDHE-RSA-AES256-GCM-SHA384 解释">ECDHE-RSA-AES256-GCM-SHA384 解释</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/cpp/" title="分类于 cpp">cpp</a></div><span><a href="/2021/03/13/language/cpp/STL/01.STL/" title="STL 01">STL 01</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/kubernetes/" title="分类于 kubernetes">kubernetes</a></div><span><a href="/2021/03/13/micro_service/kubernetes/09_kubernetes_certificate/" title="09 Kubernetes Certificates">09 Kubernetes Certificates</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/" title="29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起">29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/yum%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="yum 遇到的问题">yum 遇到的问题</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/kubernetes/" title="分类于 kubernetes">kubernetes</a></div><span><a href="/2021/03/13/micro_service/kubernetes/metrics-server,kubernetes-dashboard/" title="Metrics-Server, Kubernetes-Dashboard">Metrics-Server, Kubernetes-Dashboard</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/maven/" title="分类于 maven">maven</a></div><span><a href="/2021/03/13/technologies/maven/thrift/" title="thrift">thrift</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Kung-Fu-Master @ Kung Fu Master</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">1.1m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">16:30</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/13/linux/awk_sed_find_grep/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->

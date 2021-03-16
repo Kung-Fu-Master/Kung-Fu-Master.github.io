@@ -1,53 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="在前两次的分享中，我讲解了 Linux 容器最基础的两种技术：Namespace 和 Cgroups。希望此时，你已经彻底理解了“容器的本质是一种特殊的进程”这个最重要的概念。 而正如我前面所说的，Namespace 的作用是“隔离”，它让应用进程只能看到该 Namespace 内的“世界”；而 Cgroups 的作用是“限制”，它给这个“世界”围上了一圈看不见的">
-<meta property="og:type" content="article">
-<meta property="og:title" content="07 | 白话容器基础（三）：深入理解容器镜像">
-<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在前两次的分享中，我讲解了 Linux 容器最基础的两种技术：Namespace 和 Cgroups。希望此时，你已经彻底理解了“容器的本质是一种特殊的进程”这个最重要的概念。 而正如我前面所说的，Namespace 的作用是“隔离”，它让应用进程只能看到该 Namespace 内的“世界”；而 Cgroups 的作用是“限制”，它给这个“世界”围上了一圈看不见的">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/2.jpg">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/1.png">
-<meta property="article:published_time" content="2021-03-13T04:35:15.121Z">
-<meta property="article:modified_time" content="2021-03-13T04:35:15.121Z">
-<meta property="article:author" content="Kung-Fu-Master">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/2.jpg"><title>07 | 白话容器基础（三）：深入理解容器镜像 | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: true,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
-
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">07 | 白话容器基础（三）：深入理解容器镜像</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">6.2k</span></span></div></header><div class="post-body"><p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="2.jpg"  alt="">
-      </p>
-<p>在前两次的分享中，我讲解了 Linux 容器最基础的两种技术：Namespace 和 Cgroups。希望此时，你已经彻底理解了“容器的本质是一种特殊的进程”这个最重要的概念。</p>
-<p>而正如我前面所说的，Namespace 的作用是“隔离”，它让应用进程只能看到该 Namespace 内的“世界”；而 Cgroups 的作用是“限制”，它给这个“世界”围上了一圈看不见的墙。这么一折腾，进程就真的被“装”在了一个与世隔绝的房间里，而这些房间就是 PaaS 项目赖以生存的应用“沙盒”。</p>
-<p>可是，还有一个问题不知道你有没有仔细思考过：这个房间四周虽然有了墙，但是如果容器进程低头一看地面，又是怎样一副景象呢？</p>
-<p>换句话说，<strong><code>容器里的进程看到的文件系统又是什么样子的呢？</code></strong></p>
-<p>可能你立刻就能想到，这一定是一个关于 Mount Namespace 的问题：容器里的应用进程，理应看到一份完全独立的文件系统。这样，它就可以在自己的容器目录（比如 /tmp）下进行操作，而完全不会受宿主机以及其他容器的影响。</p>
-<p>那么，真实情况是这样吗？</p>
-<p>“左耳朵耗子”叔在多年前写的一篇<span class="exturl"><a class="exturl__link"   href="https://coolshell.cn/articles/17010.html"  target="_blank" rel="noopener">关于 Docker 基础知识的博客</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>里，曾经介绍过一段小程序。这段小程序的作用是，在创建子进程时开启指定的 Namespace。</p>
-<p>下面，我们不妨使用它来验证一下刚刚提到的问题。</p>
-<pre><code>#define _GNU_SOURCE
+<!-- build time:Wed Mar 17 2021 02:52:24 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="https://kung-fu-master.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="https://kung-fu-master.github.io/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="https://kung-fu-master.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/"><title>07 | 白话容器基础（三）：深入理解容器镜像 - k8s - reference | Kung Fu Master = Hexo</title><meta name="generator" content="Hexo 4.2.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">07 | 白话容器基础（三）：深入理解容器镜像</h1><div class="meta"><span class="item" title="创建时间：2021-03-13 12:35:15"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-03-13T12:35:15+08:00">2021-03-13</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>11k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>10 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Kung Fu Master</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclhtuo6nj20zk0m8ttm.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclx29mstj20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/reference/" itemprop="item" rel="index" title="分类于 reference"><span itemprop="name">reference</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/reference/k8s/" itemprop="item" rel="index" title="分类于 k8s"><span itemprop="name">k8s</span></a><meta itemprop="position" content="2"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Kung-Fu-Master"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><p><img data-src="2.jpg" alt=""></p><p>在前两次的分享中，我讲解了 Linux 容器最基础的两种技术：Namespace 和 Cgroups。希望此时，你已经彻底理解了 “容器的本质是一种特殊的进程” 这个最重要的概念。</p><p>而正如我前面所说的，Namespace 的作用是 “隔离”，它让应用进程只能看到该 Namespace 内的 “世界”；而 Cgroups 的作用是 “限制”，它给这个 “世界” 围上了一圈看不见的墙。这么一折腾，进程就真的被 “装” 在了一个与世隔绝的房间里，而这些房间就是 PaaS 项目赖以生存的应用 “沙盒”。</p><p>可是，还有一个问题不知道你有没有仔细思考过：这个房间四周虽然有了墙，但是如果容器进程低头一看地面，又是怎样一副景象呢？</p><p>换句话说，<strong> <code>容器里的进程看到的文件系统又是什么样子的呢？</code></strong></p><p>可能你立刻就能想到，这一定是一个关于 Mount Namespace 的问题：容器里的应用进程，理应看到一份完全独立的文件系统。这样，它就可以在自己的容器目录（比如 /tmp）下进行操作，而完全不会受宿主机以及其他容器的影响。</p><p>那么，真实情况是这样吗？</p><p>“左耳朵耗子” 叔在多年前写的一篇<span class="exturl" data-url="aHR0cHM6Ly9jb29sc2hlbGwuY24vYXJ0aWNsZXMvMTcwMTAuaHRtbA==">关于 Docker 基础知识的博客</span>里，曾经介绍过一段小程序。这段小程序的作用是，在创建子进程时开启指定的 Namespace。</p><p>下面，我们不妨使用它来验证一下刚刚提到的问题。</p><pre><code>#define _GNU_SOURCE
 #include &lt;sys/mount.h&gt; 
 #include &lt;sys/types.h&gt;
 #include &lt;sys/wait.h&gt;
@@ -61,15 +12,15 @@ char* const container_args[] = {
   &quot;/bin/bash&quot;,
   NULL
 };
-
+ 
 int container_main(void* arg)
 {  
   printf(&quot;Container - inside the container!\n&quot;);
   execv(container_args[0], container_args);
-  printf(&quot;Something&apos;s wrong!\n&quot;);
+  printf(&quot;Something's wrong!\n&quot;);
   return 1;
 }
-
+ 
 int main()
 {
   printf(&quot;Parent - start a container!\n&quot;);
@@ -77,127 +28,60 @@ int main()
   waitpid(container_pid, NULL, 0);
   printf(&quot;Parent - container stopped!\n&quot;);
   return 0;
-}</code></pre><p>这段代码的功能非常简单：在 main 函数里，我们通过 clone() 系统调用创建了一个新的子进程 container_main，并且声明要为它启用 Mount Namespace（即：CLONE_NEWNS 标志）。</p>
-<p>而这个子进程执行的，是一个“/bin/bash”程序，也就是一个 shell。所以这个 shell 就运行在了 Mount Namespace 的隔离环境中。</p>
-<p>我们来一起编译一下这个程序：</p>
-<pre><code>$ gcc -o ns ns.c
+}
+</code></pre><p>这段代码的功能非常简单：在 main 函数里，我们通过 clone () 系统调用创建了一个新的子进程 container_main，并且声明要为它启用 Mount Namespace（即：CLONE_NEWNS 标志）。</p><p>而这个子进程执行的，是一个 “/bin/bash” 程序，也就是一个 shell。所以这个 shell 就运行在了 Mount Namespace 的隔离环境中。</p><p>我们来一起编译一下这个程序：</p><pre><code>$ gcc -o ns ns.c
 $ ./ns
 Parent - start a container!
-Container - inside the container!</code></pre><p>这样，我们就进入了这个“容器”当中。可是，如果在“容器”里执行一下 ls 指令的话，我们就会发现一个有趣的现象： /tmp 目录下的内容跟宿主机的内容是一样的。</p>
-<pre><code>$ ls /tmp
-# 你会看到好多宿主机的文件</code></pre><p>也就是说：</p>
-<blockquote>
-<p>即使开启了 Mount Namespace，容器进程看到的文件系统也跟宿主机完全一样。</p>
-</blockquote>
-<p>这是怎么回事呢？</p>
-<p>仔细思考一下，你会发现这其实并不难理解：Mount Namespace 修改的，是容器进程对文件系统“挂载点”的认知。但是，这也就意味着，只有在“挂载”这个操作发生之后，进程的视图才会被改变。而在此之前，新创建的容器会直接继承宿主机的各个挂载点。</p>
-<p>这时，你可能已经想到了一个解决办法：创建新进程时，除了声明要启用 Mount Namespace 之外，我们还可以告诉容器进程，有哪些目录需要重新挂载，就比如这个 /tmp 目录。于是，我们在容器进程执行前可以添加一步重新挂载 /tmp 目录的操作：</p>
-<pre><code>int container_main(void* arg)
+Container - inside the container!
+</code></pre><p>这样，我们就进入了这个 “容器” 当中。可是，如果在 “容器” 里执行一下 ls 指令的话，我们就会发现一个有趣的现象： /tmp 目录下的内容跟宿主机的内容是一样的。</p><pre><code>$ ls /tmp
+# 你会看到好多宿主机的文件
+</code></pre><p>也就是说：</p><blockquote><p>即使开启了 Mount Namespace，容器进程看到的文件系统也跟宿主机完全一样。</p></blockquote><p>这是怎么回事呢？</p><p>仔细思考一下，你会发现这其实并不难理解：Mount Namespace 修改的，是容器进程对文件系统 “挂载点” 的认知。但是，这也就意味着，只有在 “挂载” 这个操作发生之后，进程的视图才会被改变。而在此之前，新创建的容器会直接继承宿主机的各个挂载点。</p><p>这时，你可能已经想到了一个解决办法：创建新进程时，除了声明要启用 Mount Namespace 之外，我们还可以告诉容器进程，有哪些目录需要重新挂载，就比如这个 /tmp 目录。于是，我们在容器进程执行前可以添加一步重新挂载 /tmp 目录的操作：</p><pre><code>int container_main(void* arg)
 {
   printf(&quot;Container - inside the container!\n&quot;);
   // 如果你的机器的根目录的挂载类型是 shared，那必须先重新挂载根目录
   // mount(&quot;&quot;, &quot;/&quot;, NULL, MS_PRIVATE, &quot;&quot;);
   mount(&quot;none&quot;, &quot;/tmp&quot;, &quot;tmpfs&quot;, 0, &quot;&quot;);
   execv(container_args[0], container_args);
-  printf(&quot;Something&apos;s wrong!\n&quot;);
+  printf(&quot;Something's wrong!\n&quot;);
   return 1;
-}</code></pre><p>可以看到，在修改后的代码里，我在容器进程启动之前，加上了一句 mount(“none”, “/tmp”, “tmpfs”, 0, “”) 语句。就这样，我告诉了容器以 tmpfs（内存盘）格式，重新挂载了 /tmp 目录。</p>
-<p>这段修改后的代码，编译执行后的结果又如何呢？我们可以试验一下：</p>
-<pre><code>$ gcc -o ns ns.c
+}
+</code></pre><p>可以看到，在修改后的代码里，我在容器进程启动之前，加上了一句 mount (“none”, “/tmp”, “tmpfs”, 0, “”) 语句。就这样，我告诉了容器以 tmpfs（内存盘）格式，重新挂载了 /tmp 目录。</p><p>这段修改后的代码，编译执行后的结果又如何呢？我们可以试验一下：</p><pre><code>$ gcc -o ns ns.c
 $ ./ns
 Parent - start a container!
 Container - inside the container!
-$ ls /tmp</code></pre><p>可以看到，这次 /tmp 变成了一个空目录，这意味着重新挂载生效了。我们可以用 mount -l 检查一下：</p>
-<pre><code>$ mount -l | grep tmpfs
-none on /tmp type tmpfs (rw,relatime)</code></pre><p>可以看到，容器里的 /tmp 目录是以 tmpfs 方式单独挂载的。</p>
-<p>更重要的是，因为我们创建的新进程启用了 Mount Namespace，所以这次重新挂载的操作，只在容器进程的 Mount Namespace 中有效。如果在宿主机上用 mount -l 来检查一下这个挂载，你会发现它是不存在的：</p>
-<pre><code># 在宿主机上
-$ mount -l | grep tmpfs</code></pre><p><strong><code>这就是 Mount Namespace 跟其他 Namespace 的使用略有不同的地方：它对容器进程视图的改变，一定是伴随着挂载操作（mount）才能生效。</code></strong></p>
-<p>可是，作为一个普通用户，我们希望的是一个更友好的情况：每当创建一个新容器时，我希望容器进程看到的文件系统就是一个独立的隔离环境，而不是继承自宿主机的文件系统。怎么才能做到这一点呢？</p>
-<p>不难想到，我们可以在容器进程启动之前重新挂载它的整个根目录“/”。而由于 Mount Namespace 的存在，这个挂载对宿主机不可见，所以容器进程就可以在里面随便折腾了。</p>
-<p>在 Linux 操作系统里，有一个名为 chroot 的命令可以帮助你在 shell 中方便地完成这个工作。顾名思义，它的作用就是帮你“change root file system”，即改变进程的根目录到你指定的位置。它的用法也非常简单。</p>
-<p>假设，我们现在有一个 $HOME/test 目录，想要把它作为一个 /bin/bash 进程的根目录。</p>
-<p>首先，创建一个 test 目录和几个 lib 文件夹：</p>
-<pre><code>$ mkdir -p $HOME/test
+$ ls /tmp
+</code></pre><p>可以看到，这次 /tmp 变成了一个空目录，这意味着重新挂载生效了。我们可以用 mount -l 检查一下：</p><pre><code>$ mount -l | grep tmpfs
+none on /tmp type tmpfs (rw,relatime)
+</code></pre><p>可以看到，容器里的 /tmp 目录是以 tmpfs 方式单独挂载的。</p><p>更重要的是，因为我们创建的新进程启用了 Mount Namespace，所以这次重新挂载的操作，只在容器进程的 Mount Namespace 中有效。如果在宿主机上用 mount -l 来检查一下这个挂载，你会发现它是不存在的：</p><pre><code># 在宿主机上
+$ mount -l | grep tmpfs
+</code></pre><p><strong><code>这就是 Mount Namespace 跟其他 Namespace 的使用略有不同的地方：它对容器进程视图的改变，一定是伴随着挂载操作（mount）才能生效。</code></strong></p><p>可是，作为一个普通用户，我们希望的是一个更友好的情况：每当创建一个新容器时，我希望容器进程看到的文件系统就是一个独立的隔离环境，而不是继承自宿主机的文件系统。怎么才能做到这一点呢？</p><p>不难想到，我们可以在容器进程启动之前重新挂载它的整个根目录 “/”。而由于 Mount Namespace 的存在，这个挂载对宿主机不可见，所以容器进程就可以在里面随便折腾了。</p><p>在 Linux 操作系统里，有一个名为 chroot 的命令可以帮助你在 shell 中方便地完成这个工作。顾名思义，它的作用就是帮你 “change root file system”，即改变进程的根目录到你指定的位置。它的用法也非常简单。</p><p>假设，我们现在有一个 $HOME/test 目录，想要把它作为一个 /bin/bash 进程的根目录。</p><p>首先，创建一个 test 目录和几个 lib 文件夹：</p><pre><code>$ mkdir -p $HOME/test
 $ mkdir -p $HOME/test/{bin,lib64,lib}
-$ cd $T</code></pre><p>然后，把 bash 命令拷贝到 test 目录对应的 bin 路径下：</p>
-<pre><code>$ cp -v /bin/{bash,ls} $HOME/test/bin</code></pre><p>接下来，把 bash 命令需要的所有 so 文件，也拷贝到 test 目录对应的 lib 路径下。找到 so 文件可以用 ldd 命令：</p>
-<pre><code>$ T=$HOME/test
-$ list=&quot;$(ldd /bin/ls | egrep -o &apos;/lib.*\.[0-9]&apos;)&quot;
-$ for i in $list; do cp -v &quot;$i&quot; &quot;${T}${i}&quot;; done</code></pre><p>最后，执行 chroot 命令，告诉操作系统，我们将使用 $HOME/test 目录作为 /bin/bash 进程的根目录：</p>
-<pre><code>$ chroot $HOME/test /bin/bash</code></pre><p>这时，你如果执行 “ls /“，就会看到，它返回的都是 $HOME/test 目录下面的内容，而不是宿主机的内容。</p>
-<p>更重要的是，对于被 chroot 的进程来说，它并不会感受到自己的根目录已经被“修改”成 $HOME/test 了。</p>
-<p>这种视图被修改的原理，是不是跟我之前介绍的 Linux Namespace 很类似呢？</p>
-<p>没错！</p>
-<p><strong><code>实际上，Mount Namespace 正是基于对 chroot 的不断改良才被发明出来的，它也是 Linux 操作系统里的第一个 Namespace。</code></strong></p>
-<p>当然，为了能够让容器的这个根目录看起来更“真实”，我们一般会在这个容器的根目录下挂载一个完整操作系统的文件系统，比如 Ubuntu16.04 的 ISO。这样，在容器启动之后，我们在容器里通过执行 “ls /“ 查看根目录下的内容，就是 Ubuntu 16.04 的所有目录和文件。</p>
-<p><strong><code>而这个挂载在容器根目录上、用来为容器进程提供隔离后执行环境的文件系统，就是所谓的“容器镜像”。它还有一个更为专业的名字，叫作：rootfs(根文件系统).</code></strong><br><strong><code>我们将程序的代码、依赖、环境打包成一个镜像，这里可以看出容器镜像是一种静态的，事实上，容器镜像是为容器进程提供可执行隔离环境的文件系统，如何实现的隔离，就是通过切换与宿主机不同的跟根目录，这个根目录也就是rootfs根文件系统.</code></strong><br>所以，一个最常见的 rootfs，或者说容器镜像，会包括如下所示的一些目录和文件，比如 /bin，/etc，/proc 等等：</p>
-<pre><code>$ ls /
-bin dev etc home lib lib64 mnt opt proc root run sbin sys tmp usr var</code></pre><p>而你进入容器之后执行的 /bin/bash，就是 /bin 目录下的可执行文件，与宿主机的 /bin/bash 完全不同。</p>
-<p>现在，你应该可以理解，对 Docker 项目来说，它最核心的原理实际上就是为待创建的用户进程：</p>
-<p>1.启用 Linux Namespace 配置;</p>
-<p>2.设置指定的 Cgroups 参数;</p>
-<p>3.切换进程的根目录(Change Root);</p>
-<blockquote>
-<p><strong><code>牛逼:容器是一个 创建时指定了namespace的进程,并且启动参数里设置了cpu,内存的限制,使用的文件系统目录也被提前设置了,挂载到了其他的目录(这个就是镜像) 2.所以容器没有像虚拟机一样虚拟出内核等,容器使用的是宿主机的内核,那么问题来了,为什么我在Windows上也可以使用docker呢? 其实是虚拟机....那为什么有windows的镜像呢,原理本身也是会启动一个虚拟机.</code></strong></p>
-</blockquote>
-<p>这样，一个完整的容器就诞生了。不过，Docker 项目在最后一步的切换上会优先使用 pivot_root 系统调用，如果系统不支持，才会使用 chroot。这两个系统调用虽然功能类似，但是也有细微的区别，这一部分小知识就交给你课后去探索了。</p>
-<p>另外，需要明确的是，rootfs 只是一个操作系统所包含的文件、配置和目录，并不包括操作系统内核。在 Linux 操作系统中，这两部分是分开存放的，操作系统只有在开机启动时才会加载指定版本的内核镜像。</p>
-<p>所以说，rootfs 只包括了操作系统的“躯壳”，并没有包括操作系统的“灵魂”。</p>
-<p>那么，对于容器来说，这个操作系统的“灵魂”又在哪里呢？</p>
-<p>实际上，<strong><code>同一台机器上的所有容器，都共享宿主机操作系统的内核.</code></strong></p>
-<p>这就意味着，<strong>如果你的应用程序需要配置内核参数、加载额外的内核模块，以及跟内核进行直接的交互，你就需要注意了：这些操作和依赖的对象，都是宿主机操作系统的内核，它对于该机器上的所有容器来说是一个“全局变量”，牵一发而动全身。</strong></p>
-<p>这也是容器相比于虚拟机的主要缺陷之一：毕竟后者不仅有模拟出来的硬件机器充当沙盒，而且每个沙盒里还运行着一个完整的 Guest OS 给应用随便折腾。</p>
-<p>不过，正是由于 rootfs 的存在，容器才有了一个被反复宣传至今的重要特性:<strong><code>一致性.</code></strong></p>
-<p>什么是容器的“一致性”呢？</p>
-<p>我在专栏的第一篇文章《小鲸鱼大事记（一）：初出茅庐》中曾经提到过：由于云端与本地服务器环境不同，应用的打包过程，一直是使用 PaaS 时最“痛苦”的一个步骤。</p>
-<p>但有了容器之后，更准确地说，有了容器镜像（即 rootfs）之后，这个问题被非常优雅地解决了。</p>
-<p><strong><code>由于 rootfs 里打包的不只是应用，而是整个操作系统的文件和目录，也就意味着，应用以及它运行所需要的所有依赖，都被封装在了一起.</code></strong></p>
-<p>事实上，对于大多数开发者而言，他们对应用依赖的理解，一直局限在编程语言层面。比如 Golang 的 Godeps.json。但实际上，一个一直以来很容易被忽视的事实是，<strong><code>对一个应用来说，操作系统本身才是它运行所需要的最完整的“依赖库”.</code></strong></p>
-<p>有了容器镜像“打包操作系统”的能力，这个最基础的依赖环境也终于变成了应用沙盒的一部分。这就赋予了容器所谓的一致性：无论在本地、云端，还是在一台任何地方的机器上，用户只需要解压打包好的容器镜像，那么这个应用运行所需要的完整的执行环境就被重现出来了。</p>
-<p><strong><code>这种深入到操作系统级别的运行环境一致性，打通了应用在本地开发和远端执行环境之间难以逾越的鸿沟.</code></strong></p>
-<p>不过，这时你可能已经发现了另一个非常棘手的问题：难道我每开发一个应用，或者升级一下现有的应用，都要重复制作一次 rootfs 吗？</p>
-<p>比如，我现在用 Ubuntu 操作系统的 ISO 做了一个 rootfs，然后又在里面安装了 Java 环境，用来部署我的 Java 应用。那么，我的另一个同事在发布他的 Java 应用时，显然希望能够直接使用我安装过 Java 环境的 rootfs，而不是重复这个流程。</p>
-<p>一种比较直观的解决办法是，我在制作 rootfs 的时候，每做一步“有意义”的操作，就保存一个 rootfs 出来，这样其他同事就可以按需求去用他需要的 rootfs 了。</p>
-<p>但是，这个解决办法并不具备推广性。原因在于，一旦你的同事们修改了这个 rootfs，新旧两个 rootfs 之间就没有任何关系了。这样做的结果就是极度的碎片化。</p>
-<p>那么，既然这些修改都基于一个旧的 rootfs，我们能不能以增量的方式去做这些修改呢？这样做的好处是，所有人都只需要维护相对于 base rootfs 修改的增量内容，而不是每次修改都制造一个“fork”。</p>
-<p>答案当然是肯定的。</p>
-<p>这也正是为何，Docker 公司在实现 Docker 镜像时并没有沿用以前制作 rootfs 的标准流程，而是做了一个小小的创新：</p>
-<blockquote>
-<p><strong><code>Docker 在镜像的设计中，引入了层（layer）的概念。也就是说，用户制作镜像的每一步操作，都会生成一个层，也就是一个增量 rootfs.</code></strong></p>
-</blockquote>
-<p>当然，这个想法不是凭空臆造出来的，而是用到了一种叫作联合文件系统（Union File System）的能力。</p>
-<p>Union File System 也叫 UnionFS，最主要的功能是将多个不同位置的目录联合挂载（union mount）到同一个目录下。比如，我现在有两个目录 A 和 B，它们分别有两个文件：</p>
-<pre><code>$ tree
+$ cd $T
+</code></pre><p>然后，把 bash 命令拷贝到 test 目录对应的 bin 路径下：</p><pre><code>$ cp -v /bin/{bash,ls} $HOME/test/bin
+</code></pre><p>接下来，把 bash 命令需要的所有 so 文件，也拷贝到 test 目录对应的 lib 路径下。找到 so 文件可以用 ldd 命令：</p><pre><code>$ T=$HOME/test
+$ list=&quot;$(ldd /bin/ls | egrep -o '/lib.*\.[0-9]')&quot;
+$ for i in $list; do cp -v &quot;$i&quot; &quot;${T}${i}&quot;; done
+</code></pre><p>最后，执行 chroot 命令，告诉操作系统，我们将使用 $HOME/test 目录作为 /bin/bash 进程的根目录：</p><pre><code>$ chroot $HOME/test /bin/bash
+</code></pre><p>这时，你如果执行 &quot;ls /&quot;，就会看到，它返回的都是 $HOME/test 目录下面的内容，而不是宿主机的内容。</p><p>更重要的是，对于被 chroot 的进程来说，它并不会感受到自己的根目录已经被 “修改” 成 $HOME/test 了。</p><p>这种视图被修改的原理，是不是跟我之前介绍的 Linux Namespace 很类似呢？</p><p>没错！</p><p><strong><code>实际上，Mount Namespace 正是基于对 chroot 的不断改良才被发明出来的，它也是 Linux 操作系统里的第一个 Namespace。</code></strong></p><p>当然，为了能够让容器的这个根目录看起来更 “真实”，我们一般会在这个容器的根目录下挂载一个完整操作系统的文件系统，比如 Ubuntu16.04 的 ISO。这样，在容器启动之后，我们在容器里通过执行 &quot;ls /&quot; 查看根目录下的内容，就是 Ubuntu 16.04 的所有目录和文件。</p><p><strong><code>而这个挂载在容器根目录上、用来为容器进程提供隔离后执行环境的文件系统，就是所谓的“容器镜像”。它还有一个更为专业的名字，叫作：rootfs(根文件系统).</code></strong><br><strong><code>我们将程序的代码、依赖、环境打包成一个镜像，这里可以看出容器镜像是一种静态的，事实上，容器镜像是为容器进程提供可执行隔离环境的文件系统，如何实现的隔离，就是通过切换与宿主机不同的跟根目录，这个根目录也就是rootfs根文件系统.</code></strong><br>所以，一个最常见的 rootfs，或者说容器镜像，会包括如下所示的一些目录和文件，比如 /bin，/etc，/proc 等等：</p><pre><code>$ ls /
+bin dev etc home lib lib64 mnt opt proc root run sbin sys tmp usr var
+</code></pre><p>而你进入容器之后执行的 /bin/bash，就是 /bin 目录下的可执行文件，与宿主机的 /bin/bash 完全不同。</p><p>现在，你应该可以理解，对 Docker 项目来说，它最核心的原理实际上就是为待创建的用户进程：</p><p>1. 启用 Linux Namespace 配置；</p><p>2. 设置指定的 Cgroups 参数；</p><p>3. 切换进程的根目录 (Change Root);</p><blockquote><p><strong><code>牛逼:容器是一个 创建时指定了namespace的进程,并且启动参数里设置了cpu,内存的限制,使用的文件系统目录也被提前设置了,挂载到了其他的目录(这个就是镜像) 2.所以容器没有像虚拟机一样虚拟出内核等,容器使用的是宿主机的内核,那么问题来了,为什么我在Windows上也可以使用docker呢? 其实是虚拟机....那为什么有windows的镜像呢,原理本身也是会启动一个虚拟机.</code></strong></p></blockquote><p>这样，一个完整的容器就诞生了。不过，Docker 项目在最后一步的切换上会优先使用 pivot_root 系统调用，如果系统不支持，才会使用 chroot。这两个系统调用虽然功能类似，但是也有细微的区别，这一部分小知识就交给你课后去探索了。</p><p>另外，需要明确的是，rootfs 只是一个操作系统所包含的文件、配置和目录，并不包括操作系统内核。在 Linux 操作系统中，这两部分是分开存放的，操作系统只有在开机启动时才会加载指定版本的内核镜像。</p><p>所以说，rootfs 只包括了操作系统的 “躯壳”，并没有包括操作系统的 “灵魂”。</p><p>那么，对于容器来说，这个操作系统的 “灵魂” 又在哪里呢？</p><p>实际上，<strong> <code>同一台机器上的所有容器，都共享宿主机操作系统的内核.</code></strong></p><p>这就意味着，<strong>如果你的应用程序需要配置内核参数、加载额外的内核模块，以及跟内核进行直接的交互，你就需要注意了：这些操作和依赖的对象，都是宿主机操作系统的内核，它对于该机器上的所有容器来说是一个 “全局变量”，牵一发而动全身。</strong></p><p>这也是容器相比于虚拟机的主要缺陷之一：毕竟后者不仅有模拟出来的硬件机器充当沙盒，而且每个沙盒里还运行着一个完整的 Guest OS 给应用随便折腾。</p><p>不过，正是由于 rootfs 的存在，容器才有了一个被反复宣传至今的重要特性:<strong> <code>一致性.</code></strong></p><p>什么是容器的 “一致性” 呢？</p><p>我在专栏的第一篇文章《小鲸鱼大事记（一）：初出茅庐》中曾经提到过：由于云端与本地服务器环境不同，应用的打包过程，一直是使用 PaaS 时最 “痛苦” 的一个步骤。</p><p>但有了容器之后，更准确地说，有了容器镜像（即 rootfs）之后，这个问题被非常优雅地解决了。</p><p><strong><code>由于 rootfs 里打包的不只是应用，而是整个操作系统的文件和目录，也就意味着，应用以及它运行所需要的所有依赖，都被封装在了一起.</code></strong></p><p>事实上，对于大多数开发者而言，他们对应用依赖的理解，一直局限在编程语言层面。比如 Golang 的 Godeps.json。但实际上，一个一直以来很容易被忽视的事实是，<strong> <code>对一个应用来说，操作系统本身才是它运行所需要的最完整的“依赖库”.</code></strong></p><p>有了容器镜像 “打包操作系统” 的能力，这个最基础的依赖环境也终于变成了应用沙盒的一部分。这就赋予了容器所谓的一致性：无论在本地、云端，还是在一台任何地方的机器上，用户只需要解压打包好的容器镜像，那么这个应用运行所需要的完整的执行环境就被重现出来了。</p><p><strong><code>这种深入到操作系统级别的运行环境一致性，打通了应用在本地开发和远端执行环境之间难以逾越的鸿沟.</code></strong></p><p>不过，这时你可能已经发现了另一个非常棘手的问题：难道我每开发一个应用，或者升级一下现有的应用，都要重复制作一次 rootfs 吗？</p><p>比如，我现在用 Ubuntu 操作系统的 ISO 做了一个 rootfs，然后又在里面安装了 Java 环境，用来部署我的 Java 应用。那么，我的另一个同事在发布他的 Java 应用时，显然希望能够直接使用我安装过 Java 环境的 rootfs，而不是重复这个流程。</p><p>一种比较直观的解决办法是，我在制作 rootfs 的时候，每做一步 “有意义” 的操作，就保存一个 rootfs 出来，这样其他同事就可以按需求去用他需要的 rootfs 了。</p><p>但是，这个解决办法并不具备推广性。原因在于，一旦你的同事们修改了这个 rootfs，新旧两个 rootfs 之间就没有任何关系了。这样做的结果就是极度的碎片化。</p><p>那么，既然这些修改都基于一个旧的 rootfs，我们能不能以增量的方式去做这些修改呢？这样做的好处是，所有人都只需要维护相对于 base rootfs 修改的增量内容，而不是每次修改都制造一个 “fork”。</p><p>答案当然是肯定的。</p><p>这也正是为何，Docker 公司在实现 Docker 镜像时并没有沿用以前制作 rootfs 的标准流程，而是做了一个小小的创新：</p><blockquote><p><strong><code>Docker 在镜像的设计中，引入了层（layer）的概念。也就是说，用户制作镜像的每一步操作，都会生成一个层，也就是一个增量 rootfs.</code></strong></p></blockquote><p>当然，这个想法不是凭空臆造出来的，而是用到了一种叫作联合文件系统（Union File System）的能力。</p><p>Union File System 也叫 UnionFS，最主要的功能是将多个不同位置的目录联合挂载（union mount）到同一个目录下。比如，我现在有两个目录 A 和 B，它们分别有两个文件：</p><pre><code>$ tree
 .
 ├── A
 │  ├── a
 │  └── x
 └── B
   ├── b
-  └── x</code></pre><p>然后，我使用联合挂载的方式，将这两个目录挂载到一个公共的目录 C 上：</p>
-<pre><code>$ mkdir C
-$ mount -t aufs -o dirs=./A:./B none ./C</code></pre><p>这时，我再查看目录 C 的内容，就能看到目录 A 和 B 下的文件被合并到了一起：</p>
-<pre><code>$ tree ./C
+  └── x
+</code></pre><p>然后，我使用联合挂载的方式，将这两个目录挂载到一个公共的目录 C 上：</p><pre><code>$ mkdir C
+$ mount -t aufs -o dirs=./A:./B none ./C
+</code></pre><p>这时，我再查看目录 C 的内容，就能看到目录 A 和 B 下的文件被合并到了一起：</p><pre><code>$ tree ./C
 ./C
 ├── a
 ├── b
-└── x</code></pre><p>可以看到，在这个合并后的目录 C 里，有 a、b、x 三个文件，并且 x 文件只有一份。这，就是“合并”的含义。此外，如果你在目录 C 里对 a、b、x 文件做修改，这些修改也会在对应的目录 A、B 中生效。</p>
-<p>那么，在 Docker 项目中，又是如何使用这种 Union File System 的呢？</p>
-<p>我的环境是 Ubuntu 16.04 和 Docker CE 18.05，这对组合默认使用的是 AuFS 这个联合文件系统的实现。你可以通过 docker info 命令，查看到这个信息。</p>
-<p>AuFS 的全称是 Another UnionFS，后改名为 Alternative UnionFS，再后来干脆改名叫作 Advance UnionFS，从这些名字中你应该能看出这样两个事实：</p>
-<ol>
-<li><p>它是对 Linux 原生 UnionFS 的重写和改进；</p>
-</li>
-<li><p>它的作者怨气好像很大。我猜是 Linus Torvalds（Linux 之父）一直不让 AuFS 进入 Linux 内核主干的缘故，所以我们只能在 Ubuntu 和 Debian 这些发行版上使用它。</p>
-</li>
-</ol>
-<p>对于 AuFS 来说，它最关键的目录结构在 /var/lib/docker 路径下的 diff 目录：</p>
-<pre><code>/var/lib/docker/aufs/diff/&lt;layer_id&gt;</code></pre><p>而这个目录的作用，我们不妨通过一个具体例子来看一下。</p>
-<p>现在，我们启动一个容器，比如：</p>
-<pre><code>$ docker run -d ubuntu:latest sleep 3600</code></pre><p>这时候，Docker 就会从 Docker Hub 上拉取一个 Ubuntu 镜像到本地。</p>
-<p>这个所谓的“镜像”，实际上就是一个 Ubuntu 操作系统的 rootfs，它的内容是 Ubuntu 操作系统的所有文件和目录。不过，与之前我们讲述的 rootfs 稍微不同的是，Docker 镜像使用的 rootfs，往往由多个“层”组成：</p>
-<pre><code>$ docker image inspect ubuntu:latest
+└── x
+</code></pre><p>可以看到，在这个合并后的目录 C 里，有 a、b、x 三个文件，并且 x 文件只有一份。这，就是 “合并” 的含义。此外，如果你在目录 C 里对 a、b、x 文件做修改，这些修改也会在对应的目录 A、B 中生效。</p><p>那么，在 Docker 项目中，又是如何使用这种 Union File System 的呢？</p><p>我的环境是 Ubuntu 16.04 和 Docker CE 18.05，这对组合默认使用的是 AuFS 这个联合文件系统的实现。你可以通过 docker info 命令，查看到这个信息。</p><p>AuFS 的全称是 Another UnionFS，后改名为 Alternative UnionFS，再后来干脆改名叫作 Advance UnionFS，从这些名字中你应该能看出这样两个事实：</p><ol><li><p>它是对 Linux 原生 UnionFS 的重写和改进；</p></li><li><p>它的作者怨气好像很大。我猜是 Linus Torvalds（Linux 之父）一直不让 AuFS 进入 Linux 内核主干的缘故，所以我们只能在 Ubuntu 和 Debian 这些发行版上使用它。</p></li></ol><p>对于 AuFS 来说，它最关键的目录结构在 /var/lib/docker 路径下的 diff 目录：</p><pre><code>/var/lib/docker/aufs/diff/&lt;layer_id&gt;
+</code></pre><p>而这个目录的作用，我们不妨通过一个具体例子来看一下。</p><p>现在，我们启动一个容器，比如：</p><pre><code>$ docker run -d ubuntu:latest sleep 3600
+</code></pre><p>这时候，Docker 就会从 Docker Hub 上拉取一个 Ubuntu 镜像到本地。</p><p>这个所谓的 “镜像”，实际上就是一个 Ubuntu 操作系统的 rootfs，它的内容是 Ubuntu 操作系统的所有文件和目录。不过，与之前我们讲述的 rootfs 稍微不同的是，Docker 镜像使用的 rootfs，往往由多个 “层” 组成：</p><pre><code>$ docker image inspect ubuntu:latest
 ...
      &quot;RootFS&quot;: {
       &quot;Type&quot;: &quot;layers&quot;,
@@ -208,336 +92,23 @@ $ mount -t aufs -o dirs=./A:./B none ./C</code></pre><p>这时，我再查看目
         &quot;sha256:c01d74f99de40e097c73...&quot;,
         &quot;sha256:268a067217b5fe78e000...&quot;
       ]
-    }</code></pre><p>可以看到，这个 Ubuntu 镜像，实际上由五个层组成。这五个层就是五个增量 rootfs，每一层都是 Ubuntu 操作系统文件与目录的一部分；而在使用镜像时，Docker 会把这些增量联合挂载在一个统一的挂载点上（等价于前面例子里的“/C”目录）。</p>
-<p>这个挂载点就是 /var/lib/docker/aufs/mnt/，比如：</p>
-<pre><code>/var/lib/docker/aufs/mnt/6e3be5d2ecccae7cc0fcfa2a2f5c89dc21ee30e166be823ceaeba15dce645b3e</code></pre><p>不出意外的，这个目录里面正是一个完整的 Ubuntu 操作系统：</p>
-<pre><code>$ ls /var/lib/docker/aufs/mnt/6e3be5d2ecccae7cc0fcfa2a2f5c89dc21ee30e166be823ceaeba15dce645b3e
-bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var</code></pre><p>那么，前面提到的五个镜像层，又是如何被联合挂载成这样一个完整的 Ubuntu 文件系统的呢？</p>
-<p>这个信息记录在 AuFS 的系统目录 /sys/fs/aufs 下面。</p>
-<p>首先，通过查看 AuFS 的挂载信息，我们可以找到这个目录对应的 AuFS 的内部 ID（也叫：si）：</p>
-<pre><code>$ cat /proc/mounts| grep aufs
-none /var/lib/docker/aufs/mnt/6e3be5d2ecccae7cc0fc... aufs rw,relatime,si=972c6d361e6b32ba,dio,dirperm1 0 0</code></pre><p>即，si=972c6d361e6b32ba。</p>
-<p>然后使用这个 ID，你就可以在 /sys/fs/aufs 下查看被联合挂载在一起的各个层的信息：</p>
-<pre><code>$ cat /sys/fs/aufs/si_972c6d361e6b32ba/br[0-9]*
+    }
+</code></pre><p>可以看到，这个 Ubuntu 镜像，实际上由五个层组成。这五个层就是五个增量 rootfs，每一层都是 Ubuntu 操作系统文件与目录的一部分；而在使用镜像时，Docker 会把这些增量联合挂载在一个统一的挂载点上（等价于前面例子里的 “/C” 目录）。</p><p>这个挂载点就是 /var/lib/docker/aufs/mnt/，比如：</p><pre><code>/var/lib/docker/aufs/mnt/6e3be5d2ecccae7cc0fcfa2a2f5c89dc21ee30e166be823ceaeba15dce645b3e
+</code></pre><p>不出意外的，这个目录里面正是一个完整的 Ubuntu 操作系统：</p><pre><code>$ ls /var/lib/docker/aufs/mnt/6e3be5d2ecccae7cc0fcfa2a2f5c89dc21ee30e166be823ceaeba15dce645b3e
+bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var
+</code></pre><p>那么，前面提到的五个镜像层，又是如何被联合挂载成这样一个完整的 Ubuntu 文件系统的呢？</p><p>这个信息记录在 AuFS 的系统目录 /sys/fs/aufs 下面。</p><p>首先，通过查看 AuFS 的挂载信息，我们可以找到这个目录对应的 AuFS 的内部 ID（也叫：si）：</p><pre><code>$ cat /proc/mounts| grep aufs
+none /var/lib/docker/aufs/mnt/6e3be5d2ecccae7cc0fc... aufs rw,relatime,si=972c6d361e6b32ba,dio,dirperm1 0 0
+</code></pre><p>即，si=972c6d361e6b32ba。</p><p>然后使用这个 ID，你就可以在 /sys/fs/aufs 下查看被联合挂载在一起的各个层的信息：</p><pre><code>$ cat /sys/fs/aufs/si_972c6d361e6b32ba/br[0-9]*
 /var/lib/docker/aufs/diff/6e3be5d2ecccae7cc...=rw
 /var/lib/docker/aufs/diff/6e3be5d2ecccae7cc...-init=ro+wh
 /var/lib/docker/aufs/diff/32e8e20064858c0f2...=ro+wh
 /var/lib/docker/aufs/diff/2b8858809bce62e62...=ro+wh
 /var/lib/docker/aufs/diff/20707dce8efc0d267...=ro+wh
 /var/lib/docker/aufs/diff/72b0744e06247c7d0...=ro+wh
-/var/lib/docker/aufs/diff/a524a729adadedb90...=ro+wh</code></pre><p>从这些信息里，我们可以看到，镜像的层都放置在 /var/lib/docker/aufs/diff 目录下，然后被联合挂载在 /var/lib/docker/aufs/mnt 里面。</p>
-<p>而且，从这个结构可以看出来，这个容器的 rootfs 由如下图所示的三部分组成：</p>
-<p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="1.png"  alt="">
-      </p>
-<p><strong>第一部分，只读层。</strong></p>
-<p>它是这个容器的 rootfs 最下面的五层，对应的正是 ubuntu:latest 镜像的五层。可以看到，它们的挂载方式都是只读的（ro+wh，即 readonly+whiteout，至于什么是 whiteout，我下面马上会讲到）。</p>
-<p>这时，我们可以分别查看一下这些层的内容：</p>
-<pre><code>$ ls /var/lib/docker/aufs/diff/72b0744e06247c7d0...
+/var/lib/docker/aufs/diff/a524a729adadedb90...=ro+wh
+</code></pre><p>从这些信息里，我们可以看到，镜像的层都放置在 /var/lib/docker/aufs/diff 目录下，然后被联合挂载在 /var/lib/docker/aufs/mnt 里面。</p><p>而且，从这个结构可以看出来，这个容器的 rootfs 由如下图所示的三部分组成：</p><p><img data-src="1.png" alt=""></p><p><strong>第一部分，只读层。</strong></p><p>它是这个容器的 rootfs 最下面的五层，对应的正是 ubuntu:latest 镜像的五层。可以看到，它们的挂载方式都是只读的（ro+wh，即 readonly+whiteout，至于什么是 whiteout，我下面马上会讲到）。</p><p>这时，我们可以分别查看一下这些层的内容：</p><pre><code>$ ls /var/lib/docker/aufs/diff/72b0744e06247c7d0...
 etc sbin usr var
 $ ls /var/lib/docker/aufs/diff/32e8e20064858c0f2...
 run
-$ ls /var/lib/docker/aufs/diff/a524a729adadedb900...</code></pre><p>bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var<br>可以看到，这些层，都以增量的方式分别包含了 Ubuntu 操作系统的一部分。</p>
-<p><strong>第二部分，可读写层。</strong></p>
-<p>它是这个容器的 rootfs 最上面的一层（6e3be5d2ecccae7cc），它的挂载方式为：rw，即 read write。在没有写入文件之前，这个目录是空的。而一旦在容器里做了写操作，你修改产生的内容就会以增量的方式出现在这个层中。</p>
-<p>可是，你有没有想到这样一个问题：如果我现在要做的，是删除只读层里的一个文件呢？</p>
-<p>为了实现这样的删除操作，AuFS 会在可读写层创建一个 whiteout 文件，把只读层里的文件“遮挡”起来。</p>
-<p>比如，你要删除只读层里一个名叫 foo 的文件，那么这个删除操作实际上是在可读写层创建了一个名叫.wh.foo 的文件。这样，当这两个层被联合挂载之后，foo 文件就会被.wh.foo 文件“遮挡”起来，“消失”了。这个功能，就是“ro+wh”的挂载方式，即只读 +whiteout 的含义。我喜欢把 whiteout 形象地翻译为：“白障”。</p>
-<p>所以，最上面这个可读写层的作用，就是专门用来存放你修改 rootfs 后产生的增量，无论是增、删、改，都发生在这里。而当我们使用完了这个被修改过的容器之后，还可以使用 docker commit 和 push 指令，保存这个被修改过的可读写层，并上传到 Docker Hub 上，供其他人使用；而与此同时，原先的只读层里的内容则不会有任何变化。这，就是增量 rootfs 的好处。</p>
-<p><strong>第三部分，Init 层。</strong></p>
-<p>它是一个以“-init”结尾的层，夹在只读层和读写层之间。Init 层是 Docker 项目单独生成的一个内部层，专门用来存放 /etc/hosts、/etc/resolv.conf 等信息。</p>
-<p>需要这样一层的原因是，这些文件本来属于只读的 Ubuntu 镜像的一部分，但是用户往往需要在启动容器时写入一些指定的值比如 hostname，所以就需要在可读写层对它们进行修改。</p>
-<p>可是，这些修改往往只对当前的容器有效，我们并不希望执行 docker commit 时，把这些信息连同可读写层一起提交掉。</p>
-<p>所以，Docker 做法是，在修改了这些文件之后，以一个单独的层挂载了出来。而用户执行 docker commit 只会提交可读写层，所以是不包含这些内容的。</p>
-<p>最终，这 7 个层都被联合挂载到 /var/lib/docker/aufs/mnt 目录下，表现为一个完整的 Ubuntu 操作系统供容器使用。</p>
-<p><strong>总结</strong><br>在今天的分享中，我着重介绍了 Linux 容器文件系统的实现方式。而这种机制，正是我们经常提到的容器镜像，也叫作：rootfs。它只是一个操作系统的所有文件和目录，并不包含内核，最多也就几百兆。而相比之下，传统虚拟机的镜像大多是一个磁盘的“快照”，磁盘有多大，镜像就至少有多大。</p>
-<p><strong><code>通过结合使用 Mount Namespace 和 rootfs，容器就能够为进程构建出一个完善的文件系统隔离环境。当然，这个功能的实现还必须感谢 chroot 和 pivot_root 这两个系统调用切换进程根目录的能力。</code></strong></p>
-<p><strong><code>而在 rootfs 的基础上，Docker 公司创新性地提出了使用多个增量 rootfs 联合挂载一个完整 rootfs 的方案，这就是容器镜像中“层”的概念。</code></strong></p>
-<p>通过“分层镜像”的设计，以 Docker 镜像为核心，来自不同公司、不同团队的技术人员被紧密地联系在了一起。而且，由于容器镜像的操作是增量式的，这样每次镜像拉取、推送的内容，比原本多个完整的操作系统的大小要小得多；而共享层的存在，可以使得所有这些容器镜像需要的总空间，也比每个镜像的总和要小。这样就使得基于容器镜像的团队协作，要比基于动则几个 GB 的虚拟机磁盘镜像的协作要敏捷得多。</p>
-<p>更重要的是，一旦这个镜像被发布，那么你在全世界的任何一个地方下载这个镜像，得到的内容都完全一致，可以完全复现这个镜像制作者当初的完整环境。这，就是容器技术“强一致性”的重要体现。</p>
-<p>而这种价值正是支撑 Docker 公司在 2014~2016 年间迅猛发展的核心动力。容器镜像的发明，不仅打通了“开发 - 测试 - 部署”流程的每一个环节，更重要的是：</p>
-<blockquote>
-<p>容器镜像将会成为未来软件的主流发布方式。</p>
-</blockquote>
-<p>思考题</p>
-<ol>
-<li><p>既然容器的 rootfs（比如，Ubuntu 镜像），是以只读方式挂载的，那么又如何在容器里修改 Ubuntu 镜像的内容呢？（提示：Copy-on-Write）</p>
-</li>
-<li><p>除了 AuFS，你知道 Docker 项目还支持哪些 UnionFS 实现吗？你能说出不同宿主机环境下推荐使用哪种实现吗？</p>
-</li>
-</ol>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/">https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/reference/k8s/06.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%BA%8C)%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">06 | 白话容器基础（二）：隔离与限制</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/reference/k8s/09.%E4%BB%8E%E5%AE%B9%E5%99%A8%E5%88%B0%E5%AE%B9%E5%99%A8%E4%BA%91%EF%BC%9A%E8%B0%88%E8%B0%88Kubernetes%E7%9A%84%E6%9C%AC%E8%B4%A8/"><span class="paginator-prev__text">09 | 从容器到容器云：谈谈Kubernetes的本质</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">292</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
-
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
-
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
-
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
-
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
-
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
-
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
-
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
-
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
-
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
-
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
-
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
-
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
-
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
-    }
-  });
-}
-
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
-
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
-
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
-
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
-
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
-
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
-
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
-
-var assistSearchList = window.CONFIG.assistSearch;
-
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
+$ ls /var/lib/docker/aufs/diff/a524a729adadedb900...
+</code></pre><p>bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var<br>可以看到，这些层，都以增量的方式分别包含了 Ubuntu 操作系统的一部分。</p><p><strong>第二部分，可读写层。</strong></p><p>它是这个容器的 rootfs 最上面的一层（6e3be5d2ecccae7cc），它的挂载方式为：rw，即 read write。在没有写入文件之前，这个目录是空的。而一旦在容器里做了写操作，你修改产生的内容就会以增量的方式出现在这个层中。</p><p>可是，你有没有想到这样一个问题：如果我现在要做的，是删除只读层里的一个文件呢？</p><p>为了实现这样的删除操作，AuFS 会在可读写层创建一个 whiteout 文件，把只读层里的文件 “遮挡” 起来。</p><p>比如，你要删除只读层里一个名叫 foo 的文件，那么这个删除操作实际上是在可读写层创建了一个名叫.wh.foo 的文件。这样，当这两个层被联合挂载之后，foo 文件就会被.wh.foo 文件 “遮挡” 起来，“消失” 了。这个功能，就是 “ro+wh” 的挂载方式，即只读 +whiteout 的含义。我喜欢把 whiteout 形象地翻译为：“白障”。</p><p>所以，最上面这个可读写层的作用，就是专门用来存放你修改 rootfs 后产生的增量，无论是增、删、改，都发生在这里。而当我们使用完了这个被修改过的容器之后，还可以使用 docker commit 和 push 指令，保存这个被修改过的可读写层，并上传到 Docker Hub 上，供其他人使用；而与此同时，原先的只读层里的内容则不会有任何变化。这，就是增量 rootfs 的好处。</p><p><strong>第三部分，Init 层。</strong></p><p>它是一个以 “-init” 结尾的层，夹在只读层和读写层之间。Init 层是 Docker 项目单独生成的一个内部层，专门用来存放 /etc/hosts、/etc/resolv.conf 等信息。</p><p>需要这样一层的原因是，这些文件本来属于只读的 Ubuntu 镜像的一部分，但是用户往往需要在启动容器时写入一些指定的值比如 hostname，所以就需要在可读写层对它们进行修改。</p><p>可是，这些修改往往只对当前的容器有效，我们并不希望执行 docker commit 时，把这些信息连同可读写层一起提交掉。</p><p>所以，Docker 做法是，在修改了这些文件之后，以一个单独的层挂载了出来。而用户执行 docker commit 只会提交可读写层，所以是不包含这些内容的。</p><p>最终，这 7 个层都被联合挂载到 /var/lib/docker/aufs/mnt 目录下，表现为一个完整的 Ubuntu 操作系统供容器使用。</p><p><strong>总结</strong><br>在今天的分享中，我着重介绍了 Linux 容器文件系统的实现方式。而这种机制，正是我们经常提到的容器镜像，也叫作：rootfs。它只是一个操作系统的所有文件和目录，并不包含内核，最多也就几百兆。而相比之下，传统虚拟机的镜像大多是一个磁盘的 “快照”，磁盘有多大，镜像就至少有多大。</p><p><strong><code>通过结合使用 Mount Namespace 和 rootfs，容器就能够为进程构建出一个完善的文件系统隔离环境。当然，这个功能的实现还必须感谢 chroot 和 pivot_root 这两个系统调用切换进程根目录的能力。</code></strong></p><p><strong><code>而在 rootfs 的基础上，Docker 公司创新性地提出了使用多个增量 rootfs 联合挂载一个完整 rootfs 的方案，这就是容器镜像中“层”的概念。</code></strong></p><p>通过 “分层镜像” 的设计，以 Docker 镜像为核心，来自不同公司、不同团队的技术人员被紧密地联系在了一起。而且，由于容器镜像的操作是增量式的，这样每次镜像拉取、推送的内容，比原本多个完整的操作系统的大小要小得多；而共享层的存在，可以使得所有这些容器镜像需要的总空间，也比每个镜像的总和要小。这样就使得基于容器镜像的团队协作，要比基于动则几个 GB 的虚拟机磁盘镜像的协作要敏捷得多。</p><p>更重要的是，一旦这个镜像被发布，那么你在全世界的任何一个地方下载这个镜像，得到的内容都完全一致，可以完全复现这个镜像制作者当初的完整环境。这，就是容器技术 “强一致性” 的重要体现。</p><p>而这种价值正是支撑 Docker 公司在 2014~2016 年间迅猛发展的核心动力。容器镜像的发明，不仅打通了 “开发 - 测试 - 部署” 流程的每一个环节，更重要的是：</p><blockquote><p>容器镜像将会成为未来软件的主流发布方式。</p></blockquote><p>思考题</p><ol><li><p>既然容器的 rootfs（比如，Ubuntu 镜像），是以只读方式挂载的，那么又如何在容器里修改 Ubuntu 镜像的内容呢？（提示：Copy-on-Write）</p></li><li><p>除了 AuFS，你知道 Docker 项目还支持哪些 UnionFS 实现吗？你能说出不同宿主机环境下推荐使用哪种实现吗？</p></li></ol></div><footer><div class="meta"></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Kung-Fu-Master 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Kung-Fu-Master 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Kung-Fu-Master 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Kung-Fu-Master <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>本文链接：</strong> <a href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/" title="07 | 白话容器基础（三）：深入理解容器镜像">https://kung-fu-master.github.io/2021/03/13/reference/k8s/07.白话容器基础(三)深入理解容器镜像/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/reference/k8s/08.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E5%9B%9B)%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86Docker%E5%AE%B9%E5%99%A8/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexe4oykj20zk0m87ji.jpg" title="08 | 白话容器基础（四）：重新认识Docker容器"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> k8s</span><h3>08 | 白话容器基础（四）：重新认识Docker容器</h3></a></div><div class="item right"><a href="/2021/03/13/reference/k8s/06.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%BA%8C)%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giph4baakhj20zk0m8h5q.jpg" title="06 | 白话容器基础（二）：隔离与限制"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> k8s</span><h3>06 | 白话容器基础（二）：隔离与限制</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/2021/03/13/reference/k8s/00.%E5%BC%80%E7%AF%87%E8%AF%8D-%E6%89%93%E9%80%9A%E2%80%9C%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E2%80%9D%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/" rel="bookmark" title="00 | 开篇词-打通“容器技术”的任督二脉">00 | 开篇词-打通“容器技术”的任督二脉</a></li><li><a href="/2021/03/13/reference/k8s/03.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%B8%89)%E7%BE%A4%E9%9B%84%E5%B9%B6%E8%B5%B7/" rel="bookmark" title="03 | 预习篇 · 小鲸鱼大事记（三）：群雄并起">03 | 预习篇 · 小鲸鱼大事记（三）：群雄并起</a></li><li><a href="/2021/03/13/reference/k8s/01.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%B8%80)%E5%88%9D%E5%87%BA%E8%8C%85%E5%BA%90/" rel="bookmark" title="01 | 预习篇 · 小鲸鱼大事记（一）：初出茅庐">01 | 预习篇 · 小鲸鱼大事记（一）：初出茅庐</a></li><li><a href="/2021/03/13/reference/k8s/02.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%BA%8C)%E5%B4%AD%E9%9C%B2%E5%A4%B4%E8%A7%92/" rel="bookmark" title="02 | 预习篇 · 小鲸鱼大事记（二）：崭露头角">02 | 预习篇 · 小鲸鱼大事记（二）：崭露头角</a></li><li><a href="/2021/03/13/reference/k8s/04.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E5%9B%9B)%E5%B0%98%E5%9F%83%E8%90%BD%E5%AE%9A/" rel="bookmark" title="04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定">04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定</a></li><li><a href="/2021/03/13/reference/k8s/05.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%80)%E4%BB%8E%E8%BF%9B%E7%A8%8B%E8%AF%B4%E5%BC%80%E5%8E%BB/" rel="bookmark" title="05 | 白话容器基础（一）：从进程说开去">05 | 白话容器基础（一）：从进程说开去</a></li><li><a href="/2021/03/13/reference/k8s/06.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%BA%8C)%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/" rel="bookmark" title="06 | 白话容器基础（二）：隔离与限制">06 | 白话容器基础（二）：隔离与限制</a></li><li class="active"><a href="/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/" rel="bookmark" title="07 | 白话容器基础（三）：深入理解容器镜像">07 | 白话容器基础（三）：深入理解容器镜像</a></li><li><a href="/2021/03/13/reference/k8s/08.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E5%9B%9B)%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86Docker%E5%AE%B9%E5%99%A8/" rel="bookmark" title="08 | 白话容器基础（四）：重新认识Docker容器">08 | 白话容器基础（四）：重新认识Docker容器</a></li><li><a href="/2021/03/13/reference/k8s/09.%E4%BB%8E%E5%AE%B9%E5%99%A8%E5%88%B0%E5%AE%B9%E5%99%A8%E4%BA%91%EF%BC%9A%E8%B0%88%E8%B0%88Kubernetes%E7%9A%84%E6%9C%AC%E8%B4%A8/" rel="bookmark" title="09 | 从容器到容器云：谈谈Kubernetes的本质">09 | 从容器到容器云：谈谈Kubernetes的本质</a></li><li><a href="/2021/03/13/reference/k8s/12.%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BA%94%E7%94%A8/" rel="bookmark" title="12 | 牛刀小试：我的第一个容器化应用">12 | 牛刀小试：我的第一个容器化应用</a></li><li><a href="/2021/03/13/reference/k8s/13.%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81Pod/" rel="bookmark" title="13 | 为什么我们需要Pod？">13 | 为什么我们需要Pod？</a></li><li><a href="/2021/03/13/reference/k8s/11.%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84Kubernetes%E9%9B%86%E7%BE%A4/" rel="bookmark" title="11 | 从0到1：搭建一个完整的Kubernetes集群">11 | 从0到1：搭建一个完整的Kubernetes集群</a></li><li><a href="/2021/03/13/reference/k8s/10.Kubernetes%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%A9%E5%99%A8kubeadm/" rel="bookmark" title="10 | Kubernetes一键部署利器：kubeadm">10 | Kubernetes一键部署利器：kubeadm</a></li><li><a href="/2021/03/13/reference/k8s/14.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90Pod%E5%AF%B9%E8%B1%A1(%E4%B8%80)%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" rel="bookmark" title="14 | 深入解析Pod对象（一）：基本概念">14 | 深入解析Pod对象（一）：基本概念</a></li><li><a href="/2021/03/13/reference/k8s/15.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90Pod%E5%AF%B9%E8%B1%A1(%E4%BA%8C)%E4%BD%BF%E7%94%A8%E8%BF%9B%E9%98%B6/" rel="bookmark" title="15 | 深入解析Pod对象（二）：使用进阶">15 | 深入解析Pod对象（二）：使用进阶</a></li><li><a href="/2021/03/13/reference/k8s/16.%E7%BC%96%E6%8E%92%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95%EF%BC%9A%E8%B0%88%E8%B0%88%E2%80%9C%E6%8E%A7%E5%88%B6%E5%99%A8%E2%80%9D%E6%A8%A1%E5%9E%8B/" rel="bookmark" title="16 | 编排其实很简单：谈谈“控制器”模型">16 | 编排其实很简单：谈谈“控制器”模型</a></li><li><a href="/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/" rel="bookmark" title="17 | 经典PaaS的记忆：作业副本与水平扩展">17 | 经典PaaS的记忆：作业副本与水平扩展</a></li><li><a href="/2021/03/13/reference/k8s/21.%E5%AE%B9%E5%99%A8%E5%8C%96%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9ADaemonSet/" rel="bookmark" title="21 | 容器化守护进程的意义：DaemonSet">21 | 容器化守护进程的意义：DaemonSet</a></li><li><a href="/2021/03/13/reference/k8s/19.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%BA%8C)%EF%BC%9A%E5%AD%98%E5%82%A8%E7%8A%B6%E6%80%81/" rel="bookmark" title="19 | 深入理解StatefulSet（二）：存储状态">19 | 深入理解StatefulSet（二）：存储状态</a></li><li><a href="/2021/03/13/reference/k8s/18.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%80)%EF%BC%9A%E6%8B%93%E6%89%91%E7%8A%B6%E6%80%81/" rel="bookmark" title="18 | 深入理解StatefulSet（一）：拓扑状态">18 | 深入理解StatefulSet（一）：拓扑状态</a></li><li><a href="/2021/03/13/reference/k8s/20.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%89)%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/" rel="bookmark" title="17 | 经典PaaS的记忆：作业副本与水平扩展">17 | 经典PaaS的记忆：作业副本与水平扩展</a></li><li><a href="/2021/03/13/reference/k8s/23.%E5%A3%B0%E6%98%8E%E5%BC%8FAPI%E4%B8%8EKubernetes%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" rel="bookmark" title="23 | 声明式API与Kubernetes编程范式">23 | 声明式API与Kubernetes编程范式</a></li><li><a href="/2021/03/13/reference/k8s/22.%E6%92%AC%E5%8A%A8%E7%A6%BB%E7%BA%BF%E4%B8%9A%E5%8A%A1%EF%BC%9AJob%E4%B8%8ECronJob/" rel="bookmark" title="22 | 撬动离线业务：Job与CronJob">22 | 撬动离线业务：Job与CronJob</a></li><li><a href="/2021/03/13/reference/k8s/24.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%B8%80)%EF%BC%9AAPI%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A5%A5%E7%A7%98/" rel="bookmark" title="24 | 深入解析声明式API（一）：API对象的奥秘">24 | 深入解析声明式API（一）：API对象的奥秘</a></li><li><a href="/2021/03/13/reference/k8s/25.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%BA%8C)%EF%BC%9A%E7%BC%96%E5%86%99%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E5%88%B6%E5%99%A8/" rel="bookmark" title="25 | 深入解析声明式API（二）：编写自定义控制器">25 | 深入解析声明式API（二）：编写自定义控制器</a></li><li><a href="/2021/03/13/reference/k8s/26.%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%EF%BC%9ARBAC/" rel="bookmark" title="26 | 基于角色的权限控制：RBAC">26 | 基于角色的权限控制：RBAC</a></li><li><a href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" rel="bookmark" title="27 | 聪明的微创新：Operator工作原理解读">27 | 聪明的微创新：Operator工作原理解读</a></li><li><a href="/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/" rel="bookmark" title="28 | PV、PVC、StorageClass，这些到底在说啥？">28 | PV、PVC、StorageClass，这些到底在说啥？</a></li><li><a href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/" rel="bookmark" title="29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起">29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起</a></li><li><a href="/2021/03/13/reference/k8s/30.%E7%BC%96%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AD%98%E5%82%A8%E6%8F%92%E4%BB%B6%EF%BC%9AFlexVolume%E4%B8%8ECSI/" rel="bookmark" title="30 | 编写自己的存储插件：FlexVolume与CSI">30 | 编写自己的存储插件：FlexVolume与CSI</a></li><li><a href="/2021/03/13/reference/k8s/31.%E5%AE%B9%E5%99%A8%E5%AD%98%E5%82%A8%E5%AE%9E%E8%B7%B5%EF%BC%9ACSI%E6%8F%92%E4%BB%B6%E7%BC%96%E5%86%99%E6%8C%87%E5%8D%97/" rel="bookmark" title="31 | 容器存储实践：CSI插件编写指南">31 | 容器存储实践：CSI插件编写指南</a></li><li><a href="/2021/03/13/reference/k8s/32.%E6%B5%85%E8%B0%88%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/" rel="bookmark" title="32 | 浅谈容器网络">32 | 浅谈容器网络</a></li><li><a href="/2021/03/13/reference/k8s/33.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%AE%B9%E5%99%A8%E8%B7%A8%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="bookmark" title="33 | 深入解析容器跨主机网络">33 | 深入解析容器跨主机网络</a></li><li><a href="/2021/03/13/reference/k8s/34.Kubernetes%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8ECNI%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/" rel="bookmark" title="34 | Kubernetes网络模型与CNI网络插件">34 | Kubernetes网络模型与CNI网络插件</a></li><li><a href="/2021/03/13/reference/k8s/35.%E8%A7%A3%E8%AF%BBKubernetes%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E6%96%B9%E6%A1%88/" rel="bookmark" title="35 | 解读Kubernetes三层网络方案">35 | 解读Kubernetes三层网络方案</a></li><li><a href="/2021/03/13/reference/k8s/36.%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4Kubernetes%E5%8F%AA%E6%9C%89soft%20multi-tenancy/" rel="bookmark" title="36 | 为什么说Kubernetes只有soft multi-tenancy？">36 | 为什么说Kubernetes只有soft multi-tenancy？</a></li><li><a href="/2021/03/13/reference/k8s/37.%E6%89%BE%E5%88%B0%E5%AE%B9%E5%99%A8%E4%B8%8D%E5%AE%B9%E6%98%93%EF%BC%9AService%E3%80%81DNS%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" rel="bookmark" title="37 | 找到容器不容易：Service、DNS与服务发现">37 | 找到容器不容易：Service、DNS与服务发现</a></li><li><a href="/2021/03/13/reference/k8s/38.%E4%BB%8E%E5%A4%96%E7%95%8C%E8%BF%9E%E9%80%9AService%E4%B8%8EService%E8%B0%83%E8%AF%95%E2%80%9C%E4%B8%89%E6%9D%BF%E6%96%A7%E2%80%9D/" rel="bookmark" title="38 | 从外界连通Service与Service调试“三板斧”">38 | 从外界连通Service与Service调试“三板斧”</a></li><li><a href="/2021/03/13/reference/k8s/39.%E8%B0%88%E8%B0%88Service%E4%B8%8EIngress/" rel="bookmark" title="39 | 谈谈Service与Ingress">39 | 谈谈Service与Ingress</a></li><li><a href="/2021/03/13/reference/k8s/40.Kubernetes%E7%9A%84%E8%B5%84%E6%BA%90%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" rel="bookmark" title="40 | Kubernetes的资源模型与资源管理">40 | Kubernetes的资源模型与资源管理</a></li><li><a href="/2021/03/13/reference/k8s/41.%E5%8D%81%E5%AD%97%E8%B7%AF%E5%8F%A3%E4%B8%8A%E7%9A%84Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8/" rel="bookmark" title="41 | 十字路口上的Kubernetes默认调度器">41 | 十字路口上的Kubernetes默认调度器</a></li><li><a href="/2021/03/13/reference/k8s/43.Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E4%B8%8E%E6%8A%A2%E5%8D%A0%E6%9C%BA%E5%88%B6/" rel="bookmark" title="43 | Kubernetes默认调度器的优先级与抢占机制">43 | Kubernetes默认调度器的优先级与抢占机制</a></li><li><a href="/2021/03/13/reference/k8s/44.Kubernetes%20GPU%E7%AE%A1%E7%90%86%E4%B8%8EDevice%20Plugin%E6%9C%BA%E5%88%B6/" rel="bookmark" title="44 | Kubernetes GPU管理与Device Plugin机制">44 | Kubernetes GPU管理与Device Plugin机制</a></li><li><a href="/2021/03/13/reference/k8s/45.%E5%B9%95%E5%90%8E%E8%8B%B1%E9%9B%84%EF%BC%9ASIG-Node%E4%B8%8ECRI/" rel="bookmark" title="45 | 幕后英雄：SIG-Node与CRI">45 | 幕后英雄：SIG-Node与CRI</a></li><li><a href="/2021/03/13/reference/k8s/42.Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5%E8%A7%A3%E6%9E%90/" rel="bookmark" title="42 | Kubernetes默认调度器调度策略解析">42 | Kubernetes默认调度器调度策略解析</a></li><li><a href="/2021/03/13/reference/k8s/46.%E8%A7%A3%E8%AF%BB%20CRI%20%E4%B8%8E%20%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6/" rel="bookmark" title="46 | 解读 CRI 与 容器运行时">46 | 解读 CRI 与 容器运行时</a></li><li><a href="/2021/03/13/reference/k8s/48.Prometheus%E3%80%81Metrics%20Server%E4%B8%8EKubernetes%E7%9B%91%E6%8E%A7%E4%BD%93%E7%B3%BB/" rel="bookmark" title="48 | Prometheus、Metrics Server与Kubernetes监控体系">48 | Prometheus、Metrics Server与Kubernetes监控体系</a></li><li><a href="/2021/03/13/reference/k8s/49.Custom%20Metrics%E8%AE%A9Auto%20Scaling%E4%B8%8D%E5%86%8D%E2%80%9C%E9%A3%9F%E4%B9%8B%E6%97%A0%E5%91%B3%E2%80%9D/" rel="bookmark" title="49 | Custom Metrics 让Auto Scaling不再 食之无味">49 | Custom Metrics 让Auto Scaling不再 食之无味</a></li><li><a href="/2021/03/13/reference/k8s/50.%E8%AE%A9%E6%97%A5%E5%BF%97%E6%97%A0%E5%A4%84%E5%8F%AF%E9%80%83%EF%BC%9A%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E4%B8%8E%E7%AE%A1%E7%90%86/" rel="bookmark" title="50 | 让日志无处可逃：容器日志收集与管理">50 | 让日志无处可逃：容器日志收集与管理</a></li><li><a href="/2021/03/13/reference/k8s/47.%E7%BB%9D%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%AE%89%E5%85%A8%EF%BC%9AKata%20Containers%E4%B8%8EgVisor/" rel="bookmark" title="47 | 绝不仅仅是安全：Kata Containers 与 gVisor">47 | 绝不仅仅是安全：Kata Containers 与 gVisor</a></li><li><a href="/2021/03/13/reference/k8s/53.%E7%89%B9%E5%88%AB%E6%94%BE%E9%80%812019%E5%B9%B4%EF%BC%8C%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E7%94%9F%E6%80%81%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BA%9B%E4%BB%80%E4%B9%88/" rel="bookmark" title="53 | 特别放送 | 2019 年，容器技术生态会发生些什么？">53 | 特别放送 | 2019 年，容器技术生态会发生些什么？</a></li><li><a href="/2021/03/13/reference/k8s/51.%E8%B0%88%E8%B0%88Kubernetes%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%E5%92%8C%E6%9C%AA%E6%9D%A5%E8%B5%B0%E5%90%91/" rel="bookmark" title="51 | 谈谈Kubernetes开源社区和未来走向">51 | 谈谈Kubernetes开源社区和未来走向</a></li><li><a href="/2021/03/13/reference/k8s/54.%E7%89%B9%E5%88%AB%E6%94%BE%E9%80%81.%E5%9F%BA%E4%BA%8E%20Kubernetes%20%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86%EF%BC%8C%E5%88%B0%E5%BA%95%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A/" rel="bookmark" title="54 | 特别放送 | 基于 Kubernetes 的云原生应用管理，到底应该怎么做？">54 | 特别放送 | 基于 Kubernetes 的云原生应用管理，到底应该怎么做？</a></li><li><a href="/2021/03/13/reference/k8s/52.%E7%AD%94%E7%96%91%EF%BC%9A%E5%9C%A8%E9%97%AE%E9%A2%98%E4%B8%AD%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%EF%BC%8C%E5%9C%A8%E6%80%9D%E8%80%83%E4%B8%AD%E4%BA%A7%E7%94%9F%E6%80%9D%E8%80%83/" rel="bookmark" title="52 | 答疑：在问题中解决问题，在思考中产生思考">52 | 答疑：在问题中解决问题，在思考中产生思考</a></li><li><a href="/2021/03/13/reference/k8s/55.%E7%BB%93%E6%9D%9F%E8%AF%ADKubernetes%EF%BC%9A%E8%B5%A2%E5%BC%80%E5%8F%91%E8%80%85%E8%B5%A2%E5%A4%A9%E4%B8%8B/" rel="bookmark" title="55 | 结束语 | Kubernetes：赢开发者赢天下">55 | 结束语 | Kubernetes：赢开发者赢天下</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Kung-Fu-Master" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Kung-Fu-Master</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">292</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">40</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">12</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/reference/k8s/08.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E5%9B%9B)%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86Docker%E5%AE%B9%E5%99%A8/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/13/reference/k8s/06.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%BA%8C)%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/linux%E7%BB%99grub%E6%B7%BB%E5%8A%A0%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0/" title="linux给grub添加内核启动参数">linux给grub添加内核启动参数</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/windows/" title="分类于 windows">windows</a></div><span><a href="/2021/03/13/windows/%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2/" title="笔记本内存信息查询">笔记本内存信息查询</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/web%E5%89%8D%E7%AB%AF/" title="分类于 web前端">web前端</a></div><span><a href="/2021/03/13/technologies/web/HTML/" title="HTML">HTML</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/cpp/" title="分类于 cpp">cpp</a></div><span><a href="/2021/03/13/language/cpp/08_%E6%A8%A1%E6%9D%BF/" title="08 模板">08 模板</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/technologies/" title="分类于 technologies">technologies</a> <i class="ic i-angle-right"></i> <a href="/categories/technologies/security/" title="分类于 security">security</a></div><span><a href="/2021/03/16/technologies/security/openssl_update/" title="openssl update">openssl update</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/cpp/" title="分类于 cpp">cpp</a></div><span><a href="/2021/03/13/language/cpp/10_%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/" title="10 输入输出流">10 输入输出流</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/23.%E5%A3%B0%E6%98%8E%E5%BC%8FAPI%E4%B8%8EKubernetes%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" title="23 | 声明式API与Kubernetes编程范式">23 | 声明式API与Kubernetes编程范式</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/python/" title="分类于 python">python</a></div><span><a href="/2021/03/13/language/python/VScode_python%E5%8C%85numpy%E8%87%AA%E5%8A%A8%E6%8F%90%E7%A4%BA/" title="VScode_python包numpy等自动提示">VScode_python包numpy等自动提示</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/nodejs/" title="分类于 nodejs">nodejs</a></div><span><a href="/2021/03/13/language/nodejs/2.Linux_Node.js_%E5%AE%89%E8%A3%85/" title="2.Linux Node.js 安装">2.Linux Node.js 安装</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/cpp/" title="分类于 cpp">cpp</a></div><span><a href="/2021/03/13/language/cpp/06_%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/" title="06 继承与派生">06 继承与派生</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Kung-Fu-Master @ Kung Fu Master</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">1.1m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">16:30</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/13/reference/k8s/07.白话容器基础(三)深入理解容器镜像/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->

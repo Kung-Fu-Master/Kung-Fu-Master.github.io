@@ -1,52 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.1" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.1" type="image/png" sizes="32x32"><meta name="description" content="在上一篇文章中，我为你详细介绍了 Kubernetes 项目中第一个重要的设计思想：控制器模式。 而在今天这篇文章中，我就来为你详细讲解一下，Kubernetes 里第一个控制器模式的完整实现：Deployment。 Deployment 看似简单，但实际上，它实现了 Kubernetes 项目中一个非常重要的功能：Pod 的“水平扩展 &#x2F; 收缩”（horizon">
-<meta property="og:type" content="article">
-<meta property="og:title" content="17 | 经典PaaS的记忆：作业副本与水平扩展">
-<meta property="og:url" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在上一篇文章中，我为你详细介绍了 Kubernetes 项目中第一个重要的设计思想：控制器模式。 而在今天这篇文章中，我就来为你详细讲解一下，Kubernetes 里第一个控制器模式的完整实现：Deployment。 Deployment 看似简单，但实际上，它实现了 Kubernetes 项目中一个非常重要的功能：Pod 的“水平扩展 &#x2F; 收缩”（horizon">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/1.jpg">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/2.png">
-<meta property="og:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/3.png">
-<meta property="article:published_time" content="2021-03-13T04:35:15.184Z">
-<meta property="article:modified_time" content="2021-03-13T04:35:15.184Z">
-<meta property="article:author" content="Kung-Fu-Master">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/1.jpg"><title>17 | 经典PaaS的记忆：作业副本与水平扩展 | Hexo</title><link ref="canonical" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.1"><script>var Stun = window.Stun || {};
-var CONFIG = {
-  root: '/',
-  algolia: undefined,
-  assistSearch: undefined,
-  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
-  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
-  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
-  postWidget: {"endText":true},
-  nightMode: {"enable":true},
-  back2top: {"enable":true},
-  codeblock: {"style":"default","highlight":"light","wordWrap":false},
-  reward: false,
-  fancybox: false,
-  zoomImage: {"gapAside":"20px"},
-  galleryWaterfall: undefined,
-  lazyload: true,
-  pjax: undefined,
-  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
-  shortcuts: undefined,
-  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
-  sourcePath: {"js":"js","css":"css","images":"images"},
-};
-
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-feather-alt"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-fingerprint"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">17 | 经典PaaS的记忆：作业副本与水平扩展</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-03-13</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.8k</span></span></div></header><div class="post-body"><p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="1.jpg"  alt="">
-      </p>
-<p>在上一篇文章中，我为你详细介绍了 Kubernetes 项目中第一个重要的设计思想：控制器模式。</p>
-<p>而在今天这篇文章中，我就来为你详细讲解一下，Kubernetes 里第一个控制器模式的完整实现：Deployment。</p>
-<p>Deployment 看似简单，但实际上，它实现了 Kubernetes 项目中一个非常重要的功能：<code>Pod 的“水平扩展 / 收缩”（horizontal scaling out/in）</code>。这个功能，是从 PaaS 时代开始，一个平台级项目就必须具备的编排能力。</p>
-<p>举个例子，如果你更新了 Deployment 的 Pod 模板（比如，修改了容器的镜像），那么 Deployment 就需要遵循一种叫作“滚动更新”（rolling update）的方式，来升级现有的容器。</p>
-<p>而这个能力的实现，依赖的是 Kubernetes 项目中的一个非常重要的概念（API 对象）：ReplicaSet。</p>
-<p>ReplicaSet 的结构非常简单，我们可以通过这个 YAML 文件查看一下：</p>
-<pre><code>apiVersion: apps/v1
+<!-- build time:Wed Mar 17 2021 02:52:24 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="Hexo" href="https://kung-fu-master.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="Hexo" href="https://kung-fu-master.github.io/atom.xml"><link rel="alternate" type="application/json" title="Hexo" href="https://kung-fu-master.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/"><title>17 | 经典PaaS的记忆：作业副本与水平扩展 - k8s - reference | Kung Fu Master = Hexo</title><meta name="generator" content="Hexo 4.2.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">17 | 经典PaaS的记忆：作业副本与水平扩展</h1><div class="meta"><span class="item" title="创建时间：2021-03-13 12:35:15"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2021-03-13T12:35:15+08:00">2021-03-13</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>11k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>10 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Kung Fu Master</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicmnywqgpj20zk0m8dwx.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeuv80yoj20zk0m8kjl.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li><li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciszlczyj20zk0m816d.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/reference/" itemprop="item" rel="index" title="分类于 reference"><span itemprop="name">reference</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/reference/k8s/" itemprop="item" rel="index" title="分类于 k8s"><span itemprop="name">k8s</span></a><meta itemprop="position" content="2"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Kung-Fu-Master"><meta itemprop="description" content=", "></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Hexo"></span><div class="body md" itemprop="articleBody"><p><img data-src="1.jpg" alt=""></p><p>在上一篇文章中，我为你详细介绍了 Kubernetes 项目中第一个重要的设计思想：控制器模式。</p><p>而在今天这篇文章中，我就来为你详细讲解一下，Kubernetes 里第一个控制器模式的完整实现：Deployment。</p><p>Deployment 看似简单，但实际上，它实现了 Kubernetes 项目中一个非常重要的功能： <code>Pod 的“水平扩展 / 收缩”（horizontal scaling out/in）</code> 。这个功能，是从 PaaS 时代开始，一个平台级项目就必须具备的编排能力。</p><p>举个例子，如果你更新了 Deployment 的 Pod 模板（比如，修改了容器的镜像），那么 Deployment 就需要遵循一种叫作 “滚动更新”（rolling update）的方式，来升级现有的容器。</p><p>而这个能力的实现，依赖的是 Kubernetes 项目中的一个非常重要的概念（API 对象）：ReplicaSet。</p><p>ReplicaSet 的结构非常简单，我们可以通过这个 YAML 文件查看一下：</p><pre><code>apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: nginx-set
@@ -64,12 +16,8 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.7.9</code></pre><p>从这个 YAML 文件中，我们可以看到，<strong>一个 ReplicaSet 对象，其实就是由副本数目的定义和一个 Pod 模板组成的</strong>。不难发现，它的定义其实是 Deployment 的一个子集。</p>
-<p><strong>更重要的是，Deployment 控制器实际操纵的，正是这样的 ReplicaSet 对象，而不是 Pod 对象。</strong></p>
-<p>还记不记得我在上一篇文章《编排其实很简单：谈谈“控制器”模型》中曾经提出过这样一个问题：对于一个 Deployment 所管理的 Pod，它的 ownerReference 是谁？</p>
-<p>所以，这个问题的答案就是：ReplicaSet。<br><strong>(ReplicaSet是幕后英雄，Deployment只是代理人。)</strong></p>
-<p>明白了这个原理，我再来和你一起分析一个如下所示的 Deployment：</p>
-<pre><code>apiVersion: apps/v1
+        image: nginx:1.7.9
+</code></pre><p>从这个 YAML 文件中，我们可以看到，<strong>一个 ReplicaSet 对象，其实就是由副本数目的定义和一个 Pod 模板组成的</strong>。不难发现，它的定义其实是 Deployment 的一个子集。</p><p><strong>更重要的是，Deployment 控制器实际操纵的，正是这样的 ReplicaSet 对象，而不是 Pod 对象。</strong></p><p>还记不记得我在上一篇文章《编排其实很简单：谈谈 “控制器” 模型》中曾经提出过这样一个问题：对于一个 Deployment 所管理的 Pod，它的 ownerReference 是谁？</p><p>所以，这个问题的答案就是：ReplicaSet。<br><strong>(ReplicaSet 是幕后英雄，Deployment 只是代理人。)</strong></p><p>明白了这个原理，我再来和你一起分析一个如下所示的 Deployment：</p><pre><code>apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -89,50 +37,22 @@ spec:
       - name: nginx
         image: nginx:1.7.9
         ports:
-        - containerPort: 80</code></pre><p>可以看到，这就是一个我们常用的 nginx-deployment，它定义的 Pod 副本个数是 3（spec.replicas=3）。</p>
-<p>那么，在具体的实现上，这个 Deployment，与 ReplicaSet，以及 Pod 的关系是怎样的呢？</p>
-<p>我们可以用一张图把它描述出来：</p>
-<p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="2.png"  alt="">
-      </p>
-<p>通过这张图，我们就很清楚的看到，一个定义了 replicas=3 的 Deployment，与它的 ReplicaSet，以及 Pod 的关系，实际上是一种“层层控制”的关系。</p>
-<p>其中，ReplicaSet 负责通过“控制器模式”，保证系统中 Pod 的个数永远等于指定的个数（比如，3 个）。这也正是 Deployment 只允许容器的 restartPolicy=Always 的主要原因：只有在容器能保证自己始终是 Running 状态的前提下，ReplicaSet 调整 Pod 的个数才有意义。</p>
-<p>而在此基础上，Deployment 同样通过“控制器模式”，来操作 ReplicaSet 的个数和属性，进而实现“水平扩展 / 收缩”和“滚动更新”这两个编排动作。</p>
-<p>其中，“水平扩展 / 收缩”非常容易实现，Deployment Controller 只需要修改它所控制的 ReplicaSet 的 Pod 副本个数就可以了。</p>
-<p>比如，把这个值从 3 改成 4，那么 Deployment 所对应的 ReplicaSet，就会根据修改后的值自动创建一个新的 Pod。这就是“水平扩展”了；“水平收缩”则反之。</p>
-<p>而用户想要执行这个操作的指令也非常简单，就是 kubectl scale，比如：</p>
-<pre><code>$ kubectl scale deployment nginx-deployment --replicas=4
-deployment.apps/nginx-deployment scaled</code></pre><p>那么，“滚动更新”又是什么意思，是如何实现的呢？</p>
-<p>接下来，我还以这个 Deployment 为例，来为你讲解“滚动更新”的过程。</p>
-<p>首先，我们来创建这个 nginx-deployment：</p>
-<pre><code>$ kubectl create -f nginx-deployment.yaml --record</code></pre><p><strong>注意，在这里，我额外加了一个<code>--record 参数</code>。它的作用，是记录下你每次操作所执行的命令，以方便后面查看。</strong></p>
-<p>然后，我们来检查一下 nginx-deployment 创建后的状态信息：</p>
-<pre><code>$ kubectl get deployments
+        - containerPort: 80
+</code></pre><p>可以看到，这就是一个我们常用的 nginx-deployment，它定义的 Pod 副本个数是 3（spec.replicas=3）。</p><p>那么，在具体的实现上，这个 Deployment，与 ReplicaSet，以及 Pod 的关系是怎样的呢？</p><p>我们可以用一张图把它描述出来：</p><p><img data-src="2.png" alt=""></p><p>通过这张图，我们就很清楚的看到，一个定义了 replicas=3 的 Deployment，与它的 ReplicaSet，以及 Pod 的关系，实际上是一种 “层层控制” 的关系。</p><p>其中，ReplicaSet 负责通过 “控制器模式”，保证系统中 Pod 的个数永远等于指定的个数（比如，3 个）。这也正是 Deployment 只允许容器的 restartPolicy=Always 的主要原因：只有在容器能保证自己始终是 Running 状态的前提下，ReplicaSet 调整 Pod 的个数才有意义。</p><p>而在此基础上，Deployment 同样通过 “控制器模式”，来操作 ReplicaSet 的个数和属性，进而实现 “水平扩展 / 收缩” 和 “滚动更新” 这两个编排动作。</p><p>其中，“水平扩展 / 收缩” 非常容易实现，Deployment Controller 只需要修改它所控制的 ReplicaSet 的 Pod 副本个数就可以了。</p><p>比如，把这个值从 3 改成 4，那么 Deployment 所对应的 ReplicaSet，就会根据修改后的值自动创建一个新的 Pod。这就是 “水平扩展” 了；“水平收缩” 则反之。</p><p>而用户想要执行这个操作的指令也非常简单，就是 kubectl scale，比如：</p><pre><code>$ kubectl scale deployment nginx-deployment --replicas=4
+deployment.apps/nginx-deployment scaled
+</code></pre><p>那么，“滚动更新” 又是什么意思，是如何实现的呢？</p><p>接下来，我还以这个 Deployment 为例，来为你讲解 “滚动更新” 的过程。</p><p>首先，我们来创建这个 nginx-deployment：</p><pre><code>$ kubectl create -f nginx-deployment.yaml --record
+</code></pre><p><strong>注意，在这里，我额外加了一个 <code>--record 参数</code> 。它的作用，是记录下你每次操作所执行的命令，以方便后面查看。</strong></p><p>然后，我们来检查一下 nginx-deployment 创建后的状态信息：</p><pre><code>$ kubectl get deployments
 NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   3         0         0            0           1s</code></pre><p>在返回结果中，我们可以看到四个状态字段，它们的含义如下所示。</p>
-<ol>
-<li>DESIRED：用户期望的 Pod 副本个数（spec.replicas 的值）；</li>
-<li>CURRENT：当前处于 Running 状态的 Pod 的个数；</li>
-<li>UP-TO-DATE：当前处于最新版本的 Pod 的个数，所谓最新版本指的是 Pod 的 Spec 部分与 Deployment 里 Pod 模板里定义的完全一致；</li>
-<li>AVAILABLE：当前已经可用的 Pod 的个数，即：既是 Running 状态，又是最新版本，并且已经处于 Ready（健康检查正确）状态的 Pod 的个数。</li>
-</ol>
-<p>可以看到，只有这个 AVAILABLE 字段，描述的才是用户所期望的最终状态。</p>
-<p>而 Kubernetes 项目还为我们提供了一条指令，让我们可以实时查看 Deployment 对象的状态变化。这个指令就是 kubectl rollout status：</p>
-<pre><code>$ kubectl rollout status deployment/nginx-deployment
+nginx-deployment   3         0         0            0           1s
+</code></pre><p>在返回结果中，我们可以看到四个状态字段，它们的含义如下所示。</p><ol><li>DESIRED：用户期望的 Pod 副本个数（spec.replicas 的值）；</li><li>CURRENT：当前处于 Running 状态的 Pod 的个数；</li><li>UP-TO-DATE：当前处于最新版本的 Pod 的个数，所谓最新版本指的是 Pod 的 Spec 部分与 Deployment 里 Pod 模板里定义的完全一致；</li><li>AVAILABLE：当前已经可用的 Pod 的个数，即：既是 Running 状态，又是最新版本，并且已经处于 Ready（健康检查正确）状态的 Pod 的个数。</li></ol><p>可以看到，只有这个 AVAILABLE 字段，描述的才是用户所期望的最终状态。</p><p>而 Kubernetes 项目还为我们提供了一条指令，让我们可以实时查看 Deployment 对象的状态变化。这个指令就是 kubectl rollout status：</p><pre><code>$ kubectl rollout status deployment/nginx-deployment
 Waiting for rollout to finish: 2 out of 3 new replicas have been updated...
-deployment.apps/nginx-deployment successfully rolled out</code></pre><p>在这个返回结果中，“2 out of 3 new replicas have been updated”意味着已经有 2 个 Pod 进入了 UP-TO-DATE 状态。</p>
-<p>继续等待一会儿，我们就能看到这个 Deployment 的 3 个 Pod，就进入到了 AVAILABLE 状态：</p>
-<pre><code>NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   3         3         3            3           20s</code></pre><p>此时，你可以尝试查看一下这个 Deployment 所控制的 ReplicaSet：</p>
-<pre><code>$ kubectl get rs
+deployment.apps/nginx-deployment successfully rolled out
+</code></pre><p>在这个返回结果中，“2 out of 3 new replicas have been updated” 意味着已经有 2 个 Pod 进入了 UP-TO-DATE 状态。</p><p>继续等待一会儿，我们就能看到这个 Deployment 的 3 个 Pod，就进入到了 AVAILABLE 状态：</p><pre><code>NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   3         3         3            3           20s
+</code></pre><p>此时，你可以尝试查看一下这个 Deployment 所控制的 ReplicaSet：</p><pre><code>$ kubectl get rs
 NAME                          DESIRED   CURRENT   READY   AGE
-nginx-deployment-3167673210   3         3         3       20s</code></pre><p>如上所示，在用户提交了一个 Deployment 对象后，Deployment Controller 就会立即创建一个 Pod 副本个数为 3 的 ReplicaSet。这个 ReplicaSet 的名字，则是由 Deployment 的名字和一个随机字符串共同组成。</p>
-<p>这个随机字符串叫作 pod-template-hash，在我们这个例子里就是：3167673210。ReplicaSet 会把这个随机字符串加在它所控制的所有 Pod 的标签里，从而保证这些 Pod 不会与集群里的其他 Pod 混淆。</p>
-<p>而 ReplicaSet 的 DESIRED、CURRENT 和 READY 字段的含义，和 Deployment 中是一致的。所以，<strong>相比之下，Deployment 只是在 ReplicaSet 的基础上，添加了 UP-TO-DATE 这个跟版本有关的状态字段</strong>。</p>
-<p>这个时候，如果我们修改了 Deployment 的 Pod 模板，“滚动更新”就会被自动触发。</p>
-<p>修改 Deployment 有很多方法。比如，我可以直接使用 kubectl edit 指令编辑 Etcd 里的 API 对象。</p>
-<pre><code>$ kubectl edit deployment/nginx-deployment
+nginx-deployment-3167673210   3         3         3       20s
+</code></pre><p>如上所示，在用户提交了一个 Deployment 对象后，Deployment Controller 就会立即创建一个 Pod 副本个数为 3 的 ReplicaSet。这个 ReplicaSet 的名字，则是由 Deployment 的名字和一个随机字符串共同组成。</p><p>这个随机字符串叫作 pod-template-hash，在我们这个例子里就是：3167673210。ReplicaSet 会把这个随机字符串加在它所控制的所有 Pod 的标签里，从而保证这些 Pod 不会与集群里的其他 Pod 混淆。</p><p>而 ReplicaSet 的 DESIRED、CURRENT 和 READY 字段的含义，和 Deployment 中是一致的。所以，<strong>相比之下，Deployment 只是在 ReplicaSet 的基础上，添加了 UP-TO-DATE 这个跟版本有关的状态字段</strong>。</p><p>这个时候，如果我们修改了 Deployment 的 Pod 模板，“滚动更新” 就会被自动触发。</p><p>修改 Deployment 有很多方法。比如，我可以直接使用 kubectl edit 指令编辑 Etcd 里的 API 对象。</p><pre><code>$ kubectl edit deployment/nginx-deployment
 ... 
     spec:
       containers:
@@ -141,15 +61,11 @@ nginx-deployment-3167673210   3         3         3       20s</code></pre><p>如
         ports:
         - containerPort: 80
 ...
-deployment.extensions/nginx-deployment edited</code></pre><p>这个 kubectl edit 指令，会帮你直接打开 nginx-deployment 的 API 对象。然后，你就可以修改这里的 Pod 模板部分了。比如，在这里，我将 nginx 镜像的版本升级到了 1.9.1。</p>
-<blockquote>
-<p>备注：kubectl edit 并不神秘，它不过是把 API 对象的内容下载到了本地文件，让你修改完成后再提交上去。</p>
-</blockquote>
-<p>kubectl edit 指令编辑完成后，保存退出，Kubernetes 就会立刻触发“滚动更新”的过程。你还可以通过 kubectl rollout status 指令查看 nginx-deployment 的状态变化：</p>
-<pre><code>$ kubectl rollout status deployment/nginx-deployment
+deployment.extensions/nginx-deployment edited
+</code></pre><p>这个 kubectl edit 指令，会帮你直接打开 nginx-deployment 的 API 对象。然后，你就可以修改这里的 Pod 模板部分了。比如，在这里，我将 nginx 镜像的版本升级到了 1.9.1。</p><blockquote><p>备注：kubectl edit 并不神秘，它不过是把 API 对象的内容下载到了本地文件，让你修改完成后再提交上去。</p></blockquote><p>kubectl edit 指令编辑完成后，保存退出，Kubernetes 就会立刻触发 “滚动更新” 的过程。你还可以通过 kubectl rollout status 指令查看 nginx-deployment 的状态变化：</p><pre><code>$ kubectl rollout status deployment/nginx-deployment
 Waiting for rollout to finish: 2 out of 3 new replicas have been updated...
-deployment.extensions/nginx-deployment successfully rolled out</code></pre><p>这时，你可以通过查看 Deployment 的 Events，看到这个“滚动更新”的流程：</p>
-<pre><code>$ kubectl describe deployment nginx-deployment
+deployment.extensions/nginx-deployment successfully rolled out
+</code></pre><p>这时，你可以通过查看 Deployment 的 Events，看到这个 “滚动更新” 的流程：</p><pre><code>$ kubectl describe deployment nginx-deployment
 ...
 Events:
   Type    Reason             Age   From                   Message
@@ -160,22 +76,12 @@ Events:
   Normal  ScalingReplicaSet  22s   deployment-controller  Scaled up replica set nginx-deployment-1764197365 to 2
   Normal  ScalingReplicaSet  19s   deployment-controller  Scaled down replica set nginx-deployment-3167673210 to 1
   Normal  ScalingReplicaSet  19s   deployment-controller  Scaled up replica set nginx-deployment-1764197365 to 3
-  Normal  ScalingReplicaSet  14s   deployment-controller  Scaled down replica set nginx-deployment-3167673210 to 0</code></pre><p>可以看到，首先，当你修改了 Deployment 里的 Pod 定义之后，Deployment Controller 会使用这个修改后的 Pod 模板，创建一个新的 ReplicaSet（hash=1764197365），这个新的 ReplicaSet 的初始 Pod 副本数是：0。</p>
-<p>然后，在 Age=24 s 的位置，Deployment Controller 开始将这个新的 ReplicaSet 所控制的 Pod 副本数从 0 个变成 1 个，即：“水平扩展”出一个副本。</p>
-<p>紧接着，在 Age=22 s 的位置，Deployment Controller 又将旧的 ReplicaSet（hash=3167673210）所控制的旧 Pod 副本数减少一个，即：“水平收缩”成两个副本。</p>
-<p>如此交替进行，新 ReplicaSet 管理的 Pod 副本数，从 0 个变成 1 个，再变成 2 个，最后变成 3 个。而旧的 ReplicaSet 管理的 Pod 副本数则从 3 个变成 2 个，再变成 1 个，最后变成 0 个。这样，就完成了这一组 Pod 的版本升级过程。</p>
-<p>像这样，<strong>将一个集群中正在运行的多个 Pod 版本，交替地逐一升级的过程，就是“滚动更新”。</strong><br><strong>(replicaSet 操作 pod实现水平扩展和水平收缩，deployment 操作replicaSet实现滚动更新)</strong></p>
-<p>在这个“滚动更新”过程完成之后，你可以查看一下新、旧两个 ReplicaSet 的最终状态：</p>
-<pre><code>$ kubectl get rs
+  Normal  ScalingReplicaSet  14s   deployment-controller  Scaled down replica set nginx-deployment-3167673210 to 0
+</code></pre><p>可以看到，首先，当你修改了 Deployment 里的 Pod 定义之后，Deployment Controller 会使用这个修改后的 Pod 模板，创建一个新的 ReplicaSet（hash=1764197365），这个新的 ReplicaSet 的初始 Pod 副本数是：0。</p><p>然后，在 Age=24 s 的位置，Deployment Controller 开始将这个新的 ReplicaSet 所控制的 Pod 副本数从 0 个变成 1 个，即：“水平扩展” 出一个副本。</p><p>紧接着，在 Age=22 s 的位置，Deployment Controller 又将旧的 ReplicaSet（hash=3167673210）所控制的旧 Pod 副本数减少一个，即：“水平收缩” 成两个副本。</p><p>如此交替进行，新 ReplicaSet 管理的 Pod 副本数，从 0 个变成 1 个，再变成 2 个，最后变成 3 个。而旧的 ReplicaSet 管理的 Pod 副本数则从 3 个变成 2 个，再变成 1 个，最后变成 0 个。这样，就完成了这一组 Pod 的版本升级过程。</p><p>像这样，<strong>将一个集群中正在运行的多个 Pod 版本，交替地逐一升级的过程，就是 “滚动更新”。</strong><br><strong>(replicaSet 操作 pod 实现水平扩展和水平收缩，deployment 操作 replicaSet 实现滚动更新)</strong></p><p>在这个 “滚动更新” 过程完成之后，你可以查看一下新、旧两个 ReplicaSet 的最终状态：</p><pre><code>$ kubectl get rs
 NAME                          DESIRED   CURRENT   READY   AGE
 nginx-deployment-1764197365   3         3         3       6s
-nginx-deployment-3167673210   0         0         0       30s</code></pre><p>其中，旧 ReplicaSet（hash=3167673210）已经被“水平收缩”成了 0 个副本。</p>
-<p>这种“滚动更新”的好处是显而易见的。</p>
-<p>比如，在升级刚开始的时候，集群里只有 1 个新版本的 Pod。如果这时，新版本 Pod 有问题启动不起来，那么“滚动更新”就会停止，从而允许开发和运维人员介入。而在这个过程中，由于应用本身还有两个旧版本的 Pod 在线，所以服务并不会受到太大的影响。</p>
-<p>当然，这也就要求你一定要使用 Pod 的 Health Check 机制检查应用的运行状态，而不是简单地依赖于容器的 Running 状态。要不然的话，虽然容器已经变成 Running 了，但服务很有可能尚未启动，“滚动更新”的效果也就达不到了。</p>
-<p>而为了进一步保证服务的连续性，Deployment Controller 还会确保，在任何时间窗口内，只有指定比例的 Pod 处于离线状态。同时，它也会确保，在任何时间窗口内，只有指定比例的新 Pod 被创建出来。这两个比例的值都是可以配置的，默认都是 DESIRED 值的 25%。</p>
-<p>所以，在上面这个 Deployment 的例子中，它有 3 个 Pod 副本，那么控制器在“滚动更新”的过程中永远都会确保至少有 2 个 Pod 处于可用状态，至多只有 4 个 Pod 同时存在于集群中。这个策略，是 Deployment 对象的一个字段，名叫 RollingUpdateStrategy，如下所示：</p>
-<pre><code>apiVersion: apps/v1
+nginx-deployment-3167673210   0         0         0       30s
+</code></pre><p>其中，旧 ReplicaSet（hash=3167673210）已经被 “水平收缩” 成了 0 个副本。</p><p>这种 “滚动更新” 的好处是显而易见的。</p><p>比如，在升级刚开始的时候，集群里只有 1 个新版本的 Pod。如果这时，新版本 Pod 有问题启动不起来，那么 “滚动更新” 就会停止，从而允许开发和运维人员介入。而在这个过程中，由于应用本身还有两个旧版本的 Pod 在线，所以服务并不会受到太大的影响。</p><p>当然，这也就要求你一定要使用 Pod 的 Health Check 机制检查应用的运行状态，而不是简单地依赖于容器的 Running 状态。要不然的话，虽然容器已经变成 Running 了，但服务很有可能尚未启动，“滚动更新” 的效果也就达不到了。</p><p>而为了进一步保证服务的连续性，Deployment Controller 还会确保，在任何时间窗口内，只有指定比例的 Pod 处于离线状态。同时，它也会确保，在任何时间窗口内，只有指定比例的新 Pod 被创建出来。这两个比例的值都是可以配置的，默认都是 DESIRED 值的 25%。</p><p>所以，在上面这个 Deployment 的例子中，它有 3 个 Pod 副本，那么控制器在 “滚动更新” 的过程中永远都会确保至少有 2 个 Pod 处于可用状态，至多只有 4 个 Pod 同时存在于集群中。这个策略，是 Deployment 对象的一个字段，名叫 RollingUpdateStrategy，如下所示：</p><pre><code>apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -187,346 +93,31 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 1</code></pre><p>在上面这个 RollingUpdateStrategy 的配置中，maxSurge 指定的是除了 DESIRED 数量之外，在一次“滚动”中，Deployment 控制器还可以创建多少个新 Pod；而 maxUnavailable 指的是，在一次“滚动”中，Deployment 控制器可以删除多少个旧 Pod。</p>
-<p>同时，这两个配置还可以用前面我们介绍的百分比形式来表示，比如：maxUnavailable=50%，指的是我们最多可以一次删除“50%*DESIRED 数量”个 Pod。</p>
-<p>结合以上讲述，现在我们可以扩展一下 Deployment、ReplicaSet 和 Pod 的关系图了。</p>
-<p>
-        <img   class="lazyload lazyload-gif"
-          src="/images/loading.svg" data-src="3.png"  alt="">
-      </p>
-<p>如上所示，<strong><code>Deployment 的控制器，实际上控制的是 ReplicaSet 的数目，以及每个 ReplicaSet 的属性。</code></strong></p>
-<p>而一个应用的版本，对应的正是一个 ReplicaSet；这个版本应用的 Pod 数量，则由 ReplicaSet 通过它自己的控制器（ReplicaSet Controller）来保证。</p>
-<p>通过这样的多个 ReplicaSet 对象，Kubernetes 项目就实现了对多个“应用版本”的描述。</p>
-<p>而明白了“应用版本和 ReplicaSet 一一对应”的设计思想之后，我就可以为你讲解一下Deployment 对应用进行版本控制的具体原理了。</p>
-<p>这一次，我会使用一个叫kubectl set image的指令，直接修改 nginx-deployment 所使用的镜像。这个命令的好处就是，你可以不用像 kubectl edit 那样需要打开编辑器。</p>
-<p>不过这一次，我把这个镜像名字修改成为了一个错误的名字，比如：nginx:1.91。这样，这个 Deployment 就会出现一个升级失败的版本。</p>
-<p>我们一起来实践一下：</p>
-<pre><code>$ kubectl set image deployment/nginx-deployment nginx=nginx:1.91
-deployment.extensions/nginx-deployment image updated</code></pre><p>由于这个 nginx:1.91 镜像在 Docker Hub 中并不存在，所以这个 Deployment 的“滚动更新”被触发后，会立刻报错并停止。</p>
-<p>这时，我们来检查一下 ReplicaSet 的状态，如下所示：</p>
-<pre><code>$ kubectl get rs
+      maxUnavailable: 1
+</code></pre><p>在上面这个 RollingUpdateStrategy 的配置中，maxSurge 指定的是除了 DESIRED 数量之外，在一次 “滚动” 中，Deployment 控制器还可以创建多少个新 Pod；而 maxUnavailable 指的是，在一次 “滚动” 中，Deployment 控制器可以删除多少个旧 Pod。</p><p>同时，这两个配置还可以用前面我们介绍的百分比形式来表示，比如：maxUnavailable=50%，指的是我们最多可以一次删除 “50%*DESIRED 数量” 个 Pod。</p><p>结合以上讲述，现在我们可以扩展一下 Deployment、ReplicaSet 和 Pod 的关系图了。</p><p><img data-src="3.png" alt=""></p><p>如上所示，<strong> <code>Deployment 的控制器，实际上控制的是 ReplicaSet 的数目，以及每个 ReplicaSet 的属性。</code></strong></p><p>而一个应用的版本，对应的正是一个 ReplicaSet；这个版本应用的 Pod 数量，则由 ReplicaSet 通过它自己的控制器（ReplicaSet Controller）来保证。</p><p>通过这样的多个 ReplicaSet 对象，Kubernetes 项目就实现了对多个 “应用版本” 的描述。</p><p>而明白了 “应用版本和 ReplicaSet 一一对应” 的设计思想之后，我就可以为你讲解一下 Deployment 对应用进行版本控制的具体原理了。</p><p>这一次，我会使用一个叫 kubectl set image 的指令，直接修改 nginx-deployment 所使用的镜像。这个命令的好处就是，你可以不用像 kubectl edit 那样需要打开编辑器。</p><p>不过这一次，我把这个镜像名字修改成为了一个错误的名字，比如：nginx:1.91。这样，这个 Deployment 就会出现一个升级失败的版本。</p><p>我们一起来实践一下：</p><pre><code>$ kubectl set image deployment/nginx-deployment nginx=nginx:1.91
+deployment.extensions/nginx-deployment image updated
+</code></pre><p>由于这个 nginx:1.91 镜像在 Docker Hub 中并不存在，所以这个 Deployment 的 “滚动更新” 被触发后，会立刻报错并停止。</p><p>这时，我们来检查一下 ReplicaSet 的状态，如下所示：</p><pre><code>$ kubectl get rs
 NAME                          DESIRED   CURRENT   READY   AGE
 nginx-deployment-1764197365   2         2         2       24s
 nginx-deployment-3167673210   0         0         0       35s
-nginx-deployment-2156724341   2         2         0       7s</code></pre><p>通过这个返回结果，我们可以看到，新版本的 ReplicaSet（hash=2156724341）的“水平扩展”已经停止。而且此时，它已经创建了两个 Pod，但是它们都没有进入 READY 状态。这当然是因为这两个 Pod 都拉取不到有效的镜像。</p>
-<p>与此同时，旧版本的 ReplicaSet（hash=1764197365）的“水平收缩”，也自动停止了。此时，已经有一个旧 Pod 被删除，还剩下两个旧 Pod。</p>
-<p>那么问题来了， 我们如何让这个 Deployment 的 3 个 Pod，都回滚到以前的旧版本呢？</p>
-<p>我们只需要执行一条 kubectl rollout undo 命令，就能把整个 Deployment 回滚到上一个版本：</p>
-<pre><code>$ kubectl rollout undo deployment/nginx-deployment
-deployment.extensions/nginx-deployment</code></pre><p>很容易想到，在具体操作上，Deployment 的控制器，其实就是让这个旧 ReplicaSet（hash=1764197365）再次“扩展”成 3 个 Pod，而让新的 ReplicaSet（hash=2156724341）重新“收缩”到 0 个 Pod。</p>
-<p>更进一步地，如果我想回滚到更早之前的版本，要怎么办呢？</p>
-<p>首先，<strong>我需要使用 kubectl rollout history 命令，查看每次 Deployment 变更对应的版本。而由于我们在创建这个 Deployment 的时候，指定了–record 参数，所以我们创建这些版本时执行的 kubectl 命令，都会被记录下来。</strong> 这个操作的输出如下所示：</p>
-<pre><code>$ kubectl rollout history deployment/nginx-deployment
+nginx-deployment-2156724341   2         2         0       7s
+</code></pre><p>通过这个返回结果，我们可以看到，新版本的 ReplicaSet（hash=2156724341）的 “水平扩展” 已经停止。而且此时，它已经创建了两个 Pod，但是它们都没有进入 READY 状态。这当然是因为这两个 Pod 都拉取不到有效的镜像。</p><p>与此同时，旧版本的 ReplicaSet（hash=1764197365）的 “水平收缩”，也自动停止了。此时，已经有一个旧 Pod 被删除，还剩下两个旧 Pod。</p><p>那么问题来了， 我们如何让这个 Deployment 的 3 个 Pod，都回滚到以前的旧版本呢？</p><p>我们只需要执行一条 kubectl rollout undo 命令，就能把整个 Deployment 回滚到上一个版本：</p><pre><code>$ kubectl rollout undo deployment/nginx-deployment
+deployment.extensions/nginx-deployment
+</code></pre><p>很容易想到，在具体操作上，Deployment 的控制器，其实就是让这个旧 ReplicaSet（hash=1764197365）再次 “扩展” 成 3 个 Pod，而让新的 ReplicaSet（hash=2156724341）重新 “收缩” 到 0 个 Pod。</p><p>更进一步地，如果我想回滚到更早之前的版本，要怎么办呢？</p><p>首先，<strong>我需要使用 kubectl rollout history 命令，查看每次 Deployment 变更对应的版本。而由于我们在创建这个 Deployment 的时候，指定了–record 参数，所以我们创建这些版本时执行的 kubectl 命令，都会被记录下来。</strong> 这个操作的输出如下所示：</p><pre><code>$ kubectl rollout history deployment/nginx-deployment
 deployments &quot;nginx-deployment&quot;
 REVISION    CHANGE-CAUSE
 1           kubectl create -f nginx-deployment.yaml --record
 2           kubectl edit deployment/nginx-deployment
-3           kubectl set image deployment/nginx-deployment nginx=nginx:1.91</code></pre><p>可以看到，我们前面执行的创建和更新操作，分别对应了版本 1 和版本 2，而那次失败的更新操作，则对应的是版本 3。</p>
-<p>当然，你还可以通过这个 kubectl rollout history 指令，看到每个版本对应的 Deployment 的 API 对象的细节，具体命令如下所示：</p>
-<pre><code>$ kubectl rollout history deployment/nginx-deployment --revision=2</code></pre><p><strong>然后，我们就可以在 kubectl rollout undo 命令行最后，加上要回滚到的指定版本的版本号，就可以回滚到指定版本了。</strong>这个指令的用法如下：</p>
-<pre><code>$ kubectl rollout undo deployment/nginx-deployment --to-revision=2
-deployment.extensions/nginx-deployment</code></pre><p>这样，Deployment Controller 还会按照“滚动更新”的方式，完成对 Deployment 的降级操作。</p>
-<p>不过，你可能已经想到了一个问题：<strong>我们对 Deployment 进行的每一次更新操作，都会生成一个新的 ReplicaSet 对象，是不是有些多余，甚至浪费资源</strong>呢？</p>
-<p>没错。</p>
-<p>所以，<strong>Kubernetes 项目还提供了一个指令，使得我们对 Deployment 的多次更新操作，最后 只生成一个 ReplicaSet。</strong></p>
-<p>具体的做法是，在更新 Deployment 前，你要先执行一条 kubectl rollout pause 指令。它的用法如下所示：</p>
-<pre><code>$ kubectl rollout pause deployment/nginx-deployment
-deployment.extensions/nginx-deployment paused</code></pre><p>这个 kubectl rollout pause 的作用，是让这个 Deployment 进入了一个“暂停”状态。</p>
-<p>所以接下来，你就可以随意使用 kubectl edit 或者 kubectl set image 指令，修改这个 Deployment 的内容了。</p>
-<p>由于此时 Deployment 正处于“暂停”状态，所以我们对 Deployment 的所有修改，都不会触发新的“滚动更新”，也不会创建新的 ReplicaSet。</p>
-<p>而等到我们对 Deployment 修改操作都完成之后，只需要再执行一条 kubectl rollout resume 指令，就可以把这个 Deployment“恢复”回来，如下所示：</p>
-<pre><code>$ kubectl rollout resume deploy/nginx-deployment
-deployment.extensions/nginx-deployment resumed</code></pre><p>而在这个 <strong>kubectl rollout resume 指令执行之前，在 kubectl rollout pause 指令之后的这段时间里，我们对 Deployment 进行的所有修改，最后只会触发一次“滚动更新”</strong>。</p>
-<p>当然，我们可以通过检查 ReplicaSet 状态的变化，来验证一下 kubectl rollout pause 和 kubectl rollout resume 指令的执行效果，如下所示：</p>
-<pre><code>$ kubectl get rs
+3           kubectl set image deployment/nginx-deployment nginx=nginx:1.91
+</code></pre><p>可以看到，我们前面执行的创建和更新操作，分别对应了版本 1 和版本 2，而那次失败的更新操作，则对应的是版本 3。</p><p>当然，你还可以通过这个 kubectl rollout history 指令，看到每个版本对应的 Deployment 的 API 对象的细节，具体命令如下所示：</p><pre><code>$ kubectl rollout history deployment/nginx-deployment --revision=2
+</code></pre><p>** 然后，我们就可以在 kubectl rollout undo 命令行最后，加上要回滚到的指定版本的版本号，就可以回滚到指定版本了。** 这个指令的用法如下：</p><pre><code>$ kubectl rollout undo deployment/nginx-deployment --to-revision=2
+deployment.extensions/nginx-deployment
+</code></pre><p>这样，Deployment Controller 还会按照 “滚动更新” 的方式，完成对 Deployment 的降级操作。</p><p>不过，你可能已经想到了一个问题：<strong>我们对 Deployment 进行的每一次更新操作，都会生成一个新的 ReplicaSet 对象，是不是有些多余，甚至浪费资源</strong>呢？</p><p>没错。</p><p>所以，<strong>Kubernetes 项目还提供了一个指令，使得我们对 Deployment 的多次更新操作，最后 只生成一个 ReplicaSet。</strong></p><p>具体的做法是，在更新 Deployment 前，你要先执行一条 kubectl rollout pause 指令。它的用法如下所示：</p><pre><code>$ kubectl rollout pause deployment/nginx-deployment
+deployment.extensions/nginx-deployment paused
+</code></pre><p>这个 kubectl rollout pause 的作用，是让这个 Deployment 进入了一个 “暂停” 状态。</p><p>所以接下来，你就可以随意使用 kubectl edit 或者 kubectl set image 指令，修改这个 Deployment 的内容了。</p><p>由于此时 Deployment 正处于 “暂停” 状态，所以我们对 Deployment 的所有修改，都不会触发新的 “滚动更新”，也不会创建新的 ReplicaSet。</p><p>而等到我们对 Deployment 修改操作都完成之后，只需要再执行一条 kubectl rollout resume 指令，就可以把这个 Deployment “恢复” 回来，如下所示：</p><pre><code>$ kubectl rollout resume deploy/nginx-deployment
+deployment.extensions/nginx-deployment resumed
+</code></pre><p>而在这个 <strong>kubectl rollout resume 指令执行之前，在 kubectl rollout pause 指令之后的这段时间里，我们对 Deployment 进行的所有修改，最后只会触发一次 “滚动更新”</strong>。</p><p>当然，我们可以通过检查 ReplicaSet 状态的变化，来验证一下 kubectl rollout pause 和 kubectl rollout resume 指令的执行效果，如下所示：</p><pre><code>$ kubectl get rs
 NAME               DESIRED   CURRENT   READY     AGE
 nginx-1764197365   0         0         0         2m
-nginx-3196763511   3         3         3         28s</code></pre><p>通过返回结果，我们可以看到，只有一个 hash=3196763511 的 ReplicaSet 被创建了出来。</p>
-<p>不过，即使你像上面这样小心翼翼地控制了 ReplicaSet 的生成数量，随着应用版本的不断增加，Kubernetes 中还是会为同一个 Deployment 保存很多很多不同的 ReplicaSet。</p>
-<p>那么，我们又该如何控制这些“历史”ReplicaSet 的数量呢？</p>
-<p>很简单，Deployment 对象有一个字段，叫作 spec.revisionHistoryLimit，就是 Kubernetes 为 Deployment 保留的“历史版本”个数。所以，如果把它设置为 0，你就再也不能做回滚操作了。</p>
-<p><strong>总结</strong><br>在今天这篇文章中，我为你详细讲解了 Deployment 这个 Kubernetes 项目中最基本的编排控制器的实现原理和使用方法。</p>
-<p>通过这些讲解，你应该了解到： <strong><code>Deployment 实际上是一个两层控制器。首先，它通过ReplicaSet 的个数来描述应用的版本；然后，它再通过ReplicaSet 的属性（比如 replicas 的值），来保证 Pod 的副本数量。</code></strong></p>
-<blockquote>
-<p>备注：Deployment 控制 ReplicaSet（版本），ReplicaSet 控制 Pod（副本数）。这个两层控制关系一定要牢记。</p>
-</blockquote>
-<p>不过，相信你也能够感受到，Kubernetes 项目对 Deployment 的设计，实际上是代替我们完成了对“应用”的抽象，使得我们可以使用这个 Deployment 对象来描述应用，使用 kubectl rollout 命令控制应用的版本。</p>
-<p>可是，在实际使用场景中，应用发布的流程往往千差万别，也可能有很多的定制化需求。比如，我的应用可能有会话黏连（session sticky），这就意味着“滚动更新”的时候，哪个 Pod 能下线，是不能随便选择的。</p>
-<p>这种场景，光靠 Deployment 自己就很难应对了。对于这种需求，我在专栏后续文章中重点介绍的“自定义控制器”，就可以帮我们实现一个功能更加强大的 Deployment Controller。</p>
-<p>当然，Kubernetes 项目本身，也提供了另外一种抽象方式，帮我们应对其他一些用 Deployment 无法处理的应用编排场景。这个设计，就是对有状态应用的管理，也是我在下一篇文章中要重点讲解的内容。</p>
-<p><strong>思考题</strong><br>你听说过金丝雀发布（Canary Deployment）和蓝绿发布（Blue-Green Deployment）吗？你能说出它们是什么意思吗？</p>
-<p>实际上，有了 Deployment 的能力之后，你可以非常轻松地用它来实现金丝雀发布、蓝绿发布，以及 A/B 测试等很多应用发布模式。这些问题的答案都在这个 <span class="exturl"><a class="exturl__link"   href="https://github.com/ContainerSolutions/k8s-deployment-strategies/tree/master/canary"  target="_blank" rel="noopener">GitHub 库</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>，建议你在课后实践一下。</p>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://kung-fu-master.github.io">Kung-Fu-Master</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/">https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/03/13/reference/k8s/16.%E7%BC%96%E6%8E%92%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95%EF%BC%9A%E8%B0%88%E8%B0%88%E2%80%9C%E6%8E%A7%E5%88%B6%E5%99%A8%E2%80%9D%E6%A8%A1%E5%9E%8B/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">16 | 编排其实很简单：谈谈“控制器”模型</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/03/13/reference/k8s/10.Kubernetes%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%A9%E5%99%A8kubeadm/"><span class="paginator-prev__text">10 | Kubernetes一键部署利器：kubeadm</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">Kung-Fu-Master</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="https://youtube.com/" target="_blank" rel="noopener" data-popover="Youtube" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-youtube"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">292</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">40</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Kung-Fu-Master</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v4.2.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.1</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
-  var isXML = true;
-  var search_path = 'search.json';
-
-  if (!search_path) {
-    search_path = 'search.xml';
-  } else if (/json$/i.test(search_path)) {
-    isXML = false;
-  }
-
-  var path = '/' + search_path;
-  $.ajax({
-    url: path,
-    dataType: isXML ? 'xml' : 'json',
-    async: true,
-    success: function (res) {
-      var datas = isXML ? $('entry', res).map(function () {
-        // 将 XML 转为 JSON
-        return {
-          title: $('title', this).text(),
-          content: $('content', this).text(),
-          url: $('url', this).text()
-        };
-      }).get() : res;
-      var $input = $('.search-input input');
-      var $result = $('.search-results');
-      // 搜索对象（标题、内容）的权重，影响显示顺序
-      var WEIGHT = { title: 100, content: 1 };
-      var searchPost = function () {
-        var searchText = $input.val().toLowerCase().trim();
-        // 根据空白字符分隔关键字
-        var keywords = searchText.split(/[\s]+/);
-        // 搜索结果
-        var matchPosts = [];
-
-        // 有多个关键字时，将原文字整个保存下来
-        if (keywords.length > 1) {
-          keywords.push(searchText);
-        }
-        // 防止未输入字符时搜索
-        if (searchText.length > 0) {
-          datas.forEach(function (data) {
-            var isMatch  = false;
-            // 没有标题的文章使用预设的 i18n 变量代替
-            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
-            var titleLower = title && title.toLowerCase();
-            // 删除 HTML 标签 和 所有空白字符
-            var content = data.content && data.content.replace(/<[^>]+>/g, '');
-            var contentLower = content && content.toLowerCase();
-            // 删除重复的 /
-            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
-            // 标题中匹配到的关键词
-            var titleHitSlice = [];
-            // 内容中匹配到的关键词
-            var contentHitSlice = [];
-
-            keywords.forEach(function (keyword) {
-              /**
-              * 获取匹配的关键词的索引
-              * @param {String} keyword 要匹配的关键字
-              * @param {String} text 原文字
-              * @param {Boolean} caseSensitive 是否区分大小写
-              * @param {Number} weight 匹配对象的权重。权重大的优先显示
-              * @return {Array}
-              */
-              function getIndexByword (word, text, caseSensitive, weight) {
-                if (!word || !text) {
-                  return [];
-                };
-
-                var startIndex = 0; // 每次匹配的开始索引
-                var index = -1;     // 匹配到的索引值
-                var result = [];    // 匹配结果
-
-                if (!caseSensitive) {
-                  word = word.toLowerCase();
-                  text = text.toLowerCase();
-                }
-
-                while((index = text.indexOf(word, startIndex)) !== -1) {
-                  var hasMatch = false;
-                  // 索引位置相同的关键词，保留长度较长的
-                  titleHitSlice.forEach(function (hit) {
-                    if (hit.index === index && hit.word.length < word.length) {
-                      hit.word = word;
-                      hasMatch = true;
-                    }
-                  });
-                  startIndex = index + word.length;
-                  !hasMatch && result.push({ index: index, word: word, weight: weight });
-                }
-                return result;
-              }
-              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
-              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
-            });
-
-            var hitTitle = titleHitSlice.length;
-            var hitContent = contentHitSlice.length;
-
-            if (hitTitle > 0 || hitContent > 0) {
-              isMatch = true;
-            }
-            if (isMatch) {
-              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
-                // 按照匹配文字的索引的递增顺序排序
-                hit.sort(function (left, right) {
-                  return left.index - right.index;
-                });
-              });
-              /**
-              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
-              * @param {String} text 原文本
-              * @param {Array} hitSlice 匹配项的索引信息
-              * @param {Number} start 开始索引
-              * @param {Number} end 结束索引
-              * @return {String}
-              */
-              function highlightKeyword (text, hitSlice, start, end) {
-                if (!text || !hitSlice || !hitSlice.length) {
-                  return;
-                }
-
-                var result = '';
-                var startIndex = start;
-                var endIndex = end;
-                hitSlice.forEach(function (hit) {
-                  if (hit.index < startIndex) {
-                    return;
-                  }
-
-                  var hitWordEnd = hit.index + hit.word.length;
-                  result += text.slice(startIndex, hit.index);
-                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
-                  startIndex = hitWordEnd;
-                });
-                result += text.slice(startIndex, endIndex);
-                return result;
-              }
-
-              var postData = {};
-              // 文章总的搜索权重
-              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
-              // 标记匹配关键词后的标题
-              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
-              // 标记匹配关键词后的内容
-              var postContent;
-              // 显示内容的长度
-              var SHOW_WORD_LENGTH = 200;
-              // 命中关键词前的字符显示长度
-              var SHOW_WORD_FRONT_LENGTH = 20;
-              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
-
-              // 截取匹配的第一个字符，前后共 200 个字符来显示
-              if (contentHitSlice.length > 0) {
-                var firstIndex = contentHitSlice[0].index;
-                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
-                var end = firstIndex + SHOW_WORD_END_LENGTH;
-                postContent = highlightKeyword(content, contentHitSlice, start, end);
-              } else { // 未匹配到内容，直接截取前 200 个字符来显示
-                postContent = content.slice(0, SHOW_WORD_LENGTH);
-              }
-              postData.title = postTitle;
-              postData.content = postContent;
-              postData.url = postURL;
-              postData.weight = postWeight;
-              matchPosts.push(postData);
-            }
-          });
-        }
-
-        var resultInnerHtml = '';
-        if (matchPosts.length) {
-          // 按权重递增的顺序排序，使权重大的优先显示
-          matchPosts.sort(function (left, right) {
-            return right.weight - left.weight;
-          });
-          resultInnerHtml += '<ul>';
-          matchPosts.forEach(function (post) {
-            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
-            resultInnerHtml += post.title;
-            resultInnerHtml += '</a><div class="search-results-content">';
-            resultInnerHtml += post.content;
-            resultInnerHtml += '</div></li>';
-          });
-          resultInnerHtml += '</ul>';
-        } else {
-          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
-        }
-        $result.html(resultInnerHtml);
-      };
-      $input.on('input', searchPost);
-      $input.on('keyup', function (e) {
-        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
-          searchPost();
-        }
-      });
-    }
-  });
-}
-
-function closeSearch () {
-  $('body').css({ overflow: 'auto' });
-  $('.search-popup').css({ display: 'none' });
-  $('.search-mask').css({ display: 'none' });
-}
-
-window.addEventListener('DOMContentLoaded', function () {
-  Stun.utils.pjaxReloadLocalSearch = function () {
-    $('.header-nav-search').on('click', function (e) {
-      e.stopPropagation();
-      $('body').css('overflow', 'hidden');
-      $('.search-popup')
-        .velocity('stop')
-        .velocity('transition.expandIn', {
-          duration: 300,
-          complete: function () {
-            $('.search-popup input').focus();
-          }
-        });
-      $('.search-mask')
-        .velocity('stop')
-        .velocity('transition.fadeIn', {
-          duration: 300
-        });
-
-      initSearch();
-    });
-    $('.search-mask, .search-close').on('click', function () {
-      closeSearch();
-    });
-    $(document).on('keydown', function (e) {
-      // Escape <=> 27
-      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
-        closeSearch();
-      }
-    });
-  };
-
-  Stun.utils.pjaxReloadLocalSearch();
-}, false);
-
-function safeOpenUrl(url) {
-  var newTab = window.open();
-  newTab.opener = null;
-  newTab.location = url;
-}
-
-function extSearch(engine) {
-  var engines = {
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://cn.bing.com/search?q=',
-    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
-  };
-  var host = window.location.host;
-  var query = $('.search-input input').val().toLowerCase().trim();
-  var uri = engines[engine] + query + ' site:' + host;
-
-  if (query) {
-    safeOpenUrl(uri);
-  } else {
-    Stun.utils.popAlert('warning', '请输入字符');
-  }
-}
-
-var assistSearchList = window.CONFIG.assistSearch;
-
-if (Array.isArray(assistSearchList)) {
-  assistSearchList.forEach(function (name) {
-    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
-      extSearch(name);
-    }, false);
-  });
-}</script><script src="/js/utils.js?v=2.6.1"></script><script src="/js/stun-boot.js?v=2.6.1"></script><script src="/js/scroll.js?v=2.6.1"></script><script src="/js/header.js?v=2.6.1"></script><script src="/js/sidebar.js?v=2.6.1"></script><script type="application/json" src="/search.json"></script></body></html>
+nginx-3196763511   3         3         3         28s
+</code></pre><p>通过返回结果，我们可以看到，只有一个 hash=3196763511 的 ReplicaSet 被创建了出来。</p><p>不过，即使你像上面这样小心翼翼地控制了 ReplicaSet 的生成数量，随着应用版本的不断增加，Kubernetes 中还是会为同一个 Deployment 保存很多很多不同的 ReplicaSet。</p><p>那么，我们又该如何控制这些 “历史” ReplicaSet 的数量呢？</p><p>很简单，Deployment 对象有一个字段，叫作 spec.revisionHistoryLimit，就是 Kubernetes 为 Deployment 保留的 “历史版本” 个数。所以，如果把它设置为 0，你就再也不能做回滚操作了。</p><p><strong>总结</strong><br>在今天这篇文章中，我为你详细讲解了 Deployment 这个 Kubernetes 项目中最基本的编排控制器的实现原理和使用方法。</p><p>通过这些讲解，你应该了解到： <strong><code>Deployment 实际上是一个两层控制器。首先，它通过ReplicaSet 的个数来描述应用的版本；然后，它再通过ReplicaSet 的属性（比如 replicas 的值），来保证 Pod 的副本数量。</code></strong></p><blockquote><p>备注：Deployment 控制 ReplicaSet（版本），ReplicaSet 控制 Pod（副本数）。这个两层控制关系一定要牢记。</p></blockquote><p>不过，相信你也能够感受到，Kubernetes 项目对 Deployment 的设计，实际上是代替我们完成了对 “应用” 的抽象，使得我们可以使用这个 Deployment 对象来描述应用，使用 kubectl rollout 命令控制应用的版本。</p><p>可是，在实际使用场景中，应用发布的流程往往千差万别，也可能有很多的定制化需求。比如，我的应用可能有会话黏连（session sticky），这就意味着 “滚动更新” 的时候，哪个 Pod 能下线，是不能随便选择的。</p><p>这种场景，光靠 Deployment 自己就很难应对了。对于这种需求，我在专栏后续文章中重点介绍的 “自定义控制器”，就可以帮我们实现一个功能更加强大的 Deployment Controller。</p><p>当然，Kubernetes 项目本身，也提供了另外一种抽象方式，帮我们应对其他一些用 Deployment 无法处理的应用编排场景。这个设计，就是对有状态应用的管理，也是我在下一篇文章中要重点讲解的内容。</p><p><strong>思考题</strong><br>你听说过金丝雀发布（Canary Deployment）和蓝绿发布（Blue-Green Deployment）吗？你能说出它们是什么意思吗？</p><p>实际上，有了 Deployment 的能力之后，你可以非常轻松地用它来实现金丝雀发布、蓝绿发布，以及 A/B 测试等很多应用发布模式。这些问题的答案都在这个 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NvbnRhaW5lclNvbHV0aW9ucy9rOHMtZGVwbG95bWVudC1zdHJhdGVnaWVzL3RyZWUvbWFzdGVyL2NhbmFyeQ==">GitHub 库</span>，建议你在课后实践一下。</p></div><footer><div class="meta"></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Kung-Fu-Master 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Kung-Fu-Master 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Kung-Fu-Master 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Kung-Fu-Master <i class="ic i-at"><em>@</em></i>Hexo</li><li class="link"><strong>本文链接：</strong> <a href="https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/" title="17 | 经典PaaS的记忆：作业副本与水平扩展">https://kung-fu-master.github.io/2021/03/13/reference/k8s/17.经典PaaS的记忆：作业副本与水平扩展/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2021/03/13/reference/k8s/12.%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BA%94%E7%94%A8/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclg5ms2rj20zk0m8u0x.jpg" title="12 | 牛刀小试：我的第一个容器化应用"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> k8s</span><h3>12 | 牛刀小试：我的第一个容器化应用</h3></a></div><div class="item right"><a href="/2021/03/13/reference/k8s/16.%E7%BC%96%E6%8E%92%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95%EF%BC%9A%E8%B0%88%E8%B0%88%E2%80%9C%E6%8E%A7%E5%88%B6%E5%99%A8%E2%80%9D%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giph4fomxoj20zk0m8axp.jpg" title="16 | 编排其实很简单：谈谈“控制器”模型"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> k8s</span><h3>16 | 编排其实很简单：谈谈“控制器”模型</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/2021/03/13/reference/k8s/00.%E5%BC%80%E7%AF%87%E8%AF%8D-%E6%89%93%E9%80%9A%E2%80%9C%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E2%80%9D%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/" rel="bookmark" title="00 | 开篇词-打通“容器技术”的任督二脉">00 | 开篇词-打通“容器技术”的任督二脉</a></li><li><a href="/2021/03/13/reference/k8s/03.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%B8%89)%E7%BE%A4%E9%9B%84%E5%B9%B6%E8%B5%B7/" rel="bookmark" title="03 | 预习篇 · 小鲸鱼大事记（三）：群雄并起">03 | 预习篇 · 小鲸鱼大事记（三）：群雄并起</a></li><li><a href="/2021/03/13/reference/k8s/01.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%B8%80)%E5%88%9D%E5%87%BA%E8%8C%85%E5%BA%90/" rel="bookmark" title="01 | 预习篇 · 小鲸鱼大事记（一）：初出茅庐">01 | 预习篇 · 小鲸鱼大事记（一）：初出茅庐</a></li><li><a href="/2021/03/13/reference/k8s/02.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E4%BA%8C)%E5%B4%AD%E9%9C%B2%E5%A4%B4%E8%A7%92/" rel="bookmark" title="02 | 预习篇 · 小鲸鱼大事记（二）：崭露头角">02 | 预习篇 · 小鲸鱼大事记（二）：崭露头角</a></li><li><a href="/2021/03/13/reference/k8s/04.%E9%A2%84%E4%B9%A0%E7%AF%87-%E5%B0%8F%E9%B2%B8%E9%B1%BC%E5%A4%A7%E4%BA%8B%E8%AE%B0(%E5%9B%9B)%E5%B0%98%E5%9F%83%E8%90%BD%E5%AE%9A/" rel="bookmark" title="04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定">04 | 预习篇 · 小鲸鱼大事记（四）：尘埃落定</a></li><li><a href="/2021/03/13/reference/k8s/05.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%80)%E4%BB%8E%E8%BF%9B%E7%A8%8B%E8%AF%B4%E5%BC%80%E5%8E%BB/" rel="bookmark" title="05 | 白话容器基础（一）：从进程说开去">05 | 白话容器基础（一）：从进程说开去</a></li><li><a href="/2021/03/13/reference/k8s/06.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%BA%8C)%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%99%90%E5%88%B6/" rel="bookmark" title="06 | 白话容器基础（二）：隔离与限制">06 | 白话容器基础（二）：隔离与限制</a></li><li><a href="/2021/03/13/reference/k8s/07.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E4%B8%89)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F/" rel="bookmark" title="07 | 白话容器基础（三）：深入理解容器镜像">07 | 白话容器基础（三）：深入理解容器镜像</a></li><li><a href="/2021/03/13/reference/k8s/08.%E7%99%BD%E8%AF%9D%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A1%80(%E5%9B%9B)%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86Docker%E5%AE%B9%E5%99%A8/" rel="bookmark" title="08 | 白话容器基础（四）：重新认识Docker容器">08 | 白话容器基础（四）：重新认识Docker容器</a></li><li><a href="/2021/03/13/reference/k8s/09.%E4%BB%8E%E5%AE%B9%E5%99%A8%E5%88%B0%E5%AE%B9%E5%99%A8%E4%BA%91%EF%BC%9A%E8%B0%88%E8%B0%88Kubernetes%E7%9A%84%E6%9C%AC%E8%B4%A8/" rel="bookmark" title="09 | 从容器到容器云：谈谈Kubernetes的本质">09 | 从容器到容器云：谈谈Kubernetes的本质</a></li><li><a href="/2021/03/13/reference/k8s/12.%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BA%94%E7%94%A8/" rel="bookmark" title="12 | 牛刀小试：我的第一个容器化应用">12 | 牛刀小试：我的第一个容器化应用</a></li><li><a href="/2021/03/13/reference/k8s/13.%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81Pod/" rel="bookmark" title="13 | 为什么我们需要Pod？">13 | 为什么我们需要Pod？</a></li><li><a href="/2021/03/13/reference/k8s/11.%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84Kubernetes%E9%9B%86%E7%BE%A4/" rel="bookmark" title="11 | 从0到1：搭建一个完整的Kubernetes集群">11 | 从0到1：搭建一个完整的Kubernetes集群</a></li><li><a href="/2021/03/13/reference/k8s/10.Kubernetes%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%A9%E5%99%A8kubeadm/" rel="bookmark" title="10 | Kubernetes一键部署利器：kubeadm">10 | Kubernetes一键部署利器：kubeadm</a></li><li><a href="/2021/03/13/reference/k8s/14.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90Pod%E5%AF%B9%E8%B1%A1(%E4%B8%80)%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" rel="bookmark" title="14 | 深入解析Pod对象（一）：基本概念">14 | 深入解析Pod对象（一）：基本概念</a></li><li><a href="/2021/03/13/reference/k8s/15.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90Pod%E5%AF%B9%E8%B1%A1(%E4%BA%8C)%E4%BD%BF%E7%94%A8%E8%BF%9B%E9%98%B6/" rel="bookmark" title="15 | 深入解析Pod对象（二）：使用进阶">15 | 深入解析Pod对象（二）：使用进阶</a></li><li><a href="/2021/03/13/reference/k8s/16.%E7%BC%96%E6%8E%92%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95%EF%BC%9A%E8%B0%88%E8%B0%88%E2%80%9C%E6%8E%A7%E5%88%B6%E5%99%A8%E2%80%9D%E6%A8%A1%E5%9E%8B/" rel="bookmark" title="16 | 编排其实很简单：谈谈“控制器”模型">16 | 编排其实很简单：谈谈“控制器”模型</a></li><li class="active"><a href="/2021/03/13/reference/k8s/17.%E7%BB%8F%E5%85%B8PaaS%E7%9A%84%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%BD%9C%E4%B8%9A%E5%89%AF%E6%9C%AC%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/" rel="bookmark" title="17 | 经典PaaS的记忆：作业副本与水平扩展">17 | 经典PaaS的记忆：作业副本与水平扩展</a></li><li><a href="/2021/03/13/reference/k8s/21.%E5%AE%B9%E5%99%A8%E5%8C%96%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9ADaemonSet/" rel="bookmark" title="21 | 容器化守护进程的意义：DaemonSet">21 | 容器化守护进程的意义：DaemonSet</a></li><li><a href="/2021/03/13/reference/k8s/19.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%BA%8C)%EF%BC%9A%E5%AD%98%E5%82%A8%E7%8A%B6%E6%80%81/" rel="bookmark" title="19 | 深入理解StatefulSet（二）：存储状态">19 | 深入理解StatefulSet（二）：存储状态</a></li><li><a href="/2021/03/13/reference/k8s/18.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%80)%EF%BC%9A%E6%8B%93%E6%89%91%E7%8A%B6%E6%80%81/" rel="bookmark" title="18 | 深入理解StatefulSet（一）：拓扑状态">18 | 深入理解StatefulSet（一）：拓扑状态</a></li><li><a href="/2021/03/13/reference/k8s/20.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%89)%EF%BC%9A%E6%9C%89%E7%8A%B6%E6%80%81%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/" rel="bookmark" title="17 | 经典PaaS的记忆：作业副本与水平扩展">17 | 经典PaaS的记忆：作业副本与水平扩展</a></li><li><a href="/2021/03/13/reference/k8s/23.%E5%A3%B0%E6%98%8E%E5%BC%8FAPI%E4%B8%8EKubernetes%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" rel="bookmark" title="23 | 声明式API与Kubernetes编程范式">23 | 声明式API与Kubernetes编程范式</a></li><li><a href="/2021/03/13/reference/k8s/22.%E6%92%AC%E5%8A%A8%E7%A6%BB%E7%BA%BF%E4%B8%9A%E5%8A%A1%EF%BC%9AJob%E4%B8%8ECronJob/" rel="bookmark" title="22 | 撬动离线业务：Job与CronJob">22 | 撬动离线业务：Job与CronJob</a></li><li><a href="/2021/03/13/reference/k8s/24.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%B8%80)%EF%BC%9AAPI%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A5%A5%E7%A7%98/" rel="bookmark" title="24 | 深入解析声明式API（一）：API对象的奥秘">24 | 深入解析声明式API（一）：API对象的奥秘</a></li><li><a href="/2021/03/13/reference/k8s/25.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%A3%B0%E6%98%8E%E5%BC%8FAPI(%E4%BA%8C)%EF%BC%9A%E7%BC%96%E5%86%99%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E5%88%B6%E5%99%A8/" rel="bookmark" title="25 | 深入解析声明式API（二）：编写自定义控制器">25 | 深入解析声明式API（二）：编写自定义控制器</a></li><li><a href="/2021/03/13/reference/k8s/26.%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%EF%BC%9ARBAC/" rel="bookmark" title="26 | 基于角色的权限控制：RBAC">26 | 基于角色的权限控制：RBAC</a></li><li><a href="/2021/03/13/reference/k8s/27.%E8%81%AA%E6%98%8E%E7%9A%84%E5%BE%AE%E5%88%9B%E6%96%B0%EF%BC%9AOperator%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E8%AF%BB/" rel="bookmark" title="27 | 聪明的微创新：Operator工作原理解读">27 | 聪明的微创新：Operator工作原理解读</a></li><li><a href="/2021/03/13/reference/k8s/28.PV%E3%80%81PVC%E3%80%81StorageClass%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%88%B0%E5%BA%95%E5%9C%A8%E8%AF%B4%E5%95%A5/" rel="bookmark" title="28 | PV、PVC、StorageClass，这些到底在说啥？">28 | PV、PVC、StorageClass，这些到底在说啥？</a></li><li><a href="/2021/03/13/reference/k8s/29.PV%E3%80%81PVC%E4%BD%93%E7%B3%BB%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%9A%E6%AD%A4%E4%B8%80%E4%B8%BE%EF%BC%9F%E4%BB%8E%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96%E5%8D%B7%E8%B0%88%E8%B5%B7/" rel="bookmark" title="29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起">29 | PV、PVC体系是不是多此一举？从本地持久化卷谈起</a></li><li><a href="/2021/03/13/reference/k8s/30.%E7%BC%96%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AD%98%E5%82%A8%E6%8F%92%E4%BB%B6%EF%BC%9AFlexVolume%E4%B8%8ECSI/" rel="bookmark" title="30 | 编写自己的存储插件：FlexVolume与CSI">30 | 编写自己的存储插件：FlexVolume与CSI</a></li><li><a href="/2021/03/13/reference/k8s/31.%E5%AE%B9%E5%99%A8%E5%AD%98%E5%82%A8%E5%AE%9E%E8%B7%B5%EF%BC%9ACSI%E6%8F%92%E4%BB%B6%E7%BC%96%E5%86%99%E6%8C%87%E5%8D%97/" rel="bookmark" title="31 | 容器存储实践：CSI插件编写指南">31 | 容器存储实践：CSI插件编写指南</a></li><li><a href="/2021/03/13/reference/k8s/32.%E6%B5%85%E8%B0%88%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/" rel="bookmark" title="32 | 浅谈容器网络">32 | 浅谈容器网络</a></li><li><a href="/2021/03/13/reference/k8s/33.%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%E5%AE%B9%E5%99%A8%E8%B7%A8%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="bookmark" title="33 | 深入解析容器跨主机网络">33 | 深入解析容器跨主机网络</a></li><li><a href="/2021/03/13/reference/k8s/34.Kubernetes%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8ECNI%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/" rel="bookmark" title="34 | Kubernetes网络模型与CNI网络插件">34 | Kubernetes网络模型与CNI网络插件</a></li><li><a href="/2021/03/13/reference/k8s/35.%E8%A7%A3%E8%AF%BBKubernetes%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E6%96%B9%E6%A1%88/" rel="bookmark" title="35 | 解读Kubernetes三层网络方案">35 | 解读Kubernetes三层网络方案</a></li><li><a href="/2021/03/13/reference/k8s/36.%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4Kubernetes%E5%8F%AA%E6%9C%89soft%20multi-tenancy/" rel="bookmark" title="36 | 为什么说Kubernetes只有soft multi-tenancy？">36 | 为什么说Kubernetes只有soft multi-tenancy？</a></li><li><a href="/2021/03/13/reference/k8s/37.%E6%89%BE%E5%88%B0%E5%AE%B9%E5%99%A8%E4%B8%8D%E5%AE%B9%E6%98%93%EF%BC%9AService%E3%80%81DNS%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" rel="bookmark" title="37 | 找到容器不容易：Service、DNS与服务发现">37 | 找到容器不容易：Service、DNS与服务发现</a></li><li><a href="/2021/03/13/reference/k8s/38.%E4%BB%8E%E5%A4%96%E7%95%8C%E8%BF%9E%E9%80%9AService%E4%B8%8EService%E8%B0%83%E8%AF%95%E2%80%9C%E4%B8%89%E6%9D%BF%E6%96%A7%E2%80%9D/" rel="bookmark" title="38 | 从外界连通Service与Service调试“三板斧”">38 | 从外界连通Service与Service调试“三板斧”</a></li><li><a href="/2021/03/13/reference/k8s/39.%E8%B0%88%E8%B0%88Service%E4%B8%8EIngress/" rel="bookmark" title="39 | 谈谈Service与Ingress">39 | 谈谈Service与Ingress</a></li><li><a href="/2021/03/13/reference/k8s/40.Kubernetes%E7%9A%84%E8%B5%84%E6%BA%90%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" rel="bookmark" title="40 | Kubernetes的资源模型与资源管理">40 | Kubernetes的资源模型与资源管理</a></li><li><a href="/2021/03/13/reference/k8s/41.%E5%8D%81%E5%AD%97%E8%B7%AF%E5%8F%A3%E4%B8%8A%E7%9A%84Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8/" rel="bookmark" title="41 | 十字路口上的Kubernetes默认调度器">41 | 十字路口上的Kubernetes默认调度器</a></li><li><a href="/2021/03/13/reference/k8s/43.Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E4%B8%8E%E6%8A%A2%E5%8D%A0%E6%9C%BA%E5%88%B6/" rel="bookmark" title="43 | Kubernetes默认调度器的优先级与抢占机制">43 | Kubernetes默认调度器的优先级与抢占机制</a></li><li><a href="/2021/03/13/reference/k8s/44.Kubernetes%20GPU%E7%AE%A1%E7%90%86%E4%B8%8EDevice%20Plugin%E6%9C%BA%E5%88%B6/" rel="bookmark" title="44 | Kubernetes GPU管理与Device Plugin机制">44 | Kubernetes GPU管理与Device Plugin机制</a></li><li><a href="/2021/03/13/reference/k8s/45.%E5%B9%95%E5%90%8E%E8%8B%B1%E9%9B%84%EF%BC%9ASIG-Node%E4%B8%8ECRI/" rel="bookmark" title="45 | 幕后英雄：SIG-Node与CRI">45 | 幕后英雄：SIG-Node与CRI</a></li><li><a href="/2021/03/13/reference/k8s/42.Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5%E8%A7%A3%E6%9E%90/" rel="bookmark" title="42 | Kubernetes默认调度器调度策略解析">42 | Kubernetes默认调度器调度策略解析</a></li><li><a href="/2021/03/13/reference/k8s/46.%E8%A7%A3%E8%AF%BB%20CRI%20%E4%B8%8E%20%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6/" rel="bookmark" title="46 | 解读 CRI 与 容器运行时">46 | 解读 CRI 与 容器运行时</a></li><li><a href="/2021/03/13/reference/k8s/48.Prometheus%E3%80%81Metrics%20Server%E4%B8%8EKubernetes%E7%9B%91%E6%8E%A7%E4%BD%93%E7%B3%BB/" rel="bookmark" title="48 | Prometheus、Metrics Server与Kubernetes监控体系">48 | Prometheus、Metrics Server与Kubernetes监控体系</a></li><li><a href="/2021/03/13/reference/k8s/49.Custom%20Metrics%E8%AE%A9Auto%20Scaling%E4%B8%8D%E5%86%8D%E2%80%9C%E9%A3%9F%E4%B9%8B%E6%97%A0%E5%91%B3%E2%80%9D/" rel="bookmark" title="49 | Custom Metrics 让Auto Scaling不再 食之无味">49 | Custom Metrics 让Auto Scaling不再 食之无味</a></li><li><a href="/2021/03/13/reference/k8s/50.%E8%AE%A9%E6%97%A5%E5%BF%97%E6%97%A0%E5%A4%84%E5%8F%AF%E9%80%83%EF%BC%9A%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E4%B8%8E%E7%AE%A1%E7%90%86/" rel="bookmark" title="50 | 让日志无处可逃：容器日志收集与管理">50 | 让日志无处可逃：容器日志收集与管理</a></li><li><a href="/2021/03/13/reference/k8s/47.%E7%BB%9D%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%AE%89%E5%85%A8%EF%BC%9AKata%20Containers%E4%B8%8EgVisor/" rel="bookmark" title="47 | 绝不仅仅是安全：Kata Containers 与 gVisor">47 | 绝不仅仅是安全：Kata Containers 与 gVisor</a></li><li><a href="/2021/03/13/reference/k8s/53.%E7%89%B9%E5%88%AB%E6%94%BE%E9%80%812019%E5%B9%B4%EF%BC%8C%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E7%94%9F%E6%80%81%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BA%9B%E4%BB%80%E4%B9%88/" rel="bookmark" title="53 | 特别放送 | 2019 年，容器技术生态会发生些什么？">53 | 特别放送 | 2019 年，容器技术生态会发生些什么？</a></li><li><a href="/2021/03/13/reference/k8s/51.%E8%B0%88%E8%B0%88Kubernetes%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%E5%92%8C%E6%9C%AA%E6%9D%A5%E8%B5%B0%E5%90%91/" rel="bookmark" title="51 | 谈谈Kubernetes开源社区和未来走向">51 | 谈谈Kubernetes开源社区和未来走向</a></li><li><a href="/2021/03/13/reference/k8s/54.%E7%89%B9%E5%88%AB%E6%94%BE%E9%80%81.%E5%9F%BA%E4%BA%8E%20Kubernetes%20%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86%EF%BC%8C%E5%88%B0%E5%BA%95%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A/" rel="bookmark" title="54 | 特别放送 | 基于 Kubernetes 的云原生应用管理，到底应该怎么做？">54 | 特别放送 | 基于 Kubernetes 的云原生应用管理，到底应该怎么做？</a></li><li><a href="/2021/03/13/reference/k8s/52.%E7%AD%94%E7%96%91%EF%BC%9A%E5%9C%A8%E9%97%AE%E9%A2%98%E4%B8%AD%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%EF%BC%8C%E5%9C%A8%E6%80%9D%E8%80%83%E4%B8%AD%E4%BA%A7%E7%94%9F%E6%80%9D%E8%80%83/" rel="bookmark" title="52 | 答疑：在问题中解决问题，在思考中产生思考">52 | 答疑：在问题中解决问题，在思考中产生思考</a></li><li><a href="/2021/03/13/reference/k8s/55.%E7%BB%93%E6%9D%9F%E8%AF%ADKubernetes%EF%BC%9A%E8%B5%A2%E5%BC%80%E5%8F%91%E8%80%85%E8%B5%A2%E5%A4%A9%E4%B8%8B/" rel="bookmark" title="55 | 结束语 | Kubernetes：赢开发者赢天下">55 | 结束语 | Kubernetes：赢开发者赢天下</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Kung-Fu-Master" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Kung-Fu-Master</p><div class="description" itemprop="description"></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">292</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">40</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">12</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/about/" rel="section"><i class="ic i-user"></i>关于</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2021/03/13/reference/k8s/12.%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BA%94%E7%94%A8/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2021/03/13/reference/k8s/16.%E7%BC%96%E6%8E%92%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95%EF%BC%9A%E8%B0%88%E8%B0%88%E2%80%9C%E6%8E%A7%E5%88%B6%E5%99%A8%E2%80%9D%E6%A8%A1%E5%9E%8B/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/18.%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet(%E4%B8%80)%EF%BC%9A%E6%8B%93%E6%89%91%E7%8A%B6%E6%80%81/" title="18 | 深入理解StatefulSet（一）：拓扑状态">18 | 深入理解StatefulSet（一）：拓扑状态</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/43.Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E4%B8%8E%E6%8A%A2%E5%8D%A0%E6%9C%BA%E5%88%B6/" title="43 | Kubernetes默认调度器的优先级与抢占机制">43 | Kubernetes默认调度器的优先级与抢占机制</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/centos%E5%8D%87%E7%BA%A7gcc%E5%88%B09.1.0/" title="centos升级gcc到9.1.0">centos升级gcc到9.1.0</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/cpp/" title="分类于 cpp">cpp</a></div><span><a href="/2021/03/13/language/cpp/STL/03.shared_ptr/" title="STL 03 shared_ptr">STL 03 shared_ptr</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E9%94%99%E8%AF%AF_r_command%20not%20found/" title="脚本执行错误 $&#39;\r&#39;:command not found">脚本执行错误 $'\r':command not found</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/language/" title="分类于 language">language</a> <i class="ic i-angle-right"></i> <a href="/categories/language/nodejs/" title="分类于 nodejs">nodejs</a></div><span><a href="/2021/03/13/language/nodejs/NodeJs%E7%AE%80%E4%BB%8B/" title="NodeJs简介">NodeJs简介</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/linux%E7%BB%99grub%E6%B7%BB%E5%8A%A0%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0/" title="linux给grub添加内核启动参数">linux给grub添加内核启动参数</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/linux/" title="分类于 linux">linux</a></div><span><a href="/2021/03/13/linux/curl_wget/" title="curl &amp; wget">curl & wget</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/microService/" title="分类于 microService">microService</a> <i class="ic i-angle-right"></i> <a href="/categories/microService/istio/" title="分类于 istio">istio</a></div><span><a href="/2021/03/13/micro_service/istio/istio%E6%9F%A5%E7%9C%8B%E8%AF%81%E4%B9%A6/" title="Istio 查看证书">Istio 查看证书</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/reference/" title="分类于 reference">reference</a> <i class="ic i-angle-right"></i> <a href="/categories/reference/k8s/" title="分类于 k8s">k8s</a></div><span><a href="/2021/03/13/reference/k8s/41.%E5%8D%81%E5%AD%97%E8%B7%AF%E5%8F%A3%E4%B8%8A%E7%9A%84Kubernetes%E9%BB%98%E8%AE%A4%E8%B0%83%E5%BA%A6%E5%99%A8/" title="41 | 十字路口上的Kubernetes默认调度器">41 | 十字路口上的Kubernetes默认调度器</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2021</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Kung-Fu-Master @ Kung Fu Master</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">1.1m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">16:30</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2021/03/13/reference/k8s/17.经典PaaS的记忆：作业副本与水平扩展/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->
